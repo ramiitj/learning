@@ -12,9 +12,7 @@ const pick: ComponentPlugin<{ labelKey: string }, { picked: boolean }> = {
   act: "decide",
   configSchema: { type: "object" },
   stringKeys: (c) => [String(c.labelKey)],
-  // eslint-disable-next-line no-restricted-syntax
   personal: ({ config, setState, t }) => <button type="button" onClick={() => setState({ picked: true })}>{t.text(config.labelKey)}</button>,
-  // eslint-disable-next-line no-restricted-syntax
   classroom: ({ config, t }) => <p>{t.text(config.labelKey)}</p>,
   messages: { en: {}, hi: {}, te: {} },
   summarize: (s) => (s?.picked ? "You picked the lantern." : null),
