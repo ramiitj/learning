@@ -1,0 +1,26 @@
+/* compare: two variants side by side, isolating one variable. */
+
+.lm-compare__shared { display: grid; gap: var(--space-4); margin-block: var(--space-4); }
+.lm-compare__control label { display: block; font-weight: 600; margin-block-end: var(--space-1); }
+.lm-compare__control input[type="range"] { flex: 1 1 auto; min-inline-size: 8rem; min-block-size: var(--target-min); accent-color: var(--color-accent); }
+.lm-compare__control output { min-inline-size: 4ch; font-variant-numeric: tabular-nums; font-weight: 700; text-align: end; }
+
+.lm-compare__panels {
+  display: flex; flex-wrap: wrap; gap: var(--space-4);
+  margin-block: var(--space-4);
+}
+.lm-compare__panel {
+  flex: 1 1 16rem;
+  min-inline-size: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+.lm-compare__panel code {
+  display: inline-block; margin-block-start: var(--space-1);
+  font-family: ui-monospace, "Noto Sans Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+[data-mode="classroom"] .lm-compare__panels { gap: var(--space-6); }

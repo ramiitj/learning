@@ -1,0 +1,33 @@
+/* by-hand-then-automate: manual steps, then the machine repeats them at scale. */
+
+.lm-by-hand-then-automate__step { margin-block: var(--space-4); }
+.lm-by-hand-then-automate__working code {
+  display: inline-block;
+  font-family: ui-monospace, "Noto Sans Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+.lm-by-hand-then-automate__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  margin-block: var(--space-4);
+}
+.lm-by-hand-then-automate__table caption { text-align: start; font-weight: 700; margin-block-end: var(--space-2); }
+.lm-by-hand-then-automate__table th,
+.lm-by-hand-then-automate__table td {
+  text-align: start;
+  padding: var(--space-2) var(--space-3);
+  border-block-end: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.lm-by-hand-then-automate__table thead th { border-block-end: 2px solid var(--color-border-strong); }
+.lm-by-hand-then-automate__table code { font-family: ui-monospace, "Noto Sans Mono", monospace; overflow-wrap: anywhere; }
+
+@media (max-inline-size: 30rem) {
+  .lm-by-hand-then-automate__table, .lm-by-hand-then-automate__table thead, .lm-by-hand-then-automate__table tbody, .lm-by-hand-then-automate__table tr {
+    display: block;
+  }
+  .lm-by-hand-then-automate__table thead { display: none; }
+  .lm-by-hand-then-automate__table tr { margin-block-end: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-2); }
+  .lm-by-hand-then-automate__table td, .lm-by-hand-then-automate__table th[scope="row"] { display: block; border: 0; padding-block: var(--space-1); }
+}

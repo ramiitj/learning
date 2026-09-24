@@ -1,0 +1,39 @@
+/* knob: sliders/toggles driving a live output, always paired with a goal. */
+
+.lm-knob__controls { display: grid; gap: var(--space-4); margin-block: var(--space-4); }
+.lm-knob__control label { display: block; font-weight: 600; margin-block-end: var(--space-1); }
+.lm-knob__control input[type="range"] {
+  flex: 1 1 auto;
+  min-inline-size: 8rem;
+  min-block-size: var(--target-min);
+  accent-color: var(--color-accent);
+}
+.lm-knob__control output {
+  min-inline-size: 4ch;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: end;
+}
+
+.lm-knob__toggle {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  min-block-size: var(--target-min); cursor: pointer;
+}
+.lm-knob__toggle input[type="checkbox"] { inline-size: 1.4em; block-size: 1.4em; accent-color: var(--color-accent); }
+
+.lm-knob__readout { margin-block-start: var(--space-4); }
+.lm-knob__gauge-wrap { position: relative; margin-block: var(--space-3); }
+.lm-knob__gauge-wrap .lm-bar { position: relative; block-size: 20px; }
+.lm-knob__target {
+  position: absolute; inset-block: 0;
+  background: color-mix(in srgb, var(--color-warm) 35%, transparent);
+  border-inline: 2px solid var(--color-warm);
+}
+.lm-knob__working { font-size: var(--text-small); }
+.lm-knob__working code {
+  display: inline-block; margin-block-start: var(--space-1);
+  font-family: ui-monospace, "Noto Sans Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+[data-mode="classroom"] .lm-knob__controls { gap: var(--space-5); }
