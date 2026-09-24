@@ -4,6 +4,30 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-09-24 — Phase 1 experience review: acted on, and deferred
+
+**Engineering.** The `learning-experience-reviewer` reviewed the Phase 1 UI and the test lesson before this demonstration.
+
+**Acted on:**
+- The lesson now ends with its post-checks, framed as "see how far you've come".
+- The recall warm-up asks the learner to remember before it shows anything.
+- On phones the hook appears on the first screen, with the toolbar folded into one row plus a Lesson tools panel.
+- Break-it asks for a prediction before each result.
+- Sort places a picked item without scrolling.
+- Analogies state their break point once every pair has been explored.
+- Takeaway lines carry labels.
+- Knob can turn its output into a decision at a threshold.
+- Projected text is 28px or larger everywhere, with a test.
+- The wording no longer invents claims about what "many people" guess.
+- In the test lesson, every number follows from its own rules and symbols are explained. Culture-specific examples (Nani, ₹, cricket) now appear only in the Hindi and Telugu variants (Article 7).
+
+**Deferred, for the creator's decision:**
+1. **Running the learner's own messages through the filter** (`your-data`), and applying break-it attempts to the live filter. Both need logic that counts clues in junk messages, which is subject-specific. By the architecture rules that belongs in a domain simulation plugin (Phase 5, alongside `train-classifier`), not in the subject-agnostic primitives. For now the test lesson asks learners to score their messages by hand.
+2. **Pre-checks are not shown yet.** Pre- and post-checks feed the learning-gain measure in Phase 5. Showing a pre-check before the hook would also break "open with a question". Post-checks are shown now as the ending.
+3. **The deepest-layer explanation of the threshold trade-off** would work better as an interactive slider than as text. Doing that needs either a threshold-sweep model for `knob` or a domain simulation.
+4. **Deeper-layer teasers use one generic line.** A per-block teaser question would need a new optional field on blocks, which is a schema change the creator must approve.
+5. **Testing on a real low-end Android phone** is still needed. CI checks performance on an emulated Moto G4 with a CPU slowed 4x and slow 3G. The current result is content in about 0.7 s, usable in about 11 s, and 200 KB of JavaScript.
+
 ## 2026-09-24 — Phase 1 engineering decisions
 
 **Engineering.** Recorded for the creator's review at the Phase 1 acceptance demonstration.
