@@ -1,0 +1,13 @@
+{
+  "name": "@lm/schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./validate": "./src/validate.ts",
+    "./lesson.schema.json": "../../schemas/lesson.schema.json"
+  },
+  "scripts": { "typecheck": "tsc -p tsconfig.json" },
+  "dependencies": { "ajv": "^8.20.0" }
+}

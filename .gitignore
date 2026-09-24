@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+playwright-report/
+test-results/
+.terraform/
+*.tfstate*
+.vercel
+next-env.d.ts
