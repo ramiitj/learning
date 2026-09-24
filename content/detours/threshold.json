@@ -1,0 +1,70 @@
+{
+  "id": "threshold",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.yes",
+          "d.no"
+        ],
+        "answer": "d.yes",
+        "feedback": {
+          "d.no": "d.fno"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is a threshold?",
+      "d.text": "A threshold is a line that a number has to reach.",
+      "d.s1": "In the high jump, the bar is a threshold. Clear it and the jump counts.",
+      "d.s2": "In an exam, the pass mark is a threshold. Reach it and you pass.",
+      "d.q": "The pass mark is 33. You scored 33. Did you reach the threshold?",
+      "d.yes": "Yes: 33 reaches 33",
+      "d.no": "No: you need more than 33",
+      "d.fno": "Reaching means getting to the line, not past it. Is 33 at least 33?",
+      "d.explain": "33 is at least 33, so it reaches the threshold."
+    },
+    "hi": {
+      "d.title": "सीमा क्या होती है?",
+      "d.text": "सीमा एक रेखा है जिस तक किसी संख्या को पहुँचना होता है।",
+      "d.s1": "ऊँची कूद में डंडा एक सीमा है। उसे पार करें, तो कूद गिनी जाती है।",
+      "d.s2": "परीक्षा में पास होने के अंक एक सीमा हैं। उन तक पहुँचें, तो आप पास।",
+      "d.q": "पास होने के अंक 33 हैं। आपके 33 आए। क्या आप सीमा तक पहुँचे?",
+      "d.yes": "हाँ: 33, 33 तक पहुँचता है",
+      "d.no": "नहीं: 33 से ज़्यादा चाहिए",
+      "d.fno": "पहुँचने का मतलब रेखा तक आना है, उसके पार जाना नहीं। क्या 33 कम से कम 33 है?",
+      "d.explain": "33 कम से कम 33 है, इसलिए यह सीमा तक पहुँचता है।"
+    },
+    "te": {
+      "d.title": "హద్దు అంటే ఏమిటి?",
+      "d.text": "హద్దు అంటే ఒక సంఖ్య చేరాల్సిన గీత.",
+      "d.s1": "హై జంప్‌లో కర్ర ఒక హద్దు. దాన్ని దాటితే జంప్ లెక్కలోకి వస్తుంది.",
+      "d.s2": "పరీక్షలో పాస్ మార్కు ఒక హద్దు. దాన్ని చేరితే మీరు పాస్.",
+      "d.q": "పాస్ మార్కు 33. మీకు 33 వచ్చాయి. మీరు హద్దును చేరారా?",
+      "d.yes": "అవును: 33, 33ని చేరుతుంది",
+      "d.no": "లేదు: 33 కన్నా ఎక్కువ కావాలి",
+      "d.fno": "చేరడం అంటే గీత దగ్గరికి రావడం, దాన్ని దాటడం కాదు. 33 కనీసం 33 అవుతుందా?",
+      "d.explain": "33 కనీసం 33, కాబట్టి అది హద్దును చేరుతుంది."
+    }
+  }
+}

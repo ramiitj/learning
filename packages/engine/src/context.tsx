@@ -3,6 +3,7 @@ import { createContext, useContext, useSyncExternalStore } from "react";
 import type { LessonStore, LessonState } from "./store";
 import { initialLessonState } from "./store";
 import type { Registry } from "./registry";
+import type { Block } from "@lm/schema";
 import type { Detour, GlossaryEntry, LessonT, Mode, UiT } from "./types";
 
 export interface EngineValue {
@@ -14,6 +15,8 @@ export interface EngineValue {
   ui: UiT;
   glossary: Record<string, GlossaryEntry>;
   detours: Record<string, Detour>;
+  /** Every block in the current lesson (or detour), in order. */
+  blocks: readonly Block[];
   openGlossary: (termId?: string) => void;
   openDetour: (detourId: string) => void;
   announce: (message: string) => void;
@@ -43,4 +46,9 @@ export function useStoreSelector<T>(store: LessonStore, selector: (s: LessonStat
 export function useBlockState<T = unknown>(blockId: string): T | undefined {
   const { store } = useEngine();
   return useStoreSelector(store, (s) => s.blocks[blockId] as T | undefined);
+}
+
+/** The blocks of the lesson being rendered, in order. */
+export function useLessonBlocks(): readonly Block[] {
+  return useEngine().blocks;
 }

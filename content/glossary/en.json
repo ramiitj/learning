@@ -1,0 +1,22 @@
+{
+  "clue": {
+    "term": "clue",
+    "definition": "a small sign that helps you decide something, like a word or a mark in a message"
+  },
+  "score": {
+    "term": "score",
+    "definition": "a number made by adding up points"
+  },
+  "threshold": {
+    "term": "threshold",
+    "definition": "a line a number has to reach; at or above it, one thing happens, below it, another"
+  },
+  "training": {
+    "term": "training",
+    "definition": "the way a program works out its own settings from many examples, instead of a person setting them by hand"
+  },
+  "filter": {
+    "term": "filter",
+    "definition": "something that lets some things through and holds others back"
+  }
+}

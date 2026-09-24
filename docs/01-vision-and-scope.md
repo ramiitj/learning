@@ -20,7 +20,7 @@ v1 serves learners in Indian classes 8–12, in two settings given equal weight:
 |---|---|
 | Primary setting for v1 | Personal devices and classroom projection, equally |
 | Authoring in v1 | Creator only |
-| Launch languages | English, Hindi, and one regional language (to be chosen; configured as `REGIONAL`) |
+| Launch languages | English, Hindi and Telugu (`te`), configured in `platform/config/locales.json` |
 | Learner accounts in v1 | None for children; anonymous use or teacher class codes |
 | Live AI inside lessons in v1 | None; AI powers authoring only |
 | Curriculum alignment | Standalone content, with every lesson tagged to CBSE/NCERT and state-board objectives where they exist |

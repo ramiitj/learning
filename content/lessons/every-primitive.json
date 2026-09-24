@@ -1,0 +1,967 @@
+{
+  "id": "every-primitive",
+  "schemaVersion": "1.0",
+  "version": 1,
+  "status": "draft",
+  "meta": {
+    "titleKey": "title",
+    "subtitleKey": "subtitle",
+    "subject": "ai",
+    "course": "ai-for-kids",
+    "issue": "issue-01",
+    "concepts": [
+      "clue",
+      "score",
+      "threshold"
+    ],
+    "objectives": [
+      {
+        "id": "o1",
+        "textKey": "obj.o1"
+      },
+      {
+        "id": "o2",
+        "textKey": "obj.o2"
+      }
+    ],
+    "prerequisites": [],
+    "audiences": [
+      "school-13-17"
+    ],
+    "curriculumTags": [],
+    "estimatedMinutes": 25,
+    "provenance": "Phase 1 hand-written test lesson using every universal primitive; hi and te are unreviewed drafts"
+  },
+  "stages": [
+    {
+      "stage": "hook",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "hook.text",
+            "steps": [
+              "hook.s1",
+              "hook.s2"
+            ],
+            "questionKey": "hook.q"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "predict",
+      "blocks": [
+        {
+          "id": "b2",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "predict.prompt",
+            "choices": [
+              "predict.c1",
+              "predict.c2",
+              "predict.c3"
+            ],
+            "answer": "predict.c2",
+            "confidence": true,
+            "revealKey": "predict.reveal"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "score",
+            "threshold"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "manipulate",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "sort",
+          "componentVersion": "1.0",
+          "config": {
+            "instructionKey": "sort.instruction",
+            "groups": [
+              "sort.g1",
+              "sort.g2"
+            ],
+            "items": [
+              {
+                "id": "m1",
+                "labelKey": "sort.m1",
+                "symbol": "🎁",
+                "group": "sort.g1"
+              },
+              {
+                "id": "m2",
+                "labelKey": "sort.m2",
+                "symbol": "📘",
+                "group": "sort.g2"
+              },
+              {
+                "id": "m3",
+                "labelKey": "sort.m3",
+                "symbol": "🔒",
+                "group": "sort.g1"
+              },
+              {
+                "id": "m4",
+                "labelKey": "sort.m4",
+                "symbol": "🍲",
+                "group": "sort.g2"
+              },
+              {
+                "id": "m5",
+                "labelKey": "sort.m5",
+                "symbol": "📱",
+                "group": "sort.g1"
+              },
+              {
+                "id": "m6",
+                "labelKey": "sort.m6",
+                "symbol": "🏏",
+                "group": "sort.g2"
+              },
+              {
+                "id": "m7",
+                "labelKey": "sort.m7",
+                "symbol": "💸",
+                "group": "sort.g1"
+              },
+              {
+                "id": "m8",
+                "labelKey": "sort.m8",
+                "symbol": "🔬",
+                "group": "sort.g2"
+              }
+            ],
+            "revealKey": "sort.reveal"
+          },
+          "classroom": {
+            "mode": "vote-per-item"
+          },
+          "glossaryTerms": [
+            "clue"
+          ]
+        },
+        {
+          "id": "b4",
+          "type": "knob",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "knob.prompt",
+            "model": {
+              "type": "linear",
+              "bias": 0,
+              "inputs": [
+                {
+                  "id": "excl",
+                  "labelKey": "knob.excl",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 10,
+                  "step": 1,
+                  "initial": 2,
+                  "weight": 1
+                },
+                {
+                  "id": "money",
+                  "labelKey": "knob.money",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 3,
+                  "step": 1,
+                  "initial": 0,
+                  "weight": 2
+                },
+                {
+                  "id": "urgent",
+                  "labelKey": "knob.urgent",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 3,
+                  "step": 1,
+                  "initial": 0,
+                  "weight": 3
+                }
+              ],
+              "output": {
+                "labelKey": "knob.output",
+                "min": 0,
+                "max": 25
+              }
+            },
+            "outputTemplateKey": "knob.sentence",
+            "goal": {
+              "target": 10,
+              "tolerance": 0,
+              "goalKey": "knob.goal",
+              "successKey": "knob.success"
+            }
+          },
+          "glossaryTerms": [
+            "score",
+            "threshold"
+          ],
+          "detours": [
+            "threshold"
+          ]
+        },
+        {
+          "id": "b5",
+          "type": "by-hand-then-automate",
+          "componentVersion": "1.0",
+          "config": {
+            "introKey": "bh.intro",
+            "ruleKey": "bh.rule",
+            "process": {
+              "type": "threshold",
+              "threshold": 10,
+              "aboveKey": "bh.above",
+              "belowKey": "bh.below"
+            },
+            "items": [
+              {
+                "id": "i1",
+                "labelKey": "bh.i1",
+                "value": 12
+              },
+              {
+                "id": "i2",
+                "labelKey": "bh.i2",
+                "value": 0
+              },
+              {
+                "id": "i3",
+                "labelKey": "bh.i3",
+                "value": 11
+              },
+              {
+                "id": "i4",
+                "labelKey": "bh.i4",
+                "value": 0
+              },
+              {
+                "id": "i5",
+                "labelKey": "bh.i5",
+                "value": 14
+              },
+              {
+                "id": "i6",
+                "labelKey": "bh.i6",
+                "value": 0
+              },
+              {
+                "id": "i7",
+                "labelKey": "bh.i7",
+                "value": 8
+              },
+              {
+                "id": "i8",
+                "labelKey": "bh.i8",
+                "value": 2
+              }
+            ],
+            "manualCount": 2,
+            "automateKey": "bh.auto"
+          }
+        },
+        {
+          "id": "b6",
+          "type": "compare",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "cmp.prompt",
+            "model": {
+              "type": "linear",
+              "bias": 0,
+              "inputs": [
+                {
+                  "id": "excl",
+                  "labelKey": "knob.excl",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 10,
+                  "step": 1,
+                  "initial": 2,
+                  "weight": 1
+                },
+                {
+                  "id": "money",
+                  "labelKey": "knob.money",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 3,
+                  "step": 1,
+                  "initial": 0,
+                  "weight": 2
+                },
+                {
+                  "id": "urgent",
+                  "labelKey": "knob.urgent",
+                  "kind": "slider",
+                  "min": 0,
+                  "max": 3,
+                  "step": 1,
+                  "initial": 0,
+                  "weight": 3
+                }
+              ],
+              "output": {
+                "labelKey": "knob.output",
+                "min": 0,
+                "max": 25
+              }
+            },
+            "shared": [
+              "money",
+              "urgent"
+            ],
+            "variants": [
+              {
+                "id": "calm",
+                "labelKey": "cmp.a",
+                "overrides": {
+                  "excl": 0
+                }
+              },
+              {
+                "id": "excited",
+                "labelKey": "cmp.b",
+                "overrides": {
+                  "excl": 6
+                }
+              }
+            ],
+            "predictKey": "cmp.predict",
+            "explainKey": "cmp.explain"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "explain",
+      "blocks": [
+        {
+          "id": "b7",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "concept": "threshold",
+            "sourceKey": "an.source",
+            "mappings": [
+              {
+                "sourceKey": "an.m1s",
+                "targetKey": "an.m1t"
+              },
+              {
+                "sourceKey": "an.m2s",
+                "targetKey": "an.m2t"
+              },
+              {
+                "sourceKey": "an.m3s",
+                "targetKey": "an.m3t"
+              },
+              {
+                "sourceKey": "an.m4s",
+                "targetKey": "an.m4t"
+              }
+            ],
+            "breakPointKey": "an.break",
+            "fading": [
+              "an.f1",
+              "an.f2",
+              "an.f3"
+            ]
+          },
+          "glossaryTerms": [
+            "threshold"
+          ]
+        },
+        {
+          "id": "b8",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "deep.text"
+          },
+          "depth": "deeper",
+          "glossaryTerms": [
+            "training"
+          ]
+        },
+        {
+          "id": "b9",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "deepest.text"
+          },
+          "depth": "deepest"
+        },
+        {
+          "id": "b10",
+          "type": "assemble",
+          "componentVersion": "1.0",
+          "config": {
+            "instructionKey": "as.instruction",
+            "pieces": [
+              {
+                "id": "p1",
+                "labelKey": "as.p1"
+              },
+              {
+                "id": "p2",
+                "labelKey": "as.p2"
+              },
+              {
+                "id": "p3",
+                "labelKey": "as.p3"
+              },
+              {
+                "id": "p4",
+                "labelKey": "as.p4"
+              },
+              {
+                "id": "p5",
+                "labelKey": "as.p5"
+              }
+            ],
+            "targetOrder": [
+              "p1",
+              "p2",
+              "p3",
+              "p4",
+              "p5"
+            ],
+            "successKey": "as.success",
+            "checkKey": "as.check"
+          }
+        },
+        {
+          "id": "b11",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "ch.prompt",
+            "options": [
+              "ch.o1",
+              "ch.o2",
+              "ch.o3"
+            ],
+            "answer": "ch.o2",
+            "feedback": {
+              "ch.o1": "ch.f1",
+              "ch.o3": "ch.f3"
+            },
+            "hints": [
+              "ch.h1",
+              "ch.h2"
+            ],
+            "explainKey": "ch.explain",
+            "detour": "threshold"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "break-it",
+      "blocks": [
+        {
+          "id": "b12",
+          "type": "break-it",
+          "componentVersion": "1.0",
+          "config": {
+            "challengeKey": "br.challenge",
+            "target": "b4",
+            "attempts": [
+              {
+                "id": "t1",
+                "labelKey": "br.t1",
+                "resultKey": "br.r1",
+                "breaks": true
+              },
+              {
+                "id": "t2",
+                "labelKey": "br.t2",
+                "resultKey": "br.r2",
+                "breaks": true
+              },
+              {
+                "id": "t3",
+                "labelKey": "br.t3",
+                "resultKey": "br.r3",
+                "breaks": false
+              },
+              {
+                "id": "t4",
+                "labelKey": "br.t4",
+                "resultKey": "br.r4",
+                "breaks": false
+              }
+            ],
+            "reflectKey": "br.reflect"
+          }
+        },
+        {
+          "id": "b13",
+          "type": "your-data",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "yd.prompt",
+            "kind": "list",
+            "maxItems": 5,
+            "maxLength": 120,
+            "placeholderKey": "yd.placeholder",
+            "exampleKeys": [
+              "yd.e1",
+              "yd.e2"
+            ]
+          },
+          "classroom": {
+            "maxItems": 12
+          }
+        }
+      ]
+    },
+    {
+      "stage": "transfer-reflect",
+      "blocks": [
+        {
+          "id": "b14",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": {
+            "mode": "own-analogy",
+            "promptKey": "eb.prompt",
+            "breakPointPromptKey": "eb.break",
+            "modelAnswerKey": "eb.model"
+          }
+        },
+        {
+          "id": "b15",
+          "type": "takeaway",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "take.title",
+            "cardKey": "take.card",
+            "includes": [
+              "b4",
+              "b13",
+              "b14"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pre": [
+      {
+        "id": "pre1",
+        "objective": "o1",
+        "promptKey": "pre1.q",
+        "options": [
+          "pre1.a",
+          "pre1.b",
+          "pre1.c"
+        ],
+        "answer": "pre1.b"
+      }
+    ],
+    "post": [
+      {
+        "id": "post1",
+        "objective": "o1",
+        "promptKey": "post1.q",
+        "options": [
+          "post1.a",
+          "post1.b",
+          "post1.c"
+        ],
+        "answer": "post1.b",
+        "feedbackKey": "post1.fb"
+      },
+      {
+        "id": "post2",
+        "objective": "o2",
+        "promptKey": "post2.q",
+        "options": [
+          "post2.a",
+          "post2.b",
+          "post2.c"
+        ],
+        "answer": "post2.c",
+        "feedbackKey": "post2.fb"
+      }
+    ]
+  },
+  "strings": {
+    "en": {
+      "title": "How does a junk filter decide?",
+      "subtitle": "Build one, then try to fool it.",
+      "obj.o1": "Explain that a filter adds up clues into a score and compares the score with a threshold.",
+      "obj.o2": "Show how a filter can be fooled, because it counts clues without understanding the message.",
+      "hook.text": "A family phone gets about 40 messages a day. Around 10 of them are junk: fake prizes, “urgent” links, ads. Most of the junk never reaches the inbox.",
+      "hook.s1": "No person reads them first. Nobody sorts them by hand.",
+      "hook.s2": "A small program decides, in less time than a blink.",
+      "hook.q": "How can a program tell junk from a real message it has never seen before?",
+      "predict.prompt": "What do you think the filter does?",
+      "predict.c1": "It checks each message against a list of banned words that someone typed in.",
+      "predict.c2": "It gives each message a score from clues, and blocks it if the score is high enough.",
+      "predict.c3": "It reads and understands every message, the way a person would.",
+      "predict.reveal": "It adds up clues into a <term-score>score</term-score>. If the score reaches a line, called a <term-threshold>threshold</term-threshold>, the message goes to junk. You are about to build one.",
+      "sort.instruction": "Here are eight messages. Sort them into two groups. You are the filter now.",
+      "sort.g1": "Junk",
+      "sort.g2": "Real",
+      "sort.m1": "You WON ₹10,00,000!!! Click now",
+      "sort.m2": "Maths homework is on page 42",
+      "sort.m3": "URGENT: your account is locked, send your PIN",
+      "sort.m4": "Nani says dinner is at 8",
+      "sort.m5": "FREE phone!!! Only today!!!",
+      "sort.m6": "Cricket practice moved to Friday",
+      "sort.m7": "Congratulations, you are selected. Pay ₹99 to claim",
+      "sort.m8": "Can you send me the science notes?",
+      "sort.reveal": "Look at what you used to decide: money you didn’t expect, words like FREE and URGENT, lots of “!!!”. Those are clues.",
+      "knob.prompt": "Here is a tiny filter. It counts three kinds of clue in a message and adds up points.",
+      "knob.goal": "Challenge: build a message whose junk score is exactly 10, right on the line.",
+      "knob.excl": "Exclamation marks (1 point each)",
+      "knob.money": "Money words (2 points each)",
+      "knob.urgent": "Urgent words (3 points each)",
+      "knob.output": "Junk score",
+      "knob.sentence": "This message has {excl} exclamation marks, {money} money words and {urgent} urgent words. Its junk score is {output}.",
+      "knob.success": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
+      "bh.intro": "The filter’s rule is short. Try it by hand first, the way the program does it.",
+      "bh.rule": "If a message’s score is {threshold} or more, it goes to junk. Otherwise it goes to the inbox.",
+      "bh.above": "Junk",
+      "bh.below": "Inbox",
+      "bh.i1": "The prize message",
+      "bh.i2": "The homework reminder",
+      "bh.i3": "The locked-account message",
+      "bh.i4": "Nani’s dinner message",
+      "bh.i5": "The free-phone message",
+      "bh.i6": "The cricket message",
+      "bh.i7": "The pay-₹99 message",
+      "bh.i8": "The science-notes message",
+      "bh.auto": "The machine did the same step, the same way, every time. It never got tired, and it never used common sense either.",
+      "cmp.prompt": "One real message from a friend, two versions. Only the exclamation marks change.",
+      "cmp.a": "Calm: “We won the match.”",
+      "cmp.b": "Excited: “We WON the match!!!!!!”",
+      "cmp.predict": "Which version gets the higher junk score?",
+      "cmp.explain": "Only the exclamation marks changed, and the score jumped. The filter cannot tell an excited friend from a scammer. It only counts.",
+      "an.source": "Think of an exam with a pass mark. Each answer earns marks. The marks are added up. If the total reaches the pass mark, you pass.",
+      "an.m1s": "The marks for each answer",
+      "an.m1t": "The points for each clue",
+      "an.m2s": "Your total marks",
+      "an.m2t": "The junk score",
+      "an.m3s": "The pass mark",
+      "an.m3t": "The threshold",
+      "an.m4s": "Pass, or not yet",
+      "an.m4t": "Junk, or inbox",
+      "an.break": "Here the comparison stops working. An examiner reads your answers and understands them. The filter only counts clues. It has no idea what a message means.",
+      "an.f1": "marks + marks + marks ≥ pass mark → pass",
+      "an.f2": "points + points + points ≥ threshold → junk",
+      "an.f3": "1 × exclamations + 2 × money words + 3 × urgent words ≥ 10 → junk",
+      "deep.text": "Real filters use hundreds of clues, not three. Nobody sets their points by hand: the filter works them out from millions of messages that people marked as junk. That is called <term-training>training</term-training>.",
+      "deepest.text": "Choosing the threshold is a trade-off. A low threshold catches more junk but also blocks more real messages. A high threshold lets real messages through but lets more junk in too. There is no setting that makes zero mistakes.",
+      "as.instruction": "Put the filter’s steps in order.",
+      "as.p1": "Read the message",
+      "as.p2": "Count each kind of clue",
+      "as.p3": "Add up the points into a score",
+      "as.p4": "Compare the score with the threshold",
+      "as.p5": "Send it to junk or to the inbox",
+      "as.success": "That is the whole filter: clues, a score, a line.",
+      "as.check": "Each step needs the one before it. You can’t add up clues you haven’t counted.",
+      "ch.prompt": "A message says “Meeting moved to 3 pm.” It has no clues at all. The threshold is 10. Where does it go?",
+      "ch.o1": "Junk",
+      "ch.o2": "Inbox",
+      "ch.o3": "It depends on who sent it",
+      "ch.f1": "Its score is 0, because it has no clues. Is 0 at least 10?",
+      "ch.f3": "A person would think about the sender. This filter only adds up clues. What is the score here?",
+      "ch.h1": "Count the clues: exclamation marks, money words, urgent words.",
+      "ch.h2": "No clues gives a score of 0. Now compare: 0 is less than 10, so the message does not reach the threshold.",
+      "ch.explain": "Score 0 is below the threshold of 10, so the message goes to the inbox.",
+      "br.challenge": "Try to fool the filter. Which tricks get junk into the inbox, or push a real message into junk?",
+      "br.t1": "Write “fr ee” instead of “free”",
+      "br.r1": "The filter no longer sees a money word. The junk slips through.",
+      "br.t2": "A friend writes “I WON the quiz!!!!!!!!!!”",
+      "br.r2": "Ten exclamation marks score 10 points. A real message lands in junk.",
+      "br.t3": "Add a polite, normal sentence to a junk message",
+      "br.r3": "The money and urgent words are still there, so the score stays high. It is still caught.",
+      "br.t4": "Send the same junk message twice",
+      "br.r4": "Same clues, same score, same result, both times.",
+      "br.reflect": "What do the tricks that worked have in common?",
+      "yd.prompt": "Write up to five messages of your own. Try to write one that a person would call junk but this filter would let through.",
+      "yd.placeholder": "Type a message",
+      "yd.e1": "Hello friend, a small gift is waiting for you, reply with your address",
+      "yd.e2": "Exam results are out!!!! Check the school notice board",
+      "eb.prompt": "Where else in life does someone add things up and compare the total with a line? Write your own comparison.",
+      "eb.break": "Where does your comparison stop working?",
+      "eb.model": "A cricket team needs 150 runs to win. Every run adds up, and 150 is the line. But the team can see the match and change its plan; the filter can’t see anything beyond the clues.",
+      "take.title": "My junk filter",
+      "take.card": "I built a junk filter today. It adds up clues into a score and compares it with a line. It never understands the message.",
+      "pre1.q": "How does a junk filter usually decide?",
+      "pre1.a": "A person reads each message first",
+      "pre1.b": "It adds up clues into a score and compares it with a line",
+      "pre1.c": "It understands what each message means",
+      "post1.q": "A message scores 12. The threshold is 10. Where does it go?",
+      "post1.a": "Inbox",
+      "post1.b": "Junk",
+      "post1.c": "It depends on who sent it",
+      "post1.fb": "12 is at least 10, so it reaches the threshold and goes to junk.",
+      "post2.q": "Why can a friend’s excited message end up in junk?",
+      "post2.a": "The filter knows the friend is lying",
+      "post2.b": "Friends’ messages are always blocked",
+      "post2.c": "The filter counts clues like “!!!” without understanding the message",
+      "post2.fb": "It only counts clues. An excited friend and a scammer can look the same to it."
+    },
+    "hi": {
+      "title": "जंक फ़िल्टर कैसे तय करता है?",
+      "subtitle": "एक बनाइए, फिर उसे चकमा देने की कोशिश कीजिए।",
+      "obj.o1": "समझाना कि फ़िल्टर सुरागों को जोड़कर एक स्कोर बनाता है और उस स्कोर की तुलना एक सीमा से करता है।",
+      "obj.o2": "दिखाना कि फ़िल्टर को चकमा दिया जा सकता है, क्योंकि वह संदेश को समझे बिना सिर्फ़ सुराग गिनता है।",
+      "hook.text": "एक परिवार के फ़ोन पर रोज़ लगभग 40 संदेश आते हैं। इनमें से करीब 10 जंक होते हैं: नकली इनाम, “ज़रूरी” लिंक, विज्ञापन। ज़्यादातर जंक इनबॉक्स तक पहुँचता ही नहीं।",
+      "hook.s1": "कोई इंसान इन्हें पहले नहीं पढ़ता। कोई इन्हें हाथ से नहीं छाँटता।",
+      "hook.s2": "एक छोटा प्रोग्राम तय करता है, पलक झपकने से भी कम समय में।",
+      "hook.q": "कोई प्रोग्राम ऐसे संदेश में जंक और असली का फ़र्क कैसे कर सकता है जिसे उसने पहले कभी नहीं देखा?",
+      "predict.prompt": "आपके हिसाब से फ़िल्टर क्या करता है?",
+      "predict.c1": "वह हर संदेश को किसी के लिखे हुए प्रतिबंधित शब्दों की सूची से मिलाता है।",
+      "predict.c2": "वह सुरागों से हर संदेश को एक स्कोर देता है, और स्कोर काफ़ी ऊँचा हो तो उसे रोक देता है।",
+      "predict.c3": "वह हर संदेश को किसी इंसान की तरह पढ़ता और समझता है।",
+      "predict.reveal": "वह सुरागों को जोड़कर एक <term-score>स्कोर</term-score> बनाता है। अगर स्कोर एक रेखा तक पहुँच जाए, जिसे <term-threshold>सीमा</term-threshold> कहते हैं, तो संदेश जंक में चला जाता है। अब आप ख़ुद एक बनाने वाले हैं।",
+      "sort.instruction": "ये आठ संदेश हैं। इन्हें दो समूहों में छाँटिए। अब फ़िल्टर आप हैं।",
+      "sort.g1": "जंक",
+      "sort.g2": "असली",
+      "sort.m1": "आपने ₹10,00,000 जीते!!! अभी क्लिक करें",
+      "sort.m2": "गणित का होमवर्क पेज 42 पर है",
+      "sort.m3": "ज़रूरी: आपका खाता बंद है, अपना PIN भेजें",
+      "sort.m4": "नानी कह रही हैं खाना 8 बजे है",
+      "sort.m5": "मुफ़्त फ़ोन!!! सिर्फ़ आज!!!",
+      "sort.m6": "क्रिकेट अभ्यास शुक्रवार को हो गया है",
+      "sort.m7": "बधाई हो, आप चुने गए हैं। दावा करने के लिए ₹99 दें",
+      "sort.m8": "क्या तुम मुझे विज्ञान के नोट्स भेज सकते हो?",
+      "sort.reveal": "देखिए आपने तय करने के लिए किन चीज़ों का इस्तेमाल किया: अनचाहा पैसा, मुफ़्त और ज़रूरी जैसे शब्द, ढेर सारे “!!!”। यही सुराग हैं।",
+      "knob.prompt": "यह एक छोटा-सा फ़िल्टर है। यह संदेश में तीन तरह के सुराग गिनता है और अंक जोड़ता है।",
+      "knob.goal": "चुनौती: ऐसा संदेश बनाइए जिसका जंक स्कोर ठीक 10 हो, बिल्कुल रेखा पर।",
+      "knob.excl": "विस्मयादिबोधक चिह्न (हर एक का 1 अंक)",
+      "knob.money": "पैसे वाले शब्द (हर एक के 2 अंक)",
+      "knob.urgent": "जल्दबाज़ी वाले शब्द (हर एक के 3 अंक)",
+      "knob.output": "जंक स्कोर",
+      "knob.sentence": "इस संदेश में {excl} विस्मयादिबोधक चिह्न, {money} पैसे वाले शब्द और {urgent} जल्दबाज़ी वाले शब्द हैं। इसका जंक स्कोर {output} है।",
+      "knob.success": "स्कोर 10: ठीक सीमा पर। एक सुराग और, तो यह जंक में जाएगा; एक कम, तो इनबॉक्स में पहुँचेगा।",
+      "bh.intro": "फ़िल्टर का नियम छोटा है। पहले इसे हाथ से आज़माइए, ठीक वैसे जैसे प्रोग्राम करता है।",
+      "bh.rule": "अगर संदेश का स्कोर {threshold} या उससे ज़्यादा है, तो वह जंक में जाता है। नहीं तो इनबॉक्स में।",
+      "bh.above": "जंक",
+      "bh.below": "इनबॉक्स",
+      "bh.i1": "इनाम वाला संदेश",
+      "bh.i2": "होमवर्क की याद",
+      "bh.i3": "खाता बंद वाला संदेश",
+      "bh.i4": "नानी का खाने वाला संदेश",
+      "bh.i5": "मुफ़्त फ़ोन वाला संदेश",
+      "bh.i6": "क्रिकेट वाला संदेश",
+      "bh.i7": "₹99 दो वाला संदेश",
+      "bh.i8": "विज्ञान के नोट्स वाला संदेश",
+      "bh.auto": "मशीन ने हर बार वही कदम, उसी तरह दोहराया। वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया।",
+      "cmp.prompt": "एक दोस्त का असली संदेश, दो रूप। बस विस्मयादिबोधक चिह्न बदलते हैं।",
+      "cmp.a": "शांत: “हम मैच जीत गए।”",
+      "cmp.b": "उत्साहित: “हम मैच जीत गए!!!!!!”",
+      "cmp.predict": "किस रूप का जंक स्कोर ज़्यादा होगा?",
+      "cmp.explain": "सिर्फ़ विस्मयादिबोधक चिह्न बदले, और स्कोर उछल गया। फ़िल्टर किसी उत्साहित दोस्त और धोखेबाज़ में फ़र्क नहीं कर सकता। वह बस गिनता है।",
+      "an.source": "पास होने के अंकों वाली किसी परीक्षा के बारे में सोचिए। हर जवाब पर अंक मिलते हैं। अंक जोड़े जाते हैं। कुल अंक पास होने के अंकों तक पहुँचें, तो आप पास।",
+      "an.m1s": "हर जवाब के अंक",
+      "an.m1t": "हर सुराग के अंक",
+      "an.m2s": "आपके कुल अंक",
+      "an.m2t": "जंक स्कोर",
+      "an.m3s": "पास होने के अंक",
+      "an.m3t": "सीमा",
+      "an.m4s": "पास, या अभी नहीं",
+      "an.m4t": "जंक, या इनबॉक्स",
+      "an.break": "यहाँ यह तुलना काम करना बंद कर देती है। परीक्षक आपके जवाब पढ़ता है और समझता है। फ़िल्टर सिर्फ़ सुराग गिनता है। उसे पता ही नहीं कि संदेश का मतलब क्या है।",
+      "an.f1": "अंक + अंक + अंक ≥ पास के अंक → पास",
+      "an.f2": "अंक + अंक + अंक ≥ सीमा → जंक",
+      "an.f3": "1 × विस्मयादिबोधक + 2 × पैसे वाले शब्द + 3 × जल्दबाज़ी वाले शब्द ≥ 10 → जंक",
+      "deep.text": "असली फ़िल्टर तीन नहीं, सैकड़ों सुराग इस्तेमाल करते हैं। उनके अंक कोई हाथ से तय नहीं करता: फ़िल्टर उन्हें उन लाखों संदेशों से निकालता है जिन्हें लोगों ने जंक बताया। इसे <term-training>ट्रेनिंग</term-training> कहते हैं।",
+      "deepest.text": "सीमा चुनना एक सौदा है। नीची सीमा ज़्यादा जंक पकड़ती है, पर ज़्यादा असली संदेश भी रोक देती है। ऊँची सीमा असली संदेशों को आने देती है, पर ज़्यादा जंक भी आ जाता है। ऐसी कोई सेटिंग नहीं जिसमें कोई गलती न हो।",
+      "as.instruction": "फ़िल्टर के कदमों को सही क्रम में लगाइए।",
+      "as.p1": "संदेश पढ़ें",
+      "as.p2": "हर तरह के सुराग गिनें",
+      "as.p3": "अंकों को जोड़कर स्कोर बनाएँ",
+      "as.p4": "स्कोर की तुलना सीमा से करें",
+      "as.p5": "उसे जंक या इनबॉक्स में भेजें",
+      "as.success": "यही पूरा फ़िल्टर है: सुराग, एक स्कोर, एक रेखा।",
+      "as.check": "हर कदम को अपने से पहले वाले कदम की ज़रूरत है। जो सुराग गिने ही नहीं, उन्हें जोड़ा नहीं जा सकता।",
+      "ch.prompt": "एक संदेश में लिखा है “मीटिंग 3 बजे हो गई है।” इसमें कोई सुराग नहीं है। सीमा 10 है। यह कहाँ जाएगा?",
+      "ch.o1": "जंक",
+      "ch.o2": "इनबॉक्स",
+      "ch.o3": "यह इस पर निर्भर है कि किसने भेजा",
+      "ch.f1": "इसका स्कोर 0 है, क्योंकि इसमें कोई सुराग नहीं। क्या 0 कम से कम 10 है?",
+      "ch.f3": "कोई इंसान भेजने वाले के बारे में सोचता। यह फ़िल्टर सिर्फ़ सुराग जोड़ता है। यहाँ स्कोर कितना है?",
+      "ch.h1": "सुराग गिनिए: विस्मयादिबोधक चिह्न, पैसे वाले शब्द, जल्दबाज़ी वाले शब्द।",
+      "ch.h2": "कोई सुराग नहीं, तो स्कोर 0। अब तुलना कीजिए: 0, 10 से कम है, इसलिए संदेश सीमा तक नहीं पहुँचता।",
+      "ch.explain": "स्कोर 0, सीमा 10 से नीचे है, इसलिए संदेश इनबॉक्स में जाता है।",
+      "br.challenge": "फ़िल्टर को चकमा देने की कोशिश कीजिए। कौन-सी तरकीबें जंक को इनबॉक्स में पहुँचा देती हैं, या असली संदेश को जंक में धकेल देती हैं?",
+      "br.t1": "“मुफ़्त” की जगह “मु फ़्त” लिखें",
+      "br.r1": "फ़िल्टर को अब पैसे वाला शब्द दिखता ही नहीं। जंक निकल जाता है।",
+      "br.t2": "एक दोस्त लिखता है “मैं क्विज़ जीत गया!!!!!!!!!!”",
+      "br.r2": "दस विस्मयादिबोधक चिह्न, 10 अंक। एक असली संदेश जंक में पहुँच जाता है।",
+      "br.t3": "जंक संदेश में एक विनम्र, सामान्य वाक्य जोड़ें",
+      "br.r3": "पैसे और जल्दबाज़ी वाले शब्द अब भी हैं, इसलिए स्कोर ऊँचा ही रहता है। वह फिर भी पकड़ा जाता है।",
+      "br.t4": "वही जंक संदेश दो बार भेजें",
+      "br.r4": "वही सुराग, वही स्कोर, दोनों बार वही नतीजा।",
+      "br.reflect": "जो तरकीबें काम कर गईं, उनमें क्या बात एक जैसी है?",
+      "yd.prompt": "अपने पाँच तक संदेश लिखिए। ऐसा एक संदेश लिखने की कोशिश कीजिए जिसे कोई इंसान जंक कहे, पर यह फ़िल्टर जाने दे।",
+      "yd.placeholder": "एक संदेश लिखिए",
+      "yd.e1": "नमस्ते दोस्त, आपके लिए एक छोटा-सा तोहफ़ा इंतज़ार कर रहा है, अपना पता भेजिए",
+      "yd.e2": "परीक्षा के नतीजे आ गए!!!! स्कूल का नोटिस बोर्ड देखो",
+      "eb.prompt": "ज़िंदगी में और कहाँ कोई चीज़ों को जोड़कर कुल को किसी रेखा से मिलाता है? अपनी तुलना लिखिए।",
+      "eb.break": "आपकी तुलना कहाँ काम करना बंद कर देती है?",
+      "eb.model": "क्रिकेट टीम को जीतने के लिए 150 रन चाहिए। हर रन जुड़ता है, और 150 रेखा है। पर टीम मैच देख सकती है और अपनी योजना बदल सकती है; फ़िल्टर सुरागों के आगे कुछ नहीं देख सकता।",
+      "take.title": "मेरा जंक फ़िल्टर",
+      "take.card": "आज मैंने एक जंक फ़िल्टर बनाया। यह सुरागों को जोड़कर स्कोर बनाता है और उसकी तुलना एक रेखा से करता है। यह संदेश को कभी समझता नहीं।",
+      "pre1.q": "जंक फ़िल्टर आमतौर पर कैसे तय करता है?",
+      "pre1.a": "कोई इंसान पहले हर संदेश पढ़ता है",
+      "pre1.b": "वह सुरागों को जोड़कर स्कोर बनाता है और उसकी तुलना एक रेखा से करता है",
+      "pre1.c": "वह समझता है कि हर संदेश का मतलब क्या है",
+      "post1.q": "एक संदेश का स्कोर 12 है। सीमा 10 है। वह कहाँ जाएगा?",
+      "post1.a": "इनबॉक्स",
+      "post1.b": "जंक",
+      "post1.c": "यह इस पर निर्भर है कि किसने भेजा",
+      "post1.fb": "12, कम से कम 10 है, इसलिए यह सीमा तक पहुँचता है और जंक में जाता है।",
+      "post2.q": "किसी दोस्त का उत्साहित संदेश जंक में क्यों पहुँच सकता है?",
+      "post2.a": "फ़िल्टर जानता है कि दोस्त झूठ बोल रहा है",
+      "post2.b": "दोस्तों के संदेश हमेशा रोके जाते हैं",
+      "post2.c": "फ़िल्टर संदेश को समझे बिना “!!!” जैसे सुराग गिनता है",
+      "post2.fb": "वह सिर्फ़ सुराग गिनता है। उसके लिए उत्साहित दोस्त और धोखेबाज़ एक जैसे दिख सकते हैं।"
+    },
+    "te": {
+      "title": "జంక్ ఫిల్టర్ ఎలా నిర్ణయిస్తుంది?",
+      "subtitle": "ఒకటి తయారు చేయండి, తర్వాత దాన్ని మోసం చేసి చూడండి.",
+      "obj.o1": "ఫిల్టర్ ఆధారాలను కలిపి ఒక స్కోరు చేస్తుందని, ఆ స్కోరును ఒక హద్దుతో పోలుస్తుందని వివరించడం.",
+      "obj.o2": "ఫిల్టర్ సందేశాన్ని అర్థం చేసుకోకుండా ఆధారాలను మాత్రమే లెక్కిస్తుంది కాబట్టి దాన్ని ఎలా మోసం చేయవచ్చో చూపించడం.",
+      "hook.text": "ఒక కుటుంబం ఫోన్‌కు రోజుకు సుమారు 40 సందేశాలు వస్తాయి. వాటిలో దాదాపు 10 జంక్: నకిలీ బహుమతులు, “అత్యవసర” లింకులు, ప్రకటనలు. చాలా జంక్ ఇన్‌బాక్స్‌కు చేరనే చేరదు.",
+      "hook.s1": "వీటిని ముందుగా ఎవరూ చదవరు. ఎవరూ చేత్తో వేరు చేయరు.",
+      "hook.s2": "ఒక చిన్న ప్రోగ్రామ్ రెప్పపాటు కన్నా తక్కువ సమయంలో నిర్ణయిస్తుంది.",
+      "hook.q": "ఇంతకు ముందెప్పుడూ చూడని సందేశంలో జంక్‌ని, నిజమైనదాన్ని ప్రోగ్రామ్ ఎలా వేరు చేయగలదు?",
+      "predict.prompt": "ఫిల్టర్ ఏం చేస్తుందని మీరు అనుకుంటున్నారు?",
+      "predict.c1": "ఎవరో టైప్ చేసిన నిషిద్ధ పదాల జాబితాతో ప్రతి సందేశాన్ని పోల్చి చూస్తుంది.",
+      "predict.c2": "ఆధారాల నుండి ప్రతి సందేశానికి ఒక స్కోరు ఇస్తుంది, స్కోరు తగినంత ఎక్కువైతే దాన్ని ఆపేస్తుంది.",
+      "predict.c3": "ఒక మనిషిలాగే ప్రతి సందేశాన్ని చదివి అర్థం చేసుకుంటుంది.",
+      "predict.reveal": "అది ఆధారాలను కలిపి ఒక <term-score>స్కోరు</term-score> చేస్తుంది. స్కోరు ఒక గీతను చేరితే, దాన్ని <term-threshold>హద్దు</term-threshold> అంటారు, ఆ సందేశం జంక్‌కి వెళ్తుంది. ఇప్పుడు మీరే ఒకటి తయారు చేయబోతున్నారు.",
+      "sort.instruction": "ఇవి ఎనిమిది సందేశాలు. వీటిని రెండు గుంపులుగా వేరు చేయండి. ఇప్పుడు ఫిల్టర్ మీరే.",
+      "sort.g1": "జంక్",
+      "sort.g2": "నిజమైనది",
+      "sort.m1": "మీరు ₹10,00,000 గెలిచారు!!! ఇప్పుడే క్లిక్ చేయండి",
+      "sort.m2": "లెక్కల హోంవర్క్ 42వ పేజీలో ఉంది",
+      "sort.m3": "అత్యవసరం: మీ ఖాతా లాక్ అయింది, మీ PIN పంపండి",
+      "sort.m4": "అమ్మమ్మ రాత్రి భోజనం 8కి అంటోంది",
+      "sort.m5": "ఉచిత ఫోన్!!! ఈరోజు మాత్రమే!!!",
+      "sort.m6": "క్రికెట్ ప్రాక్టీస్ శుక్రవారానికి మారింది",
+      "sort.m7": "అభినందనలు, మీరు ఎంపికయ్యారు. పొందడానికి ₹99 చెల్లించండి",
+      "sort.m8": "సైన్స్ నోట్స్ నాకు పంపగలవా?",
+      "sort.reveal": "నిర్ణయించడానికి మీరు వేటిని ఉపయోగించారో చూడండి: ఊహించని డబ్బు, ఉచితం, అత్యవసరం లాంటి పదాలు, చాలా “!!!”. ఇవే ఆధారాలు.",
+      "knob.prompt": "ఇది ఒక చిన్న ఫిల్టర్. ఇది సందేశంలో మూడు రకాల ఆధారాలను లెక్కించి పాయింట్లు కలుపుతుంది.",
+      "knob.goal": "సవాలు: జంక్ స్కోరు సరిగ్గా 10 ఉండే సందేశం తయారు చేయండి, సరిగ్గా గీత మీద.",
+      "knob.excl": "ఆశ్చర్యార్థక గుర్తులు (ఒక్కొక్కటికి 1 పాయింట్)",
+      "knob.money": "డబ్బు పదాలు (ఒక్కొక్కటికి 2 పాయింట్లు)",
+      "knob.urgent": "అత్యవసర పదాలు (ఒక్కొక్కటికి 3 పాయింట్లు)",
+      "knob.output": "జంక్ స్కోరు",
+      "knob.sentence": "ఈ సందేశంలో {excl} ఆశ్చర్యార్థక గుర్తులు, {money} డబ్బు పదాలు, {urgent} అత్యవసర పదాలు ఉన్నాయి. దీని జంక్ స్కోరు {output}.",
+      "knob.success": "స్కోరు 10: సరిగ్గా హద్దు మీద. ఇంకో ఆధారం ఉంటే జంక్‌కి వెళ్తుంది; ఒకటి తక్కువైతే ఇన్‌బాక్స్‌కి చేరుతుంది.",
+      "bh.intro": "ఫిల్టర్ నియమం చిన్నది. ముందు ప్రోగ్రామ్ చేసినట్టే మీరు చేత్తో ప్రయత్నించండి.",
+      "bh.rule": "సందేశం స్కోరు {threshold} లేదా అంతకంటే ఎక్కువైతే అది జంక్‌కి వెళ్తుంది. లేకపోతే ఇన్‌బాక్స్‌కి.",
+      "bh.above": "జంక్",
+      "bh.below": "ఇన్‌బాక్స్",
+      "bh.i1": "బహుమతి సందేశం",
+      "bh.i2": "హోంవర్క్ గుర్తు",
+      "bh.i3": "ఖాతా లాక్ సందేశం",
+      "bh.i4": "అమ్మమ్మ భోజనం సందేశం",
+      "bh.i5": "ఉచిత ఫోన్ సందేశం",
+      "bh.i6": "క్రికెట్ సందేశం",
+      "bh.i7": "₹99 చెల్లించండి సందేశం",
+      "bh.i8": "సైన్స్ నోట్స్ సందేశం",
+      "bh.auto": "యంత్రం ప్రతిసారీ అదే అడుగును, అదే విధంగా చేసింది. అది ఎప్పుడూ అలసిపోలేదు, ఎప్పుడూ ఇంగిత జ్ఞానాన్ని కూడా ఉపయోగించలేదు.",
+      "cmp.prompt": "స్నేహితుడి నుండి ఒక నిజమైన సందేశం, రెండు రూపాలు. ఆశ్చర్యార్థక గుర్తులు మాత్రమే మారతాయి.",
+      "cmp.a": "ప్రశాంతంగా: “మనం మ్యాచ్ గెలిచాం.”",
+      "cmp.b": "ఉత్సాహంగా: “మనం మ్యాచ్ గెలిచాం!!!!!!”",
+      "cmp.predict": "ఏ రూపానికి జంక్ స్కోరు ఎక్కువ వస్తుంది?",
+      "cmp.explain": "ఆశ్చర్యార్థక గుర్తులు మాత్రమే మారాయి, స్కోరు ఎగిరింది. ఉత్సాహంగా ఉన్న స్నేహితుడికి, మోసగాడికి తేడాను ఫిల్టర్ చెప్పలేదు. అది లెక్కిస్తుంది, అంతే.",
+      "an.source": "పాస్ మార్కు ఉన్న ఒక పరీక్ష గురించి ఆలోచించండి. ప్రతి జవాబుకు మార్కులు వస్తాయి. మార్కులన్నీ కలుపుతారు. మొత్తం పాస్ మార్కును చేరితే, మీరు పాస్.",
+      "an.m1s": "ప్రతి జవాబుకు మార్కులు",
+      "an.m1t": "ప్రతి ఆధారానికి పాయింట్లు",
+      "an.m2s": "మీ మొత్తం మార్కులు",
+      "an.m2t": "జంక్ స్కోరు",
+      "an.m3s": "పాస్ మార్కు",
+      "an.m3t": "హద్దు",
+      "an.m4s": "పాస్, లేదా ఇంకా కాదు",
+      "an.m4t": "జంక్, లేదా ఇన్‌బాక్స్",
+      "an.break": "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. పరీక్షకులు మీ జవాబులు చదివి అర్థం చేసుకుంటారు. ఫిల్టర్ ఆధారాలను మాత్రమే లెక్కిస్తుంది. సందేశానికి అర్థం ఏమిటో దానికి ఏమాత్రం తెలియదు.",
+      "an.f1": "మార్కులు + మార్కులు + మార్కులు ≥ పాస్ మార్కు → పాస్",
+      "an.f2": "పాయింట్లు + పాయింట్లు + పాయింట్లు ≥ హద్దు → జంక్",
+      "an.f3": "1 × ఆశ్చర్యార్థకాలు + 2 × డబ్బు పదాలు + 3 × అత్యవసర పదాలు ≥ 10 → జంక్",
+      "deep.text": "నిజమైన ఫిల్టర్లు మూడు కాదు, వందలాది ఆధారాలను ఉపయోగిస్తాయి. వాటి పాయింట్లను ఎవరూ చేత్తో పెట్టరు: ప్రజలు జంక్ అని గుర్తించిన లక్షలాది సందేశాల నుండి ఫిల్టర్ వాటిని లెక్కిస్తుంది. దాన్ని <term-training>ట్రైనింగ్</term-training> అంటారు.",
+      "deepest.text": "హద్దును ఎంచుకోవడం ఒక బేరం. తక్కువ హద్దు ఎక్కువ జంక్‌ను పట్టుకుంటుంది, కానీ ఎక్కువ నిజమైన సందేశాలనూ ఆపేస్తుంది. ఎక్కువ హద్దు నిజమైన సందేశాలను రానిస్తుంది, కానీ ఎక్కువ జంక్‌నూ లోపలికి రానిస్తుంది. ఒక్క తప్పు కూడా చేయని అమరిక లేదు.",
+      "as.instruction": "ఫిల్టర్ అడుగులను సరైన క్రమంలో అమర్చండి.",
+      "as.p1": "సందేశాన్ని చదవండి",
+      "as.p2": "ప్రతి రకం ఆధారాన్ని లెక్కించండి",
+      "as.p3": "పాయింట్లను కలిపి స్కోరు చేయండి",
+      "as.p4": "స్కోరును హద్దుతో పోల్చండి",
+      "as.p5": "దాన్ని జంక్‌కి లేదా ఇన్‌బాక్స్‌కి పంపండి",
+      "as.success": "ఫిల్టర్ మొత్తం ఇదే: ఆధారాలు, ఒక స్కోరు, ఒక గీత.",
+      "as.check": "ప్రతి అడుగుకు దాని ముందు అడుగు అవసరం. లెక్కించని ఆధారాలను కలపలేరు.",
+      "ch.prompt": "ఒక సందేశంలో “మీటింగ్ మధ్యాహ్నం 3కి మారింది.” అని ఉంది. అందులో ఒక్క ఆధారం కూడా లేదు. హద్దు 10. అది ఎక్కడికి వెళ్తుంది?",
+      "ch.o1": "జంక్",
+      "ch.o2": "ఇన్‌బాక్స్",
+      "ch.o3": "ఎవరు పంపారనే దానిపై ఆధారపడి ఉంటుంది",
+      "ch.f1": "దీని స్కోరు 0, ఎందుకంటే ఇందులో ఆధారాలు లేవు. 0 కనీసం 10 అవుతుందా?",
+      "ch.f3": "ఒక మనిషి పంపినవారి గురించి ఆలోచిస్తారు. ఈ ఫిల్టర్ ఆధారాలను మాత్రమే కలుపుతుంది. ఇక్కడ స్కోరు ఎంత?",
+      "ch.h1": "ఆధారాలను లెక్కించండి: ఆశ్చర్యార్థక గుర్తులు, డబ్బు పదాలు, అత్యవసర పదాలు.",
+      "ch.h2": "ఆధారాలు లేకపోతే స్కోరు 0. ఇప్పుడు పోల్చండి: 0, 10 కన్నా తక్కువ, కాబట్టి సందేశం హద్దును చేరదు.",
+      "ch.explain": "స్కోరు 0, హద్దు 10 కన్నా తక్కువ, కాబట్టి సందేశం ఇన్‌బాక్స్‌కి వెళ్తుంది.",
+      "br.challenge": "ఫిల్టర్‌ను మోసం చేసి చూడండి. ఏ ఉపాయాలు జంక్‌ను ఇన్‌బాక్స్‌లోకి పంపుతాయి, లేదా నిజమైన సందేశాన్ని జంక్‌లోకి నెట్టుతాయి?",
+      "br.t1": "“ఉచితం” బదులు “ఉ చితం” అని రాయండి",
+      "br.r1": "ఫిల్టర్‌కు ఇప్పుడు డబ్బు పదం కనిపించదు. జంక్ జారిపోతుంది.",
+      "br.t2": "స్నేహితుడు రాస్తాడు “నేను క్విజ్ గెలిచా!!!!!!!!!!”",
+      "br.r2": "పది ఆశ్చర్యార్థక గుర్తులు, 10 పాయింట్లు. నిజమైన సందేశం జంక్‌లో పడుతుంది.",
+      "br.t3": "జంక్ సందేశానికి ఒక మర్యాదగా ఉన్న సాధారణ వాక్యం జోడించండి",
+      "br.r3": "డబ్బు, అత్యవసర పదాలు ఇంకా ఉన్నాయి, కాబట్టి స్కోరు ఎక్కువగానే ఉంటుంది. అది ఇంకా పట్టుబడుతుంది.",
+      "br.t4": "అదే జంక్ సందేశాన్ని రెండుసార్లు పంపండి",
+      "br.r4": "అవే ఆధారాలు, అదే స్కోరు, రెండుసార్లూ అదే ఫలితం.",
+      "br.reflect": "పనిచేసిన ఉపాయాలలో ఉమ్మడిగా ఉన్నది ఏమిటి?",
+      "yd.prompt": "మీ సొంత సందేశాలు ఐదు వరకు రాయండి. మనిషి జంక్ అనే, కానీ ఈ ఫిల్టర్ వదిలేసే ఒక సందేశం రాసి చూడండి.",
+      "yd.placeholder": "ఒక సందేశం టైప్ చేయండి",
+      "yd.e1": "హలో మిత్రమా, మీకోసం ఒక చిన్న కానుక ఎదురుచూస్తోంది, మీ చిరునామా పంపండి",
+      "yd.e2": "పరీక్ష ఫలితాలు వచ్చాయి!!!! స్కూల్ నోటీసు బోర్డు చూడు",
+      "eb.prompt": "జీవితంలో ఇంకెక్కడ ఎవరైనా వాటిని కలిపి మొత్తాన్ని ఒక గీతతో పోలుస్తారు? మీ సొంత పోలిక రాయండి.",
+      "eb.break": "మీ పోలిక ఎక్కడ పనిచేయడం ఆగిపోతుంది?",
+      "eb.model": "క్రికెట్ జట్టు గెలవడానికి 150 పరుగులు కావాలి. ప్రతి పరుగు కలుస్తుంది, 150 గీత. కానీ జట్టు మ్యాచ్‌ను చూసి తన ప్రణాళిక మార్చుకోగలదు; ఫిల్టర్ ఆధారాలకు మించి ఏమీ చూడలేదు.",
+      "take.title": "నా జంక్ ఫిల్టర్",
+      "take.card": "ఈరోజు నేను ఒక జంక్ ఫిల్టర్ తయారు చేశాను. అది ఆధారాలను కలిపి ఒక స్కోరు చేసి దాన్ని ఒక గీతతో పోలుస్తుంది. అది సందేశాన్ని ఎప్పుడూ అర్థం చేసుకోదు.",
+      "pre1.q": "జంక్ ఫిల్టర్ సాధారణంగా ఎలా నిర్ణయిస్తుంది?",
+      "pre1.a": "ప్రతి సందేశాన్ని ముందుగా ఒక మనిషి చదువుతారు",
+      "pre1.b": "ఆధారాలను కలిపి స్కోరు చేసి దాన్ని ఒక గీతతో పోలుస్తుంది",
+      "pre1.c": "ప్రతి సందేశం అర్థం ఏమిటో అది అర్థం చేసుకుంటుంది",
+      "post1.q": "ఒక సందేశం స్కోరు 12. హద్దు 10. అది ఎక్కడికి వెళ్తుంది?",
+      "post1.a": "ఇన్‌బాక్స్",
+      "post1.b": "జంక్",
+      "post1.c": "ఎవరు పంపారనే దానిపై ఆధారపడి ఉంటుంది",
+      "post1.fb": "12 కనీసం 10, కాబట్టి అది హద్దును చేరి జంక్‌కి వెళ్తుంది.",
+      "post2.q": "స్నేహితుడి ఉత్సాహపు సందేశం జంక్‌లో ఎందుకు పడవచ్చు?",
+      "post2.a": "స్నేహితుడు అబద్ధం చెబుతున్నాడని ఫిల్టర్‌కు తెలుసు",
+      "post2.b": "స్నేహితుల సందేశాలు ఎప్పుడూ ఆపివేయబడతాయి",
+      "post2.c": "ఫిల్టర్ సందేశాన్ని అర్థం చేసుకోకుండా “!!!” లాంటి ఆధారాలను లెక్కిస్తుంది",
+      "post2.fb": "అది ఆధారాలను మాత్రమే లెక్కిస్తుంది. దానికి ఉత్సాహపు స్నేహితుడు, మోసగాడు ఒకేలా కనిపించవచ్చు."
+    }
+  },
+  "localeStatus": {
+    "en": "draft",
+    "hi": "draft",
+    "te": "draft"
+  }
+}

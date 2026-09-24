@@ -2,7 +2,26 @@
 
 This pack contains everything Claude Code needs to build the platform: the vision and scope, the platform constitution every agent follows, the architecture, the content model and JSON schema, the interaction component catalogue, the experience and design standards, the multilingual approach, the agent operating system, governance for the creator, privacy and safety, operations, the AI for Kids v1 curriculum, and a phased build plan.
 
-## How to use it
+## Running the platform
+
+Requires Node 22 and pnpm 10.
+
+```bash
+pnpm install
+pnpm dev                 # http://localhost:3000 → /en, /hi, /te
+pnpm test                # unit, component and accessibility tests (Vitest + axe)
+pnpm lint && pnpm typecheck
+pnpm validate:content    # every lesson and detour against the schema and component contracts
+pnpm build && pnpm test:e2e   # Playwright: locales and fonts, WCAG 2.2 AA, offline, emulated low-end Android on slow 3G
+```
+
+Useful pages: the cover (`/en`), the Phase 1 test lesson (`/en/lessons/every-primitive`) and its classroom mode (`/en/lessons/every-primitive/classroom`), and the component preview (`/en/preview`), which shows every component in personal and classroom mode. Swap `en` for `hi` or `te` to see the other locales.
+
+Test lesson content is generated from `scripts/content/*.py` (strings for all three locales live in one file so they stay aligned): `python3 scripts/content/build_every_primitive.py`. After editing `packages/tokens/src/index.ts`, regenerate the CSS with `pnpm --filter @lm/tokens build`.
+
+Decisions and their reasons are in `docs/DECISIONS.md`.
+
+## How the specification pack was meant to be used
 
 Copy the whole folder into the root of a new, empty repository. Open Claude Code in that repository and start with:
 
@@ -24,6 +43,6 @@ Work through the phases in order. Each phase in the build plan ends with accepta
 | `.claude/agents/` | Claude Code subagents for building the platform |
 | `.claude/skills/lesson-authoring/` | The authoring skill; also upload it to claude.ai for conversational authoring |
 
-## Open decision
+## Launch languages
 
-The third launch language is still to be chosen. It appears throughout as `REGIONAL` in `platform/config/locales.json`. Set it there once decided; nothing else in the architecture depends on which language it is.
+English (`en`), Hindi (`hi`) and Telugu (`te`), configured in `platform/config/locales.json`. Telugu was chosen as the third language on 2026-09-24 (see `docs/DECISIONS.md`); nothing else in the architecture depends on which language it is.

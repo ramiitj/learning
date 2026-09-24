@@ -1,6 +1,6 @@
 import Ajv2020, { type ErrorObject } from "ajv/dist/2020.js";
 import lessonSchema from "../../../schemas/lesson.schema.json" with { type: "json" };
-import { allBlocks, type ComponentContract, type Lesson } from "./index";
+import { allBlocks, type Block, type ComponentContract, type Lesson, type Strings } from "./index";
 
 export type Severity = "error" | "warning";
 export interface Issue {
@@ -38,7 +38,6 @@ export function validateLesson(doc: unknown, opts: ValidateOptions): Issue[] {
     return issues;
   }
   const lesson = doc;
-  const byType = new Map(opts.contracts.map((c) => [c.type, c]));
   const blockIds = new Set<string>();
   const used = new Set<string>([lesson.meta.titleKey, ...lesson.meta.objectives.map((o) => o.textKey)]);
   if (lesson.meta.subtitleKey) used.add(lesson.meta.subtitleKey);
@@ -53,8 +52,26 @@ export function validateLesson(doc: unknown, opts: ValidateOptions): Issue[] {
     if (!objectiveIds.has(c.objective)) issues.push({ severity: "error", check: "references", path: `/checks/${c.id}`, message: `objective "${c.objective}" is not declared in meta.objectives` });
   }
 
+  checkBlocks([...allBlocks(lesson)].map((b) => b.block), opts, used, issues, blockIds);
+
+  const locales = opts.locales ?? Object.entries(lesson.localeStatus).filter(([, s]) => s !== "missing").map(([l]) => l);
+  checkStrings(used, lesson.strings, locales, issues);
+  return issues;
+}
+
+/** Validate a bare list of blocks with its strings (detours, previews). */
+export function validateBlocks(blocks: Block[], strings: Strings, opts: ValidateOptions & { extraKeys?: string[] }): Issue[] {
+  const issues: Issue[] = [];
+  const used = new Set<string>(opts.extraKeys ?? []);
+  checkBlocks(blocks, opts, used, issues, new Set());
+  checkStrings(used, strings, opts.locales ?? Object.keys(strings), issues);
+  return issues;
+}
+
+function checkBlocks(blocks: Block[], opts: ValidateOptions, used: Set<string>, issues: Issue[], blockIds: Set<string>) {
+  const byType = new Map(opts.contracts.map((c) => [c.type, c]));
   const refs: { from: string; to: string }[] = [];
-  for (const { block } of allBlocks(lesson)) {
+  for (const block of blocks) {
     const path = `/blocks/${block.id}`;
     if (blockIds.has(block.id)) issues.push({ severity: "error", check: "structure", path, message: "duplicate block id" });
     blockIds.add(block.id);
@@ -80,21 +97,22 @@ export function validateLesson(doc: unknown, opts: ValidateOptions): Issue[] {
       }
     }
   }
-  const order = [...allBlocks(lesson)].map((b) => b.block.id);
+  const order = blocks.map((b) => b.id);
   for (const { from, to } of refs) {
     if (!blockIds.has(to)) issues.push({ severity: "error", check: "references", path: `/blocks/${from}`, message: `refers to unknown block "${to}"` });
     else if (order.indexOf(to) > order.indexOf(from)) issues.push({ severity: "warning", check: "references", path: `/blocks/${from}`, message: `refers to later block "${to}"` });
   }
 
-  const locales = opts.locales ?? Object.entries(lesson.localeStatus).filter(([, s]) => s !== "missing").map(([l]) => l);
+}
+
+function checkStrings(used: Set<string>, strings: Strings, locales: string[], issues: Issue[]) {
   for (const locale of locales) {
-    const table = lesson.strings[locale] ?? {};
+    const table = strings[locale] ?? {};
     const missing = [...used].filter((k) => !(k in table));
     if (missing.length) {
       issues.push({ severity: locale === "en" ? "error" : "warning", check: "strings", path: `/strings/${locale}`, message: `${missing.length} missing: ${missing.slice(0, 8).join(", ")}${missing.length > 8 ? ", …" : ""}` });
     }
   }
-  return issues;
 }
 
 export const hasErrors = (issues: Issue[]) => issues.some((i) => i.severity === "error");

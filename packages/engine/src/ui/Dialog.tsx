@@ -25,6 +25,8 @@ export function Dialog({ open, onClose, labelledBy, children, className }: { ope
   }, [open]);
 
   return (
+    // Clicking the backdrop closes the dialog; the keyboard equivalent is Escape (onCancel).
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <dialog
       ref={ref}
       aria-labelledby={labelledBy}

@@ -2,7 +2,7 @@
 
 ## Launch locales
 
-English (`en`), Hindi (`hi`), and one regional language (`REGIONAL`, to be chosen). Configured in `platform/config/locales.json`. The architecture supports any number of locales; adding one is configuration plus content.
+English (`en`), Hindi (`hi`) and Telugu (`te`, chosen 2026-09-24). Configured in `platform/config/locales.json`. The architecture supports any number of locales; adding one is configuration plus content.
 
 ## Translation workflow
 

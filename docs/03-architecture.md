@@ -4,16 +4,17 @@
 
 The platform has four layers. The **learner experience** is the web app where lessons are explored in personal or classroom mode. The **lesson engine** renders lessons from JSON using registered components. The **content platform** is the CMS, media pipeline, validation service and MCP connector. The **agent operating system** is the orchestrator, agents, shared artifact store, permission system, event log and Creator Console.
 
-## Recommended stack (to be confirmed in Phase 0)
+## Stack (confirmed by the creator on 2026-09-24)
 
-The `technical-architect` subagent confirms or revises these defaults, with trade-offs, before any application code is written.
+Confirmed as proposed, with hosting on Vercel (functions in `bom1`, Mumbai) and PostgreSQL on Neon in `aws-ap-south-1` (Mumbai). See `docs/DECISIONS.md` for the reasons, trade-offs and repository layout.
 
 | Concern | Default | Reason |
 |---|---|---|
 | Language | TypeScript (strict) | One language across front end, CMS, MCP server and agents |
 | Web framework | Next.js (App Router) | Server rendering for speed on slow networks, static export of lessons for offline packs |
 | CMS | Payload CMS on PostgreSQL | TypeScript-native, runs inside Next.js, code-defined schema, drafts and versions built in |
-| Database | PostgreSQL in an Indian region | Data residency; relational model suits the concept graph and versions |
+| Database | PostgreSQL in an Indian region (Neon, `aws-ap-south-1`) | Data residency; relational model suits the concept graph and versions |
+| Hosting | Vercel, functions pinned to `bom1` (Mumbai); infrastructure in `infra/terraform` | Fast to ship; no personal data in v1, so edge processing outside India is acceptable (revisit before collecting any) |
 | Real-time classroom sessions | WebSockets via a managed real-time service | Class-code joining and live voting |
 | Internationalisation | ICU message format with a Next.js i18n library | Plurals and gender handled correctly across languages |
 | Offline | Progressive web app with a service worker; downloadable lesson packs | Low connectivity in many schools |

@@ -25,12 +25,12 @@ export interface LessonViewProps {
 const depthRank = (d: Depth | undefined) => DEPTHS.indexOf(d ?? "core");
 const recorded = new Set<string>();
 
-function useScope(opts: { locale: string; mode: Mode; registry: Registry; strings: LessonDoc["strings"]; storageKey: string; glossary: Record<string, GlossaryEntry>; detours: Record<string, Detour>; openGlossary: (id?: string) => void; openDetour: (id: string) => void; announce: (m: string) => void; defaultDepth?: Depth }): EngineValue {
-  const { locale, mode, registry, strings, storageKey, glossary, detours, openGlossary, openDetour, announce, defaultDepth } = opts;
+function useScope(opts: { blocks: readonly Block[]; locale: string; mode: Mode; registry: Registry; strings: LessonDoc["strings"]; storageKey: string; glossary: Record<string, GlossaryEntry>; detours: Record<string, Detour>; openGlossary: (id?: string) => void; openDetour: (id: string) => void; announce: (m: string) => void; defaultDepth?: Depth }): EngineValue {
+  const { blocks, locale, mode, registry, strings, storageKey, glossary, detours, openGlossary, openDetour, announce, defaultDepth } = opts;
   const [store] = useState(() => new LessonStore(storageKey, { defaultDepth }));
   const t = useMemo(() => createLessonT(locale, strings, (id, children, key) => <GlossaryTerm key={key} termId={id}>{children}</GlossaryTerm>), [locale, strings]);
   const ui = useMemo(() => createUiT(locale, [engineMessages]), [locale]);
-  return useMemo(() => ({ locale, mode, registry, store, t, ui, glossary, detours, openGlossary, openDetour, announce }), [locale, mode, registry, store, t, ui, glossary, detours, openGlossary, openDetour, announce]);
+  return useMemo(() => ({ blocks, locale, mode, registry, store, t, ui, glossary, detours, openGlossary, openDetour, announce }), [blocks, locale, mode, registry, store, t, ui, glossary, detours, openGlossary, openDetour, announce]);
 }
 
 /** Renders a whole lesson: header, controls, the six stages and their blocks, glossary and detours. */
@@ -45,11 +45,14 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
     setAnnouncement("");
     requestAnimationFrame(() => setAnnouncement(m));
   }, []);
-  const scope = useScope({ locale, mode, registry, strings: lesson.strings, storageKey: key, glossary: localGlossary, detours, openGlossary, openDetour: setDetourId, announce });
+  const blocks = useMemo(() => lesson.stages.flatMap((s) => s.blocks), [lesson]);
+  const scope = useScope({ blocks, locale, mode, registry, strings: lesson.strings, storageKey: key, glossary: localGlossary, detours, openGlossary, openDetour: setDetourId, announce });
   const { store, t, ui } = scope;
   const state = useLessonState(store);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    setHydrated(true);
     if (!recorded.has(key)) {
       recorded.add(key);
       store.recordVisit();
@@ -82,7 +85,7 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
 
   return (
     <EngineContext.Provider value={scope}>
-      <article className="lm-lesson" lang={locale} data-mode={mode} aria-labelledby={titleId}>
+      <article className="lm-lesson" lang={locale} data-mode={mode} aria-labelledby={titleId} data-hydrated={hydrated || undefined}>
         <header className="lm-lesson__header">
           {lesson.meta.subtitleKey ? <p className="lm-eyebrow">{ui("lesson.minutes", { n: lesson.meta.estimatedMinutes })}</p> : null}
           <h1 id={titleId} className="lm-lesson__title">{t.rich(lesson.meta.titleKey)}</h1>
@@ -310,7 +313,7 @@ function DetourDialog({ detourId, parentKey, onClose }: { detourId: string | nul
 
 function DetourBody({ detour, parentKey, titleId, onClose }: { detour: Detour; parentKey: string; titleId: string; onClose: () => void }) {
   const parent = useEngine();
-  const scope = useScope({ ...parent, strings: detour.strings, storageKey: `${parentKey}:detour:${detour.id}` });
+  const scope = useScope({ ...parent, blocks: detour.blocks, strings: detour.strings, storageKey: `${parentKey}:detour:${detour.id}` });
   return (
     <EngineContext.Provider value={scope}>
       <div className="lm-dialog__head">
@@ -336,15 +339,16 @@ function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
   const [dismissed, setDismissed] = useState(false);
   const ui = useMemo(() => createUiT(locale, [engineMessages]), [locale]);
   const titleId = useId();
+  const blockStates = state.blocks;
   const recall = useMemo(() => {
     for (const s of lesson.stages)
       for (const b of s.blocks) {
         const p = registry.get(b.type, b.componentVersion);
-        const summary = p?.summarize?.(state.blocks[b.id], b.config, t, createUiT(locale, [registry.messages, engineMessages], b.type) as UiT);
+        const summary = p?.summarize?.(blockStates[b.id], b.config, t, createUiT(locale, [registry.messages, engineMessages], b.type) as UiT);
         if (summary) return { blockId: b.id, summary };
       }
     return null;
-  }, [lesson, registry, state.blocks, t, locale]);
+  }, [lesson, registry, blockStates, t, locale]);
   if (!recall || dismissed) return null;
   const jump = () => {
     const el = document.getElementById(`block-${recall.blockId}`);
@@ -363,5 +367,26 @@ function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
         <Button onClick={jump}>{ui("recall.jump")}</Button>
       </div>
     </section>
+  );
+}
+
+/**
+ * One block on its own, in a chosen mode, with its own saved state. Used by
+ * the component preview page so personal and classroom variants can be
+ * reviewed side by side in every locale.
+ */
+export function BlockPreview({ lesson, blockId, locale, mode, registry, glossary = {}, detours = {} }: Omit<LessonViewProps, "storageKey" | "mode"> & { blockId: string; mode: Mode }) {
+  const block = useMemo(() => lesson.stages.flatMap((s) => s.blocks).find((b) => b.id === blockId), [lesson, blockId]);
+  const blocks = useMemo(() => (block ? [block] : []), [block]);
+  const localGlossary = useMemo(() => ({ ...(glossary[FALLBACK_LOCALE] ?? {}), ...(glossary[locale] ?? {}) }), [glossary, locale]);
+  const noop = useCallback(() => {}, []);
+  const scope = useScope({ blocks, locale, mode, registry, strings: lesson.strings, storageKey: `lm:preview:${lesson.id}:${blockId}:${mode}`, glossary: localGlossary, detours, openGlossary: noop, openDetour: noop, announce: noop });
+  if (!block) return null;
+  return (
+    <EngineContext.Provider value={scope}>
+      <div className="lm-preview" data-mode={mode} lang={locale}>
+        <BlockFrame block={block} firstUse />
+      </div>
+    </EngineContext.Provider>
   );
 }

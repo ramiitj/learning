@@ -10,14 +10,28 @@
     "course": "ai-for-kids",
     "module": "m1",
     "issue": "issue-01",
-    "concepts": ["pattern", "example", "learning-from-examples"],
+    "concepts": [
+      "pattern",
+      "example",
+      "learning-from-examples"
+    ],
     "objectives": [
-      { "id": "o1", "textKey": "obj.o1" },
-      { "id": "o2", "textKey": "obj.o2" }
+      {
+        "id": "o1",
+        "textKey": "obj.o1"
+      },
+      {
+        "id": "o2",
+        "textKey": "obj.o2"
+      }
     ],
     "prerequisites": [],
-    "audiences": ["school-13-17"],
-    "curriculumTags": ["cbse-ai-class8-unit1"],
+    "audiences": [
+      "school-13-17"
+    ],
+    "curriculumTags": [
+      "cbse-ai-class8-unit1"
+    ],
     "estimatedMinutes": 35,
     "teacherGuide": "tg-ai-kids-m1",
     "parentPage": "pp-ai-kids-m1",
@@ -31,7 +45,11 @@
           "id": "b1",
           "type": "reveal",
           "componentVersion": "1.0",
-          "config": { "imageSet": "hook-two-labels", "textKey": "hook.text", "questionKey": "hook.question" }
+          "config": {
+            "imageSet": "hook-two-labels",
+            "textKey": "hook.text",
+            "questionKey": "hook.question"
+          }
         }
       ]
     },
@@ -44,12 +62,18 @@
           "componentVersion": "1.0",
           "config": {
             "promptKey": "predict.prompt",
-            "choices": ["predict.c1", "predict.c2", "predict.c3"],
+            "choices": [
+              "predict.c1",
+              "predict.c2",
+              "predict.c3"
+            ],
             "confidence": true,
             "revealKey": "predict.reveal",
             "showOthersGuesses": true
           },
-          "classroom": { "mode": "class-vote" }
+          "classroom": {
+            "mode": "class-vote"
+          }
         }
       ]
     },
@@ -60,16 +84,34 @@
           "id": "b3",
           "type": "sort",
           "componentVersion": "1.0",
-          "config": { "itemSet": "fruit-vs-vegetable-20", "groups": ["sort.g1", "sort.g2"], "instructionKey": "sort.instruction" },
-          "classroom": { "mode": "vote-per-item" },
-          "detours": ["pattern"],
-          "glossaryTerms": ["example"]
+          "config": {
+            "itemSet": "fruit-vs-vegetable-20",
+            "groups": [
+              "sort.g1",
+              "sort.g2"
+            ],
+            "instructionKey": "sort.instruction"
+          },
+          "classroom": {
+            "mode": "vote-per-item"
+          },
+          "detours": [
+            "pattern"
+          ],
+          "glossaryTerms": [
+            "example"
+          ]
         },
         {
           "id": "b4",
           "type": "train-classifier",
           "componentVersion": "1.0",
-          "config": { "trainingFrom": "b3", "testSet": "fruit-vs-vegetable-new-8", "showConfidence": true, "explainKey": "train.explain" }
+          "config": {
+            "trainingFrom": "b3",
+            "testSet": "fruit-vs-vegetable-new-8",
+            "showConfidence": true,
+            "explainKey": "train.explain"
+          }
         }
       ]
     },
@@ -85,12 +127,21 @@
             "concept": "learning-from-examples",
             "sourceKey": "an1.source",
             "mappings": [
-              { "sourceKey": "an1.m1s", "targetKey": "an1.m1t" },
-              { "sourceKey": "an1.m2s", "targetKey": "an1.m2t" }
+              {
+                "sourceKey": "an1.m1s",
+                "targetKey": "an1.m1t"
+              },
+              {
+                "sourceKey": "an1.m2s",
+                "targetKey": "an1.m2t"
+              }
             ],
             "breakPointKey": "an1.break"
           },
-          "glossaryTerms": ["model", "training"]
+          "glossaryTerms": [
+            "model",
+            "training"
+          ]
         }
       ]
     },
@@ -101,7 +152,12 @@
           "id": "b6",
           "type": "break-it",
           "componentVersion": "1.0",
-          "config": { "challengeKey": "break.challenge", "target": "b4", "allowRelabel": true, "reflectKey": "break.reflect" }
+          "config": {
+            "challengeKey": "break.challenge",
+            "target": "b4",
+            "allowRelabel": true,
+            "reflectKey": "break.reflect"
+          }
         }
       ]
     },
@@ -112,24 +168,66 @@
           "id": "b7",
           "type": "explain-back",
           "componentVersion": "1.0",
-          "config": { "mode": "own-analogy", "promptKey": "eb.prompt", "breakPointPromptKey": "eb.break" }
+          "config": {
+            "mode": "own-analogy",
+            "promptKey": "eb.prompt",
+            "breakPointPromptKey": "eb.break"
+          }
         },
         {
           "id": "b8",
           "type": "takeaway",
           "componentVersion": "1.0",
-          "config": { "cardKey": "take.card", "includes": ["b4-model-summary", "b7-analogy"] }
+          "config": {
+            "cardKey": "take.card",
+            "includes": [
+              "b4-model-summary",
+              "b7-analogy"
+            ]
+          }
         }
       ]
     }
   ],
   "checks": {
     "pre": [
-      { "id": "pre1", "objective": "o1", "promptKey": "pre1.q", "options": ["pre1.a", "pre1.b", "pre1.c"], "answer": "pre1.b" }
+      {
+        "id": "pre1",
+        "objective": "o1",
+        "promptKey": "pre1.q",
+        "options": [
+          "pre1.a",
+          "pre1.b",
+          "pre1.c"
+        ],
+        "answer": "pre1.b"
+      }
     ],
     "post": [
-      { "id": "post1", "objective": "o1", "promptKey": "post1.q", "options": ["post1.a", "post1.b", "post1.c"], "answer": "post1.b", "feedbackKey": "post1.fb" },
-      { "id": "post2", "objective": "o2", "promptKey": "post2.q", "options": ["post2.a", "post2.b", "post2.c"], "answer": "post2.c", "feedbackKey": "post2.fb" }
+      {
+        "id": "post1",
+        "objective": "o1",
+        "promptKey": "post1.q",
+        "options": [
+          "post1.a",
+          "post1.b",
+          "post1.c"
+        ],
+        "answer": "post1.b",
+        "feedbackKey": "post1.fb"
+      },
+      {
+        "id": "post2",
+        "objective": "o2",
+        "promptKey": "post2.q",
+        "options": [
+          "post2.a",
+          "post2.b",
+          "post2.c"
+        ],
+        "answer": "post2.c",
+        "feedbackKey": "post2.fb"
+      }
     ]
   },
   "strings": {
@@ -176,5 +274,9 @@
       "post2.fb": "A machine cannot tell good examples from bad ones. It learns from what it gets."
     }
   },
-  "localeStatus": { "en": "draft", "hi": "missing", "REGIONAL": "missing" }
+  "localeStatus": {
+    "en": "draft",
+    "hi": "missing",
+    "te": "missing"
+  }
 }

@@ -1,0 +1,36 @@
+{
+  "site": {
+    "name": "Learning Magazine",
+    "tagline": "Ideas you explore, not lessons you sit through.",
+    "skip": "Skip to the main content",
+    "language": "Language",
+    "cover": "Cover"
+  },
+  "cover": {
+    "issue": "Issue 1 · AI for Kids",
+    "headline": "Can a machine learn from you?",
+    "dek": "Teach one, fool one, and find out what it really learned. Every page asks you to guess, build or try something.",
+    "open": "Open the story",
+    "classroom": "Run it with a class",
+    "minutes": "{n, plural, one {# minute} other {# minutes}}",
+    "scripts": "Read it in English, हिन्दी or తెలుగు.",
+    "preview": "Component preview"
+  },
+  "lesson": {
+    "personal": "Personal mode",
+    "classroom": "Classroom mode",
+    "modeLabel": "Mode"
+  },
+  "preview": {
+    "title": "Component preview",
+    "intro": "Every interaction component, in personal and classroom mode. Use this page to review components in each language.",
+    "personal": "Personal",
+    "classroom": "Classroom",
+    "contents": "Components"
+  },
+  "footer": {
+    "transparency": "Lessons are made with AI assistance and reviewed and approved by the creator. Translations are reviewed by native speakers before they are published.",
+    "privacy": "No personal information is collected. What you make stays on this device.",
+    "offline": "Ready to use offline."
+  }
+}

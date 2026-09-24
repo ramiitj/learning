@@ -20,7 +20,7 @@ Each stage contains **blocks**. A block has a `type` (a registered component), a
 
 ## Localisation
 
-All learner-facing text lives in a `strings` object keyed by locale (`en`, `hi`, and the `REGIONAL` code), and blocks reference strings by key. A lesson cannot be published in a locale until every key used by its blocks has a reviewed string in that locale. Terms link to the per-locale glossary.
+All learner-facing text lives in a `strings` object keyed by locale (`en`, `hi` and `te`), and blocks reference strings by key. A lesson cannot be published in a locale until every key used by its blocks has a reviewed string in that locale. Terms link to the per-locale glossary.
 
 ## Analogy blocks
 

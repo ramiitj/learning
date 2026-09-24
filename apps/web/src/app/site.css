@@ -1,0 +1,51 @@
+/* Site chrome: header, cover, footer, preview. Tokens only. */
+
+.site-skip {
+  position: absolute; inset-inline-start: var(--space-3); inset-block-start: -100px; z-index: 100;
+  background: var(--color-accent); color: var(--color-accent-ink); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
+}
+.site-skip:focus { inset-block-start: var(--space-3); }
+
+.site-header {
+  display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-4); border-block-end: 1px solid var(--color-border);
+}
+.site-brand { font-weight: 800; font-size: var(--text-h3); color: var(--color-ink); text-decoration: none; letter-spacing: -0.01em; }
+.site-lang ul { display: flex; flex-wrap: wrap; gap: var(--space-1); list-style: none; margin: 0; padding: 0; }
+.site-lang a {
+  display: inline-flex; align-items: center; min-block-size: var(--target-min); padding: 0 var(--space-3);
+  border-radius: var(--radius-pill); color: var(--color-ink); text-decoration: none; font-weight: 600;
+}
+.site-lang a[aria-current] { background: var(--color-ink); color: var(--color-bg); }
+
+main:focus { outline: none; }
+a { color: var(--color-accent); text-underline-offset: 0.2em; }
+
+.site-footer {
+  max-inline-size: var(--measure); margin: var(--space-8) auto 0; padding: var(--space-5) var(--space-4) var(--space-7);
+  border-block-start: 1px solid var(--color-border); font-size: var(--text-small); color: var(--color-ink-muted);
+}
+.site-offline:empty { display: none; }
+
+.cover { max-inline-size: 64rem; margin-inline: auto; padding: var(--space-7) var(--space-4); }
+.cover__hero { padding-block: var(--space-6) var(--space-7); border-block-end: 3px solid var(--color-ink); margin-block-end: var(--space-6); }
+.cover__headline { font-size: clamp(2.6rem, 1.4rem + 6vw, 5.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; max-inline-size: 14ch; }
+:lang(hi) .cover__headline, :lang(te) .cover__headline { letter-spacing: 0; line-height: var(--leading-tight); max-inline-size: 18ch; }
+.cover__dek { font-size: var(--text-h3); max-inline-size: 36rem; }
+.cover__scripts { color: var(--color-ink-muted); }
+.cover__stories { list-style: none; padding: 0; margin: 0 0 var(--space-6); display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+.cover__story article { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--elevation-1); block-size: 100%; }
+.cover__story h2 { font-size: var(--text-h2); }
+
+.lesson-page__mode { display: flex; gap: var(--space-2); justify-content: center; padding: var(--space-3) var(--space-4) 0; flex-wrap: wrap; }
+.lesson-page__mode a { display: inline-flex; align-items: center; min-block-size: var(--target-min); padding: 0 var(--space-3); border-radius: var(--radius-pill); font-size: var(--text-small); font-weight: 600; }
+.lesson-page__mode a[aria-current] { background: var(--color-accent-soft); color: var(--color-ink); text-decoration: none; }
+body:has(.lesson-page[data-mode="classroom"]) { background: #fff; }
+
+.preview { max-inline-size: 90rem; margin-inline: auto; padding: var(--space-6) var(--space-4); }
+.preview__toc { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; }
+.preview__toc a { display: inline-flex; min-block-size: var(--target-min); align-items: center; padding: 0 var(--space-3); border: 1px solid var(--color-border-strong); border-radius: var(--radius-pill); }
+.preview__component { margin-block: var(--space-8); padding-block-start: var(--space-5); border-block-start: 3px solid var(--color-ink); }
+.preview__pair { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr)); align-items: start; }
+.lm-preview { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); }
+.lm-preview[data-mode="classroom"] { --text-body: max(22px, 1.1vw); --text-h3: max(26px, 1.4vw); --text-small: max(18px, 0.95vw); }

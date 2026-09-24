@@ -3,8 +3,8 @@
   "locales": [
     { "code": "en", "name": "English", "script": "Latn", "direction": "ltr", "font": "Noto Sans", "reviewRequired": false },
     { "code": "hi", "name": "हिन्दी", "script": "Deva", "direction": "ltr", "font": "Noto Sans Devanagari", "reviewRequired": true },
-    { "code": "REGIONAL", "name": "TO BE CHOSEN", "script": "TBD", "direction": "ltr", "font": "Noto Sans (matching script)", "reviewRequired": true }
+    { "code": "te", "name": "తెలుగు", "script": "Telu", "direction": "ltr", "font": "Noto Sans Telugu", "reviewRequired": true }
   ],
   "bilingualMode": true,
-  "note": "Replace REGIONAL with the chosen language's BCP-47 code (for example te, ta, bn, mr) and script."
+  "note": "Telugu (te) chosen as the third launch language on 2026-09-24; see docs/DECISIONS.md."
 }
