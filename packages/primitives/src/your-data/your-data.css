@@ -1,0 +1,43 @@
+/* your-data primitive: token-driven, logical properties, tolerant of text expansion. */
+
+.lm-your-data__input {
+  flex: 1 1 12rem;
+  min-block-size: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.lm-your-data__items {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.lm-your-data__items li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--target-min);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+}
+
+.lm-your-data__textarea {
+  inline-size: 100%;
+  min-block-size: 8rem;
+  padding: var(--space-3);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  resize: vertical;
+}
