@@ -18,6 +18,8 @@ describe("primitive registry", () => {
     it(`${p.type}: English interface strings avoid the constitution's banned words`, () => {
       const text = Object.values(p.messages.en ?? {}).join(" ");
       expect(text).not.toMatch(/\b(obviously|simply|clearly|just|incorrect|wrong)\b|it's easy to see/i);
+      // Article 11: no invented claims about what other people guess or do.
+      expect(text).not.toMatch(/many people|most people/i);
     });
   }
 });

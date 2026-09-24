@@ -46,7 +46,7 @@ describe("sort", () => {
     await userEvent.click(screen.getByRole("button", { name: /Potato/ }));
     await userEvent.click(screen.getByRole("button", { name: "Put it in Fruit" }));
     expect(screen.getByText(strings.reveal)).toBeInTheDocument();
-    expect(screen.getByText("You put Mango in Vegetable. Many people would put it in Fruit.")).toBeInTheDocument();
+    expect(screen.getByText("You put Mango in Vegetable. The lesson’s own grouping puts it in Fruit: worth a second look.")).toBeInTheDocument();
     expect(container.textContent).not.toMatch(/incorrect|wrong/i);
   });
 
@@ -61,7 +61,7 @@ describe("sort", () => {
     const placedMango = screen.getByRole("button", { name: /Mango/ });
     await userEvent.click(placedMango);
     await userEvent.click(screen.getByRole("button", { name: "Put it in Fruit" }));
-    expect(screen.queryByText("You put Mango in Vegetable. Many people would put it in Fruit.")).not.toBeInTheDocument();
+    expect(screen.queryByText("You put Mango in Vegetable. The lesson’s own grouping puts it in Fruit: worth a second look.")).not.toBeInTheDocument();
   });
 
   it("lets a placed item go back to the tray", async () => {

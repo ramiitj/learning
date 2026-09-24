@@ -7,7 +7,7 @@ export const messages = {
     workingHeading: "How this is worked out",
     outputFallback: "{label}: {value}",
     predictionMatches: "The version you picked did come out higher. Notice what made the difference.",
-    predictionDiffers: "The other version came out higher. Many people guess this way; the difference is the interesting part.",
+    predictionDiffers: "The other version came out higher. What did you expect to matter, and what mattered instead?",
     summary: "You compared {a} ({aOutput}) and {b} ({bOutput})",
   },
   hi: {
@@ -18,7 +18,7 @@ export const messages = {
     workingHeading: "यह इस तरह निकाला गया है",
     outputFallback: "{label}: {value}",
     predictionMatches: "आपने जो संस्करण चुना था वही ज़्यादा निकला। ध्यान दें कि फ़र्क किस वजह से आया।",
-    predictionDiffers: "दूसरा संस्करण ज़्यादा निकला। बहुत से लोग ऐसा ही अनुमान लगाते हैं; यही फ़र्क दिलचस्प है।",
+    predictionDiffers: "दूसरा रूप ज़्यादा आया। आपको क्या लगा था कि किस बात से फ़र्क पड़ेगा, और असल में किससे पड़ा?",
     summary: "आपने {a} ({aOutput}) और {b} ({bOutput}) की तुलना की",
   },
   te: {
@@ -29,7 +29,7 @@ export const messages = {
     workingHeading: "ఇది ఇలా లెక్కించబడింది",
     outputFallback: "{label}: {value}",
     predictionMatches: "మీరు ఎంచుకున్న వెర్షనే ఎక్కువగా వచ్చింది. తేడాకు కారణమేమిటో గమనించండి.",
-    predictionDiffers: "మరో వెర్షన్ ఎక్కువగా వచ్చింది. చాలామంది ఇలాగే అంచనా వేస్తారు; ఆ తేడాయే ఆసక్తికరం.",
+    predictionDiffers: "మరో రూపం ఎక్కువ వచ్చింది. ఏది తేడా చేస్తుందని మీరు అనుకున్నారు, నిజానికి ఏది చేసింది?",
     summary: "మీరు {a} ({aOutput}), {b} ({bOutput}) పోల్చారు",
   },
 };
