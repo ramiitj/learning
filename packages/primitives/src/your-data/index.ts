@@ -12,7 +12,7 @@ export const yourData: ComponentPlugin<YourDataConfig & Record<string, unknown>,
   summarize: (state, config) => {
     if (config.kind === "list") {
       if (!state?.items?.length) return null;
-      return state.items.map((i) => cleanInput(i, config.maxLength ?? 80)).join(", ");
+      return state.items.map((i) => cleanInput(i, config.maxLength ?? 80)).map((i) => `“${i}”`).join("  ·  ");
     }
     const text = cleanInput(state?.text ?? "", 1000);
     if (!text) return null;

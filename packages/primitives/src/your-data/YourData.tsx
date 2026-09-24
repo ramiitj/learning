@@ -78,7 +78,7 @@ function ListInput({ config, maxItems, maxLength, state, setState, t, ui }: Pick
   return (
     <div className="lm-your-data__list">
       <div className="lm-row">
-        <label className="lm-sr-only" htmlFor={inputId}>{config.placeholderKey ? t.text(config.placeholderKey) : ui("inputLabel")}</label>
+        <label className="lm-your-data__label" htmlFor={inputId}>{config.placeholderKey ? t.text(config.placeholderKey) : ui("inputLabel")}</label>
         <input
           id={inputId}
           type="text"
@@ -113,7 +113,7 @@ function TextInput({ maxLength, state, setState, ui }: Pick<Props, "state" | "se
   const textareaId = useId();
   return (
     <div className="lm-your-data__text">
-      <label htmlFor={textareaId} className="lm-sr-only">{ui("textLabel")}</label>
+      <label htmlFor={textareaId} className="lm-your-data__label">{ui("textLabel")}</label>
       <textarea
         id={textareaId}
         className="lm-your-data__textarea"

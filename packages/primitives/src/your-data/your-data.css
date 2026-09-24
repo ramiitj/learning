@@ -41,3 +41,5 @@
   font: inherit;
   resize: vertical;
 }
+
+.lm-your-data__label { display: block; font-weight: 700; margin-block-end: var(--space-2); }
