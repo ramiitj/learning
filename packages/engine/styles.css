@@ -261,4 +261,5 @@ p { margin: 0 0 var(--space-3); text-wrap: pretty; }
 }
 
 /* Any element that sets a mode repaints with that mode's tokens. */
-[data-mode] { background: var(--color-bg); color: var(--color-ink); }
+/* Any element that sets a mode re-applies its type too: inherited font-size is a computed value, so tokens redefined here would otherwise not reach plain text. */
+[data-mode] { background: var(--color-bg); color: var(--color-ink); font-size: var(--text-body); line-height: var(--leading-body); }

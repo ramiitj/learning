@@ -44,3 +44,22 @@ test("keyboard: skip link, then every control is reachable with a visible focus 
     expect(outline, `focus ring missing at tab stop ${i}`).not.toBe("none");
   }
 });
+
+test("classroom projection: every piece of text is at least 28px at 1080p (docs/06)", async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  for (const locale of ["en", "te"]) {
+    await page.goto(`/${locale}/lessons/every-primitive/classroom`);
+    await expect(page.locator("article[data-hydrated]")).toBeVisible();
+    const small = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const el of document.querySelectorAll<HTMLElement>(".lm-lesson *")) {
+        const hasText = [...el.childNodes].some((n) => n.nodeType === Node.TEXT_NODE && n.textContent!.trim());
+        if (!hasText || el.offsetParent === null || el.closest(".lm-sr-only")) continue;
+        const size = parseFloat(getComputedStyle(el).fontSize);
+        if (size < 28) out.push(`${size}px ${el.tagName.toLowerCase()}.${el.className} "${el.textContent!.trim().slice(0, 40)}"`);
+      }
+      return out;
+    });
+    expect(small, small.join("\n")).toEqual([]);
+  }
+});
