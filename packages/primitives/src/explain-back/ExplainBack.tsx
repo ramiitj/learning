@@ -20,6 +20,7 @@ const initial: ExplainBackState = {};
 const MAX_LEN = 600;
 
 export function ExplainBack({ config, state = initial, setState, t, ui }: Props) {
+  const focus = useFocusAfter<HTMLDivElement>(state.kept);
   const textId = useId();
   const breakId = useId();
 
@@ -39,7 +40,6 @@ export function ExplainBack({ config, state = initial, setState, t, ui }: Props)
   }
 
   const canKeep = config.mode === "own-analogy" ? !!state.text?.trim() && !!state.breakPoint?.trim() : !!state.text?.trim();
-  const focus = useFocusAfter<HTMLDivElement>(state.kept);
 
   return (
     <div className="lm-explain-back">

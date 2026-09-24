@@ -1,0 +1,29 @@
+/* Primitive styles. Each component owns its stylesheet; tokens only. */
+@import "./src/analogy/analogy.css";
+@import "./src/assemble/assemble.css";
+@import "./src/break-it/break-it.css";
+@import "./src/by-hand-then-automate/by-hand-then-automate.css";
+@import "./src/check/check.css";
+@import "./src/compare/compare.css";
+@import "./src/explain-back/explain-back.css";
+@import "./src/knob/knob.css";
+@import "./src/sort/sort.css";
+@import "./src/takeaway/takeaway.css";
+@import "./src/your-data/your-data.css";
+
+/* Shared primitive helpers used by reveal and predict. */
+.lm-small { font-size: var(--text-small); }
+.lm-stack { display: grid; gap: var(--space-3); }
+.lm-question { font-size: var(--text-h3); font-weight: 700; margin-block-start: var(--space-4); }
+.lm-prompt { font-size: var(--text-h3); }
+.lm-reveal__step { font-size: var(--text-body); padding-inline-start: var(--space-4); border-inline-start: 3px solid var(--color-accent); }
+.lm-reveal__step:focus { outline: none; }
+.lm-callout { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-weight: 600; margin: 0; }
+.lm-callout[data-tone="insight"] { background: var(--color-insight-soft); border-inline-start: 4px solid var(--color-insight); }
+.lm-callout[data-tone="warm"] { background: var(--color-warm-soft); border-inline-start: 4px solid var(--color-warm); }
+.lm-others { margin: 0; }
+.lm-others figcaption { font-weight: 700; margin-block-end: var(--space-2); }
+.lm-others ul { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
+.lm-others li { display: grid; grid-template-columns: 1fr auto; gap: var(--space-1) var(--space-3); }
+.lm-others li .lm-bar { grid-column: 1 / -1; }
+.lm-others li[data-mine] { font-weight: 700; }

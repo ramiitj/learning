@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { validateLesson } from "@lm/schema/validate";
+import Ajv2020 from "ajv/dist/2020.js";
 import { a11yViolations, renderBlock } from "../shared/test-utils";
 import { assemble } from "./index";
 
@@ -99,18 +99,15 @@ describe("assemble", () => {
   });
 
   it("satisfies its own configSchema and declares every string key it uses", () => {
-    const lesson = {
-      id: "assemble-contract-check",
-      schemaVersion: "1.0",
-      version: 1,
-      status: "draft" as const,
-      meta: { titleKey: "instr", subject: "test", concepts: [], objectives: [], prerequisites: [], audiences: ["school-13-17"], estimatedMinutes: 3 },
-      stages: [{ stage: "manipulate" as const, blocks: [{ ...block, componentVersion: "1.0" }] }],
-      checks: { pre: [], post: [] },
-      strings: { en: strings },
-      localeStatus: { en: "draft" as const },
-    };
-    const issues = validateLesson(lesson, { contracts: [assemble] });
-    expect(issues.filter((i) => i.check === "config" || i.check === "component")).toEqual([]);
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(assemble.configSchema);
+    expect(validate(block.config)).toBe(true);
+    expect(assemble.stringKeys(block.config)).toEqual(expect.arrayContaining(["instr", "s1", "s2", "s3", "success", "checked"]));
+  });
+
+  it("rejects a config with fewer than two pieces", () => {
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(assemble.configSchema);
+    expect(validate({ instructionKey: "instr", pieces: [{ id: "a", labelKey: "a" }] })).toBe(false);
   });
 });

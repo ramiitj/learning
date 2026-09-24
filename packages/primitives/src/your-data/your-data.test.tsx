@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { validateLesson } from "@lm/schema/validate";
+import Ajv2020 from "ajv/dist/2020.js";
 import { a11yViolations, renderBlock } from "../shared/test-utils";
 import { yourData } from "./index";
 
@@ -95,18 +95,16 @@ describe("your-data (text)", () => {
 
 describe("your-data contract", () => {
   it("satisfies its own configSchema and declares every string key it uses", () => {
-    const lesson = {
-      id: "your-data-contract-check",
-      schemaVersion: "1.0",
-      version: 1,
-      status: "draft" as const,
-      meta: { titleKey: "prompt", subject: "test", concepts: [], objectives: [], prerequisites: [], audiences: ["school-13-17"], estimatedMinutes: 3 },
-      stages: [{ stage: "manipulate" as const, blocks: [{ ...listBlock, componentVersion: "1.0" }] }],
-      checks: { pre: [], post: [] },
-      strings: { en: listStrings },
-      localeStatus: { en: "draft" as const },
-    };
-    const issues = validateLesson(lesson, { contracts: [yourData] });
-    expect(issues.filter((i) => i.check === "config" || i.check === "component")).toEqual([]);
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(yourData.configSchema);
+    expect(validate(listBlock.config)).toBe(true);
+    expect(validate(textBlock.config)).toBe(true);
+    expect(yourData.stringKeys(listBlock.config)).toEqual(expect.arrayContaining(["prompt", "ex1", "ex2"]));
+  });
+
+  it("rejects an unknown kind", () => {
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(yourData.configSchema);
+    expect(validate({ promptKey: "prompt", kind: "drawing" })).toBe(false);
   });
 });

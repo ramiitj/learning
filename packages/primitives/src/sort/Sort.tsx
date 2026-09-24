@@ -78,6 +78,8 @@ export function Sort({ block, config, state, setState, t, ui }: Props) {
     });
   };
 
+  const pickedPlaced = picked && placed[picked] ? items.find((i) => i.id === picked) : undefined;
+
   return (
     <div className="lm-sort">
       <p className="lm-lead">{t.rich(config.instructionKey)}</p>
@@ -103,12 +105,15 @@ export function Sort({ block, config, state, setState, t, ui }: Props) {
             ))}
           </ul>
         )}
+        {pickedPlaced ? (
+          <Button variant="quiet" onClick={() => returnToTray(pickedPlaced)}>{ui("backToTray", { item: t.text(pickedPlaced.labelKey) })}</Button>
+        ) : null}
       </section>
       <div className="lm-sort__groups">
         {config.groups.map((g) => {
           const here = items.filter((i) => placed[i.id] === g);
           return (
-            <SortGroup key={g} group={g} here={here} picked={picked} onPick={pick} onReturn={returnToTray} onPlace={placeInto} disabled={!picked} t={t} ui={ui} />
+            <SortGroup key={g} group={g} here={here} picked={picked} onPick={pick} onPlace={placeInto} disabled={!picked} t={t} ui={ui} />
           );
         })}
       </div>
@@ -117,12 +122,11 @@ export function Sort({ block, config, state, setState, t, ui }: Props) {
   );
 }
 
-function SortGroup({ group, here, picked, onPick, onReturn, onPlace, disabled, t, ui }: {
+function SortGroup({ group, here, picked, onPick, onPlace, disabled, t, ui }: {
   group: string;
   here: SortItem[];
   picked: string | undefined;
   onPick: (item: SortItem) => void;
-  onReturn: (item: SortItem) => void;
   onPlace: (group: string) => void;
   disabled: boolean;
   t: Props["t"];

@@ -1,5 +1,4 @@
 "use client";
-import { useId } from "react";
 import { Button, useFocusAfter, type BlockProps } from "@lm/engine";
 import { evaluate, initialValues, weightedSum, type ModelSpec, type Values } from "../shared/model";
 import type { KnobConfig } from "./contract";

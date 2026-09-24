@@ -1,0 +1,11 @@
+/* takeaway primitive: token-driven, logical properties, tolerant of text expansion. */
+
+.lm-takeaway__card { display: grid; gap: var(--space-3); }
+.lm-takeaway__title { font-size: var(--text-h3); }
+
+.lm-takeaway__list {
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+}

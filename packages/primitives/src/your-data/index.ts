@@ -1,4 +1,5 @@
 import type { ComponentPlugin } from "@lm/engine";
+import { cleanInput } from "../shared/strings";
 import { yourDataContract, type YourDataConfig } from "./contract";
 import { messages } from "./messages";
 import { YourData, type YourDataState } from "./YourData";
@@ -11,9 +12,9 @@ export const yourData: ComponentPlugin<YourDataConfig & Record<string, unknown>,
   summarize: (state, config) => {
     if (config.kind === "list") {
       if (!state?.items?.length) return null;
-      return state.items.join(", ");
+      return state.items.map((i) => cleanInput(i, config.maxLength ?? 80)).join(", ");
     }
-    const text = state?.text?.trim();
+    const text = cleanInput(state?.text ?? "", 1000);
     if (!text) return null;
     return text.length > 120 ? `${text.slice(0, 119)}…` : text;
   },

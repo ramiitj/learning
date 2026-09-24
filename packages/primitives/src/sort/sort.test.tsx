@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { validateLesson } from "@lm/schema/validate";
+import Ajv2020 from "ajv/dist/2020.js";
 import { a11yViolations, renderBlock } from "../shared/test-utils";
 import { sort } from "./index";
 
@@ -64,6 +64,16 @@ describe("sort", () => {
     expect(screen.queryByText("You put Mango in Vegetable. Many people would put it in Fruit.")).not.toBeInTheDocument();
   });
 
+  it("lets a placed item go back to the tray", async () => {
+    renderBlock(sort, block, strings);
+    await userEvent.click(screen.getByRole("button", { name: /Mango/ }));
+    await userEvent.click(screen.getByRole("button", { name: "Put it in Fruit" }));
+    await userEvent.click(screen.getByRole("button", { name: /Mango/ }));
+    await userEvent.click(screen.getByRole("button", { name: "Put Mango back in the tray" }));
+    const tray = screen.getByRole("region", { name: "Not yet sorted" });
+    expect(within(tray).getByRole("button", { name: /Mango/ })).toBeInTheDocument();
+  });
+
   it("can be undone", async () => {
     renderBlock(sort, block, strings);
     await userEvent.click(screen.getByRole("button", { name: /Mango/ }));
@@ -99,18 +109,15 @@ describe("sort", () => {
   });
 
   it("satisfies its own configSchema and declares every string key it uses", () => {
-    const lesson = {
-      id: "sort-contract-check",
-      schemaVersion: "1.0",
-      version: 1,
-      status: "draft" as const,
-      meta: { titleKey: "instr", subject: "test", concepts: [], objectives: [], prerequisites: [], audiences: ["school-13-17"], estimatedMinutes: 3 },
-      stages: [{ stage: "manipulate" as const, blocks: [{ ...block, componentVersion: "1.0" }] }],
-      checks: { pre: [], post: [] },
-      strings: { en: strings },
-      localeStatus: { en: "draft" as const },
-    };
-    const issues = validateLesson(lesson, { contracts: [sort] });
-    expect(issues.filter((i) => i.check === "config" || i.check === "component")).toEqual([]);
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(sort.configSchema);
+    expect(validate(block.config)).toBe(true);
+    expect(sort.stringKeys(block.config)).toEqual(expect.arrayContaining(["instr", "fruit", "veg", "mango", "potato", "reveal"]));
+  });
+
+  it("rejects a config with neither items nor an itemSet", () => {
+    const ajv = new Ajv2020({ strict: false });
+    const validate = ajv.compile(sort.configSchema);
+    expect(validate({ instructionKey: "instr", groups: ["fruit", "veg"] })).toBe(false);
   });
 });
