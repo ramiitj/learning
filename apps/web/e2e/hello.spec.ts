@@ -5,9 +5,9 @@ import { expect, test } from "@playwright/test";
  * rendering correctly.
  */
 const expected = {
-  en: { headline: "Can a machine learn from you?", font: "Noto Sans", sample: "Can" },
-  hi: { headline: "क्या कोई मशीन आपसे सीख सकती है?", font: "Noto Sans Devanagari", sample: "मशीन" },
-  te: { headline: "ఒక యంత్రం మీ నుండి నేర్చుకోగలదా?", font: "Noto Sans Telugu", sample: "యంత్రం" },
+  en: { headline: "Can a machine learn from you?", fonts: ["Noto Sans"] },
+  hi: { headline: "क्या कोई मशीन आपसे सीख सकती है?", fonts: ["Noto Sans"] },
+  te: { headline: "ఒక యంత్రం మీ నుండి నేర్చుకోగలదా?", fonts: ["Noto Sans Telugu", "Noto Sans"] },
 } as const;
 
 test("the root redirects to a locale", async ({ page }) => {
@@ -16,20 +16,25 @@ test("the root redirects to a locale", async ({ page }) => {
 });
 
 for (const [locale, e] of Object.entries(expected)) {
-  test(`cover renders in ${locale} with the ${e.font} font`, async ({ page }, info) => {
+  test(`cover renders in ${locale} with self-hosted Noto fonts (${e.fonts.join(", ")})`, async ({ page }, info) => {
     await page.goto(`/${locale}`);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     const headline = page.getByRole("heading", { level: 1 });
     await expect(headline).toHaveText(e.headline);
 
-    // The script's Noto face must actually be loaded and used for the glyphs (not a system fallback).
-    const loaded = await page.evaluate(async () => {
-      await document.fonts.ready;
-      return [...document.fonts].filter((f) => f.status === "loaded").map((f) => f.family);
-    });
-    const family = e.font.replace(/ /g, "_");
-    expect(loaded.some((f) => f.includes(family) || f.includes(e.font)), `loaded fonts: ${loaded.join(", ")}`).toBe(true);
-    expect(await page.evaluate(([sample]) => document.fonts.check(`16px ${getComputedStyle(document.querySelector("h1")!).fontFamily}`, sample), [e.sample])).toBe(true);
+    // Every glyph of the headline must be drawn by a self-hosted Noto face, never a system fallback.
+    await page.evaluate(() => document.fonts.ready);
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("DOM.enable");
+    await cdp.send("CSS.enable");
+    const { root } = await cdp.send("DOM.getDocument");
+    const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: "h1" });
+    const { fonts } = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+    const summary = fonts.map((f) => `${f.familyName} (${f.isCustomFont ? "web font" : "system"}, ${f.glyphCount} glyphs)`).join("; ");
+    expect(fonts.every((f) => f.isCustomFont && (e.fonts as readonly string[]).includes(f.familyName)), summary).toBe(true);
+    // The script's own face must carry the bulk of the glyphs (spaces and "?" may come from Latin).
+    const main = fonts.reduce((a, b) => (b.glyphCount > a.glyphCount ? b : a));
+    expect(main.familyName, summary).toBe(e.fonts[0]);
 
     await info.attach(`cover-${locale}`, { body: await page.screenshot({ fullPage: true }), contentType: "image/png" });
   });

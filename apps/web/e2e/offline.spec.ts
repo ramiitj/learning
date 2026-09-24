@@ -16,8 +16,8 @@ test("a lesson works offline after the first visit", async ({ page, context }) =
   await expect(page.getByText("No person reads them first.")).toBeVisible();
 
   // Still interactive offline: make a prediction.
-  await page.getByLabel("It gives each message a score from clues, and blocks it if the score is high enough.").check();
-  await page.getByLabel("Fairly sure").check();
+  await page.getByText("It gives each message a score from clues, and blocks it if the score is high enough.").click();
+  await page.getByRole("radio", { name: "Fairly sure" }).click();
   await page.getByRole("button", { name: "Lock in my guess" }).click();
   await expect(page.getByText("Your guess matches what happens.")).toBeVisible();
   await context.setOffline(false);

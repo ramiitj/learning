@@ -11,7 +11,7 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-ink);
-  font-family: var(--font-latin, "Noto Sans"), var(--font-deva, "Noto Sans Devanagari"), var(--font-telu, "Noto Sans Telugu"), system-ui, sans-serif;
+  font-family: var(--font-latin, "Noto Sans"), var(--font-telu, "Noto Sans Telugu"), system-ui, sans-serif;
   font-size: var(--text-body);
   line-height: var(--leading-body);
   overflow-wrap: break-word;
@@ -104,14 +104,20 @@ p { margin: 0 0 var(--space-3); text-wrap: pretty; }
 
 /* ---------- Toolbar ---------- */
 
+/* Sticky only where there is room: on a phone the wrapped toolbar would cover the lesson. */
 .lm-toolbar {
-  position: sticky; inset-block-start: 0; z-index: 5;
+  position: static; z-index: 5;
   display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: center; justify-content: space-between;
   padding: var(--space-2) var(--space-3);
   margin-inline: calc(-1 * var(--space-3));
   background: color-mix(in srgb, var(--color-bg) 92%, transparent);
   backdrop-filter: blur(8px);
   border-block-end: 1px solid var(--color-border);
+}
+@media (min-width: 48rem) {
+  .lm-toolbar { position: sticky; inset-block-start: 0; }
+  /* Keep focused and scrolled-to elements clear of the sticky toolbar (WCAG 2.2, 2.4.11). */
+  html:has(.lm-toolbar) { scroll-padding-block-start: 6rem; }
 }
 .lm-toolbar__actions { display: flex; flex-wrap: wrap; gap: var(--space-1); }
 .lm-depth { border: 0; padding: 0; margin: 0; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
