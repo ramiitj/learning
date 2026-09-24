@@ -1,0 +1,32 @@
+{
+  "profiles": [
+    {
+      "id": "school-13-17",
+      "label": "School learners, classes 8-12",
+      "status": "active",
+      "readingLevel": "grade 6-8 for core text",
+      "maxSentenceWords": 18,
+      "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+      "tone": "warm, curious, direct, never condescending",
+      "theme": "school",
+      "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+      "defaultDepth": "core",
+      "analogyVariants": "school",
+      "checks": ["act-density", "grammar", "undefined-terms", "banned-phrases", "analogy-completeness", "anthropomorphism", "reading-level", "first-use-help", "media-rules", "locale-completeness", "checks-present", "ending"]
+    },
+    {
+      "id": "adult-general",
+      "label": "Adult learners",
+      "status": "designed, not active in v1",
+      "readingLevel": "plain adult English",
+      "maxSentenceWords": 24,
+      "pacing": "learner-controlled; relevance stated up front",
+      "tone": "warm, direct, respectful of experience",
+      "theme": "editorial",
+      "gamification": "none; competence and useful outcomes",
+      "defaultDepth": "core",
+      "analogyVariants": "adult",
+      "checks": ["act-density", "grammar", "undefined-terms", "banned-phrases", "analogy-completeness", "reading-level", "first-use-help", "media-rules", "locale-completeness", "checks-present", "ending"]
+    }
+  ]
+}

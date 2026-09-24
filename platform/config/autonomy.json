@@ -1,0 +1,6 @@
+{
+  "alwaysAsk": ["publish", "unpublish", "delete", "production-deploy", "schema-change", "new-component", "new-agent", "permission-change", "constitution-amendment", "learner-data-change", "spend-over-budget"],
+  "actAndNotify": ["draft-revision", "analogy-bank-addition", "glossary-addition", "validation-fix"],
+  "autonomous": ["validation-run", "simulated-review", "test-run", "benchmark-run", "analytics-report"],
+  "digest": "daily"
+}

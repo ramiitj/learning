@@ -1,0 +1,10 @@
+{
+  "note": "Pin exact model IDs. Verify current IDs at https://docs.claude.com before deployment. Upgrade only after the benchmark suite passes.",
+  "tiers": {
+    "most-capable": { "model": "claude-opus-5-5", "use": ["editor-in-chief planning", "curriculum and instructional design", "learning experience design", "conflict resolution"] },
+    "balanced": { "model": "claude-sonnet-5", "use": ["analogy", "localisation", "educator enablement", "novice learner panel", "accuracy and safety review"] },
+    "fast": { "model": "claude-haiku-4-5-20251001", "use": ["routine checks", "classification", "feedback triage", "string extraction"] }
+  },
+  "monthlyBudgetUSD": null,
+  "alertAtFraction": 0.8
+}

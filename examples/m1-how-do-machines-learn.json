@@ -1,0 +1,180 @@
+{
+  "id": "ai-kids-m1-how-do-machines-learn",
+  "schemaVersion": "1.0",
+  "version": 1,
+  "status": "draft",
+  "meta": {
+    "titleKey": "title",
+    "subtitleKey": "subtitle",
+    "subject": "ai",
+    "course": "ai-for-kids",
+    "module": "m1",
+    "issue": "issue-01",
+    "concepts": ["pattern", "example", "learning-from-examples"],
+    "objectives": [
+      { "id": "o1", "textKey": "obj.o1" },
+      { "id": "o2", "textKey": "obj.o2" }
+    ],
+    "prerequisites": [],
+    "audiences": ["school-13-17"],
+    "curriculumTags": ["cbse-ai-class8-unit1"],
+    "estimatedMinutes": 35,
+    "teacherGuide": "tg-ai-kids-m1",
+    "parentPage": "pp-ai-kids-m1",
+    "provenance": "exemplar written for the build specification; not yet reviewed"
+  },
+  "stages": [
+    {
+      "stage": "hook",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": { "imageSet": "hook-two-labels", "textKey": "hook.text", "questionKey": "hook.question" }
+        }
+      ]
+    },
+    {
+      "stage": "predict",
+      "blocks": [
+        {
+          "id": "b2",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "predict.prompt",
+            "choices": ["predict.c1", "predict.c2", "predict.c3"],
+            "confidence": true,
+            "revealKey": "predict.reveal",
+            "showOthersGuesses": true
+          },
+          "classroom": { "mode": "class-vote" }
+        }
+      ]
+    },
+    {
+      "stage": "manipulate",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "sort",
+          "componentVersion": "1.0",
+          "config": { "itemSet": "fruit-vs-vegetable-20", "groups": ["sort.g1", "sort.g2"], "instructionKey": "sort.instruction" },
+          "classroom": { "mode": "vote-per-item" },
+          "detours": ["pattern"],
+          "glossaryTerms": ["example"]
+        },
+        {
+          "id": "b4",
+          "type": "train-classifier",
+          "componentVersion": "1.0",
+          "config": { "trainingFrom": "b3", "testSet": "fruit-vs-vegetable-new-8", "showConfidence": true, "explainKey": "train.explain" }
+        }
+      ]
+    },
+    {
+      "stage": "explain",
+      "blocks": [
+        {
+          "id": "b5",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "bankId": "child-learns-dog",
+            "concept": "learning-from-examples",
+            "sourceKey": "an1.source",
+            "mappings": [
+              { "sourceKey": "an1.m1s", "targetKey": "an1.m1t" },
+              { "sourceKey": "an1.m2s", "targetKey": "an1.m2t" }
+            ],
+            "breakPointKey": "an1.break"
+          },
+          "glossaryTerms": ["model", "training"]
+        }
+      ]
+    },
+    {
+      "stage": "break-it",
+      "blocks": [
+        {
+          "id": "b6",
+          "type": "break-it",
+          "componentVersion": "1.0",
+          "config": { "challengeKey": "break.challenge", "target": "b4", "allowRelabel": true, "reflectKey": "break.reflect" }
+        }
+      ]
+    },
+    {
+      "stage": "transfer-reflect",
+      "blocks": [
+        {
+          "id": "b7",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": { "mode": "own-analogy", "promptKey": "eb.prompt", "breakPointPromptKey": "eb.break" }
+        },
+        {
+          "id": "b8",
+          "type": "takeaway",
+          "componentVersion": "1.0",
+          "config": { "cardKey": "take.card", "includes": ["b4-model-summary", "b7-analogy"] }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pre": [
+      { "id": "pre1", "objective": "o1", "promptKey": "pre1.q", "options": ["pre1.a", "pre1.b", "pre1.c"], "answer": "pre1.b" }
+    ],
+    "post": [
+      { "id": "post1", "objective": "o1", "promptKey": "post1.q", "options": ["post1.a", "post1.b", "post1.c"], "answer": "post1.b", "feedbackKey": "post1.fb" },
+      { "id": "post2", "objective": "o2", "promptKey": "post2.q", "options": ["post2.a", "post2.b", "post2.c"], "answer": "post2.c", "feedbackKey": "post2.fb" }
+    ]
+  },
+  "strings": {
+    "en": {
+      "title": "How do machines learn?",
+      "subtitle": "Teach one yourself and find out.",
+      "obj.o1": "Explain that a machine learns patterns from examples, not from rules someone writes.",
+      "obj.o2": "Recognise that confusing examples make a confused machine.",
+      "hook.text": "A computer looked at these two photos. It called the first one a mango. It called the second one a mango too. The second one is a yellow ball.",
+      "hook.question": "Nobody told the computer what a mango is. So how did it decide?",
+      "predict.prompt": "What do you think the computer used to decide?",
+      "predict.c1": "Someone wrote a rule for it: round and yellow means mango.",
+      "predict.c2": "It looked at lots of mango photos and noticed what they had in common.",
+      "predict.c3": "It searched the internet for the answer.",
+      "predict.reveal": "It learned from lots of examples. No one wrote a rule. Let's see how that works, by teaching one yourself.",
+      "sort.instruction": "Drag each picture into a group. You are the teacher now.",
+      "sort.g1": "Fruit",
+      "sort.g2": "Vegetable",
+      "train.explain": "The machine looked only at your examples. It found what the pictures in each group had in common. Now it is guessing about pictures it has never seen.",
+      "an1.source": "Think of a small child learning the word 'dog'. Nobody gives them a list of rules. They see many dogs, and someone says 'dog' each time.",
+      "an1.m1s": "The dogs the child sees",
+      "an1.m1t": "The examples you sorted",
+      "an1.m2s": "The idea of 'dog' forming in the child's mind",
+      "an1.m2t": "The pattern the machine found",
+      "an1.break": "Here the comparison stops working. A child needs a few dogs. A machine usually needs thousands of examples. And the child understands what a dog is. The machine has only found a pattern in pictures.",
+      "break.challenge": "Try this: move three fruits into the vegetable group. Then look at the machine's guesses again.",
+      "break.reflect": "What happened to its guesses? What does that tell you about where a machine's knowledge comes from?",
+      "eb.prompt": "Now you invent a comparison. What else in life do we learn from examples instead of rules?",
+      "eb.break": "Where does your comparison stop working?",
+      "take.card": "You trained a machine today. It learned only from the examples you gave it.",
+      "pre1.q": "How does a machine usually learn to recognise a mango?",
+      "pre1.a": "A programmer writes the rule 'yellow and round'.",
+      "pre1.b": "It studies many examples of mangoes.",
+      "pre1.c": "It already knows when it is made.",
+      "post1.q": "A machine is shown 1,000 photos labelled 'cat'. What is it learning?",
+      "post1.a": "The meaning of the word 'cat'.",
+      "post1.b": "A pattern shared by those photos.",
+      "post1.c": "A rule a person wrote about cats.",
+      "post1.fb": "It finds a pattern in the photos. It does not understand what a cat is.",
+      "post2.q": "Half the 'cat' photos were actually dogs. What happens?",
+      "post2.a": "The machine notices the mistakes and fixes them.",
+      "post2.b": "Nothing changes.",
+      "post2.c": "The machine gets confused, because it learns from whatever it is given.",
+      "post2.fb": "A machine cannot tell good examples from bad ones. It learns from what it gets."
+    }
+  },
+  "localeStatus": { "en": "draft", "hi": "missing", "REGIONAL": "missing" }
+}
