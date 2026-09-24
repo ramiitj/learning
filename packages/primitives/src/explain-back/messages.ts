@@ -1,0 +1,32 @@
+export const messages = {
+  en: {
+    howto: "Explain the idea back in your own words, or pick the explanation that fits best. You can change your mind before you keep it.",
+    yourComparison: "Your comparison",
+    yourExplanation: "Your explanation",
+    keep: "Keep my explanation",
+    change: "Change my explanation",
+    modelIntro: "Here is one way to say it, for comparison:",
+    discuss: "Discuss this with a partner.",
+    showBest: "Show the strongest explanation",
+  },
+  hi: {
+    howto: "इस विचार को अपने शब्दों में समझाएँ, या जो व्याख्या सबसे सही लगे उसे चुनें। रखने से पहले आप अपना मन बदल सकते हैं।",
+    change: "मेरी व्याख्या बदलें",
+    yourComparison: "आपकी तुलना",
+    yourExplanation: "आपकी व्याख्या",
+    keep: "मेरी व्याख्या रखें",
+    modelIntro: "तुलना के लिए, इसे कहने का एक तरीका यह है:",
+    discuss: "इस पर किसी साथी से चर्चा करें।",
+    showBest: "सबसे सटीक व्याख्या दिखाएँ",
+  },
+  te: {
+    howto: "ఈ ఆలోచనను మీ సొంత మాటల్లో వివరించండి, లేదా బాగా సరిపోయే వివరణను ఎంచుకోండి. ఉంచే ముందు మీ మనసు మార్చుకోవచ్చు.",
+    change: "నా వివరణను మార్చండి",
+    yourComparison: "మీ పోలిక",
+    yourExplanation: "మీ వివరణ",
+    keep: "నా వివరణను ఉంచండి",
+    modelIntro: "పోల్చి చూడటానికి, దీన్ని చెప్పే ఒక విధానం ఇది:",
+    discuss: "దీని గురించి ఒక భాగస్వామితో చర్చించండి.",
+    showBest: "బలమైన వివరణను చూపించండి",
+  },
+};

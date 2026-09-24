@@ -1,0 +1,50 @@
+.lm-explain-back__field {
+  display: grid;
+  gap: var(--space-1);
+  margin-block: var(--space-4);
+}
+
+.lm-explain-back__field label {
+  font-weight: 600;
+  font-size: var(--text-small);
+}
+
+.lm-explain-back__field textarea {
+  font: inherit;
+  min-block-size: 4.5rem;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  resize: vertical;
+}
+
+.lm-explain-back__field textarea:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.lm-explain-back__field textarea:disabled {
+  opacity: 0.75;
+}
+
+.lm-explain-back__kept {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: var(--space-3);
+}
+
+.lm-explain-back__modelIntro {
+  font-weight: 700;
+  margin-block-end: var(--space-1);
+}
+
+.lm-explain-back__prompt {
+  font-size: var(--text-h3);
+  margin-block-end: var(--space-2);
+}
+
+[data-mode="classroom"] .lm-explain-back__prompt {
+  font-size: var(--text-h1);
+}
