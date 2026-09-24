@@ -51,3 +51,8 @@
 [data-mode="classroom"] .lm-break-it__prompt {
   font-size: var(--text-h1);
 }
+
+.lm-break-it__cards { list-style: none; margin: var(--space-4) 0; padding: 0; display: grid; gap: var(--space-3); }
+.lm-break-it__card { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4); background: var(--color-surface); }
+.lm-break-it__label { font-weight: 700; }
+.lm-break-it__guess p { margin-block-end: var(--space-2); }

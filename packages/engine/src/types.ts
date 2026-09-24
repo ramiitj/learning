@@ -46,6 +46,8 @@ export interface ComponentPlugin<C extends BlockConfig = BlockConfig, S = unknow
    * and the recall warm-up. Returns null when nothing has been made yet.
    */
   summarize?: (state: S | undefined, config: C, t: LessonT, ui: UiT) => string | null;
+  /** Whether the first-use how-to hint applies to this config (default: always). */
+  howToApplies?: (config: C) => boolean;
 }
 
 // Plugins are heterogeneous; the registry stores them with erased generics.

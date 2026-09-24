@@ -5,6 +5,8 @@ import type { BreakItConfig } from "./contract";
 
 export interface BreakItState {
   tried: string[];
+  /** The learner's prediction for each attempt, made before seeing the result. */
+  guesses?: Record<string, "breaks" | "holds">;
   note?: string;
   reflection?: string;
 }
@@ -20,10 +22,11 @@ export function BreakIt({ config, state = initial, setState, t, ui }: Props) {
   const noteId = useId();
   const reflectId = useId();
 
-  const tryAttempt = (id: string) => {
+  const lastTried = state.tried[state.tried.length - 1];
+  const guessAttempt = (id: string, guess: "breaks" | "holds") => {
     if (state.tried.includes(id)) return;
     focus.arm();
-    setState({ ...state, tried: [...state.tried, id] });
+    setState({ ...state, tried: [...state.tried, id], guesses: { ...state.guesses, [id]: guess } });
   };
 
   const goToTarget = () => {
@@ -40,23 +43,32 @@ export function BreakIt({ config, state = initial, setState, t, ui }: Props) {
 
       {attempts.length > 0 ? (
         <>
-          <div className="lm-break-it__attempts">
-            {attempts.map((a) => (
-              <Button key={a.id} variant="secondary" onClick={() => tryAttempt(a.id)}>
-                {ui("try", { label: t.text(a.labelKey) })}
-              </Button>
-            ))}
-          </div>
-          <div ref={focus.ref} tabIndex={-1} className="lm-break-it__results">
-            {attempts
-              .filter((a) => state.tried.includes(a.id))
-              .map((a) => (
-                <div key={a.id} className="lm-callout" data-tone={a.breaks ? "warm" : "insight"}>
-                  <p className="lm-break-it__resultLabel">{ui(a.breaks ? "broke" : "held")}</p>
-                  <p>{t.rich(a.resultKey)}</p>
-                </div>
-              ))}
-          </div>
+          <ul className="lm-break-it__cards">
+            {attempts.map((a) => {
+              const tried = state.tried.includes(a.id);
+              const guess = state.guesses?.[a.id];
+              return (
+                <li key={a.id} className="lm-break-it__card">
+                  <p className="lm-break-it__label">{t.rich(a.labelKey)}</p>
+                  {!tried ? (
+                    <div className="lm-break-it__guess" role="group" aria-label={ui("willItBreak")}>
+                      <p className="lm-muted">{ui("willItBreak")}</p>
+                      <div className="lm-row">
+                        <Button onClick={() => guessAttempt(a.id, "breaks")}>{ui("guessBreaks")}</Button>
+                        <Button onClick={() => guessAttempt(a.id, "holds")}>{ui("guessHolds")}</Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div ref={lastTried === a.id ? focus.ref : undefined} tabIndex={-1} className="lm-callout" data-tone={a.breaks ? "warm" : "insight"}>
+                      <p className="lm-break-it__resultLabel">{ui(a.breaks ? "broke" : "held")}</p>
+                      <p>{t.rich(a.resultKey)}</p>
+                      {guess ? <p className="lm-muted">{ui((guess === "breaks") === a.breaks ? "guessMatched" : "guessDiffered")}</p> : null}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
           {state.tried.length > 0 ? <p className="lm-muted">{ui("foundCount", { n: brokenCount, total: attempts.length })}</p> : null}
         </>
       ) : (

@@ -96,10 +96,15 @@
 }
 
 /* Stack pairs into one column on narrow screens, keeping each pair together. */
+.lm-analogy__inline-label { display: none; }
 @media (max-width: 32rem) {
-  .lm-analogy__legend,
   .lm-analogy__row {
     grid-template-columns: 1fr;
+  }
+  /* The column headers make no sense once pairs stack; each cell names its side instead. */
+  .lm-analogy__legend { display: none; }
+  .lm-analogy__inline-label {
+    display: block; font-size: var(--text-small); font-weight: 700; color: var(--color-ink-muted);
   }
 }
 

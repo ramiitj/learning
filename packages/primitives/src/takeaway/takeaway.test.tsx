@@ -18,9 +18,9 @@ const predictBlock = { id: "b1", type: "predict", componentVersion: "1.0", confi
 const block = { id: "b2", type: "takeaway", config: { cardKey: "card", titleKey: "title", includes: ["b1"] } };
 
 describe("takeaway", () => {
-  it("shows 'Not made yet' before the included block has anything to show", () => {
+  it("shows 'still to make' before the included block has anything to show", () => {
     renderBlock(takeaway, block, strings, { before: [predictBlock], extraPlugins: [predict] });
-    expect(screen.getByText("Not made yet.")).toBeInTheDocument();
+    expect(screen.getByText("Still to make, further up in the lesson.")).toBeInTheDocument();
   });
 
   it("shows the included block's summary once the learner has made something", async () => {
@@ -28,7 +28,7 @@ describe("takeaway", () => {
     await userEvent.click(screen.getByLabelText("Lots of examples"));
     await userEvent.click(screen.getByRole("button", { name: "Lock in my guess" }));
     expect(screen.getByText("You guessed: Lots of examples")).toBeInTheDocument();
-    expect(screen.queryByText("Not made yet.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Still to make, further up in the lesson.")).not.toBeInTheDocument();
   });
 
   it("resolves an include with a suffix to the block id before its first dash", async () => {

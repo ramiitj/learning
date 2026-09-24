@@ -26,9 +26,9 @@ export function Tally({ ui, options, counts, onChange, revealed, onReveal, highl
             <li key={o.id} className="lm-tally__row" data-highlight={highlight === o.id || undefined}>
               <span className="lm-tally__label">{o.label}</span>
               <span className="lm-tally__controls">
-                <Button variant="quiet" aria-label={ui("tally.remove", { option: o.text })} onClick={() => set(o.id, -1)} disabled={n === 0}>−</Button>
+                <Button variant="secondary" className="lm-tally__step" aria-label={ui("tally.remove", { option: o.text })} onClick={() => set(o.id, -1)} disabled={n === 0}>−</Button>
                 <output className="lm-tally__count" aria-live="polite">{n}</output>
-                <Button variant="quiet" aria-label={ui("tally.add", { option: o.text })} onClick={() => set(o.id, +1)}>+</Button>
+                <Button variant="primary" className="lm-tally__step" aria-label={ui("tally.add", { option: o.text })} onClick={() => set(o.id, +1)}>+</Button>
               </span>
               {revealed ? (
                 <span className="lm-bar" aria-hidden="true">

@@ -101,6 +101,13 @@ export function Sort({ block, config, state, setState, t, ui }: Props) {
                   {item.symbol ? <span aria-hidden="true">{item.symbol} </span> : null}
                   {t.rich(item.labelKey)}
                 </button>
+                {picked === item.id ? (
+                  <div className="lm-sort__quick" role="group" aria-label={ui("quickPlace", { item: t.text(item.labelKey) })}>
+                    {config.groups.map((g) => (
+                      <Button key={g} variant="primary" onClick={() => placeInto(g)}>{t.text(g)}</Button>
+                    ))}
+                  </div>
+                ) : null}
               </li>
             ))}
           </ul>

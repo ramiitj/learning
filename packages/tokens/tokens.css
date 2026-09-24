@@ -106,8 +106,8 @@
   --color-border: #8C8C8C;
   --color-border-strong: #000000;
   --color-focus: #B45309;
-  --text-body: max(28px, 1.46vw);
-  --text-small: max(24px, 1.25vw);
+  --text-body: max(30px, 1.56vw);
+  --text-small: max(28px, 1.46vw);
   --text-h3: max(34px, 1.8vw);
   --text-h2: max(44px, 2.3vw);
   --text-h1: max(60px, 3.2vw);

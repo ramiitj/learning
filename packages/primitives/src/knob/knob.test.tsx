@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { validateLesson } from "@lm/schema/validate";
 import { a11yViolations, renderBlock } from "../shared/test-utils";
@@ -53,7 +53,7 @@ describe("knob", () => {
     const slider = screen.getByLabelText("Sensitivity");
     fireChange(slider, "6");
     expect(screen.getByText(/Volume: 6/)).toBeInTheDocument();
-    expect(screen.getByText(/1 × 6 \+ 1 × 0 \+ 0 = 6/)).toBeInTheDocument();
+    expect(screen.getByText(/1 × 6 \+ 1 × 0 = 6/)).toBeInTheDocument();
   });
 
   it("shows the success message once the output is within tolerance of the goal", async () => {
@@ -85,6 +85,13 @@ describe("knob", () => {
       expect(await a11yViolations(container)).toEqual([]);
       unmount();
     }
+  });
+  it("turns the output into a decision at a threshold, inside the responsive sentence", async () => {
+    const withDecision = { ...config, outputTemplateKey: "sentence", decision: { threshold: 5, aboveKey: "loud", belowKey: "quiet" } };
+    renderBlock(knob, { ...block, config: withDecision as unknown as Record<string, unknown> }, { ...strings, sentence: "Volume {output}: {decision}.", loud: "loud", quiet: "quiet" });
+    expect(screen.getByText("Volume 2: quiet.")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Sensitivity"), { target: { value: "7" } });
+    expect(screen.getByText("Volume 7: loud.")).toBeInTheDocument();
   });
 });
 

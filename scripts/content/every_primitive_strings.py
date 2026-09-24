@@ -17,12 +17,12 @@ add("obj.o2", "Show how a filter can be fooled, because it counts clues without 
     "ఫిల్టర్ సందేశాన్ని అర్థం చేసుకోకుండా ఆధారాలను మాత్రమే లెక్కిస్తుంది కాబట్టి దాన్ని ఎలా మోసం చేయవచ్చో చూపించడం.")
 
 # hook
-add("hook.text", "A family phone gets about 40 messages a day. Around 10 of them are junk: fake prizes, “urgent” links, ads. Most of the junk never reaches the inbox.",
-    "एक परिवार के फ़ोन पर रोज़ लगभग 40 संदेश आते हैं। इनमें से करीब 10 जंक होते हैं: नकली इनाम, “ज़रूरी” लिंक, विज्ञापन। ज़्यादातर जंक इनबॉक्स तक पहुँचता ही नहीं।",
-    "ఒక కుటుంబం ఫోన్‌కు రోజుకు సుమారు 40 సందేశాలు వస్తాయి. వాటిలో దాదాపు 10 జంక్: నకిలీ బహుమతులు, “అత్యవసర” లింకులు, ప్రకటనలు. చాలా జంక్ ఇన్‌బాక్స్‌కు చేరనే చేరదు.")
-add("hook.s1", "No person reads them first. Nobody sorts them by hand.", "कोई इंसान इन्हें पहले नहीं पढ़ता। कोई इन्हें हाथ से नहीं छाँटता।", "వీటిని ముందుగా ఎవరూ చదవరు. ఎవరూ చేత్తో వేరు చేయరు.")
-add("hook.s2", "A small program decides, in less time than a blink.", "एक छोटा प्रोग्राम तय करता है, पलक झपकने से भी कम समय में।", "ఒక చిన్న ప్రోగ్రామ్ రెప్పపాటు కన్నా తక్కువ సమయంలో నిర్ణయిస్తుంది.")
-add("hook.q", "How can a program tell junk from a real message it has never seen before?", "कोई प्रोग्राम ऐसे संदेश में जंक और असली का फ़र्क कैसे कर सकता है जिसे उसने पहले कभी नहीं देखा?", "ఇంతకు ముందెప్పుడూ చూడని సందేశంలో జంక్‌ని, నిజమైనదాన్ని ప్రోగ్రామ్ ఎలా వేరు చేయగలదు?")
+add("hook.text", "A message arrives: “You WON a prize!!! Click now.” Your phone moved it to junk before you ever saw it. No person read it first.",
+    "एक संदेश आता है: “आपने इनाम जीता!!! अभी क्लिक करें।” आपके देखने से पहले ही फ़ोन ने उसे जंक में डाल दिया। किसी इंसान ने उसे पहले नहीं पढ़ा।",
+    "ఒక సందేశం వస్తుంది: “మీరు బహుమతి గెలిచారు!!! ఇప్పుడే క్లిక్ చేయండి.” మీరు చూడకముందే మీ ఫోన్ దాన్ని జంక్‌లోకి పంపేసింది. దాన్ని ముందుగా ఏ మనిషీ చదవలేదు.")
+add("hook.q", "So how did a program decide, about a message it had never seen before?",
+    "तो एक प्रोग्राम ने ऐसे संदेश के बारे में कैसे तय किया, जिसे उसने पहले कभी नहीं देखा था?",
+    "మరి ఇంతకు ముందెప్పుడూ చూడని సందేశం గురించి ఒక ప్రోగ్రామ్ ఎలా నిర్ణయించింది?")
 
 # predict
 add("predict.prompt", "What do you think the filter does?", "आपके हिसाब से फ़िल्टर क्या करता है?", "ఫిల్టర్ ఏం చేస్తుందని మీరు అనుకుంటున్నారు?")
@@ -37,13 +37,21 @@ add("predict.reveal", "It adds up clues into a <term-score>score</term-score>. I
 add("sort.instruction", "Here are eight messages. Sort them into two groups. You are the filter now.", "ये आठ संदेश हैं। इन्हें दो समूहों में छाँटिए। अब फ़िल्टर आप हैं।", "ఇవి ఎనిమిది సందేశాలు. వీటిని రెండు గుంపులుగా వేరు చేయండి. ఇప్పుడు ఫిల్టర్ మీరే.")
 add("sort.g1", "Junk", "जंक", "జంక్")
 add("sort.g2", "Real", "असली", "నిజమైనది")
-add("sort.m1", "You WON ₹10,00,000!!! Click now", "आपने ₹10,00,000 जीते!!! अभी क्लिक करें", "మీరు ₹10,00,000 గెలిచారు!!! ఇప్పుడే క్లిక్ చేయండి")
+add("sort.m1", "You WON a prize!!! Click now",
+    "आपने ₹10,00,000 जीते!!! अभी क्लिक करें",
+    "మీరు ₹10,00,000 గెలిచారు!!! ఇప్పుడే క్లిక్ చేయండి")
 add("sort.m2", "Maths homework is on page 42", "गणित का होमवर्क पेज 42 पर है", "లెక్కల హోంవర్క్ 42వ పేజీలో ఉంది")
 add("sort.m3", "URGENT: your account is locked, send your PIN", "ज़रूरी: आपका खाता बंद है, अपना PIN भेजें", "అత్యవసరం: మీ ఖాతా లాక్ అయింది, మీ PIN పంపండి")
-add("sort.m4", "Nani says dinner is at 8", "नानी कह रही हैं खाना 8 बजे है", "అమ్మమ్మ రాత్రి భోజనం 8కి అంటోంది")
+add("sort.m4", "Grandma says dinner is at 8",
+    "नानी कह रही हैं खाना 8 बजे है",
+    "అమ్మమ్మ రాత్రి భోజనం 8కి అంటోంది")
 add("sort.m5", "FREE phone!!! Only today!!!", "मुफ़्त फ़ोन!!! सिर्फ़ आज!!!", "ఉచిత ఫోన్!!! ఈరోజు మాత్రమే!!!")
-add("sort.m6", "Cricket practice moved to Friday", "क्रिकेट अभ्यास शुक्रवार को हो गया है", "క్రికెట్ ప్రాక్టీస్ శుక్రవారానికి మారింది")
-add("sort.m7", "Congratulations, you are selected. Pay ₹99 to claim", "बधाई हो, आप चुने गए हैं। दावा करने के लिए ₹99 दें", "అభినందనలు, మీరు ఎంపికయ్యారు. పొందడానికి ₹99 చెల్లించండి")
+add("sort.m6", "Football practice moved to Friday",
+    "क्रिकेट अभ्यास शुक्रवार को हो गया है",
+    "క్రికెట్ ప్రాక్టీస్ శుక్రవారానికి మారింది")
+add("sort.m7", "Congratulations, you are selected. Pay a small fee to claim",
+    "बधाई हो, आप चुने गए हैं। दावा करने के लिए ₹99 दें",
+    "అభినందనలు, మీరు ఎంపికయ్యారు. పొందడానికి ₹99 చెల్లించండి")
 add("sort.m8", "Can you send me the science notes?", "क्या तुम मुझे विज्ञान के नोट्स भेज सकते हो?", "సైన్స్ నోట్స్ నాకు పంపగలవా?")
 add("sort.reveal", "Look at what you used to decide: money you didn’t expect, words like FREE and URGENT, lots of “!!!”. Those are clues.",
     "देखिए आपने तय करने के लिए किन चीज़ों का इस्तेमाल किया: अनचाहा पैसा, मुफ़्त और ज़रूरी जैसे शब्द, ढेर सारे “!!!”। यही सुराग हैं।",
@@ -52,19 +60,23 @@ add("sort.reveal", "Look at what you used to decide: money you didn’t expect, 
 # knob
 add("knob.prompt", "Here is a tiny filter. It counts three kinds of clue in a message and adds up points.", "यह एक छोटा-सा फ़िल्टर है। यह संदेश में तीन तरह के सुराग गिनता है और अंक जोड़ता है।", "ఇది ఒక చిన్న ఫిల్టర్. ఇది సందేశంలో మూడు రకాల ఆధారాలను లెక్కించి పాయింట్లు కలుపుతుంది.")
 add("knob.goal", "Challenge: build a message whose junk score is exactly 10, right on the line.", "चुनौती: ऐसा संदेश बनाइए जिसका जंक स्कोर ठीक 10 हो, बिल्कुल रेखा पर।", "సవాలు: జంక్ స్కోరు సరిగ్గా 10 ఉండే సందేశం తయారు చేయండి, సరిగ్గా గీత మీద.")
-add("knob.excl", "Exclamation marks (1 point each)", "विस्मयादिबोधक चिह्न (हर एक का 1 अंक)", "ఆశ్చర్యార్థక గుర్తులు (ఒక్కొక్కటికి 1 పాయింట్)")
+add("knob.excl", "Exclamation marks “!” (1 point each)",
+    "“!” चिह्न (हर एक का 1 अंक)",
+    "“!” గుర్తులు (ఒక్కొక్కటికి 1 పాయింట్)")
 add("knob.money", "Money words (2 points each)", "पैसे वाले शब्द (हर एक के 2 अंक)", "డబ్బు పదాలు (ఒక్కొక్కటికి 2 పాయింట్లు)")
 add("knob.urgent", "Urgent words (3 points each)", "जल्दबाज़ी वाले शब्द (हर एक के 3 अंक)", "అత్యవసర పదాలు (ఒక్కొక్కటికి 3 పాయింట్లు)")
 add("knob.output", "Junk score", "जंक स्कोर", "జంక్ స్కోరు")
-add("knob.sentence", "This message has {excl} exclamation marks, {money} money words and {urgent} urgent words. Its junk score is {output}.",
-    "इस संदेश में {excl} विस्मयादिबोधक चिह्न, {money} पैसे वाले शब्द और {urgent} जल्दबाज़ी वाले शब्द हैं। इसका जंक स्कोर {output} है।",
-    "ఈ సందేశంలో {excl} ఆశ్చర్యార్థక గుర్తులు, {money} డబ్బు పదాలు, {urgent} అత్యవసర పదాలు ఉన్నాయి. దీని జంక్ స్కోరు {output}.")
+add("knob.sentence", "This message has {excl} “!” marks, {money} money words and {urgent} urgent words. Its junk score is {output}, so it goes to {decision}.",
+    "इस संदेश में {excl} “!” चिह्न, {money} पैसे वाले शब्द और {urgent} जल्दबाज़ी वाले शब्द हैं। इसका जंक स्कोर {output} है, इसलिए यह {decision} में जाता है।",
+    "ఈ సందేశంలో {excl} “!” గుర్తులు, {money} డబ్బు పదాలు, {urgent} అత్యవసర పదాలు ఉన్నాయి. దీని జంక్ స్కోరు {output}, కాబట్టి ఇది {decision}కి వెళ్తుంది.")
 add("knob.success", "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
     "स्कोर 10: ठीक सीमा पर। एक सुराग और, तो यह जंक में जाएगा; एक कम, तो इनबॉक्स में पहुँचेगा।",
     "స్కోరు 10: సరిగ్గా హద్దు మీద. ఇంకో ఆధారం ఉంటే జంక్‌కి వెళ్తుంది; ఒకటి తక్కువైతే ఇన్‌బాక్స్‌కి చేరుతుంది.")
 
 # by hand then automate
-add("bh.intro", "The filter’s rule is short. Try it by hand first, the way the program does it.", "फ़िल्टर का नियम छोटा है। पहले इसे हाथ से आज़माइए, ठीक वैसे जैसे प्रोग्राम करता है।", "ఫిల్టర్ నియమం చిన్నది. ముందు ప్రోగ్రామ్ చేసినట్టే మీరు చేత్తో ప్రయత్నించండి.")
+add("bh.intro", "The filter’s rule is short. Each message below already has its clues counted and its points added up, using the points from the filter above. Try the rule by hand first, the way the program does it.",
+    "फ़िल्टर का नियम छोटा है। नीचे हर संदेश के सुराग गिने जा चुके हैं और ऊपर वाले फ़िल्टर के अंकों से जोड़े जा चुके हैं। पहले नियम को हाथ से आज़माइए, ठीक वैसे जैसे प्रोग्राम करता है।",
+    "ఫిల్టర్ నియమం చిన్నది. కింద ప్రతి సందేశంలోని ఆధారాలు ఇప్పటికే లెక్కించబడ్డాయి, పైన ఉన్న ఫిల్టర్ పాయింట్లతో కలపబడ్డాయి. ముందు ప్రోగ్రామ్ చేసినట్టే మీరు చేత్తో నియమాన్ని ప్రయత్నించండి.")
 add("bh.rule", "If a message’s score is {threshold} or more, it goes to junk. Otherwise it goes to the inbox.", "अगर संदेश का स्कोर {threshold} या उससे ज़्यादा है, तो वह जंक में जाता है। नहीं तो इनबॉक्स में।", "సందేశం స్కోరు {threshold} లేదా అంతకంటే ఎక్కువైతే అది జంక్‌కి వెళ్తుంది. లేకపోతే ఇన్‌బాక్స్‌కి.")
 add("bh.above", "Junk", "जंक", "జంక్")
 add("bh.below", "Inbox", "इनबॉक्स", "ఇన్‌బాక్స్")
@@ -79,18 +91,24 @@ for i, (en, hi, te) in enumerate([
     ("The science-notes message", "विज्ञान के नोट्स वाला संदेश", "సైన్స్ నోట్స్ సందేశం"),
 ], start=1):
     add(f"bh.i{i}", en, hi, te)
-add("bh.auto", "The machine did the same step, the same way, every time. It never got tired, and it never used common sense either.",
-    "मशीन ने हर बार वही कदम, उसी तरह दोहराया। वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया।",
-    "యంత్రం ప్రతిసారీ అదే అడుగును, అదే విధంగా చేసింది. అది ఎప్పుడూ అలసిపోలేదు, ఎప్పుడూ ఇంగిత జ్ఞానాన్ని కూడా ఉపయోగించలేదు.")
+add("bh.auto", "The machine did the same step, the same way, every time. It never got tired, and it never used common sense either: two scams, the locked-account message and the pay-a-fee message, slipped into the inbox.",
+    "मशीन ने हर बार वही कदम, उसी तरह दोहराया। वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया: दो धोखे, खाता बंद वाला संदेश और ₹99 वाला संदेश, इनबॉक्स में पहुँच गए।",
+    "యంత్రం ప్రతిసారీ అదే అడుగును, అదే విధంగా చేసింది. అది ఎప్పుడూ అలసిపోలేదు, ఇంగిత జ్ఞానాన్నీ ఉపయోగించలేదు: రెండు మోసాలు, ఖాతా లాక్ సందేశం, ₹99 సందేశం, ఇన్‌బాక్స్‌లోకి జారిపోయాయి.")
 
 # compare
-add("cmp.prompt", "One real message from a friend, two versions. Only the exclamation marks change.", "एक दोस्त का असली संदेश, दो रूप। बस विस्मयादिबोधक चिह्न बदलते हैं।", "స్నేహితుడి నుండి ఒక నిజమైన సందేశం, రెండు రూపాలు. ఆశ్చర్యార్థక గుర్తులు మాత్రమే మారతాయి.")
+add("cmp.prompt", "Two versions of the same real message from a friend.",
+    "एक दोस्त के एक ही असली संदेश के दो रूप।",
+    "స్నేహితుడి నుండి వచ్చిన ఒకే నిజమైన సందేశానికి రెండు రూపాలు.")
 add("cmp.a", "Calm: “We won the match.”", "शांत: “हम मैच जीत गए।”", "ప్రశాంతంగా: “మనం మ్యాచ్ గెలిచాం.”")
-add("cmp.b", "Excited: “We WON the match!!!!!!”", "उत्साहित: “हम मैच जीत गए!!!!!!”", "ఉత్సాహంగా: “మనం మ్యాచ్ గెలిచాం!!!!!!”")
-add("cmp.predict", "Which version gets the higher junk score?", "किस रूप का जंक स्कोर ज़्यादा होगा?", "ఏ రూపానికి జంక్ స్కోరు ఎక్కువ వస్తుంది?")
-add("cmp.explain", "Only the exclamation marks changed, and the score jumped. The filter cannot tell an excited friend from a scammer. It only counts.",
-    "सिर्फ़ विस्मयादिबोधक चिह्न बदले, और स्कोर उछल गया। फ़िल्टर किसी उत्साहित दोस्त और धोखेबाज़ में फ़र्क नहीं कर सकता। वह बस गिनता है।",
-    "ఆశ్చర్యార్థక గుర్తులు మాత్రమే మారాయి, స్కోరు ఎగిరింది. ఉత్సాహంగా ఉన్న స్నేహితుడికి, మోసగాడికి తేడాను ఫిల్టర్ చెప్పలేదు. అది లెక్కిస్తుంది, అంతే.")
+add("cmp.b", "Excited: “We WON the match!!!!!!!!!!”",
+    "उत्साहित: “हम मैच जीत गए!!!!!!!!!!”",
+    "ఉత్సాహంగా: “మనం మ్యాచ్ గెలిచాం!!!!!!!!!!”")
+add("cmp.predict", "The threshold is 10. Which version ends up in junk?",
+    "सीमा 10 है। कौन-सा रूप जंक में पहुँचेगा?",
+    "హద్దు 10. ఏ రూపం జంక్‌లో పడుతుంది?")
+add("cmp.explain", "Only the “!” marks changed, and the excited version reached the threshold of 10. A real message from a friend lands in junk. The filter cannot tell an excited friend from a scammer. It only counts.",
+    "सिर्फ़ “!” चिह्न बदले, और उत्साहित रूप 10 की सीमा तक पहुँच गया। दोस्त का असली संदेश जंक में पहुँच गया। फ़िल्टर किसी उत्साहित दोस्त और धोखेबाज़ में फ़र्क नहीं कर सकता। वह बस गिनता है।",
+    "“!” గుర్తులు మాత్రమే మారాయి, ఉత్సాహపు రూపం 10 హద్దును చేరింది. స్నేహితుడి నిజమైన సందేశం జంక్‌లో పడింది. ఉత్సాహంగా ఉన్న స్నేహితుడికి, మోసగాడికి తేడాను ఫిల్టర్ చెప్పలేదు. అది లెక్కిస్తుంది, అంతే.")
 
 # analogy
 add("an.source", "Think of an exam with a pass mark. Each answer earns marks. The marks are added up. If the total reaches the pass mark, you pass.",
@@ -107,9 +125,13 @@ add("an.m4t", "Junk, or inbox", "जंक, या इनबॉक्स", "జ�
 add("an.break", "Here the comparison stops working. An examiner reads your answers and understands them. The filter only counts clues. It has no idea what a message means.",
     "यहाँ यह तुलना काम करना बंद कर देती है। परीक्षक आपके जवाब पढ़ता है और समझता है। फ़िल्टर सिर्फ़ सुराग गिनता है। उसे पता ही नहीं कि संदेश का मतलब क्या है।",
     "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. పరీక్షకులు మీ జవాబులు చదివి అర్థం చేసుకుంటారు. ఫిల్టర్ ఆధారాలను మాత్రమే లెక్కిస్తుంది. సందేశానికి అర్థం ఏమిటో దానికి ఏమాత్రం తెలియదు.")
-add("an.f1", "marks + marks + marks ≥ pass mark → pass", "अंक + अंक + अंक ≥ पास के अंक → पास", "మార్కులు + మార్కులు + మార్కులు ≥ పాస్ మార్కు → పాస్")
+add("an.f1", "marks + marks + marks ≥ pass mark → pass. (“≥” means “is at least”; “→” means “leads to”.)",
+    "अंक + अंक + अंक ≥ पास के अंक → पास। (“≥” का मतलब “कम से कम इतना”; “→” का मतलब “नतीजा”।)",
+    "మార్కులు + మార్కులు + మార్కులు ≥ పాస్ మార్కు → పాస్. (“≥” అంటే “కనీసం అంత”; “→” అంటే “దారి తీస్తుంది”.)")
 add("an.f2", "points + points + points ≥ threshold → junk", "अंक + अंक + अंक ≥ सीमा → जंक", "పాయింట్లు + పాయింట్లు + పాయింట్లు ≥ హద్దు → జంక్")
-add("an.f3", "1 × exclamations + 2 × money words + 3 × urgent words ≥ 10 → junk", "1 × विस्मयादिबोधक + 2 × पैसे वाले शब्द + 3 × जल्दबाज़ी वाले शब्द ≥ 10 → जंक", "1 × ఆశ్చర్యార్థకాలు + 2 × డబ్బు పదాలు + 3 × అత్యవసర పదాలు ≥ 10 → జంక్")
+add("an.f3", "1 × “!” marks + 2 × money words + 3 × urgent words ≥ 10 → junk. (“×” means “times”.)",
+    "1 × “!” चिह्न + 2 × पैसे वाले शब्द + 3 × जल्दबाज़ी वाले शब्द ≥ 10 → जंक। (“×” का मतलब “गुणा”।)",
+    "1 × “!” గుర్తులు + 2 × డబ్బు పదాలు + 3 × అత్యవసర పదాలు ≥ 10 → జంక్. (“×” అంటే “గుణించు”.)")
 
 # deeper / deepest
 add("deep.text", "Real filters use hundreds of clues, not three. Nobody sets their points by hand: the filter works them out from millions of messages that people marked as junk. That is called <term-training>training</term-training>.",
@@ -144,7 +166,9 @@ add("ch.explain", "Score 0 is below the threshold of 10, so the message goes to 
 add("br.challenge", "Try to fool the filter. Which tricks get junk into the inbox, or push a real message into junk?", "फ़िल्टर को चकमा देने की कोशिश कीजिए। कौन-सी तरकीबें जंक को इनबॉक्स में पहुँचा देती हैं, या असली संदेश को जंक में धकेल देती हैं?", "ఫిల్టర్‌ను మోసం చేసి చూడండి. ఏ ఉపాయాలు జంక్‌ను ఇన్‌బాక్స్‌లోకి పంపుతాయి, లేదా నిజమైన సందేశాన్ని జంక్‌లోకి నెట్టుతాయి?")
 add("br.t1", "Write “fr ee” instead of “free”", "“मुफ़्त” की जगह “मु फ़्त” लिखें", "“ఉచితం” బదులు “ఉ చితం” అని రాయండి")
 add("br.r1", "The filter no longer sees a money word. The junk slips through.", "फ़िल्टर को अब पैसे वाला शब्द दिखता ही नहीं। जंक निकल जाता है।", "ఫిల్టర్‌కు ఇప్పుడు డబ్బు పదం కనిపించదు. జంక్ జారిపోతుంది.")
-add("br.t2", "A friend writes “I WON the quiz!!!!!!!!!!”", "एक दोस्त लिखता है “मैं क्विज़ जीत गया!!!!!!!!!!”", "స్నేహితుడు రాస్తాడు “నేను క్విజ్ గెలిచా!!!!!!!!!!”")
+add("br.t2", "A friend writes “I WON the quiz!!!!!!!!!!”",
+    "एक दोस्त लिखता है “मैं क्विज़ जीत गया!!!!!!!!!!”",
+    "స్నేహితుడు రాస్తాడు “నేను క్విజ్ గెలిచా!!!!!!!!!!”")
 add("br.r2", "Ten exclamation marks score 10 points. A real message lands in junk.", "दस विस्मयादिबोधक चिह्न, 10 अंक। एक असली संदेश जंक में पहुँच जाता है।", "పది ఆశ్చర్యార్థక గుర్తులు, 10 పాయింట్లు. నిజమైన సందేశం జంక్‌లో పడుతుంది.")
 add("br.t3", "Add a polite, normal sentence to a junk message", "जंक संदेश में एक विनम्र, सामान्य वाक्य जोड़ें", "జంక్ సందేశానికి ఒక మర్యాదగా ఉన్న సాధారణ వాక్యం జోడించండి")
 add("br.r3", "The money and urgent words are still there, so the score stays high. It is still caught.", "पैसे और जल्दबाज़ी वाले शब्द अब भी हैं, इसलिए स्कोर ऊँचा ही रहता है। वह फिर भी पकड़ा जाता है।", "డబ్బు, అత్యవసర పదాలు ఇంకా ఉన్నాయి, కాబట్టి స్కోరు ఎక్కువగానే ఉంటుంది. అది ఇంకా పట్టుబడుతుంది.")
@@ -153,15 +177,21 @@ add("br.r4", "Same clues, same score, same result, both times.", "वही स�
 add("br.reflect", "What do the tricks that worked have in common?", "जो तरकीबें काम कर गईं, उनमें क्या बात एक जैसी है?", "పనిచేసిన ఉపాయాలలో ఉమ్మడిగా ఉన్నది ఏమిటి?")
 
 # your data
-add("yd.prompt", "Write up to five messages of your own. Try to write one that a person would call junk but this filter would let through.", "अपने पाँच तक संदेश लिखिए। ऐसा एक संदेश लिखने की कोशिश कीजिए जिसे कोई इंसान जंक कहे, पर यह फ़िल्टर जाने दे।", "మీ సొంత సందేశాలు ఐదు వరకు రాయండి. మనిషి జంక్ అనే, కానీ ఈ ఫిల్టర్ వదిలేసే ఒక సందేశం రాసి చూడండి.")
+add("yd.prompt", "Write up to five messages that you think would fool this filter. For each one, count its clues and work out its score with the points above: would it reach 10?",
+    "पाँच तक ऐसे संदेश लिखिए जो आपको लगता है इस फ़िल्टर को चकमा दे देंगे। हर एक के सुराग गिनिए और ऊपर के अंकों से उसका स्कोर निकालिए: क्या वह 10 तक पहुँचेगा?",
+    "ఈ ఫిల్టర్‌ను మోసం చేస్తాయని మీరు అనుకునే సందేశాలు ఐదు వరకు రాయండి. ప్రతిదానిలో ఆధారాలను లెక్కించి, పై పాయింట్లతో దాని స్కోరు లెక్కించండి: అది 10ని చేరుతుందా?")
 add("yd.placeholder", "Type a message", "एक संदेश लिखिए", "ఒక సందేశం టైప్ చేయండి")
-add("yd.e1", "Hello friend, a small gift is waiting for you, reply with your address", "नमस्ते दोस्त, आपके लिए एक छोटा-सा तोहफ़ा इंतज़ार कर रहा है, अपना पता भेजिए", "హలో మిత్రమా, మీకోసం ఒక చిన్న కానుక ఎదురుచూస్తోంది, మీ చిరునామా పంపండి")
+add("yd.e1", "Hello friend, a small gift is waiting for you, reply with your address",
+    "नमस्ते दोस्त, आपके लिए एक छोटा-सा तोहफ़ा इंतज़ार कर रहा है, अपना पता भेजिए",
+    "హలో మిత్రమా, మీకోసం ఒక చిన్న కానుక ఎదురుచూస్తోంది, మీ చిరునామా పంపండి")
 add("yd.e2", "Exam results are out!!!! Check the school notice board", "परीक्षा के नतीजे आ गए!!!! स्कूल का नोटिस बोर्ड देखो", "పరీక్ష ఫలితాలు వచ్చాయి!!!! స్కూల్ నోటీసు బోర్డు చూడు")
 
 # explain back
-add("eb.prompt", "Where else in life does someone add things up and compare the total with a line? Write your own comparison.", "ज़िंदगी में और कहाँ कोई चीज़ों को जोड़कर कुल को किसी रेखा से मिलाता है? अपनी तुलना लिखिए।", "జీవితంలో ఇంకెక్కడ ఎవరైనా వాటిని కలిపి మొత్తాన్ని ఒక గీతతో పోలుస్తారు? మీ సొంత పోలిక రాయండి.")
+add("eb.prompt", "Think of something else in life where points are added up and the total has to reach a line. Describe it as your own comparison.",
+    "ज़िंदगी में कोई और ऐसी चीज़ सोचिए जहाँ अंक जोड़े जाते हैं और कुल को किसी रेखा तक पहुँचना होता है। उसे अपनी तुलना के रूप में लिखिए।",
+    "జీవితంలో పాయింట్లు కలిపి, మొత్తం ఒక గీతను చేరాల్సిన మరో సందర్భం గురించి ఆలోచించండి. దాన్ని మీ సొంత పోలికగా రాయండి.")
 add("eb.break", "Where does your comparison stop working?", "आपकी तुलना कहाँ काम करना बंद कर देती है?", "మీ పోలిక ఎక్కడ పనిచేయడం ఆగిపోతుంది?")
-add("eb.model", "A cricket team needs 150 runs to win. Every run adds up, and 150 is the line. But the team can see the match and change its plan; the filter can’t see anything beyond the clues.",
+add("eb.model", "A class needs 30 signatures to start a new school club. Each signature adds one, and 30 is the line. But the students can read the petition and change it; the filter can’t see anything beyond the clues.",
     "क्रिकेट टीम को जीतने के लिए 150 रन चाहिए। हर रन जुड़ता है, और 150 रेखा है। पर टीम मैच देख सकती है और अपनी योजना बदल सकती है; फ़िल्टर सुरागों के आगे कुछ नहीं देख सकता।",
     "క్రికెట్ జట్టు గెలవడానికి 150 పరుగులు కావాలి. ప్రతి పరుగు కలుస్తుంది, 150 గీత. కానీ జట్టు మ్యాచ్‌ను చూసి తన ప్రణాళిక మార్చుకోగలదు; ఫిల్టర్ ఆధారాలకు మించి ఏమీ చూడలేదు.")
 
@@ -186,3 +216,51 @@ add("post2.a", "The filter knows the friend is lying", "फ़िल्टर �
 add("post2.b", "Friends’ messages are always blocked", "दोस्तों के संदेश हमेशा रोके जाते हैं", "స్నేహితుల సందేశాలు ఎప్పుడూ ఆపివేయబడతాయి")
 add("post2.c", "The filter counts clues like “!!!” without understanding the message", "फ़िल्टर संदेश को समझे बिना “!!!” जैसे सुराग गिनता है", "ఫిల్టర్ సందేశాన్ని అర్థం చేసుకోకుండా “!!!” లాంటి ఆధారాలను లెక్కిస్తుంది")
 add("post2.fb", "It only counts clues. An excited friend and a scammer can look the same to it.", "वह सिर्फ़ सुराग गिनता है। उसके लिए उत्साहित दोस्त और धोखेबाज़ एक जैसे दिख सकते हैं।", "అది ఆధారాలను మాత్రమే లెక్కిస్తుంది. దానికి ఉత్సాహపు స్నేహితుడు, మోసగాడు ఒకేలా కనిపించవచ్చు.")
+add("predict.f1", "Early filters worked a lot like that. The trouble: scammers change one letter and the list misses it. Watch for that idea later.",
+    "शुरुआती फ़िल्टर काफ़ी हद तक ऐसे ही काम करते थे। दिक्कत यह: धोखेबाज़ एक अक्षर बदल देते हैं और सूची चूक जाती है। आगे यह बात फिर आएगी।",
+    "తొలి ఫిల్టర్లు దాదాపు అలాగే పనిచేసేవి. సమస్య ఏమిటంటే: మోసగాళ్ళు ఒక అక్షరం మారుస్తారు, జాబితా దాన్ని పట్టుకోలేదు. ఈ ఆలోచన తర్వాత మళ్ళీ వస్తుంది.")
+add("predict.f3", "It can seem that way, because the results are often right. Keep that guess in mind: by the end you can test it yourself.",
+    "ऐसा लग सकता है, क्योंकि नतीजे अक्सर सही होते हैं। यह अनुमान याद रखिए: आख़िर तक आप इसे ख़ुद परख सकेंगे।",
+    "అలా అనిపించవచ్చు, ఎందుకంటే ఫలితాలు తరచుగా సరిగ్గా ఉంటాయి. ఈ అంచనాను గుర్తుంచుకోండి: చివరికి మీరే దీన్ని పరీక్షించవచ్చు.")
+add("knob.junk", "junk",
+    "जंक",
+    "జంక్")
+add("knob.inbox", "the inbox",
+    "इनबॉक्स",
+    "ఇన్‌బాక్స్")
+add("bh.value", "Junk score",
+    "जंक स्कोर",
+    "జంక్ స్కోరు")
+add("bh.i1", "The prize message: 3 “!”, 2 money words, 1 urgent word (3 + 4 + 3)",
+    "इनाम वाला संदेश: 3 “!”, 2 पैसे वाले शब्द, 1 जल्दबाज़ी वाला शब्द (3 + 4 + 3)",
+    "బహుమతి సందేశం: 3 “!”, 2 డబ్బు పదాలు, 1 అత్యవసర పదం (3 + 4 + 3)")
+add("bh.i2", "The homework reminder: no clues",
+    "होमवर्क की याद: कोई सुराग नहीं",
+    "హోంవర్క్ గుర్తు: ఆధారాలు లేవు")
+add("bh.i3", "The locked-account message: 1 urgent word (3)",
+    "खाता बंद वाला संदेश: 1 जल्दबाज़ी वाला शब्द (3)",
+    "ఖాతా లాక్ సందేశం: 1 అత్యవసర పదం (3)")
+add("bh.i4", "Grandma’s dinner message: no clues",
+    "नानी का खाने वाला संदेश: कोई सुराग नहीं",
+    "అమ్మమ్మ భోజనం సందేశం: ఆధారాలు లేవు")
+add("bh.i5", "The free-phone message: 6 “!”, 1 money word, 1 urgent word (6 + 2 + 3)",
+    "मुफ़्त फ़ोन वाला संदेश: 6 “!”, 1 पैसे वाला शब्द, 1 जल्दबाज़ी वाला शब्द (6 + 2 + 3)",
+    "ఉచిత ఫోన్ సందేశం: 6 “!”, 1 డబ్బు పదం, 1 అత్యవసర పదం (6 + 2 + 3)")
+add("bh.i6", "The football message: no clues",
+    "क्रिकेट वाला संदेश: कोई सुराग नहीं",
+    "క్రికెట్ సందేశం: ఆధారాలు లేవు")
+add("bh.i7", "The pay-a-fee message: 2 money words (4)",
+    "₹99 दो वाला संदेश: 2 पैसे वाले शब्द (4)",
+    "₹99 చెల్లించండి సందేశం: 2 డబ్బు పదాలు (4)")
+add("bh.i8", "The science-notes message: no clues",
+    "विज्ञान के नोट्स वाला संदेश: कोई सुराग नहीं",
+    "సైన్స్ నోట్స్ సందేశం: ఆధారాలు లేవు")
+add("take.l1", "My filter",
+    "मेरा फ़िल्टर",
+    "నా ఫిల్టర్")
+add("take.l2", "Messages I wrote to fool it",
+    "उसे चकमा देने के लिए मेरे लिखे संदेश",
+    "దాన్ని మోసం చేయడానికి నేను రాసిన సందేశాలు")
+add("take.l3", "My own comparison",
+    "मेरी अपनी तुलना",
+    "నా సొంత పోలిక")

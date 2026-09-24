@@ -24,7 +24,7 @@ describe("predict", () => {
     await userEvent.click(screen.getByLabelText("Very sure"));
     await userEvent.click(screen.getByRole("button", { name: "Lock in my guess" }));
     expect(container.textContent).not.toMatch(/incorrect|wrong/i);
-    expect(screen.getByText(/the difference is the interesting part/)).toBeInTheDocument();
+    expect(screen.getByText(/That gap is the interesting part/)).toBeInTheDocument();
     expect(screen.getByText(/You were very sure/)).toBeInTheDocument();
   });
 

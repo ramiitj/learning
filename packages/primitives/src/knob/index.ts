@@ -16,7 +16,8 @@ export const knob: ComponentPlugin<KnobConfig & Record<string, unknown>, KnobSta
       config.model.type === "threshold" && config.model.output.labelKeys
         ? t.text(config.model.output.labelKeys[output as 0 | 1])
         : String(output);
-    return config.outputTemplateKey ? t.text(config.outputTemplateKey, { output: outputText, ...state.values }) : ui("outputFallback", { label: t.text(config.model.output.labelKey), value: outputText });
+    const decision = config.decision ? t.text(output >= config.decision.threshold ? config.decision.aboveKey : config.decision.belowKey) : "";
+    return config.outputTemplateKey ? t.text(config.outputTemplateKey, { output: outputText, decision, ...state.values }) : ui("outputFallback", { label: t.text(config.model.output.labelKey), value: outputText });
   },
 };
 

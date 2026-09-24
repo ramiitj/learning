@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { validateLesson } from "@lm/schema/validate";
 import { a11yViolations, renderBlock } from "../shared/test-utils";
@@ -30,19 +30,23 @@ const block = {
 const m1Config = { challengeKey: "challenge", target: "b4", allowRelabel: true, reflectKey: "reflect" };
 
 describe("break-it", () => {
-  it("shows a result card for each tried attempt, marked with text (not colour alone)", async () => {
+  it("asks for a prediction before each result, and compares the result with it", async () => {
     const { container } = renderBlock(breakIt, block, strings);
-    await userEvent.click(screen.getByRole("button", { name: "Try: Show it a blurry photo" }));
+    const card = (label: string) => screen.getByText(label).closest("li")!;
+    expect(screen.queryByText("It held up")).not.toBeInTheDocument();
+    await userEvent.click(within(card("Show it a blurry photo")).getByRole("button", { name: "I think it breaks" }));
     expect(screen.getByText("It held up")).toBeInTheDocument();
     expect(screen.getByText(strings.a1r)).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: "Try: Show it something it has never seen" }));
+    expect(screen.getByText(/That is not what you expected/)).toBeInTheDocument();
+    await userEvent.click(within(card("Show it something it has never seen")).getByRole("button", { name: "I think it breaks" }));
     expect(screen.getByText("It broke")).toBeInTheDocument();
+    expect(screen.getByText("That is what you expected.")).toBeInTheDocument();
     expect(container.textContent).toMatch(/1.*out of 2|found 1/i);
   });
 
   it("lets the learner note something else they tried and reflect, without penalty language", async () => {
     const { container } = renderBlock(breakIt, block, strings);
-    await userEvent.click(screen.getByRole("button", { name: "Try: Show it a blurry photo" }));
+    await userEvent.click(screen.getAllByRole("button", { name: "I think it holds up" })[0]!);
     const note = screen.getByLabelText("Something else I tried");
     await userEvent.type(note, "I tried rotating the picture");
     expect(note).toHaveValue("I tried rotating the picture");
@@ -61,7 +65,7 @@ describe("break-it", () => {
 
   it("can be undone", async () => {
     renderBlock(breakIt, block, strings);
-    await userEvent.click(screen.getByRole("button", { name: "Try: Show it a blurry photo" }));
+    await userEvent.click(screen.getAllByRole("button", { name: "I think it holds up" })[0]!);
     expect(screen.getByText("It held up")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Undo" }));
     expect(screen.queryByText("It held up")).not.toBeInTheDocument();

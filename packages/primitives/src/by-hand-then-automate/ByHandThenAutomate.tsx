@@ -58,7 +58,7 @@ function ManualStep({ config, item, index, total, mode, locale, t, ui, onAnswer,
     <div className="lm-by-hand-then-automate__step">
       <p className="lm-muted lm-small">{ui("stepProgress", { n: index + 1, m: total })}</p>
       <p className="lm-lead">{t.rich(item.labelKey)}</p>
-      <p>{ui("itemValue", { value: fmt(locale, item.value) })}</p>
+      <p>{config.valueLabelKey ? ui("itemValueLabelled", { label: t.text(config.valueLabelKey), value: fmt(locale, item.value) }) : ui("itemValue", { value: fmt(locale, item.value) })}</p>
       {mode === "classroom" && !answered ? <p className="lm-notice">{ui("classroomCheck")}</p> : null}
       {!answered ? (
         process.type === "threshold" ? (

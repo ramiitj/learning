@@ -14,6 +14,8 @@ export interface TakeawayConfig {
    * the longest block-id prefix followed by "-".
    */
   includes: string[];
+  /** A label for each include, in the same order ("My filter", "My messages"), so every line says what it is. */
+  labelKeys?: string[];
   mode?: string;
 }
 
@@ -29,12 +31,13 @@ export const takeawayContract: ComponentContract = {
       cardKey: { type: "string" },
       titleKey: { type: "string" },
       includes: { type: "array", items: { type: "string" }, minItems: 1 },
+      labelKeys: { type: "array", items: { type: "string" } },
       mode: { enum: ["class-card"] },
     },
   },
   stringKeys: (c) => {
     const x = c as unknown as TakeawayConfig;
-    return keys(x.cardKey, x.titleKey);
+    return keys(x.cardKey, x.titleKey, x.labelKeys);
   },
   // The validator only knows block ids, not the full block list, so it cannot
   // do the component's "exact id first, then longest id prefix" resolution.

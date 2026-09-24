@@ -127,4 +127,11 @@ describe("analogy", () => {
 
     expect(new Set(analogyContract.stringKeys(block.config))).toEqual(new Set(["source", "m1s", "m1t", "m2s", "m2t", "brk"]));
   });
+  it("states where the comparison breaks once every pair has been explored (Article 7)", async () => {
+    renderBlock(analogy, block, strings);
+    expect(screen.queryByText(strings.brk)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /Seeing lots of dogs/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Guessing 'dog'/ }));
+    expect(screen.getByText(strings.brk)).toBeInTheDocument();
+  });
 });

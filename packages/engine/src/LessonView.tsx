@@ -1,15 +1,15 @@
 "use client";
 import { Component, memo, useCallback, useEffect, useId, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from "react";
-import { DEPTHS, type Block, type Depth, type Lesson } from "@lm/schema";
+import { DEPTHS, type Block, type CheckItem, type Depth, type Lesson } from "@lm/schema";
 import { EngineContext, useEngine, useLessonState, useStoreSelector, type EngineValue } from "./context";
 import { createLessonT, createUiT, FALLBACK_LOCALE } from "./i18n";
 import { engineMessages } from "./messages";
 import type { Registry } from "./registry";
 import { LessonStore } from "./store";
 import type { Detour, Glossary, GlossaryEntry, Mode, SetStateOptions, UiT } from "./types";
-import { Button, Dialog } from "./ui";
+import { Button, ChoiceGroup, Dialog, useFocusAfter } from "./ui";
 
-export type LessonDoc = Pick<Lesson, "id" | "version" | "meta" | "stages" | "strings" | "localeStatus">;
+export type LessonDoc = Pick<Lesson, "id" | "version" | "meta" | "stages" | "strings" | "localeStatus"> & Partial<Pick<Lesson, "checks">>;
 
 export interface LessonViewProps {
   lesson: LessonDoc;
@@ -87,7 +87,7 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
     <EngineContext.Provider value={scope}>
       <article className="lm-lesson" lang={locale} data-mode={mode} aria-labelledby={titleId} data-hydrated={hydrated || undefined}>
         <header className="lm-lesson__header">
-          {lesson.meta.subtitleKey ? <p className="lm-eyebrow">{ui("lesson.minutes", { n: lesson.meta.estimatedMinutes })}</p> : null}
+          <p className="lm-eyebrow">{ui("lesson.minutes", { n: lesson.meta.estimatedMinutes })}</p>
           <h1 id={titleId} className="lm-lesson__title">{t.rich(lesson.meta.titleKey)}</h1>
           {lesson.meta.subtitleKey ? <p className="lm-lesson__subtitle">{t.rich(lesson.meta.subtitleKey)}</p> : null}
           {draftLocale ? <p className="lm-notice" role="note">{ui("draft.translation")}</p> : null}
@@ -109,6 +109,8 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
             )}
           </section>
         ))}
+
+        <Ending checks={lesson.checks?.post ?? []} />
       </article>
 
       <GlossaryDialog open={glossaryOpen !== null} focus={glossaryOpen?.focus} termIds={termsInLesson} onClose={() => setGlossaryOpen(null)} />
@@ -118,32 +120,46 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
   );
 }
 
+/**
+ * One compact row on every screen: the two things learners reach for (undo,
+ * glossary) plus a "Lesson tools" panel for depth and starting again, so on a
+ * phone the lesson's opening question is not pushed below the fold.
+ */
 function Toolbar({ depth, hasGlossary }: { depth: Depth; hasGlossary: boolean }) {
   const { store, ui, announce, openGlossary } = useEngine();
   const [confirm, setConfirm] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const confirmId = useId();
   const depthName = useId();
+  const panelId = useId();
+  const helpId = useId();
   const onUndo = () => {
     const blockId = store.undo();
     announce(ui(blockId ? "undo.done" : "undo.none"));
     if (blockId) document.getElementById(`block-${blockId}`)?.scrollIntoView({ block: "nearest" });
   };
   return (
-    <div className="lm-toolbar" role="toolbar" aria-label={ui("lesson.controls")}>
-      <fieldset className="lm-depth">
-        <legend>{ui("depth.label")}</legend>
-        <div className="lm-depth__options">
-          {DEPTHS.map((d) => (
-            <label key={d} className="lm-pill" data-selected={depth === d || undefined}>
-              <input type="radio" name={depthName} value={d} checked={depth === d} onChange={() => store.setDepth(d)} />
-              <span>{ui(`depth.${d}`)}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <div className="lm-toolbar__actions">
-        {hasGlossary ? <Button variant="quiet" onClick={() => openGlossary()}>{ui("glossary.open")}</Button> : null}
+    <div className="lm-toolbar" role="group" aria-label={ui("lesson.controls")}>
+      <div className="lm-toolbar__row">
         <Button variant="quiet" onClick={onUndo}>{ui("undo")}</Button>
+        {hasGlossary ? <Button variant="quiet" onClick={() => openGlossary()}>{ui("glossary.open")}</Button> : null}
+        <Button variant="quiet" aria-expanded={toolsOpen} aria-controls={panelId} onClick={() => setToolsOpen(!toolsOpen)}>
+          {ui("tools.open")}
+        </Button>
+      </div>
+      <div id={panelId} className="lm-toolbar__panel" hidden={!toolsOpen}>
+        <fieldset className="lm-depth" aria-describedby={helpId}>
+          <legend>{ui("depth.label")}</legend>
+          <p id={helpId} className="lm-depth__help">{ui("depth.help")}</p>
+          <div className="lm-depth__options">
+            {DEPTHS.map((d) => (
+              <label key={d} className="lm-pill" data-selected={depth === d || undefined}>
+                <input type="radio" name={depthName} value={d} checked={depth === d} onChange={() => store.setDepth(d)} />
+                <span>{ui(`depth.${d}`)}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
         <Button variant="quiet" onClick={() => setConfirm(true)}>{ui("resetAll")}</Button>
       </div>
       <Dialog open={confirm} onClose={() => setConfirm(false)} labelledBy={confirmId} className="lm-dialog--small">
@@ -201,7 +217,7 @@ export const BlockFrame = memo(function BlockFrame({ block, firstUse }: { block:
     );
   }
   const Render = mode === "classroom" ? plugin.classroom : plugin.personal;
-  const showHowTo = firstUse && !howToSeen && componentUi("howto") !== "howto";
+  const showHowTo = firstUse && !howToSeen && componentUi("howto") !== "howto" && (plugin.howToApplies?.(config) ?? true);
 
   return (
     <div className="lm-block" id={`block-${block.id}`} data-type={block.type} tabIndex={-1} onFocusCapture={() => store.touch(block.id)}>
@@ -333,11 +349,15 @@ function DetourBody({ detour, parentKey, titleId, onClose }: { detour: Detour; p
   );
 }
 
-/** For returning learners: a light look back at something they made, before carrying on. */
+/**
+ * For returning learners: a light retrieval task. The learner is asked to
+ * remember first; what they made is shown only when they ask for it.
+ */
 function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
   const { registry, store, locale, t } = useEngine();
   const state = useLessonState(store);
   const [dismissed, setDismissed] = useState(false);
+  const [shown, setShown] = useState(false);
   const ui = useMemo(() => createUiT(locale, [engineMessages]), [locale]);
   const titleId = useId();
   const blockStates = state.blocks;
@@ -350,6 +370,7 @@ function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
       }
     return null;
   }, [lesson, registry, blockStates, t, locale]);
+  const focus = useFocusAfter<HTMLQuoteElement>(shown);
   if (!recall || dismissed) return null;
   const jump = () => {
     const el = document.getElementById(`block-${recall.blockId}`);
@@ -361,13 +382,77 @@ function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
     <section className="lm-recall" aria-labelledby={titleId}>
       <h2 id={titleId}>{ui("recall.title")}</h2>
       <p>{ui("recall.body")}</p>
-      <blockquote>{recall.summary}</blockquote>
       <p>{ui("recall.question")}</p>
-      <div className="lm-row">
-        <Button variant="primary" onClick={() => setDismissed(true)}>{ui("recall.keep")}</Button>
-        <Button onClick={jump}>{ui("recall.jump")}</Button>
-      </div>
+      {shown ? (
+        <>
+          <blockquote ref={focus.ref} tabIndex={-1}>{recall.summary}</blockquote>
+          <div className="lm-row">
+            <Button variant="primary" onClick={() => setDismissed(true)}>{ui("recall.keep")}</Button>
+            <Button onClick={jump}>{ui("recall.jump")}</Button>
+          </div>
+        </>
+      ) : (
+        <div className="lm-row">
+          <Button variant="primary" onClick={() => { focus.arm(); setShown(true); }}>{ui("recall.show")}</Button>
+          <Button variant="quiet" onClick={() => setDismissed(true)}>{ui("recall.skip")}</Button>
+        </div>
+      )}
     </section>
+  );
+}
+
+/**
+ * The designed ending: the lesson's post-checks, framed as a chance to see how
+ * far the learner has come, never as a test. Answers stay on the device.
+ */
+function Ending({ checks }: { checks: CheckItem[] }) {
+  const { ui } = useEngine();
+  const titleId = useId();
+  if (!checks.length) return null;
+  return (
+    <section className="lm-stage lm-ending" aria-labelledby={titleId}>
+      <h2 id={titleId} className="lm-stage__eyebrow">{ui("ending.title")}</h2>
+      <p className="lm-lead">{ui("ending.intro", { n: checks.length })}</p>
+      {checks.map((c) => (
+        <PostCheck key={c.id} item={c} />
+      ))}
+      <p className="lm-ending__done">{ui("ending.done")}</p>
+    </section>
+  );
+}
+
+interface PostCheckState {
+  choice?: string;
+  checked?: string;
+}
+
+function PostCheck({ item }: { item: CheckItem }) {
+  const { store, t, ui } = useEngine();
+  const key = `__post:${item.id}`;
+  const state = useStoreSelector(store, (s) => s.blocks[key] as PostCheckState | undefined) ?? {};
+  const focus = useFocusAfter<HTMLDivElement>(state.checked);
+  const landed = state.checked !== undefined && state.checked === item.answer;
+  return (
+    <div className="lm-block lm-postcheck">
+      <ChoiceGroup
+        legend={t.rich(item.promptKey)}
+        choices={item.options.map((o) => ({ id: o, label: t.rich(o), tone: state.checked === o ? (landed ? "insight" : "warm") : undefined }))}
+        value={state.choice}
+        locked={landed}
+        onChange={(choice) => store.setBlock<PostCheckState>(key, { ...state, choice })}
+      />
+      {!landed ? (
+        <Button variant="primary" disabled={!state.choice || state.choice === state.checked} onClick={() => { focus.arm(); store.setBlock<PostCheckState>(key, { ...state, checked: state.choice }); }}>
+          {ui("ending.check")}
+        </Button>
+      ) : null}
+      {state.checked !== undefined ? (
+        <div ref={focus.ref} tabIndex={-1} className={landed ? "lm-insight" : "lm-notice"}>
+          <p>{ui(landed ? "ending.landed" : "ending.again")}</p>
+          {landed && item.feedbackKey ? <p>{t.rich(item.feedbackKey)}</p> : null}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

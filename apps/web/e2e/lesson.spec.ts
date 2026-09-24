@@ -27,7 +27,7 @@ test("glossary terms open in place and in the glossary", async ({ page }) => {
   await chip.click();
   await expect(chip).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#block-b4").getByText("a line a number has to reach", { exact: false })).toBeVisible();
-  await page.getByRole("toolbar", { name: "Lesson controls" }).getByRole("button", { name: "Glossary" }).click();
+  await page.getByRole("group", { name: "Lesson controls" }).getByRole("button", { name: "Glossary" }).click();
   const dialog = page.getByRole("dialog", { name: "Words in this lesson" });
   await expect(dialog.getByText("training", { exact: true })).toBeVisible();
   await page.keyboard.press("Escape");
@@ -40,16 +40,18 @@ test("the depth dial reveals deeper layers, and one can be opened on its own", a
   await page.getByRole("button", { name: "Show the deeper idea" }).first().click();
   await expect(page.getByText("Real filters use hundreds of clues")).toBeVisible();
   await expect(page.getByText("Choosing the threshold is a trade-off.")).toBeHidden();
+  await page.getByRole("button", { name: "Lesson tools" }).click();
   await page.getByRole("radio", { name: "Deepest" }).click();
   await expect(page.getByText("Choosing the threshold is a trade-off.")).toBeVisible();
 });
 
 test("undo reverses the last change, wherever it was", async ({ page }) => {
   await open(page);
-  await page.getByRole("button", { name: "Show the next idea" }).click();
-  await expect(page.getByText("No person reads them first.")).toBeVisible();
-  await page.getByRole("toolbar", { name: "Lesson controls" }).getByRole("button", { name: "Undo" }).click();
-  await expect(page.getByText("No person reads them first.")).toBeHidden();
+  const choice = page.getByRole("radio", { name: "It gives each message a score from clues, and blocks it if the score is high enough." });
+  await page.getByText("It gives each message a score from clues, and blocks it if the score is high enough.").click();
+  await expect(choice).toBeChecked();
+  await page.getByRole("group", { name: "Lesson controls" }).getByRole("button", { name: "Undo" }).click();
+  await expect(choice).not.toBeChecked();
   await expect(page.getByRole("status").filter({ hasText: "Your last change was undone." })).toBeAttached();
 });
 
@@ -71,6 +73,14 @@ test("progress survives a reload and a language switch, returning to the same pl
   await expect(page.locator("#block-b3")).toBeFocused();
   await expect(page.locator("#block-b3").getByRole("region", { name: "ఇంకా వర్గీకరించని వస్తువులు" }).getByRole("button", { name: /లెక్కల హోంవర్క్/ })).toHaveCount(0);
   await expect(page.getByRole("note").filter({ hasText: "ముసాయిదా" }).first()).toBeVisible();
+});
+
+test("the lesson ends with the post-checks and a labelled takeaway card", async ({ page }) => {
+  await open(page);
+  await expect(page.getByRole("heading", { name: "See how far you've come" })).toBeVisible();
+  const card = page.locator("#block-b15");
+  await expect(card.getByText("My filter")).toBeVisible();
+  await expect(card.getByText("Messages I wrote to fool it")).toBeVisible();
 });
 
 test("classroom mode shows the show-of-hands path and no personal data", async ({ page }) => {

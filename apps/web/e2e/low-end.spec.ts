@@ -31,8 +31,8 @@ test("lesson becomes usable within budget on emulated slow 3G and a slow CPU", a
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible({ timeout: 60_000 });
   const firstContentMs = Date.now() - start;
   await expect(page.locator("article[data-hydrated]")).toBeVisible({ timeout: 60_000 });
-  await page.getByRole("button", { name: "Show the next idea" }).tap();
-  await expect(page.getByText("No person reads them first.")).toBeVisible();
+  await page.getByText("It gives each message a score from clues, and blocks it if the score is high enough.").tap();
+  await expect(page.getByRole("radio", { name: "It gives each message a score from clues, and blocks it if the score is high enough." })).toBeChecked();
   const interactiveMs = Date.now() - start;
 
   const report = { firstContentMs, interactiveMs, jsKb: Math.round(jsBytes / 1024) };

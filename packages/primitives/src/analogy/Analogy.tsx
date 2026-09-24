@@ -7,6 +7,8 @@ export interface AnalogyState {
   active?: number;
   fade?: number;
   sawBreak?: boolean;
+  /** Mapping indexes the learner has looked at; once all are seen the break point appears by itself. */
+  seen?: number[];
 }
 
 type Props = BlockProps<AnalogyConfig & Record<string, unknown>, AnalogyState> & { teacher?: boolean };
@@ -19,10 +21,12 @@ function AnalogyBody({ block, config, state = initial, setState, t, ui, teacher 
   const fading = config.fading ?? [];
   const fadeIdx = fading.length ? Math.min(state.fade ?? 0, fading.length - 1) : 0;
 
-  const nextPair = () => {
-    const next = mappings.length ? ((state.active ?? -1) + 1) % mappings.length : 0;
-    setState({ ...state, active: next });
-  };
+  const choose = (i: number) => setState({ ...state, active: i, seen: [...new Set([...(state.seen ?? []), i])] });
+  const nextPair = () => choose(mappings.length ? ((state.active ?? -1) + 1) % mappings.length : 0);
+  // Article 7: every analogy states where it breaks. It appears once every pair has been explored,
+  // and the learner can open it sooner.
+  const allSeen = mappings.length > 0 && mappings.every((_, i) => state.seen?.includes(i));
+  const breakShown = !!state.sawBreak || allSeen;
 
   return (
     <div className="lm-analogy">
@@ -45,13 +49,15 @@ function AnalogyBody({ block, config, state = initial, setState, t, ui, teacher 
           const active = state.active === i;
           return (
             <li key={`${block.id}-${i}`} className="lm-analogy__row" data-active={active || undefined}>
-              <button type="button" className="lm-analogy__source" aria-pressed={active} aria-describedby={targetId} onClick={() => setState({ ...state, active: i })}>
+              <button type="button" className="lm-analogy__source" aria-pressed={active} aria-describedby={targetId} onClick={() => choose(i)}>
+                <span className="lm-analogy__inline-label">{ui("everyday")}</span>
                 <span className="lm-analogy__badge" aria-hidden="true">
                   {i + 1}
                 </span>
                 {t.rich(m.sourceKey)}
               </button>
               <p id={targetId} className="lm-analogy__target" data-active={active || undefined}>
+                <span className="lm-analogy__inline-label">{ui("formal")}</span>
                 <span className="lm-analogy__badge" aria-hidden="true">
                   {i + 1}
                 </span>
@@ -89,10 +95,12 @@ function AnalogyBody({ block, config, state = initial, setState, t, ui, teacher 
         </div>
       ) : null}
 
-      <Button variant="quiet" aria-expanded={!!state.sawBreak} onClick={() => setState({ ...state, sawBreak: !state.sawBreak })}>
-        {ui(state.sawBreak ? "breakHide" : "breakShow")}
-      </Button>
-      {state.sawBreak ? (
+      {!allSeen ? (
+        <Button variant="quiet" aria-expanded={breakShown} onClick={() => setState({ ...state, sawBreak: !state.sawBreak })}>
+          {ui(breakShown ? "breakHide" : "breakShow")}
+        </Button>
+      ) : null}
+      {breakShown ? (
         <p className="lm-notice" role="note">
           {t.rich(config.breakPointKey)}
         </p>

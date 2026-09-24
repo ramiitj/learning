@@ -22,7 +22,8 @@ function fmt(locale: string, n: number, decimals?: number): string {
 function workingLine(locale: string, model: ModelSpec, values: Values): string {
   const parts = model.inputs.map((i) => `${fmt(locale, i.weight)} × ${fmt(locale, values[i.id] ?? i.initial)}`);
   const sum = weightedSum(model, values);
-  return `${parts.join(" + ")} + ${fmt(locale, model.bias ?? 0)} = ${fmt(locale, sum)}`;
+  if (model.bias) parts.push(fmt(locale, model.bias));
+  return `${parts.join(" + ")} = ${fmt(locale, sum)}`;
 }
 
 function sharedIds(config: CompareConfig): string[] {

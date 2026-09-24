@@ -21,7 +21,8 @@ function fmt(locale: string, n: number, decimals?: number): string {
 function workingLine(locale: string, model: ModelSpec, values: Values): string {
   const parts = model.inputs.map((i) => `${fmt(locale, i.weight)} × ${fmt(locale, values[i.id] ?? i.initial)}`);
   const sum = weightedSum(model, values);
-  return `${parts.join(" + ")} + ${fmt(locale, model.bias ?? 0)} = ${fmt(locale, sum)}`;
+  if (model.bias) parts.push(fmt(locale, model.bias));
+  return `${parts.join(" + ")} = ${fmt(locale, sum)}`;
 }
 
 function withinTolerance(output: number, goal: KnobConfig["goal"]): boolean {
@@ -71,8 +72,9 @@ function Readout({ config, values, locale, t, ui }: { config: KnobConfig; values
     model.type === "threshold" && model.output.labelKeys
       ? t.text(model.output.labelKeys[output as 0 | 1])
       : fmt(locale, output, model.output.decimals);
+  const decision = config.decision ? t.text(output >= config.decision.threshold ? config.decision.aboveKey : config.decision.belowKey) : "";
   const bodyText = config.outputTemplateKey
-    ? t.text(config.outputTemplateKey, { output: outputText, ...values })
+    ? t.text(config.outputTemplateKey, { output: outputText, decision, ...values })
     : ui("outputFallback", { label: t.text(model.output.labelKey), value: outputText });
   const range = model.output.max - model.output.min || 1;
   const pct = (v: number) => Math.min(100, Math.max(0, ((v - model.output.min) / range) * 100));

@@ -7,19 +7,21 @@ test("a lesson works offline after the first visit", async ({ page, context }) =
   await expect(page.getByRole("status").filter({ hasText: "Ready to use offline." })).toBeVisible({ timeout: 60_000 });
 
   // Make something, so we can check it survives the offline reload.
-  await page.getByRole("button", { name: "Show the next idea" }).click();
+  await page.getByText("It gives each message a score from clues, and blocks it if the score is high enough.").click();
+  await page.getByRole("radio", { name: "Fairly sure" }).click();
+  await page.getByRole("button", { name: "Lock in my guess" }).click();
 
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByRole("heading", { level: 1, name: "How does a junk filter decide?" })).toBeVisible();
   await expect(page.locator("article[data-hydrated]")).toBeVisible();
-  await expect(page.getByText("No person reads them first.")).toBeVisible();
-
-  // Still interactive offline: make a prediction.
-  await page.getByText("It gives each message a score from clues, and blocks it if the score is high enough.").click();
-  await page.getByRole("radio", { name: "Fairly sure" }).click();
-  await page.getByRole("button", { name: "Lock in my guess" }).click();
   await expect(page.getByText("Your guess matches what happens.")).toBeVisible();
+
+  // Still interactive offline: sort a message.
+  const sort = page.locator("#block-b3");
+  await sort.getByRole("button", { name: /Maths homework/ }).click();
+  await sort.getByRole("group", { name: /Where does/ }).getByRole("button", { name: "Real" }).click();
+  await expect(sort.getByRole("region", { name: "Not yet sorted" }).getByRole("button", { name: /Maths homework/ })).toHaveCount(0);
   await context.setOffline(false);
 });
 

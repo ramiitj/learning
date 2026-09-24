@@ -19,10 +19,7 @@ export function Reveal({ config, state, setState, t, ui }: BlockProps<RevealConf
         </p>
       ))}
       {shown < steps.length ? (
-        <div className="lm-row">
-          <Button variant="primary" onClick={() => { focus.arm(); setState({ shown: shown + 1 }); }}>{ui("next")}</Button>
-          <span className="lm-muted lm-small">{ui("progress", { shown, total: steps.length })}</span>
-        </div>
+        <Button variant="primary" onClick={() => { focus.arm(); setState({ shown: shown + 1 }); }}>{ui("next")}</Button>
       ) : null}
       {config.questionKey && shown === steps.length ? <p className="lm-question">{t.rich(config.questionKey)}</p> : null}
     </div>

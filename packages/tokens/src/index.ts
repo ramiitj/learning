@@ -98,7 +98,7 @@ export const elevation = {
 /** Type scale. Personal mode is fluid; projection guarantees >= 28px body at 1080p. */
 export const type = {
   personal: { body: "clamp(1.0625rem, 0.98rem + 0.35vw, 1.1875rem)", small: "0.9375rem", h3: "1.3rem", h2: "clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem)", h1: "clamp(2.1rem, 1.4rem + 3vw, 3.6rem)" },
-  projection: { body: "max(28px, 1.46vw)", small: "max(24px, 1.25vw)", h3: "max(34px, 1.8vw)", h2: "max(44px, 2.3vw)", h1: "max(60px, 3.2vw)" },
+  projection: { body: "max(30px, 1.56vw)", small: "max(28px, 1.46vw)", h3: "max(34px, 1.8vw)", h2: "max(44px, 2.3vw)", h1: "max(60px, 3.2vw)" },
   /** Indic scripts need taller lines for matras and conjuncts. */
   leading: { latin: "1.55", indic: "1.8", tight: "1.2", indicTight: "1.4" },
 } as const;

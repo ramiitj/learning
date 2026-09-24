@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import type { Block } from "@lm/schema";
 import { Button, createUiT, engineMessages, useBlockState, useEngine, useLessonBlocks, type BlockProps, type LessonT, type UiT } from "@lm/engine";
 import type { TakeawayConfig } from "./contract";
@@ -35,16 +35,17 @@ export function Takeaway({ config, mode, state, setState, readBlock, t, ui, loca
     const lines: string[] = [];
     if (config.titleKey) lines.push(t.text(config.titleKey));
     lines.push(t.text(config.cardKey));
-    for (const { block } of resolved) {
+    for (const [i, { block }] of resolved.entries()) {
+      const label = config.labelKeys?.[i] ? `${t.text(config.labelKeys[i]!)}: ` : "";
       if (!block) {
-        lines.push(ui("notMadeYet"));
+        lines.push(label + ui("notMadeYet"));
         continue;
       }
       const plugin = registry.get(block.type, block.componentVersion);
       const componentUi = createUiT(locale, [registry.messages, engineMessages], block.type);
       const value = readBlock(block.id);
       const summary = plugin?.summarize?.(value, block.config, t, componentUi) ?? null;
-      lines.push(summary ?? ui("notMadeYet"));
+      lines.push(label + (summary ?? ui("notMadeYet")));
     }
     downloadCard(lines);
   };
@@ -56,8 +57,8 @@ export function Takeaway({ config, mode, state, setState, readBlock, t, ui, loca
         {config.titleKey ? <h3 className="lm-takeaway__title">{t.rich(config.titleKey)}</h3> : null}
         <p>{t.rich(config.cardKey)}</p>
         <ul className="lm-takeaway__list">
-          {resolved.map(({ include, block }) => (
-            <IncludeLine key={include} blockId={block?.id} t={t} ui={ui} />
+          {resolved.map(({ include, block }, i) => (
+            <IncludeLine key={include} blockId={block?.id} label={config.labelKeys?.[i] ? t.rich(config.labelKeys[i]!) : null} t={t} ui={ui} />
           ))}
         </ul>
       </div>
@@ -73,16 +74,22 @@ export function Takeaway({ config, mode, state, setState, readBlock, t, ui, loca
 }
 
 /** One line of the card: the summary of what the learner made in an included block, reactively. */
-function IncludeLine({ blockId, t, ui }: { blockId: string | undefined; t: LessonT; ui: UiT }) {
+function IncludeLine({ blockId, label, t, ui }: { blockId: string | undefined; label: ReactNode; t: LessonT; ui: UiT }) {
   const { registry, locale } = useEngine();
   const blocks = useLessonBlocks();
   const state = useBlockState(blockId ?? "");
   const block = blockId ? blocks.find((b) => b.id === blockId) : undefined;
-  if (!block) return <li>{ui("notMadeYet")}</li>;
+  const head = label ? <strong className="lm-takeaway__label">{label}</strong> : null;
+  if (!block) return <li>{head}{ui("notMadeYet")}</li>;
   const plugin = registry.get(block.type, block.componentVersion);
   const componentUi = createUiT(locale, [registry.messages, engineMessages], block.type);
   const summary = plugin?.summarize?.(state, block.config, t, componentUi) ?? null;
-  return <li>{summary ?? ui("notMadeYet")}</li>;
+  return (
+    <li data-made={summary ? "" : undefined}>
+      {head}
+      {summary ?? <span className="lm-muted">{ui("notMadeYet")}</span>}
+    </li>
+  );
 }
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {

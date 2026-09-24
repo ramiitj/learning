@@ -20,6 +20,8 @@ export interface ByHandConfig {
   /** ICU text describing the rule; receives {threshold}, {weight}, {bias}. */
   ruleKey: string;
   automateKey: string;
+  /** What each item's number is, e.g. "Junk score". Defaults to a generic "Value". */
+  valueLabelKey?: string;
 }
 
 export const byHandThenAutomateContract: ComponentContract = {
@@ -74,11 +76,12 @@ export const byHandThenAutomateContract: ComponentContract = {
       manualCount: { type: "integer", minimum: 0 },
       ruleKey: { type: "string" },
       automateKey: { type: "string" },
+      valueLabelKey: { type: "string" },
     },
   },
   stringKeys: (c) => {
     const x = c as unknown as ByHandConfig;
     const processKeys = x.process.type === "threshold" ? [x.process.aboveKey, x.process.belowKey] : [];
-    return keys(x.introKey, x.ruleKey, x.automateKey, x.items.map((i) => i.labelKey), processKeys);
+    return keys(x.introKey, x.ruleKey, x.automateKey, x.valueLabelKey, x.items.map((i) => i.labelKey), processKeys);
   },
 };

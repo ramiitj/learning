@@ -11,12 +11,21 @@ export interface KnobGoal {
   successKey: string;
 }
 
+/** Turns the output into a decision at a threshold, e.g. "junk" at 10 or more. */
+export interface KnobDecision {
+  threshold: number;
+  aboveKey: string;
+  belowKey: string;
+}
+
 export interface KnobConfig {
   promptKey: string;
   model: ModelSpec;
   /** ICU sentence receiving {output} and each input id as values, so numbers in the sentence update live. */
   outputTemplateKey?: string;
   goal?: KnobGoal;
+  /** When present, {decision} is passed to outputTemplateKey and the threshold is marked on the gauge. */
+  decision?: KnobDecision;
 }
 
 export const knobContract: ComponentContract = {
@@ -31,6 +40,12 @@ export const knobContract: ComponentContract = {
       promptKey: { type: "string" },
       model: modelSchema,
       outputTemplateKey: { type: "string" },
+      decision: {
+        type: "object",
+        required: ["threshold", "aboveKey", "belowKey"],
+        additionalProperties: false,
+        properties: { threshold: { type: "number" }, aboveKey: { type: "string" }, belowKey: { type: "string" } },
+      },
       goal: {
         type: "object",
         required: ["target", "tolerance", "goalKey", "successKey"],
@@ -46,6 +61,6 @@ export const knobContract: ComponentContract = {
   },
   stringKeys: (c) => {
     const x = c as unknown as KnobConfig;
-    return keys(x.promptKey, modelStringKeys(x.model), x.outputTemplateKey, x.goal?.goalKey, x.goal?.successKey);
+    return keys(x.promptKey, modelStringKeys(x.model), x.outputTemplateKey, x.goal?.goalKey, x.goal?.successKey, x.decision?.aboveKey, x.decision?.belowKey);
   },
 };

@@ -26,11 +26,12 @@ messages = [("m1", "🎁", "sort.g1"), ("m2", "📘", "sort.g2"), ("m3", "🔒",
 
 stages = [
     {"stage": "hook", "blocks": [
-        block("b1", "reveal", {"textKey": "hook.text", "steps": ["hook.s1", "hook.s2"], "questionKey": "hook.q"}),
+        block("b1", "reveal", {"textKey": "hook.text", "questionKey": "hook.q"}),
     ]},
     {"stage": "predict", "blocks": [
-        block("b2", "predict", {"promptKey": "predict.prompt", "choices": ["predict.c1", "predict.c2", "predict.c3"], "answer": "predict.c2", "confidence": True, "revealKey": "predict.reveal"},
-              classroom={"mode": "class-vote"}, glossaryTerms=["score", "threshold"]),
+        block("b2", "predict", {"promptKey": "predict.prompt", "choices": ["predict.c1", "predict.c2", "predict.c3"], "answer": "predict.c2", "confidence": True, "revealKey": "predict.reveal",
+                                "choiceFeedback": {"predict.c1": "predict.f1", "predict.c3": "predict.f3"}},
+              classroom={"mode": "class-vote"}),
     ]},
     {"stage": "manipulate", "blocks": [
         block("b3", "sort", {"instructionKey": "sort.instruction", "groups": ["sort.g1", "sort.g2"],
@@ -38,15 +39,16 @@ stages = [
                              "revealKey": "sort.reveal"},
               classroom={"mode": "vote-per-item"}, glossaryTerms=["clue"]),
         block("b4", "knob", {"promptKey": "knob.prompt", "model": filter_model, "outputTemplateKey": "knob.sentence",
+                             "decision": {"threshold": 10, "aboveKey": "knob.junk", "belowKey": "knob.inbox"},
                              "goal": {"target": 10, "tolerance": 0, "goalKey": "knob.goal", "successKey": "knob.success"}},
               glossaryTerms=["score", "threshold"], detours=["threshold"]),
         block("b5", "by-hand-then-automate", {"introKey": "bh.intro", "ruleKey": "bh.rule",
                              "process": {"type": "threshold", "threshold": 10, "aboveKey": "bh.above", "belowKey": "bh.below"},
-                             "items": [{"id": f"i{i}", "labelKey": f"bh.i{i}", "value": v} for i, v in enumerate([12, 0, 11, 0, 14, 0, 8, 2], start=1)],
-                             "manualCount": 2, "automateKey": "bh.auto"}),
+                             "items": [{"id": f"i{i}", "labelKey": f"bh.i{i}", "value": v} for i, v in enumerate([10, 0, 3, 0, 11, 0, 4, 0], start=1)],
+                             "manualCount": 2, "automateKey": "bh.auto", "valueLabelKey": "bh.value"}),
         block("b6", "compare", {"promptKey": "cmp.prompt", "model": filter_model, "shared": ["money", "urgent"],
                                 "variants": [{"id": "calm", "labelKey": "cmp.a", "overrides": {"excl": 0}},
-                                             {"id": "excited", "labelKey": "cmp.b", "overrides": {"excl": 6}}],
+                                             {"id": "excited", "labelKey": "cmp.b", "overrides": {"excl": 10}}],
                                 "predictKey": "cmp.predict", "explainKey": "cmp.explain"}),
     ]},
     {"stage": "explain", "blocks": [
@@ -75,7 +77,7 @@ stages = [
     ]},
     {"stage": "transfer-reflect", "blocks": [
         block("b14", "explain-back", {"mode": "own-analogy", "promptKey": "eb.prompt", "breakPointPromptKey": "eb.break", "modelAnswerKey": "eb.model"}),
-        block("b15", "takeaway", {"titleKey": "take.title", "cardKey": "take.card", "includes": ["b4", "b13", "b14"]}),
+        block("b15", "takeaway", {"titleKey": "take.title", "cardKey": "take.card", "includes": ["b4", "b13", "b14"], "labelKeys": ["take.l1", "take.l2", "take.l3"]}),
     ]},
 ]
 

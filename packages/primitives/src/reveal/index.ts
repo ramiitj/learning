@@ -9,4 +9,5 @@ export const reveal: ComponentPlugin<RevealConfig & Record<string, unknown>, Rev
   personal: Reveal,
   classroom: Reveal,
   messages,
+  howToApplies: (config) => (config.steps?.length ?? 0) > 0,
 };
