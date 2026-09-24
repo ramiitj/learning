@@ -94,7 +94,7 @@ function Readout({ config, values, locale, t, ui }: { config: KnobConfig; values
             />
           ) : null}
         </span>
-        {goal ? <p className="lm-muted lm-small">{ui("target", { min: fmt(locale, goal.target - goal.tolerance), max: fmt(locale, goal.target + goal.tolerance) })}</p> : null}
+        {goal ? <p className="lm-muted lm-small">{goal.tolerance === 0 ? ui("targetExact", { value: fmt(locale, goal.target) }) : ui("target", { min: fmt(locale, goal.target - goal.tolerance), max: fmt(locale, goal.target + goal.tolerance) })}</p> : null}
       </div>
       <p className="lm-knob__working">
         <span className="lm-muted lm-small">{ui("workingHeading")}</span>

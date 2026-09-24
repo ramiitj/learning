@@ -6,7 +6,7 @@ import { createLessonT, createUiT, FALLBACK_LOCALE } from "./i18n";
 import { engineMessages } from "./messages";
 import type { Registry } from "./registry";
 import { LessonStore } from "./store";
-import type { Detour, Glossary, GlossaryEntry, LessonT, Mode, SetStateOptions, UiT } from "./types";
+import type { Detour, Glossary, GlossaryEntry, Mode, SetStateOptions, UiT } from "./types";
 import { Button, Dialog } from "./ui";
 
 export type LessonDoc = Pick<Lesson, "id" | "version" | "meta" | "stages" | "strings" | "localeStatus">;
@@ -220,7 +220,7 @@ export const BlockFrame = memo(function BlockFrame({ block, firstUse }: { block:
 });
 
 function BlockFooter({ block, canReset }: { block: Block; canReset: boolean }) {
-  const { glossary, detours, store, t, ui, openDetour } = useEngine();
+  const { glossary, detours, store, locale, ui, openDetour } = useEngine();
   const terms = (block.glossaryTerms ?? []).filter((g) => g in glossary);
   const offered = (block.detours ?? []).filter((d) => d in detours);
   if (!terms.length && !offered.length && !canReset) return null;
@@ -236,7 +236,7 @@ function BlockFooter({ block, canReset }: { block: Block; canReset: boolean }) {
       ) : null}
       {offered.map((d) => (
         <Button key={d} variant="quiet" className="lm-detour-offer" onClick={() => openDetour(d)}>
-          {ui("detour.offer", { title: detourTitle(detours[d]!, t) })}
+          {ui("detour.offer", { title: detourTitle(detours[d]!, locale) })}
         </Button>
       ))}
       {canReset ? (
@@ -246,8 +246,9 @@ function BlockFooter({ block, canReset }: { block: Block; canReset: boolean }) {
   );
 }
 
-function detourTitle(d: Detour, t: LessonT): string {
-  return t.has(d.titleKey) ? t.text(d.titleKey) : d.titleKey;
+/** A detour's title lives in the detour's own strings, not the lesson's. */
+function detourTitle(d: Detour, locale: string): string {
+  return createLessonT(locale, d.strings, (_id, children) => children).text(d.titleKey);
 }
 
 /** A glossary term: tap to see its definition in place, without leaving the sentence. */

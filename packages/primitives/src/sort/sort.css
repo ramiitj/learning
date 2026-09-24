@@ -20,7 +20,8 @@
   min-block-size: var(--target-min);
   min-inline-size: var(--target-min);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-lg);
+  text-align: start;
   border: 2px solid var(--color-border-strong);
   background: var(--color-surface);
   color: var(--color-ink);
