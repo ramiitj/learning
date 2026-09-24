@@ -66,7 +66,7 @@ add("knob.excl", "Exclamation marks “!” (1 point each)",
 add("knob.money", "Money words (2 points each)", "पैसे वाले शब्द (हर एक के 2 अंक)", "డబ్బు పదాలు (ఒక్కొక్కటికి 2 పాయింట్లు)")
 add("knob.urgent", "Urgent words (3 points each)", "जल्दबाज़ी वाले शब्द (हर एक के 3 अंक)", "అత్యవసర పదాలు (ఒక్కొక్కటికి 3 పాయింట్లు)")
 add("knob.output", "Junk score", "जंक स्कोर", "జంక్ స్కోరు")
-add("knob.sentence", "This message has {excl} “!” marks, {money} money words and {urgent} urgent words. Its junk score is {output}, so it goes to {decision}.",
+add("knob.sentence", "This message has {excl, plural, one {# “!” mark} other {# “!” marks}}, {money, plural, one {# money word} other {# money words}} and {urgent, plural, one {# urgent word} other {# urgent words}}. Its junk score is {output}, so it goes to {decision}.",
     "इस संदेश में {excl} “!” चिह्न, {money} पैसे वाले शब्द और {urgent} जल्दबाज़ी वाले शब्द हैं। इसका जंक स्कोर {output} है, इसलिए यह {decision} में जाता है।",
     "ఈ సందేశంలో {excl} “!” గుర్తులు, {money} డబ్బు పదాలు, {urgent} అత్యవసర పదాలు ఉన్నాయి. దీని జంక్ స్కోరు {output}, కాబట్టి ఇది {decision}కి వెళ్తుంది.")
 add("knob.success", "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",

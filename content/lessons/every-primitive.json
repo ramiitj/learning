@@ -641,7 +641,7 @@
       "knob.money": "Money words (2 points each)",
       "knob.urgent": "Urgent words (3 points each)",
       "knob.output": "Junk score",
-      "knob.sentence": "This message has {excl} “!” marks, {money} money words and {urgent} urgent words. Its junk score is {output}, so it goes to {decision}.",
+      "knob.sentence": "This message has {excl, plural, one {# “!” mark} other {# “!” marks}}, {money, plural, one {# money word} other {# money words}} and {urgent, plural, one {# urgent word} other {# urgent words}}. Its junk score is {output}, so it goes to {decision}.",
       "knob.success": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
       "bh.intro": "The filter’s rule is short. Each message below already has its clues counted and its points added up, using the points from the filter above. Try the rule by hand first, the way the program does it.",
       "bh.rule": "If a message’s score is {threshold} or more, it goes to junk. Otherwise it goes to the inbox.",
