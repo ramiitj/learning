@@ -18,5 +18,17 @@
   "filter": {
     "term": "filter",
     "definition": "something that lets some things through and holds others back"
+  },
+  "junk": {
+    "term": "junk",
+    "definition": "messages you did not ask for, such as adverts and tricks, kept apart from your main messages"
+  },
+  "program": {
+    "term": "program",
+    "definition": "a list of exact steps that a computer follows"
+  },
+  "inbox": {
+    "term": "inbox",
+    "definition": "the place where the messages you want arrive"
   }
 }

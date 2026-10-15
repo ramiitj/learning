@@ -26,7 +26,7 @@ messages = [("m1", "🎁", "sort.g1"), ("m2", "📘", "sort.g2"), ("m3", "🔒",
 
 stages = [
     {"stage": "hook", "blocks": [
-        block("b1", "reveal", {"textKey": "hook.text", "questionKey": "hook.q"}),
+        block("b1", "reveal", {"textKey": "hook.text", "questionKey": "hook.q"}, glossaryTerms=["junk", "program"]),
     ]},
     {"stage": "predict", "blocks": [
         block("b2", "predict", {"promptKey": "predict.prompt", "choices": ["predict.c1", "predict.c2", "predict.c3"], "answer": "predict.c2", "confidence": True, "revealKey": "predict.reveal",
@@ -37,11 +37,11 @@ stages = [
         block("b3", "sort", {"instructionKey": "sort.instruction", "groups": ["sort.g1", "sort.g2"],
                              "items": [{"id": m, "labelKey": f"sort.{m}", "symbol": sym, "group": g} for m, sym, g in messages],
                              "revealKey": "sort.reveal"},
-              classroom={"mode": "vote-per-item"}, glossaryTerms=["clue"]),
+              classroom={"mode": "vote-per-item"}, glossaryTerms=["filter", "clue"]),
         block("b4", "knob", {"promptKey": "knob.prompt", "model": filter_model, "outputTemplateKey": "knob.sentence",
                              "decision": {"threshold": 10, "aboveKey": "knob.junk", "belowKey": "knob.inbox"},
                              "goal": {"target": 10, "tolerance": 0, "goalKey": "knob.goal", "successKey": "knob.success"}},
-              glossaryTerms=["score", "threshold"], detours=["threshold"]),
+              glossaryTerms=["score", "threshold", "inbox"], detours=["threshold"]),
         block("b5", "by-hand-then-automate", {"introKey": "bh.intro", "ruleKey": "bh.rule",
                              "process": {"type": "threshold", "threshold": 10, "aboveKey": "bh.above", "belowKey": "bh.below"},
                              "items": [{"id": f"i{i}", "labelKey": f"bh.i{i}", "value": v} for i, v in enumerate([10, 0, 3, 0, 11, 0, 4, 0], start=1)],
