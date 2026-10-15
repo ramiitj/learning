@@ -15,7 +15,9 @@
     "cms:migrate": "payload migrate"
   },
   "dependencies": {
+    "@lm/agents": "workspace:*",
     "@lm/engine": "workspace:*",
+    "@lm/orchestrator": "workspace:*",
     "@lm/primitives": "workspace:*",
     "@lm/schema": "workspace:*",
     "@lm/tokens": "workspace:*",

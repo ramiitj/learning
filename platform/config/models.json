@@ -1,10 +1,53 @@
 {
   "note": "Pin exact model IDs. Verify current IDs at https://docs.claude.com before deployment. Upgrade only after the benchmark suite passes.",
   "tiers": {
-    "most-capable": { "model": "claude-opus-5-5", "use": ["editor-in-chief planning", "curriculum and instructional design", "learning experience design", "conflict resolution"] },
-    "balanced": { "model": "claude-sonnet-5", "use": ["analogy", "localisation", "educator enablement", "novice learner panel", "accuracy and safety review"] },
-    "fast": { "model": "claude-haiku-4-5-20251001", "use": ["routine checks", "classification", "feedback triage", "string extraction"] }
+    "most-capable": {
+      "model": "claude-opus-5-5",
+      "use": [
+        "editor-in-chief planning",
+        "curriculum and instructional design",
+        "learning experience design",
+        "conflict resolution"
+      ]
+    },
+    "balanced": {
+      "model": "claude-sonnet-5",
+      "use": [
+        "analogy",
+        "localisation",
+        "educator enablement",
+        "novice learner panel",
+        "accuracy and safety review"
+      ]
+    },
+    "fast": {
+      "model": "claude-haiku-4-5-20251001",
+      "use": [
+        "routine checks",
+        "classification",
+        "feedback triage",
+        "string extraction"
+      ]
+    }
   },
   "monthlyBudgetUSD": null,
-  "alertAtFraction": 0.8
+  "alertAtFraction": 0.8,
+  "pricing": {
+    "note": "USD per million tokens. Opus 5.5 and Sonnet 5 from the Claude API model reference (2026-10); Haiku 4.5 from its earlier published price, to verify. Used for cost tracking and the monthly budget. Cache writes with a 1-hour lifetime cost 2x input.",
+    "claude-opus-5-5": {
+      "input": 4,
+      "output": 20,
+      "cacheRead": 0.2
+    },
+    "claude-sonnet-5": {
+      "input": 2,
+      "output": 10,
+      "cacheRead": 0.2
+    },
+    "claude-haiku-4-5-20251001": {
+      "input": 1,
+      "output": 5,
+      "cacheRead": 0.1
+    }
+  }
 }

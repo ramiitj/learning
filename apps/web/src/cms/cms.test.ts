@@ -100,4 +100,38 @@ describe.skipIf(!DB)("CMS rules", () => {
     await payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "ok" }, user: fresh(), overrideAccess: false });
     expect(((await live()).docs[0]!.doc as { strings: { en: Record<string, string> } }).strings.en["hook.q"]).toBe("A changed question?");
   });
+
+  it("runs the agent pipeline through the CMS, each agent within its own permissions", async () => {
+    const { advance } = await import("@lm/orchestrator");
+    const { fakeClient } = await import("@lm/orchestrator/testing");
+    const { cmsPipelineStore, runFromDoc } = await import("@/pipeline/store");
+    for (const agentId of ["editor-in-chief", "curriculum-instructional-designer", "learning-experience-designer", "analogy-specialist", "localisation-specialist", "educator-enablement", "accuracy-safety-reviewer", "novice-learner-panel"]) {
+      await payload.create({ collection: "users", data: { name: agentId, role: "agent", agentId }, overrideAccess: true, context: { system: true } });
+      await payload.create({ collection: "agents", data: { agentId, enabled: true }, overrideAccess: true, context: { system: true } });
+    }
+    await payload.create({ collection: "audiences", data: { audienceId: "school-13-17", label: "School", profile: { id: "school-13-17", maxSentenceWords: 18 } }, overrideAccess: true, context: { system: true } });
+    const doc = await payload.create({ collection: "pipeline-runs", data: { title: "Pipeline test", request: "A lesson on how a junk filter decides", stage: "plan", status: "queued" }, user: fresh(), overrideAccess: false });
+    const store = cmsPipelineStore(payload, doc.id);
+    let run = runFromDoc({ ...doc, id: doc.id } as never);
+    const calls: string[] = [];
+    for (let i = 0; i < 30 && !["waiting-for-creator", "failed", "paused"].includes(run.status); i++) run = await advance(run, { store, client: fakeClient({}, calls) });
+    expect(run.steps.filter((s) => s.agent === "orchestrator")).toEqual([]);
+    expect(run.status).toBe("waiting-for-creator");
+
+    // Learners still see the version the creator published in the previous test...
+    const live = await payload.find({ collection: "lessons", where: { lessonId: { equals: "every-primitive" } }, overrideAccess: false, user: null as never });
+    expect((live.docs[0]!.doc as { strings: { en: Record<string, string> } }).strings.en["hook.q"]).toBe("A changed question?");
+    // ...while the agents' work waits as a draft, with machine-drafted Hindi and Telugu.
+    const latest = await payload.findByID({ collection: "lessons", id: live.docs[0]!.id, draft: true, overrideAccess: true });
+    expect(latest._status).toBe("draft");
+    expect((latest.doc as { strings: { en: Record<string, string>; hi: Record<string, string> } }).strings.en["hook.q"]).not.toBe("A changed question?");
+    expect((latest.doc as { strings: { hi: Record<string, string> } }).strings.hi["hook.q"]).toContain("अनुवाद");
+    const decisions = await payload.find({ collection: "decisions", where: { kind: { equals: "publish" }, requestedBy: { equals: "editor-in-chief" } }, overrideAccess: true });
+    expect(decisions.totalDocs).toBe(1);
+    const agentEvents = await payload.find({ collection: "events", where: { actorKind: { equals: "agent" } }, limit: 500, overrideAccess: true });
+    expect(new Set(agentEvents.docs.map((e) => e.actorId))).toEqual(new Set(["editor-in-chief", "curriculum-instructional-designer", "analogy-specialist", "learning-experience-designer", "localisation-specialist", "accuracy-safety-reviewer", "novice-learner-panel", "educator-enablement"]));
+    const saved = await payload.findByID({ collection: "pipeline-runs", id: doc.id, overrideAccess: true });
+    expect(saved.status).toBe("waiting-for-creator");
+    expect(saved.costUsd).toBeGreaterThan(0);
+  });
 });

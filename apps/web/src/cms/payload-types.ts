@@ -516,16 +516,24 @@ export interface PipelineRun {
   stage:
     | 'plan'
     | 'draft'
-    | 'enrich'
+    | 'analogies'
+    | 'compose'
     | 'localise'
     | 'review'
     | 'revise'
-    | 'validate'
+    | 're-review'
+    | 'resolve'
     | 'teacher-guide'
     | 'creator-preview'
-    | 'done'
-    | 'paused'
-    | 'failed';
+    | 'done';
+  /**
+   * The lesson id the pipeline is working on.
+   */
+  lessonSlug?: string | null;
+  /**
+   * Urgent runs continue past the budget alert level (never past the limit).
+   */
+  urgent?: boolean | null;
   currentAgent?: string | null;
   status: 'queued' | 'running' | 'waiting-for-creator' | 'done' | 'failed' | 'paused';
   costUsd?: number | null;
@@ -1049,6 +1057,8 @@ export interface PipelineRunsSelect<T extends boolean = true> {
   request?: T;
   lesson?: T;
   stage?: T;
+  lessonSlug?: T;
+  urgent?: T;
   currentAgent?: T;
   status?: T;
   costUsd?: T;

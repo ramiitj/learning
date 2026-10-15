@@ -13,6 +13,9 @@ export interface RunResult {
 
 const MAX_ATTEMPTS = 2;
 
+/** The Claude API client (reads ANTHROPIC_API_KEY). Created here so every caller shares one SDK. */
+export const createClient = () => new Anthropic();
+
 /**
  * Runs an agent on one input through the Messages API. The system prompt
  * (constitution, profile, rubric, references) is cached; the response is
@@ -41,17 +44,27 @@ export async function runJudge(kit: AgentKit, artifact: unknown, task: unknown, 
   return runWithRubric(client, "claude-opus-5-5", judgePrompt(kit), judgeOutputSchema(rubric) as unknown as Record<string, unknown>, { task, artifact }, (o) => enforceJudge(o, rubric));
 }
 
-async function runWithRubric(client: Anthropic, model: string, system: string, schema: Record<string, unknown>, input: unknown, enforce: (o: unknown) => Violation[]): Promise<RunResult> {
+/**
+ * One structured call with enforcement: the response is constrained to
+ * `schema` (when given), checked by `enforce`, and redone once with the
+ * violations fed back. Exported for the orchestrator, which uses it for steps
+ * whose contract is the lesson schema and the validation service.
+ */
+export async function runStructured(client: Pick<Anthropic, "messages">, model: string, system: string, schema: Record<string, unknown> | null, input: unknown, enforce: (o: unknown) => Violation[], maxAttempts = MAX_ATTEMPTS): Promise<RunResult> {
+  return runWithRubric(client, model, system, schema, input, enforce, maxAttempts);
+}
+
+async function runWithRubric(client: Pick<Anthropic, "messages">, model: string, system: string, schema: Record<string, unknown> | null, input: unknown, enforce: (o: unknown) => Violation[], maxAttempts = MAX_ATTEMPTS): Promise<RunResult> {
   const messages: Anthropic.MessageParam[] = [{ role: "user", content: JSON.stringify(input) }];
   const usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 };
   let output: unknown = null;
   let violations: Violation[] = [];
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const stream = client.messages.stream({
       model,
       max_tokens: 64000,
       thinking: { type: "adaptive" },
-      output_config: { effort: "high", format: { type: "json_schema", schema } },
+      output_config: schema ? { effort: "high", format: { type: "json_schema", schema } } : { effort: "high" },
       system: [{ type: "text", text: system, cache_control: { type: "ephemeral", ttl: "1h" } }],
       messages,
     });
@@ -61,7 +74,7 @@ async function runWithRubric(client: Anthropic, model: string, system: string, s
     usage.cacheRead += response.usage.cache_read_input_tokens ?? 0;
     usage.cacheWrite += response.usage.cache_creation_input_tokens ?? 0;
     if (response.stop_reason === "refusal") throw new Error(`agent refused: ${response.stop_details?.explanation ?? "no explanation"}`);
-    const text = response.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("");
+    const text = response.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("").replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, "");
     try {
       output = JSON.parse(text);
       violations = enforce(output);
@@ -75,5 +88,5 @@ async function runWithRubric(client: Anthropic, model: string, system: string, s
       content: `Your output broke the rubric and was rejected:\n${violations.map((x) => `- ${x.rule}: ${x.detail}`).join("\n")}\nRedo the work, following the rubric exactly, and return the complete JSON.`,
     });
   }
-  return { output, violations, attempts: MAX_ATTEMPTS, usage };
+  return { output, violations, attempts: maxAttempts, usage };
 }
