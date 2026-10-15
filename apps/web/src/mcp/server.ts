@@ -6,6 +6,7 @@ import { z } from "zod";
 import { catalogue as contracts, catalogueMessages as componentMessages } from "@lm/catalogue";
 import { STAGE_ORDER, type Block, type Lesson } from "@lm/schema";
 import { previewUrl } from "@/auth/session";
+import { appOriginOrNull } from "@/auth/origin";
 import { routing } from "@/i18n/routing";
 import { repoRoot, validateWithCms } from "@/cms/validation";
 
@@ -153,7 +154,7 @@ export function buildMcpServer(payload: Payload, user: User) {
       const lesson = lessonId ? await findLesson(lessonId) : null;
       if (lessonId && !lesson) return failure(`No lesson "${lessonId}".`);
       const run = await payload.create({ collection: "pipeline-runs", data: { title: request.slice(0, 80), request, lesson: lesson?.id as never, stage: "plan", status: "queued" }, ...as });
-      return json({ queued: true, runId: run.id, console: `${process.env.APP_ORIGIN ?? ""}/console/collections/pipeline-runs/${run.id}` });
+      return json({ queued: true, runId: run.id, console: `${appOriginOrNull() ?? ""}/console/collections/pipeline-runs/${run.id}` });
     },
   );
 

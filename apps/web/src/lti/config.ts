@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
+import { appOrigin as resolvedOrigin } from "@/auth/origin";
 
 /**
  * LTI 1.3 and xAPI are OFF by default (docs/proposals/lti-xapi.md). They change
@@ -6,7 +7,7 @@ import { SignJWT, jwtVerify } from "jose";
  */
 export const ltiEnabled = () => process.env.LTI_ENABLED === "1";
 export const xapiEnabled = () => ltiEnabled() && process.env.XAPI_ENABLED === "1";
-export const appOrigin = () => new URL(process.env.APP_ORIGIN ?? "http://localhost:3000").origin;
+export const appOrigin = () => resolvedOrigin();
 
 /** Lesson ids follow schemas/lesson.schema.json (^[a-z0-9-]+$), with a length cap. */
 export const LESSON_ID = /^[a-z0-9](?:[a-z0-9-]{0,78}[a-z0-9])?$/;

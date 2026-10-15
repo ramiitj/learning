@@ -21,3 +21,21 @@ variable "anthropic_api_key" {
   default     = ""
   sensitive   = true
 }
+
+variable "creator_setup_enabled" {
+  description = "Create CREATOR_SETUP_TOKEN for the one-time creator setup. Set to false after the creator's passkey exists: the next apply deletes the token and the Vercel variable."
+  type        = bool
+  default     = true
+}
+
+variable "alert_webhook_url" {
+  description = "Optional webhook that receives short error alerts with no learner data (ALERT_WEBHOOK_URL). Leave empty for no alerts."
+  type        = string
+  default     = ""
+  sensitive   = true
+
+  validation {
+    condition     = var.alert_webhook_url == "" || startswith(var.alert_webhook_url, "https://")
+    error_message = "alert_webhook_url must be an https URL, or empty."
+  }
+}

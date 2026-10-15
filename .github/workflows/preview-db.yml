@@ -1,0 +1,163 @@
+name: Preview database
+
+# One Neon branch per pull request (docs/runbooks/deploy.md, gap 4), so pull
+# requests with different migrations never share a schema.
+#
+#   opened, reopened, synchronize   create (or reuse) Neon branch pr-<number> from production,
+#                                   run the migrations against it, and point the Vercel preview
+#                                   DATABASE_URI for this git branch at it
+#   closed                          delete the Vercel variable and the Neon branch
+#
+# UNTESTED until the credentials exist: written against the documented Neon API v2
+# (https://api-docs.neon.tech/reference) and Vercel REST API
+# (https://vercel.com/docs/rest-api). Run it on a throwaway pull request first.
+#
+# Secrets: NEON_API_KEY, NEON_PROJECT_ID (terraform output neon_project_id), VERCEL_TOKEN,
+# VERCEL_PROJECT_ID (terraform output vercel_project_id). Optional repository variable
+# VERCEL_TEAM_ID if the project belongs to a team. Without the secrets every job is skipped
+# with a notice. A preview branch is a copy of production, so it holds what production holds
+# (no learner personal data in v1), stays in aws-ap-south-1 and is deleted when the PR closes.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-db-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+env:
+  NEON_API: https://console.neon.tech/api/v2
+  VERCEL_API: https://api.vercel.com
+  BRANCH_NAME: pr-${{ github.event.pull_request.number }}
+  GIT_BRANCH: ${{ github.head_ref }}
+  # The database and role made by infra/terraform/main.tf (neon_project.main).
+  DB_NAME: magazine
+  DB_ROLE: magazine
+
+jobs:
+  up:
+    name: Create or reuse the pull request's database branch
+    # Forks never get the secrets; skip them rather than fail.
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the secrets are present
+        id: secrets
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$NEON_API_KEY" ] || [ -z "$NEON_PROJECT_ID" ] || [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::notice::Preview database skipped: NEON_API_KEY, NEON_PROJECT_ID, VERCEL_TOKEN and VERCEL_PROJECT_ID are not all set. Previews use the shared Neon 'preview' branch."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create or reuse Neon branch pr-<number> from production
+        id: neon
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          api() { curl -sS --fail-with-body -H "Authorization: Bearer $NEON_API_KEY" -H "Accept: application/json" "$@"; }
+          branches="$(api "$NEON_API/projects/$NEON_PROJECT_ID/branches")"
+          id="$(jq -r --arg n "$BRANCH_NAME" '.branches[] | select(.name == $n) | .id' <<<"$branches" | head -n1)"
+          if [ -z "$id" ]; then
+            parent="$(jq -r '.branches[] | select(.default == true or .primary == true) | .id' <<<"$branches" | head -n1)"
+            [ -n "$parent" ] || { echo "::error::No default (production) branch found in the Neon project"; exit 1; }
+            created="$(api -X POST -H "Content-Type: application/json" "$NEON_API/projects/$NEON_PROJECT_ID/branches" \
+              -d "$(jq -n --arg n "$BRANCH_NAME" --arg p "$parent" '{branch: {name: $n, parent_id: $p}, endpoints: [{type: "read_write"}]}')")"
+            id="$(jq -r '.branch.id' <<<"$created")"
+            echo "Created Neon branch $BRANCH_NAME ($id) from $parent"
+          else
+            echo "Reusing Neon branch $BRANCH_NAME ($id)"
+          fi
+          uri="$(api -G "$NEON_API/projects/$NEON_PROJECT_ID/connection_uri" --data-urlencode "branch_id=$id" --data-urlencode "database_name=$DB_NAME" --data-urlencode "role_name=$DB_ROLE" | jq -r '.uri')"
+          [ -n "$uri" ] && [ "$uri" != "null" ] || { echo "::error::Could not get a connection string for $BRANCH_NAME"; exit 1; }
+          echo "::add-mask::$uri"
+          # The compute may still be starting: wait until it answers.
+          for i in $(seq 1 30); do psql "$uri" -Atqc 'select 1' >/dev/null 2>&1 && break; sleep 5; done
+          psql "$uri" -Atqc 'select 1' >/dev/null
+          echo "branch_id=$id" >> "$GITHUB_OUTPUT"
+          echo "uri=$uri" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+      - uses: pnpm/action-setup@v4
+        if: steps.secrets.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      # Installing runs the pull request's code: no secret is in this step's environment.
+      - run: pnpm install --frozen-lockfile
+        if: steps.secrets.outputs.ready == 'true'
+
+      - name: Run the migrations against the branch
+        if: steps.secrets.outputs.ready == 'true'
+        # Only this branch's own connection string is visible here; the Neon and Vercel tokens are not.
+        env:
+          DATABASE_URI: ${{ steps.neon.outputs.uri }}
+          NODE_ENV: production
+        run: |
+          # Payload needs a secret to load its config; migrations sign nothing, so a throwaway one is enough.
+          PAYLOAD_SECRET="$(openssl rand -hex 32)" pnpm --filter @lm/web cms:migrate
+
+      - name: Point the Vercel preview DATABASE_URI for this git branch at it
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID }}
+          URI: ${{ steps.neon.outputs.uri }}
+        run: |
+          set -euo pipefail
+          team="${VERCEL_TEAM_ID:+&teamId=$VERCEL_TEAM_ID}"
+          # upsert=true replaces this branch's value if it already exists.
+          curl -sS --fail-with-body -X POST "$VERCEL_API/v10/projects/$VERCEL_PROJECT_ID/env?upsert=true$team" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+            -d "$(jq -n --arg v "$URI" --arg b "$GIT_BRANCH" '{key: "DATABASE_URI", value: $v, type: "sensitive", target: ["preview"], gitBranch: $b, comment: "Neon branch for this pull request (preview-db.yml)"}')" \
+            | jq '{created: (.created | if type == "array" then length else 1 end), failed: (.failed // [] | length)}'
+          echo "::notice::Preview DATABASE_URI for $GIT_BRANCH now points at Neon branch $BRANCH_NAME. A deployment that started before this step used the shared preview branch: push again or Redeploy in Vercel."
+
+  down:
+    name: Delete the pull request's database branch
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove the Vercel variable and the Neon branch
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "$NEON_API_KEY" ] || [ -z "$NEON_PROJECT_ID" ] || [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::notice::Secrets not set; nothing to delete."; exit 0
+          fi
+          team="${VERCEL_TEAM_ID:+&teamId=$VERCEL_TEAM_ID}"
+          envs="$(curl -sS --fail-with-body -G "$VERCEL_API/v9/projects/$VERCEL_PROJECT_ID/env?decrypt=false$team" --data-urlencode "gitBranch=$GIT_BRANCH" -H "Authorization: Bearer $VERCEL_TOKEN")"
+          for env_id in $(jq -r --arg b "$GIT_BRANCH" '.envs[] | select(.key == "DATABASE_URI" and .gitBranch == $b) | .id' <<<"$envs"); do
+            curl -sS --fail-with-body -X DELETE "$VERCEL_API/v9/projects/$VERCEL_PROJECT_ID/env/$env_id${VERCEL_TEAM_ID:+?teamId=$VERCEL_TEAM_ID}" -H "Authorization: Bearer $VERCEL_TOKEN" >/dev/null
+            echo "Deleted Vercel DATABASE_URI for $GIT_BRANCH ($env_id)"
+          done
+          api() { curl -sS --fail-with-body -H "Authorization: Bearer $NEON_API_KEY" -H "Accept: application/json" "$@"; }
+          id="$(api "$NEON_API/projects/$NEON_PROJECT_ID/branches" | jq -r --arg n "$BRANCH_NAME" '.branches[] | select(.name == $n) | .id' | head -n1)"
+          # Never delete anything but a pr-<number> branch.
+          if [ -n "$id" ] && [[ "$BRANCH_NAME" =~ ^pr-[0-9]+$ ]]; then
+            api -X DELETE "$NEON_API/projects/$NEON_PROJECT_ID/branches/$id" >/dev/null
+            echo "Deleted Neon branch $BRANCH_NAME ($id)"
+          else
+            echo "No Neon branch $BRANCH_NAME to delete"
+          fi

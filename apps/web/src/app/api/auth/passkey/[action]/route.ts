@@ -12,10 +12,12 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { logEvent } from "@/cms/events";
 import { CHALLENGE_COOKIE, SESSION_COOKIE, cookieOptions, readChallenge, readInvite, readSession, relyingParty, signChallenge, signSession } from "@/auth/session";
+import { OriginUnavailableError } from "@/auth/origin";
+import { cleanName, isFresh, setupClosed } from "@/auth/passkeys";
 
 export const dynamic = "force-dynamic";
 
-type Passkey = { credentialId: string; publicKey: string; counter: number; transports?: AuthenticatorTransportFuture[]; label?: string };
+type Passkey = { credentialId: string; publicKey: string; counter: number; transports?: AuthenticatorTransportFuture[]; label?: string; addedAt?: string; lastUsedAt?: string };
 type Creator = { id: string | number; name: string; role?: string; passkeys?: Passkey[] };
 
 const b64 = {
@@ -39,7 +41,9 @@ async function creator(payload: Awaited<ReturnType<typeof getPayload>>): Promise
 /**
  * Passkey ceremonies (decided 2026-10-15: passkeys only).
  *   register-options / register   the creator's first passkey (one-time setup token), another one (signed in,
- *                                 fresh), or an invited reviewer's passkey (invite link)
+ *                                 confirmed within five minutes), or an invited reviewer's passkey (invite link).
+ *                                 Once a creator exists the setup token is refused for good, whatever the
+ *                                 environment says, and each attempt is logged as auth.setup-refused.
  *   login-options / login         sign in with any registered passkey; also re-confirms before publishing
  *   logout
  */
@@ -47,7 +51,14 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
   const { action } = await params;
   const payload = await getPayload({ config });
   const jar = await cookies();
-  const rp = relyingParty();
+  let rp: ReturnType<typeof relyingParty>;
+  try {
+    rp = relyingParty();
+  } catch (e) {
+    // Production without APP_ORIGIN: refuse every ceremony rather than bind passkeys to the wrong origin.
+    if (e instanceof OriginUnavailableError) return fail(503, e.message);
+    throw e;
+  }
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
   const owner = await creator(payload);
   const session = await readSession(jar.get(SESSION_COOKIE)?.value);
@@ -55,11 +66,24 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
   const invitedId = await readInvite(body.invite);
   const invited = invitedId ? ((await payload.findByID({ collection: "users", id: invitedId, overrideAccess: true, depth: 0, showHiddenFields: true }).catch(() => null)) as Creator | null) : null;
 
+  const ownerSignedIn = !!owner && !!session && session.userId === String(owner.id);
+  const isSetupAttempt = (action === "register-options" || action === "register") && body.setupToken !== undefined && !invited;
+  if (isSetupAttempt && (owner || (await setupClosed(payload)))) {
+    await logEvent(payload, undefined, { action: "auth.setup-refused", reason: "a creator account already exists; the setup token is closed for good", data: { step: action } });
+    return fail(403, "Setup is closed: the creator account already exists. Sign in with your passkey.");
+  }
+
   if (action === "register-options") {
     const firstKey = !owner && setupTokenOk(body.setupToken);
-    const addingKey = !!owner && !!session && session.userId === String(owner.id) && Date.now() / 1000 - session.authTime < 300;
+    const addingKey = ownerSignedIn && isFresh(session?.authTime);
     const reviewerKey = invited?.role === "reviewer";
-    if (!firstKey && !addingKey && !reviewerKey) return fail(403, invitedId === null && body.invite ? "This invitation has expired." : owner ? "Sign in with your existing passkey first." : "The setup token is not right.");
+    if (!firstKey && !addingKey && !reviewerKey) {
+      if (ownerSignedIn) {
+        await logEvent(payload, undefined, { action: "auth.passkey-add-refused", target: `users/${owner!.id}`, reason: "no passkey confirmation in the last five minutes" });
+        return fail(403, "Adding a passkey needs a passkey confirmation from the last five minutes. Confirm, then try again.");
+      }
+      return fail(403, invitedId === null && body.invite ? "This invitation has expired." : owner ? "Sign in with your existing passkey first." : "The setup token is not right.");
+    }
     const options = await generateRegistrationOptions({
       rpName: rp.rpName,
       rpID: rp.rpID,
@@ -76,20 +100,25 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
     const challenge = await readChallenge(jar.get(CHALLENGE_COOKIE)?.value, "register");
     if (!challenge) return fail(400, "The request expired. Try again.");
     const firstKey = !owner && setupTokenOk(body.setupToken);
-    const addingKey = !!owner && !!session && session.userId === String(owner.id);
+    // Adding another passkey needs the same fresh confirmation here as in register-options.
+    const addingKey = ownerSignedIn && isFresh(session?.authTime);
     const reviewerKey = invited?.role === "reviewer";
-    if (!firstKey && !addingKey && !reviewerKey) return fail(403, "Not allowed.");
+    if (!firstKey && !addingKey && !reviewerKey) {
+      if (ownerSignedIn) await logEvent(payload, undefined, { action: "auth.passkey-add-refused", target: `users/${owner!.id}`, reason: "no passkey confirmation in the last five minutes" });
+      return fail(403, ownerSignedIn ? "Adding a passkey needs a passkey confirmation from the last five minutes. Confirm, then try again." : "Not allowed.");
+    }
     const v = await verifyRegistrationResponse({ response: body.response as never, expectedChallenge: challenge, expectedOrigin: rp.origin, expectedRPID: rp.rpID, requireUserVerification: true });
     if (!v.verified || !v.registrationInfo) return fail(400, "The passkey could not be verified.");
     const { credential } = v.registrationInfo;
-    const key: Passkey = { credentialId: credential.id, publicKey: b64.enc(credential.publicKey), counter: credential.counter, transports: credential.transports, label: String(body.label ?? "Passkey") };
+    const key: Passkey = { credentialId: credential.id, publicKey: b64.enc(credential.publicKey), counter: credential.counter, transports: credential.transports, label: cleanName(body.label) ?? "Passkey", addedAt: new Date().toISOString() };
     const holder = reviewerKey ? invited : owner;
     const user = holder
       ? await payload.update({ collection: "users", id: holder.id, data: { passkeys: [...(holder.passkeys ?? []), key] } as never, overrideAccess: true, context: { system: true } })
       : await payload.create({ collection: "users", data: { name: String(body.name ?? "Creator"), role: "creator", passkeys: [key] } as never, overrideAccess: true, context: { system: true } });
-    await logEvent(payload, undefined, { action: reviewerKey ? "auth.reviewer-joined" : owner ? "auth.passkey-added" : "auth.creator-created", target: `users/${user.id}` });
+    await logEvent(payload, undefined, { action: reviewerKey ? "auth.reviewer-joined" : owner ? "auth.passkey-added" : "auth.creator-created", target: `users/${user.id}`, data: { name: key.label } });
     jar.delete(CHALLENGE_COOKIE);
-    jar.set(SESSION_COOKIE, await signSession(user.id), cookieOptions());
+    // Adding a key keeps the existing session's confirmation time; a new account or reviewer starts a fresh session.
+    jar.set(SESSION_COOKIE, await signSession(user.id, addingKey && session ? session.authTime : undefined), cookieOptions());
     return NextResponse.json({ ok: true });
   }
 
@@ -121,7 +150,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
       await logEvent(payload, undefined, { action: "auth.sign-in-failed", target: `users/${person.id}` });
       return fail(403, "The passkey could not be verified.");
     }
-    const passkeys = (person.passkeys ?? []).map((p) => (p.credentialId === key.credentialId ? { ...p, counter: v.authenticationInfo.newCounter } : p));
+    const passkeys = (person.passkeys ?? []).map((p) => (p.credentialId === key.credentialId ? { ...p, counter: v.authenticationInfo.newCounter, lastUsedAt: new Date().toISOString() } : p));
     await payload.update({ collection: "users", id: person.id, data: { passkeys } as never, overrideAccess: true, context: { system: true } });
     await logEvent(payload, undefined, { action: session ? "auth.reconfirmed" : "auth.signed-in", target: `users/${person.id}` });
     jar.delete(CHALLENGE_COOKIE);

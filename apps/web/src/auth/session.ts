@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
+import { resolveOrigin } from "./origin";
 
 /**
  * The creator's session after a passkey sign-in: a short-lived signed cookie.
@@ -57,9 +58,10 @@ export async function readChallenge(token: string | undefined, purpose: string):
   }
 }
 
+/** WebAuthn relying party: origin and rpID come from the one origin helper; throws OriginUnavailableError if unset in production. */
 export function relyingParty() {
-  const origin = process.env.APP_ORIGIN ?? "http://localhost:3000";
-  return { origin, rpID: new URL(origin).hostname, rpName: "Learning Magazine" };
+  const { origin, rpID } = resolveOrigin();
+  return { origin, rpID, rpName: "Learning Magazine" };
 }
 
 /** A signed, expiring preview link (docs/03: get_preview_link). Anyone holding it sees drafts of that lesson only. */
@@ -77,7 +79,7 @@ export async function readPreview(token: string | null): Promise<string | null> 
 }
 
 export async function previewUrl(lessonId: string, locale = "en", mode: "personal" | "classroom" = "personal") {
-  const origin = process.env.APP_ORIGIN ?? "http://localhost:3000";
+  const { origin } = resolveOrigin();
   const token = await signPreview(lessonId);
   return `${origin}/api/preview?token=${encodeURIComponent(token)}&locale=${locale}&mode=${mode}`;
 }

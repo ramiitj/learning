@@ -9,7 +9,10 @@ Handing a pack to a school is a publication: **only the creator decides it**.
 ```bash
 pnpm pack:lessons                              # published lessons only
 pnpm pack:lessons --include every-primitive    # test pack: adds named lessons whatever their status
+DATABASE_URI='<read-only connection string>' pnpm pack:lessons --from-cms   # what is published in the CMS
 ```
+
+`--from-cms` reads, in one READ ONLY transaction, the published lessons, detours, glossary and teacher guides from the database in `DATABASE_URI` (use the read-only backup role, `docs/runbooks/backup-restore.md`). It mirrors what the live site shows: lessons and teacher guides only from the CMS, a detour missing from the CMS taken from the repository, the CMS glossary when it has entries. Lessons from the CMS are marked `published` in the pack whatever their JSON `status` says, and `manifest.json` records `"source": "cms"`. Ids from the database that are not plain lowercase ids stop the build. `--include` cannot be combined with it. The database connection is used only to read content; the build itself and the pack never see `DATABASE_URI`.
 
 Output: `dist/lesson-pack-<date>.zip` and `dist/lesson-pack-<date>.zip.sha256`. A pack with any unpublished lesson is named `...-test.zip` and its README says "TEST PACK, do not give to schools". With no published lessons and no `--include`, the build stops with a message.
 
@@ -19,7 +22,7 @@ In GitHub: Actions, **Lesson pack**, Run workflow (also runs on each published r
 
 ## How it is built (`scripts/ops/build-pack.ts`)
 
-1. Lessons are chosen from `content/lessons/*.json` by their `status` field (`published`), plus `--include`.
+1. Lessons are chosen from `content/lessons/*.json` by their `status` field (`published`), plus `--include`; with `--from-cms`, from what is published in the CMS, staged over a copy of `content/`.
 2. The repository's tracked and untracked, not-ignored files are copied to a work folder. The build never touches `apps/web/.next` (so it can run beside `pnpm dev`) and never copies `.env` files.
 3. In the copy, `content/lessons` and `content/teacher-guides` are cut down to the chosen lessons, and the routes that need a database or the creator are removed: `/console`, `/api/*`, `/oauth/*`, `/.well-known/*` are plain 404s in a pack.
 4. `pnpm install` with a flat (`hoisted`) `node_modules`, so the pack holds real files and unzips on Windows; then `next build` with `LM_PACK=1` (`output: "standalone"`, only for this build) and no `DATABASE_URI`.
@@ -43,4 +46,5 @@ What works: cover, every lesson in personal and classroom mode in en, hi and te,
 - Student devices only work while the pack computer is running. The service worker that makes the online site work offline needs HTTPS (or `localhost`), which a school network address is not.
 - Built and tested on Linux. The pack holds no symlinks, and the parts a pack uses are plain JavaScript, but it has not yet been tried on Windows or macOS.
 - About 30 MB zipped, mostly the Next.js server and libraries that are traced but not used offline (Payload, the Postgres driver). Trimming them is possible later with `outputFileTracingExcludes` in pack mode.
-- The lesson set comes from the repository's `content/` folder, not from what is published in the CMS. Once lessons are authored in the CMS, the creator exports or syncs them back to the repository before building a pack. Building directly from the CMS is a later option.
+- By default the lesson set comes from the repository's `content/` folder; use `--from-cms` once lessons are published in the CMS. A published CMS lesson that no longer passes the current validator stops the build (the pages are prerendered and validated): seen on 2026-10-15 with the CI database, whose published m4 and m5 predate the current schema. Re-publish such lessons before packing.
+- The GitHub workflow builds from the repository only; it has no database secret.

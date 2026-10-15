@@ -14,11 +14,36 @@ Who: the creator (or whoever they delegate). Time: about 15 minutes for a restor
 ## One-time setup (repository secrets)
 
 1. `age-keygen -o lm-backup-key.txt`. The line `Public key: age1...` is the **recipient**. Keep the file offline (password manager and a printed copy); without it backups cannot be read.
-2. Add secrets in GitHub: `BACKUP_DATABASE_URL` (a read-only Neon role is best), `BACKUP_AGE_RECIPIENT` (the public key), optionally `ALERT_WEBHOOK_URL`.
+2. Add secrets in GitHub: `BACKUP_DATABASE_URL` (the read-only role below), `BACKUP_AGE_RECIPIENT` (the public key), optionally `ALERT_WEBHOOK_URL`.
 3. For the unattended monthly test also add `BACKUP_AGE_IDENTITY` (the whole key file). Skipping it means running the test by hand (below) and the workflow will fail as a reminder.
 4. Run the **Backup** workflow once from the Actions tab (Run workflow) and confirm an artifact appears.
 
 To keep backups in your own storage instead of GitHub, replace the upload step in `backup.yml` with an upload to your bucket or drive. The file is already encrypted, so any destination is safe. Keep the 35-day window or longer.
+
+## A read-only role for backups
+
+Terraform cannot make this role: the `kislerdm/neon` provider has no grants, and every role created through the Neon API (or console) is a member of `neon_superuser`, which can write and drop everything. Make it once with SQL **[creator approves]**:
+
+1. Generate a password: `openssl rand -base64 30` (Neon needs at least 60 bits of entropy for roles made with SQL).
+2. Neon console, SQL Editor, branch `production`, database `magazine`, connected as the owner role `magazine`. Run, with your password:
+
+```sql
+CREATE ROLE backup_reader WITH LOGIN PASSWORD '<generated password>';
+GRANT CONNECT ON DATABASE magazine TO backup_reader;
+GRANT USAGE ON SCHEMA public TO backup_reader;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO backup_reader;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO backup_reader;
+-- Tables added by later migrations (created by the role "magazine") become readable too.
+ALTER DEFAULT PRIVILEGES FOR ROLE magazine IN SCHEMA public GRANT SELECT ON TABLES TO backup_reader;
+ALTER DEFAULT PRIVILEGES FOR ROLE magazine IN SCHEMA public GRANT SELECT ON SEQUENCES TO backup_reader;
+-- Belt and braces: every session starts read-only.
+ALTER ROLE backup_reader SET default_transaction_read_only = on;
+```
+
+3. `BACKUP_DATABASE_URL` is then `postgresql://backup_reader:<password>@<production endpoint host>/magazine?sslmode=require` (the host is in the Neon console, Connection details, `production`).
+4. Check: run the Backup workflow once, and in the SQL Editor connected as `backup_reader` confirm `INSERT INTO events (action) VALUES ('x')` fails.
+
+Tested on PostgreSQL 16 locally (2026-10-15): `scripts/ops/backup.sh` produced a full dump as this role, and INSERT, DELETE and CREATE TABLE were refused. Not yet tried on Neon. If migrations ever add a schema other than `public`, repeat the grants for it. Do not create this role through Terraform's `neon_role` or the Neon console's Roles page: both make it a superuser member.
 
 ## Restore test by hand (monthly, or after any change to backups)
 

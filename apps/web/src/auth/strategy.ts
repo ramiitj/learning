@@ -1,7 +1,7 @@
 import type { AuthStrategy } from "payload";
 import { SESSION_COOKIE, readSession } from "./session";
 
-function cookie(headers: Headers, name: string): string | undefined {
+export function cookie(headers: Headers, name: string): string | undefined {
   const raw = headers.get("cookie") ?? "";
   for (const part of raw.split(/;\s*/)) {
     const i = part.indexOf("=");

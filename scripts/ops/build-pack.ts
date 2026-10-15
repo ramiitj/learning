@@ -2,7 +2,8 @@
  * Builds an offline lesson pack (docs/03, docs/12): a zip a school unpacks on
  * one computer and runs with Node.js, with no internet and no database.
  *
- *   pnpm pack:lessons                         published lessons only
+ *   pnpm pack:lessons                         published lessons only (status in content/lessons/*.json)
+ *   pnpm pack:lessons --from-cms              what is published in the CMS at DATABASE_URI (read-only queries)
  *   pnpm pack:lessons --include every-primitive   add named lessons (testing; marks the pack "-test")
  *   options: --out <dir> (default dist/), --work <dir> (default: a temp dir), --keep-work,
  *            --reuse-work (build from the copy already in --work)
@@ -23,10 +24,11 @@
  *    dist/<name>.zip, with <name>.zip.sha256 beside it.
  */
 import { execFileSync } from "node:child_process";
+import { createRequire } from "node:module";
 import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { describeLesson, LAUNCHER, packName, parseArgs, readme, selectLessons, sha256, START_CMD, START_SH, type Manifest } from "./pack-lib";
+import { CMS_QUERIES, cmsContentFiles, cmsReplaces, describeLesson, LAUNCHER, packName, parseArgs, readme, selectLessons, sha256, START_CMD, START_SH, type CmsRows, type Manifest } from "./pack-lib";
 
 const repo = path.resolve(import.meta.dirname, "../..");
 /** Routes that need a database, a secret or the creator; they are not part of a pack. */
@@ -45,15 +47,58 @@ function walk(dir: string, base = dir): string[] {
   return out.sort();
 }
 
-function main() {
+/** Reads published content from the CMS in one READ ONLY transaction: the build can never write to the database. */
+async function readCms(url: string): Promise<CmsRows> {
+  // pg is a dependency of the web app, not of the repository root.
+  const { Client } = createRequire(path.join(repo, "apps/web/package.json"))("pg") as typeof import("pg");
+  const client = new Client({ connectionString: url, application_name: "lm-pack-readonly" });
+  await client.connect();
+  try {
+    await client.query("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
+    const q = async <T>(sql: string) => (await client.query(sql)).rows as T[];
+    const rows: CmsRows = { lessons: await q(CMS_QUERIES.lessons), detours: await q(CMS_QUERIES.detours), glossary: await q(CMS_QUERIES.glossary), guides: await q(CMS_QUERIES.guides) };
+    await client.query("ROLLBACK");
+    return rows;
+  } finally {
+    await client.end();
+  }
+}
+
+/** The content folder the pack is built from: the repository's, or a copy of it with the CMS's published content in place. */
+async function contentSource(fromCms: boolean, work: string): Promise<string> {
+  const repoContent = path.join(repo, "content");
+  if (!fromCms) return repoContent;
+  const url = process.env.DATABASE_URI;
+  if (!url) throw new Error("--from-cms needs DATABASE_URI (a read-only connection string is best).");
+  const rows = await readCms(url);
+  const { clear, write } = cmsReplaces(cmsContentFiles(rows));
+  const staged = path.join(work, "cms-content");
+  rmSync(staged, { recursive: true, force: true });
+  cpSync(repoContent, staged, { recursive: true });
+  for (const dir of clear) {
+    rmSync(path.join(staged, dir), { recursive: true, force: true });
+    mkdirSync(path.join(staged, dir), { recursive: true });
+  }
+  for (const [rel, text] of write) {
+    mkdirSync(path.dirname(path.join(staged, rel)), { recursive: true });
+    writeFileSync(path.join(staged, rel), text);
+  }
+  log(`from the CMS (published only): ${rows.lessons.length} lessons, ${rows.detours.length} detours, ${rows.glossary.length} glossary entries, ${rows.guides.length} teacher guides`);
+  return staged;
+}
+
+async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const lessonsDir = path.join(repo, "content/lessons");
+  const work = args.work ? path.resolve(args.work) : mkdtempSync(path.join(os.tmpdir(), "lm-pack-"));
+  mkdirSync(work, { recursive: true });
+  const content = await contentSource(args.fromCms, work);
+  const lessonsDir = path.join(content, "lessons");
   const all = readdirSync(lessonsDir)
     .filter((f) => f.endsWith(".json"))
     .map((f) => describeLesson(readFileSync(path.join(lessonsDir, f), "utf8")));
   const { lessons, unpublished } = selectLessons(all, args.include);
   if (!lessons.length) {
-    console.error("[pack] No published lessons in content/lessons, so there is nothing to pack. Use --include <id> to build a test pack.");
+    console.error(args.fromCms ? "[pack] No published lessons in the CMS, so there is nothing to pack." : "[pack] No published lessons in content/lessons, so there is nothing to pack. Use --include <id> to build a test pack.");
     process.exit(1);
   }
   const test = unpublished.length > 0;
@@ -63,13 +108,12 @@ function main() {
   log(`lessons: ${[...keep].join(", ")}`);
 
   // 1. Copy the repository (tracked + untracked, minus .gitignore'd: no node_modules, .next or .env files).
-  const work = args.work ? path.resolve(args.work) : mkdtempSync(path.join(os.tmpdir(), "lm-pack-"));
   const src = path.join(work, "repo");
   if (args.reuse && existsSync(src)) {
     log(`reusing ${src}`);
     // Restore the full content folder so a different --include still works, then prune again below.
     rmSync(path.join(src, "content"), { recursive: true, force: true });
-    cpSync(path.join(repo, "content"), path.join(src, "content"), { recursive: true });
+    cpSync(content, path.join(src, "content"), { recursive: true });
   } else {
     rmSync(src, { recursive: true, force: true });
     const listed = execFileSync("git", ["ls-files", "-z", "-co", "--exclude-standard"], { cwd: repo }).toString("utf8").split("\0").filter(Boolean);
@@ -80,6 +124,10 @@ function main() {
       copyFileSync(from, path.join(src, f));
     }
     log(`copied ${listed.length} files to ${src}`);
+    if (args.fromCms) {
+      rmSync(path.join(src, "content"), { recursive: true, force: true });
+      cpSync(content, path.join(src, "content"), { recursive: true });
+    }
   }
 
   // 2. Prune content and routes.
@@ -87,6 +135,8 @@ function main() {
   const guides = path.join(src, "content/teacher-guides");
   if (existsSync(guides)) for (const f of readdirSync(guides)) if (!keep.has(f.split(".")[0]!)) rmSync(path.join(guides, f));
   for (const r of EXCLUDED_ROUTES) rmSync(path.join(src, r), { recursive: true, force: true });
+  // Tests are not part of a pack, and some import the routes removed above, which would fail the build's type check.
+  for (const f of walk(path.join(src, "apps/web/src"))) if (/\.test\.tsx?$/.test(f)) rmSync(path.join(src, "apps/web/src", f));
 
   // 3. Install and build without a database.
   // A flat (hoisted) node_modules: the standalone server then contains real files rather than pnpm's
@@ -125,7 +175,7 @@ function main() {
   }
   const files: Record<string, string> = {};
   for (const f of walk(out)) files[f] = sha256(readFileSync(path.join(out, f)));
-  const manifest: Manifest = { name, builtAt: new Date().toISOString(), commit, test, node: ">=20.9 (22 LTS recommended)", lessons, files };
+  const manifest: Manifest = { name, source: args.fromCms ? "cms" : "repository", builtAt: new Date().toISOString(), commit, test, node: ">=20.9 (22 LTS recommended)", lessons, files };
   writeFileSync(path.join(out, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 
   const dist = path.resolve(args.out ?? path.join(repo, "dist"));
@@ -141,4 +191,7 @@ function main() {
   else log(`work folder kept at ${work}`);
 }
 
-main();
+main().catch((e: unknown) => {
+  console.error(`[pack] ${(e as Error).message}`);
+  process.exit(1);
+});

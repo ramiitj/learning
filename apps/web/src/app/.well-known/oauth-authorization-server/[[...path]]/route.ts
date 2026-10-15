@@ -1,8 +1,15 @@
 import { origin } from "@/auth/oauth";
+import { OriginUnavailableError, originUnavailableResponse } from "@/auth/origin";
 
 /** RFC 8414 metadata for the connector's authorization server. */
 export function GET() {
-  const o = origin();
+  let o: string;
+  try {
+    o = origin();
+  } catch (e) {
+    if (e instanceof OriginUnavailableError) return originUnavailableResponse(e);
+    throw e;
+  }
   return Response.json({
     issuer: o,
     authorization_endpoint: `${o}/oauth/authorize`,

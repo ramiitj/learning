@@ -1,5 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { SignJWT, jwtVerify } from "jose";
+import { appOrigin } from "./origin";
 
 /**
  * A small OAuth 2.1 authorization server for the MCP connector (docs/03):
@@ -8,7 +9,8 @@ import { SignJWT, jwtVerify } from "jose";
  * approve a client, after a passkey sign-in.
  */
 const key = () => new TextEncoder().encode(process.env.PAYLOAD_SECRET ?? "");
-export const origin = () => process.env.APP_ORIGIN ?? "http://localhost:3000";
+/** The issuer and resource origin; throws OriginUnavailableError in production when it is not configured. */
+export const origin = () => appOrigin();
 export const mcpResource = () => `${origin()}/api/mcp`;
 export const ACCESS_TOKEN_SECONDS = 3600;
 export const REFRESH_TOKEN_DAYS = 30;

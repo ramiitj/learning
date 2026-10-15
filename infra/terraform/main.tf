@@ -2,7 +2,9 @@
 #
 # Environments:
 #   local       pnpm dev (no cloud resources)
-#   preview     a Vercel preview deployment per pull request, with its own Neon branch
+#   preview     a Vercel preview deployment per pull request. Its Neon branch pr-<number> is made by
+#               .github/workflows/preview-db.yml; until that has run, previews use the shared
+#               "preview" branch below. The app derives its origin from VERCEL_BRANCH_URL on previews.
 #   production  Vercel production (functions in bom1, Mumbai) + Neon Postgres in aws-ap-south-1 (Mumbai)
 #
 # Nothing here has been applied. Applying it requires the creator's approval
@@ -68,8 +70,10 @@ resource "vercel_project" "web" {
     function_default_regions = ["bom1"] # Mumbai
   }
   install_command = "pnpm install --frozen-lockfile"
+  # The app reads VERCEL_ENV and VERCEL_BRANCH_URL to work out a preview's origin (apps/web/src/auth/origin.ts).
+  automatically_expose_system_environment_variables = true
   # Database migrations run before every build, so the schema always matches the code being deployed.
-  build_command   = "pnpm --filter @lm/web cms:migrate && pnpm --filter @lm/web build"
+  build_command = "pnpm --filter @lm/web cms:migrate && pnpm --filter @lm/web build"
 
   git_repository = {
     type              = "github"
@@ -107,6 +111,8 @@ resource "vercel_project_environment_variable" "payload_secret" {
   sensitive  = true
 }
 
+# Production only. Previews derive https://$VERCEL_BRANCH_URL themselves; production without
+# APP_ORIGIN refuses passkey ceremonies and the MCP connector rather than guess.
 resource "vercel_project_environment_variable" "app_origin" {
   project_id = vercel_project.web.id
   key        = "APP_ORIGIN"
@@ -129,16 +135,20 @@ resource "vercel_project_environment_variable" "cron_secret" {
 }
 
 # One-time token for creating the creator account and its first passkey. Read it with
-# `terraform output -raw creator_setup_token`, use it once, then remove the variable in Vercel.
+# `terraform output -raw creator_setup_token` and use it once. After the creator exists the app
+# refuses it for good (logged as auth.setup-refused), but remove it anyway: set
+# creator_setup_enabled = false and apply, which deletes both the token and the Vercel variable.
 resource "random_password" "creator_setup_token" {
+  count   = var.creator_setup_enabled ? 1 : 0
   length  = 32
   special = false
 }
 
 resource "vercel_project_environment_variable" "creator_setup_token" {
+  count      = var.creator_setup_enabled ? 1 : 0
   project_id = vercel_project.web.id
   key        = "CREATOR_SETUP_TOKEN"
-  value      = random_password.creator_setup_token.result
+  value      = random_password.creator_setup_token[0].result
   target     = ["production"]
   sensitive  = true
 }
@@ -151,3 +161,34 @@ resource "vercel_project_environment_variable" "anthropic_api_key" {
   target     = ["production"]
   sensitive  = true
 }
+
+# Keeps any state from before the resources took a count (nothing has been applied yet, but this is free).
+moved {
+  from = random_password.creator_setup_token
+  to   = random_password.creator_setup_token[0]
+}
+
+moved {
+  from = vercel_project_environment_variable.creator_setup_token
+  to   = vercel_project_environment_variable.creator_setup_token[0]
+}
+
+# Error and spike alerts (apps/web/src/ops): a short text with no learner data. Optional.
+resource "vercel_project_environment_variable" "alert_webhook_url" {
+  count      = var.alert_webhook_url == "" ? 0 : 1
+  project_id = vercel_project.web.id
+  key        = "ALERT_WEBHOOK_URL"
+  value      = var.alert_webhook_url
+  target     = ["production"]
+  sensitive  = true
+}
+
+# ---------- Backups: read-only database role ----------
+#
+# Not managed here, on purpose. The kislerdm/neon provider has `neon_role`, but it has no
+# grants: a role created through the Neon API (and so through `neon_role`) is a member of
+# neon_superuser, which can write and drop everything. That is the opposite of a backup role,
+# and the provider cannot revoke it. The read-only role is therefore made once with SQL as the
+# project owner; the exact statements are in docs/runbooks/backup-restore.md
+# ("A read-only role for backups"), and its connection string goes only into the GitHub secret
+# BACKUP_DATABASE_URL.

@@ -46,6 +46,8 @@ export function selectLessons(all: LessonFile[], include: string[] = []): Select
 
 export interface PackArgs {
   include: string[];
+  /** Take lessons, detours, glossary and teacher guides from what is published in the CMS (DATABASE_URI), not the repository. */
+  fromCms: boolean;
   work?: string;
   out?: string;
   keep: boolean;
@@ -54,7 +56,7 @@ export interface PackArgs {
 }
 
 export function parseArgs(argv: string[]): PackArgs {
-  const out: PackArgs = { include: [], keep: false, reuse: false };
+  const out: PackArgs = { include: [], fromCms: false, keep: false, reuse: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     const value = () => {
@@ -68,9 +70,11 @@ export function parseArgs(argv: string[]): PackArgs {
     else if (a.startsWith("--out")) out.out = value();
     else if (a === "--keep-work") out.keep = true;
     else if (a === "--reuse-work") out.reuse = true;
-    else throw new Error(`Unknown option ${a}. Usage: pnpm pack:lessons [--include id,id] [--out dir] [--work dir] [--keep-work] [--reuse-work]`);
+    else if (a === "--from-cms") out.fromCms = true;
+    else throw new Error(`Unknown option ${a}. Usage: pnpm pack:lessons [--from-cms] [--include id,id] [--out dir] [--work dir] [--keep-work] [--reuse-work]`);
   }
   if (out.reuse && !out.work) throw new Error("--reuse-work needs --work <dir>");
+  if (out.fromCms && out.include.length) throw new Error("--include cannot be used with --from-cms: a CMS pack holds published lessons only");
   return out;
 }
 
@@ -80,6 +84,8 @@ export function packName(date: Date, test: boolean): string {
 
 export interface Manifest {
   name: string;
+  /** Where the lessons came from: the repository's content/ folder, or what was published in the CMS at build time. */
+  source: "repository" | "cms";
   builtAt: string;
   commit: string;
   test: boolean;
@@ -215,4 +221,81 @@ GOOD TO KNOW
   మోడ్‌లో ఓట్లను చేతులెత్తి లెక్కిస్తారు. ఈ ప్యాక్ ఎలాంటి సమాచారాన్నీ సేకరించదు.
   (Hindi and Telugu notes are drafts awaiting native-speaker review.)
 `;
+}
+
+// ---------- --from-cms: published content from the CMS database ----------
+
+/** Rows read (read-only) from the CMS tables, published versions only. */
+export interface CmsRows {
+  lessons: { lessonId: string; doc: unknown }[];
+  detours: { detourId: string; doc: unknown }[];
+  glossary: { termId: string; locale: string; term: string; definition: string }[];
+  guides: { lessonId: string; locale: string; guide: unknown }[];
+}
+
+/** File contents for the pack's content folder, by path relative to content/. */
+export interface CmsContent {
+  lessons: Map<string, string>;
+  detours: Map<string, string>;
+  glossary: Map<string, string>;
+  guides: Map<string, string>;
+}
+
+/**
+ * The SQL that reads published content. The main collection tables hold the
+ * published version of each document (a later draft lives only in the
+ * versions tables), so `_status = 'published'` is exactly what learners see.
+ * Run inside a READ ONLY transaction.
+ */
+export const CMS_QUERIES = {
+  lessons: "SELECT lesson_id AS \"lessonId\", doc FROM lessons WHERE _status = 'published' ORDER BY lesson_id",
+  detours: "SELECT detour_id AS \"detourId\", doc FROM detours WHERE _status = 'published' ORDER BY detour_id",
+  glossary: "SELECT term_id AS \"termId\", locale::text AS locale, term, definition FROM glossary WHERE _status = 'published' ORDER BY locale, term_id",
+  guides: "SELECT lesson_id AS \"lessonId\", locale::text AS locale, guide FROM teacher_guides WHERE _status = 'published' ORDER BY lesson_id, locale",
+} as const;
+
+const SAFE_ID = /^[a-z0-9](?:[a-z0-9-]{0,78}[a-z0-9])?$/;
+const SAFE_LOCALE = /^[a-z]{2}$/;
+/** Ids become file names: anything that is not a plain id (a path, "..", spaces) stops the build. */
+function safe(kind: string, id: string, pattern = SAFE_ID): string {
+  if (!pattern.test(id)) throw new Error(`Refusing ${kind} id ${JSON.stringify(id)} from the CMS: not a plain lowercase id`);
+  return id;
+}
+const json = (v: unknown) => `${JSON.stringify(v, null, 2)}\n`;
+
+/**
+ * Turns published CMS rows into the files a pack serves. A lesson's own
+ * `status` field is set to "published" because the CMS's publish state, not
+ * the field inside the JSON, is what decides.
+ */
+export function cmsContentFiles(rows: CmsRows): CmsContent {
+  const lessons = new Map<string, string>();
+  for (const r of rows.lessons) {
+    const doc = r.doc as { id?: string } & Record<string, unknown>;
+    if (doc?.id !== r.lessonId) throw new Error(`CMS lesson ${r.lessonId}: its document id is ${JSON.stringify(doc?.id)}`);
+    lessons.set(`lessons/${safe("lesson", r.lessonId)}.json`, json({ ...doc, status: "published" }));
+  }
+  const detours = new Map<string, string>();
+  for (const r of rows.detours) detours.set(`detours/${safe("detour", r.detourId)}.json`, json(r.doc));
+  const byLocale = new Map<string, Record<string, { term: string; definition: string }>>();
+  for (const r of rows.glossary) {
+    const t = byLocale.get(safe("glossary locale", r.locale, SAFE_LOCALE)) ?? {};
+    t[safe("glossary term", r.termId, /^[a-z0-9][a-z0-9_-]{0,79}$/i)] = { term: r.term, definition: r.definition };
+    byLocale.set(r.locale, t);
+  }
+  const glossary = new Map([...byLocale].map(([l, t]) => [`glossary/${l}.json`, json(t)]));
+  const guides = new Map<string, string>();
+  for (const r of rows.guides) guides.set(`teacher-guides/${safe("teacher guide", r.lessonId)}.${safe("teacher guide locale", r.locale, SAFE_LOCALE)}.json`, json(r.guide));
+  return { lessons, detours, glossary, guides };
+}
+
+/**
+ * How CMS content replaces the repository's, mirroring what the live site
+ * does in CMS mode (apps/web/src/lib/content.ts): lessons and teacher guides
+ * come only from the CMS; a detour missing from the CMS falls back to the
+ * repository's file; the glossary comes from the CMS when it has any entries.
+ */
+export function cmsReplaces(content: CmsContent): { clear: string[]; write: Map<string, string> } {
+  const clear = ["lessons", "teacher-guides", ...(content.glossary.size ? ["glossary"] : [])];
+  return { clear, write: new Map([...content.lessons, ...content.guides, ...content.glossary, ...content.detours]) };
 }

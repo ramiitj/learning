@@ -38,13 +38,15 @@ Values marked *generated* are created by Terraform; you do not choose them.
 | Name | Environments | What it is for | Source |
 |---|---|---|---|
 | `DATABASE_URI` | production | Connection string for the Neon `production` branch | generated (`neon_project.main.connection_uri`) |
-| `DATABASE_URI` | preview | Connection string for the Neon `preview` branch | generated (`local.preview_database_url`) |
+| `DATABASE_URI` | preview | Connection string for the shared Neon `preview` branch: the fallback for any pull request whose own branch does not exist yet | generated (`local.preview_database_url`) |
+| `DATABASE_URI` | preview, one per git branch | Connection string for that pull request's Neon branch `pr-<number>` | set and deleted by `.github/workflows/preview-db.yml` (section 5) |
 | `PAYLOAD_SECRET` | production, preview | Signs CMS tokens, creator sessions, preview links | generated (48 characters) |
-| `APP_ORIGIN` | production | The public origin, e.g. `https://learn.example.in`. Passkeys, preview links and the MCP connector are bound to it | you set `app_origin` |
+| `APP_ORIGIN` | production | The public origin, e.g. `https://learn.example.in`. Passkeys, preview links, LTI and the MCP connector are bound to it. Previews do not need it: they use `https://$VERCEL_BRANCH_URL`. In production without it, passkey sign-in and the MCP connector refuse to work (503) instead of guessing (`apps/web/src/auth/origin.ts`) | you set `app_origin` |
 | `CRON_SECRET` | production, preview | Vercel Cron sends it as `Authorization: Bearer ...` to `/api/cron/purge` and `/api/pipeline/tick`; without it both refuse | generated (40 characters) |
-| `CREATOR_SETUP_TOKEN` | production | One-time token to create the creator account and first passkey. Delete after setup (section 4) | generated |
+| `CREATOR_SETUP_TOKEN` | production | One-time token to create the creator account and first passkey. Once a creator exists the app refuses it for good (logged `auth.setup-refused`); remove it anyway with `creator_setup_enabled = false` (section 4) | generated while `creator_setup_enabled` is `true` |
 | `ANTHROPIC_API_KEY` | production | The agent pipeline. Leave empty to run without agents (`/api/pipeline/tick` then answers 503 "pipeline is off") | you set `anthropic_api_key` (optional) |
-| `ALERT_WEBHOOK_URL` | production | Optional. Receives a short text with no learner data when a new error appears or errors spike | **not in Terraform: add by hand in Vercel** (see Gaps) |
+| `ALERT_WEBHOOK_URL` | production | Optional. Receives a short text with no learner data when a new error appears or errors spike | you set `alert_webhook_url` (optional, sensitive) |
+| `VERCEL_ENV`, `VERCEL_URL`, `VERCEL_BRANCH_URL` | all | Tell the app it is on a preview and its address | set by Vercel (`automatically_expose_system_environment_variables = true` in Terraform) |
 | `VERCEL_GIT_COMMIT_SHA` | all | Recorded as the release on each error | set by Vercel automatically |
 
 Other optional features being added in Phase 6 (LTI, xAPI) have their own variables, off by default; check `apps/web/.env.example` before deploying and do not turn them on without the creator's decision.
@@ -57,6 +59,8 @@ Other optional features being added in Phase 6 (LTI, xAPI) have their own variab
 | `github_repo` | no (default `ramiitj/learning`) | Repository Vercel deploys from |
 | `vercel_team` | no | Vercel team slug or id |
 | `anthropic_api_key` | no (sensitive) | Claude API key |
+| `alert_webhook_url` | no (sensitive) | https webhook for error alerts; empty for none |
+| `creator_setup_enabled` | no (default `true`) | Creates `CREATOR_SETUP_TOKEN`. Set to `false` after the creator's passkey exists |
 
 **Provider credentials** (shell environment while running Terraform, never stored in files): `VERCEL_API_TOKEN` (Vercel account settings, Tokens) and `NEON_API_KEY` (Neon account settings, API keys).
 
@@ -69,6 +73,13 @@ Other optional features being added in Phase 6 (LTI, xAPI) have their own variab
 | `BACKUP_AGE_IDENTITY` | `restore-test.yml` | age **private** key, only if the creator chooses unattended monthly restore tests (trade-off in `docs/runbooks/backup-restore.md`) |
 | `ALERT_WEBHOOK_URL` | `backup.yml`, `restore-test.yml` | Optional: told when a backup or restore test fails |
 | `ANTHROPIC_API_KEY` | `agent-benchmarks.yml` | Optional: live agent benchmarks; without it they are skipped with a warning |
+
+| `NEON_API_KEY` | `preview-db.yml` | Creates and deletes the `pr-<number>` Neon branches. A project-scoped key is enough |
+| `NEON_PROJECT_ID` | `preview-db.yml` | `terraform output neon_project_id` |
+| `VERCEL_TOKEN` | `preview-db.yml` | Sets and deletes the per-branch preview `DATABASE_URI`. Scope it to the one team or project |
+| `VERCEL_PROJECT_ID` | `preview-db.yml` | `terraform output vercel_project_id` |
+
+Repository *variable* (not secret) `VERCEL_TEAM_ID` if the Vercel project belongs to a team. Without the four `preview-db.yml` secrets that workflow skips itself with a notice and previews share the `preview` branch.
 
 `ci.yml` and `lesson-pack.yml` need no secrets.
 
@@ -112,7 +123,7 @@ terraform apply tfplan
 terraform output database_region            # must print aws-ap-south-1
 ```
 
-Then add `ALERT_WEBHOOK_URL` by hand in Vercel (Project, Settings, Environment Variables, Production) if the creator wants alerts.
+For alerts, pass `-var 'alert_webhook_url=https://...'` (or put it in the uncommitted `terraform.tfvars`).
 
 ## 4. First deploy, migrations and the creator account
 
@@ -138,9 +149,9 @@ Check after the build:
 
 1. Read the token: `terraform output -raw creator_setup_token`.
 2. On the creator's own device open `https://<origin>/console`, choose **First time? Set up the creator account**, enter your name and the token, and follow the browser's passkey prompt (Touch ID, Windows Hello, a phone or a security key). Only one creator can be created this way; the token does nothing once a creator exists.
-3. Prefer a passkey that syncs (iCloud Keychain, Google Password Manager) or keep a hardware security key as well, so losing one device does not lock you out. The server accepts a second passkey from a freshly signed-in creator (`register-options` in `apps/web/src/app/api/auth/passkey/[action]/route.ts`), but the console has no button for it yet (see Gaps).
-4. **Delete `CREATOR_SETUP_TOKEN`** in Vercel (Settings, Environment Variables), and remove the resource from Terraform state or code so a later `apply` does not recreate it, then redeploy. Record this in `docs/DECISIONS.md` if the Terraform code changes.
-5. In the console, open the event log and check for `auth.creator-created` and `auth.signed-in`.
+3. Add a second passkey straight away: console, **Your passkeys** (`/console/passkeys`), "Confirm with passkey" at the top right, then **Add another passkey**. Keep one that syncs (iCloud Keychain, Google Password Manager) and a hardware security key, so losing one device does not lock you out. The page lists each passkey's name, when it was added and last used, and lets you rename or remove one (removing needs a fresh confirmation; the last one cannot be removed).
+4. **Remove the setup token** **[creator approves]**: `terraform apply -var 'creator_setup_enabled=false' ...` deletes the token and the Vercel variable; redeploy. The app already refuses the token once a creator exists (each try is logged `auth.setup-refused`), so this is defence in depth.
+5. In the console, open the event log and check for `auth.creator-created`, `auth.passkey-added` and `auth.signed-in`.
 
 ### Import content as drafts
 
@@ -157,8 +168,10 @@ Do **not** use `PUBLISH=1` or `--publish` against production: that publishes eve
 
 ## 5. Preview deployments
 
-- Every pull request gets a Vercel preview deployment. Its `DATABASE_URI` points at the Neon `preview` branch, and its build runs the migrations against that branch.
-- All previews share that one branch (see Gaps).
+- Every pull request gets a Vercel preview deployment, and (once its secrets are set) `.github/workflows/preview-db.yml` gives it its own Neon branch `pr-<number>`, copied from production when the pull request opens: the workflow runs the migrations on it and sets a preview `DATABASE_URI` for that git branch in Vercel. Closing the pull request deletes both. **Untested until the Neon and Vercel credentials exist**: try it on a throwaway pull request first and watch the workflow log.
+- The very first preview build of a new pull request can start before the workflow has set the variable; that build uses the shared `preview` branch. Push again or press Redeploy once the workflow is green.
+- A `pr-<number>` branch is a copy of production: it holds what production holds (no learner personal data in v1, but classroom sessions and anonymous totals), stays in `aws-ap-south-1`, and is deleted when the pull request closes.
+- Previews work out their own address from `VERCEL_BRANCH_URL` (stable per git branch). Passkeys are bound to that host, so signing in on a preview needs a passkey registered on that preview, and the preview database's creator. Most preview checks need no sign-in (lessons, preview links).
 - Draft lessons are viewed through signed preview links (valid 72 hours, one lesson each). They come from the agent pipeline's creator-preview step, the decision queue in the console, or the MCP tool `get_preview_link`. A preview link only opens the lesson it was made for.
 - Vercel Cron does not call preview deployments, so the purge and pipeline jobs run only in production.
 
@@ -193,7 +206,7 @@ Both steps are **[creator approves]**. For older points in time use the daily en
 1. Vercel, Project, Settings, Domains: add the domain (e.g. `learn.example.in`). Vercel shows the DNS records (an `A` record for an apex domain, a `CNAME` for a subdomain). Add them at the domain registrar.
 2. Vercel issues and renews the HTTPS certificate itself once DNS resolves.
 3. Set `app_origin` to `https://learn.example.in` and `terraform apply` **[creator approves]**, then redeploy.
-4. **Choose the final domain before creating the creator's passkey.** Passkeys are bound to the hostname in `APP_ORIGIN`; changing the domain later means registering passkeys again (with a new setup token) and re-approving MCP connectors.
+4. **Choose the final domain before creating the creator's passkey.** Passkeys are bound to the hostname in `APP_ORIGIN`; changing the domain later means registering passkeys again and re-approving MCP connectors. The setup token cannot be reused for that (it is closed for good once a creator exists), so a domain change needs the account recovery procedure, which does not exist yet (Gaps, 13).
 
 ## 9. Pre-launch checklist
 
@@ -208,7 +221,7 @@ Each item needs evidence (a link, a screenshot, a CI run) before the creator app
 - [ ] `ANTHROPIC_API_KEY` set if agents are to run, with a spend limit on the Anthropic side.
 - [ ] Backups: `BACKUP_DATABASE_URL` and `BACKUP_AGE_RECIPIENT` set, the Backup workflow run once by hand and its artifact present, the private key stored offline, a restore test passed.
 - [ ] `ALERT_WEBHOOK_URL` set in Vercel and GitHub, and tested (it should receive a message).
-- [ ] `CREATOR_SETUP_TOKEN` deleted; the creator's passkey is synced or backed by a second authenticator.
+- [ ] `creator_setup_enabled = false` applied (no `CREATOR_SETUP_TOKEN` in Vercel); **Your passkeys** lists at least two passkeys (one synced, one hardware key).
 - [ ] Custom domain on HTTPS, `APP_ORIGIN` matches it.
 - [ ] Consent and ethics approval for the pilot in place (`docs/11`, `docs/14` Phase 6).
 - [ ] `terraform output database_region` is `aws-ap-south-1`; Vercel functions are in `bom1`.
@@ -226,17 +239,18 @@ Each item needs evidence (a link, a screenshot, a CI run) before the creator app
 
 ## Gaps for a real deploy
 
-These are missing or inconsistent in the repository today. They are listed, not worked around.
+Missing or inconsistent things found in the repository, listed rather than worked around. Closed ones are kept, struck through, with where they were closed.
 
 1. **No Terraform state backend** is configured (section 2): a decision for the creator.
-2. **`APP_ORIGIN` is not set for preview deployments** (Terraform sets it for production only). Preview code falls back to `http://localhost:3000`, so passkey sign-in and preview links on a preview deployment will not work.
-3. **`ALERT_WEBHOOK_URL` is not managed by Terraform**; it must be added by hand in Vercel.
-4. **One shared Neon `preview` branch** for all pull requests (the comment in `main.tf` says "per pull request"). Two pull requests with different migrations will conflict on it. A branch per pull request (Neon's Vercel integration or a workflow) is needed before parallel schema work.
-5. **`CREATOR_SETUP_TOKEN` is a Terraform resource**: deleting it in Vercel and then running `apply` recreates it. The code needs a variable to switch it off after setup.
-6. **No read-only database role** is created for `BACKUP_DATABASE_URL`; it must be made by hand in Neon.
+2. ~~`APP_ORIGIN` is not set for preview deployments.~~ **Closed 2026-10-15.** One helper (`apps/web/src/auth/origin.ts`) decides the origin for passkeys (and the WebAuthn rpID), OAuth and MCP metadata, LTI, preview and invitation links: `APP_ORIGIN`, else `https://$VERCEL_BRANCH_URL` on a preview, else localhost in development only. Production without `APP_ORIGIN` refuses passkey ceremonies with a 503 explaining what to set. Tests: `apps/web/src/auth/origin.test.ts`, `passkey-api.test.ts`.
+3. ~~`ALERT_WEBHOOK_URL` is not managed by Terraform.~~ **Closed:** optional sensitive variable `alert_webhook_url`. The GitHub secret of the same name (backup workflows) is still set by hand.
+4. ~~One shared Neon `preview` branch for all pull requests.~~ **Closed in code, untested:** `.github/workflows/preview-db.yml` (section 5). It has not run against real Neon and Vercel accounts; it uses only documented endpoints (Neon API v2 branches and connection_uri; Vercel v10/v9 project env). `actionlint` 1.7.7 passes; shell scripts were not run through shellcheck.
+5. ~~`CREATOR_SETUP_TOKEN` is recreated by every apply.~~ **Closed:** `creator_setup_enabled` (default `true`); set it to `false` after setup. Independently the app refuses the token for good once a creator exists or `auth.creator-created` is in the event log.
+6. **No read-only database role in Terraform, by design.** The `kislerdm/neon` provider (0.18) can create roles but not grant privileges, and Neon makes every API-created role a member of `neon_superuser`. Make the role once with SQL: `docs/runbooks/backup-restore.md`, "A read-only role for backups".
 7. **No spend limits as code**: Vercel, Neon and Anthropic limits are set by hand in each dashboard.
 8. **Vercel plan**: the every-minute cron needs a paid plan (section 6).
-9. **Migrations for Phase 6 collections** are being generated at the end of the phase. Before the first deploy, check that `apps/web/src/cms/migrations/` covers every collection in `payload.config.ts` (`payload migrate:status` against a scratch database).
+9. **Migrations for Phase 6 collections** are being generated at the end of the phase. Before the first deploy, check that `apps/web/src/cms/migrations/` covers every collection in `payload.config.ts` (`payload migrate:status` against a scratch database). This now includes the new `users.passkeys` fields `addedAt` and `lastUsedAt`.
 10. **No staging environment** separate from previews; the first deploy of each migration to a database holding real data happens in production.
-11. **Lesson packs** are built from the repository's `content/` folder (`status` in the JSON), not from what is published in the CMS. See `docs/runbooks/lesson-packs.md`.
-12. **No console button to add a second passkey.** The API supports it for a freshly signed-in creator; the console only offers first-time setup and reviewer invites.
+11. ~~Lesson packs are built from the repository only.~~ **Closed:** `pnpm pack:lessons --from-cms` builds from what is published in the CMS (`docs/runbooks/lesson-packs.md`). The default is still the repository.
+12. ~~No console button to add a second passkey.~~ **Closed:** console, **Your passkeys** (section 4). The console's import map must be regenerated (`payload generate:importmap`) for the new view to load.
+13. **No account recovery path.** With the setup token closed for good, a creator who loses every passkey cannot get back in without database access. A recovery procedure is proposed in `docs/DECISIONS.md` (2026-10-15, deploy gaps) and awaits the creator. Until then keep at least two passkeys.
