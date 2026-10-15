@@ -4,6 +4,20 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — Agents bound by rubrics, and measured
+
+**Engineering, at the creator's request** that every agent work to clear rubrics, as a team of experienced domain experts would, starting with the most important.
+
+- **Rubrics.** Every platform agent has a rubric in `platform/rubrics/`, with references in `platform/references/`. The runner (`packages/agents`) builds each agent's prompt from the constitution, its profile and its rubric, and rejects output that breaks the rubric. The agent is told what broke and redoes it once; output that still fails is blocked.
+  - Reviewers must report every check, with located and quoted flags, a fix for each, and calibrated severity.
+  - Makers must pass automatic checks, then an independent judge scores them on anchored 0–4 criteria.
+  - The Editor-in-Chief is scored against cases with known answers.
+- **Benchmarks.** Measured runs are recorded in `benchmarks/`, and CI fails if a recorded run falls below its pass bar. The judge is calibrated by planting defects it must detect. Results are in `benchmarks/SCORECARD.md`.
+- **Build subagents.** Each subagent in `.claude/agents/` now ends its report with a "done means" checklist, every item backed by evidence.
+- **The test lesson.** The real problems the reviewers found are fixed in `content/`. Benchmark cases stay frozen, so recorded runs remain comparable.
+- **Not changed.** The profiles in `platform/agents/` are the creator's files and are not edited. Proposed for the creator: add a line to each profile pointing to its rubric.
+- **Limits.** The build team wrote the rubrics, references and benchmarks, and a model judges the makers. Expert review and judge–expert agreement are required before the scores gate model or prompt changes (`benchmarks/README.md`).
+
 ## 2026-10-15 — Learner-experience redesign
 
 **Engineering (design), at the creator's request** to design the platform "as an expert UI/UX designer with 20 years in ed-tech, keeping learner experience and reach in mind". The `learning-experience-reviewer` reviewed it twice, and its findings were applied.

@@ -1,0 +1,48 @@
+{
+  "agent": "learning-experience-designer",
+  "scores": [
+    {
+      "criterion": "hook",
+      "score": 4,
+      "evidence": "The hook asks 'A program read 92 out of 100 handwritten numbers correctly. Would you let it mark your answer sheet?' It is concrete and about the learner's own marks. In h2 the same test splits into Hill School 86/90 and River School 6/10, which is a real surprise. Only the core idea (an unbalanced dataset hidden by one overall total) resolves it.",
+      "improve": "Already at the top level. To keep it there, make sure the h1 vote really is shown again in h2 and t3 as configured."
+    },
+    {
+      "criterion": "acts",
+      "score": 4,
+      "evidence": "Each of the 19 blocks has a learner act (predict, compare, sort, knob, by-hand-then-automate, analogy match, explain-back, break-it, takeaway) and gives a specific removal-test reason. The designer turned two passive draft steps into acts: the e4 count-out became a knob over the test mix, and the m1 statement became a question asked after sorting. No two passive blocks sit next to each other. e5 is a deeper layer, but the learner still acts in it (calculator step, choosing the rounding on a number line).",
+      "improve": "Already at the top level. e2 and e5 still carry a lot of explanation before the act. Splitting their text into tap-revealed steps would stop them reading as text blocks."
+    },
+    {
+      "criterion": "wrong-answers",
+      "score": 3,
+      "evidence": "Most decisions get specific feedback that teaches without judging. Examples: in h2, 'About the same' makes the hollow dots pulse ('Same count, very different share'); in e2, choice (c) brings back the m3 balanced-pile result; in t1, putting card 4 in the plan links back to m4. Some gaps remain. In e1 the block says 'Each mismatch gets its own reply' but writes replies for only 3 of the possible wrong pairings. In e3, 'Any other answer' falls back to the generic hint ladder. In b2, leaving out 'People who test it on each group' gets no reply. In e5, only two wrong moves are designed.",
+      "improve": "Write a reply for every wrong pairing in e1, keyed to the target the learner chose. Add a reply in b2 for leaving out 'people who test it on each group'. In e3, replace the 'any other answer' fallback with replies for the likely slips, such as 86 or 50."
+    },
+    {
+      "criterion": "component-fit",
+      "score": 3,
+      "evidence": "The components suit the ideas: the knob on dataset mix (m3), compare for bigger-pile versus better-mix (m4), the knob on test mix that shows how one total hides a group (e4), and break-it with an always-empty Warnings panel (b1). The note on train-classifier sits correctly in notesForCreator. The weakness is that some learner-facing text gives away the outcome the configuration asks the learner to predict. m3's text says 'Hill School hardly changed. River School went up a lot.' e4's text lists all three sums (92, 85, 78) before the up/down guess. b2's text runs 'Choose Yes or No. No. This program does not change...' without the draft's 'Now reveal' split. As written, the predictions in these blocks cannot be honest.",
+      "improve": "Split the m3, e4 and b2 text into pre-action and post-action strings, so results and answers appear only after the learner's guess and action."
+    },
+    {
+      "criterion": "classroom",
+      "score": 3,
+      "evidence": "Every block has a variant a teacher can run on one screen: votes by raised hands or thumbs, only counts on the shared screen, the teacher drives the knobs and drops cards in, and e3 is worked on paper. Each variant has a time. But the notes give about 47 minutes of blocks. The suggested cuts (skip e5, shorten t2) bring this to about 41 minutes, and that still leaves out the roughly 9 minutes of pre-check and post-check in the draft's 40-minute plan. So the timing is not realistic for one period.",
+      "improve": "Give a 40-minute classroom route that includes the checks, for example by merging p2 into m2 and making e6 or e5 homework or optional. State which blocks are cut."
+    },
+    {
+      "criterion": "ending",
+      "score": 4,
+      "evidence": "t3 and the ending give the learner an editable takeaway card in their own words, with three questions: who was in the dataset, how well it works for each group, and who can fix it. The card also shows the learner's 'Then' and 'Now' trust votes. It is saved on the device only. The ending text ('Now you can look inside a number like that') ties back to the hook.",
+      "improve": "Already at the top level."
+    },
+    {
+      "criterion": "voice-and-respect",
+      "score": 4,
+      "evidence": "A scan found no banned phrases and no Article 14 patterns: no streaks, no confetti, no progress bars, no 'Next' as the main interaction, and animations run once and respect reduced motion. The AI framing is mechanistic ('It follows the patterns in the examples it was given', 'a program has no wishes or plans'). The mind-framed distractor in p1 B is used only so it can be corrected. The microcopy is warm and treats the learner as a peer ('Your guess was worth testing', 'Wanting more evidence is a good instinct', 'Your reason matters more than the spot').",
+      "improve": "Already at the top level. e5 and e2 are long. Breaking them into shorter tap-revealed lines would keep the voice light."
+    }
+  ],
+  "overall": "Passes. Mean score is 3.57 (25/7). Both blocking criteria score 4 (acts 4, voice-and-respect 4). This is a strong design: a surprising hook about the learner's own marks, every block an act, two analogies with break points, and an ending the learner keeps. Three fixes would raise it further: keep results and answers hidden until after the learner predicts in m3, e4 and b2; write wrong-answer replies for the remaining mismatches in e1, b2 and e3; and give a classroom route that fits a 40-minute period including the checks."
+}

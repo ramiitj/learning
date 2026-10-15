@@ -2,5 +2,35 @@
   "agent": "learning-experience-designer",
   "task": "data-decides",
   "violations": [],
-  "advisories": []
+  "advisories": [],
+  "judge": {
+    "violations": [],
+    "mean": 3.63,
+    "minBlocking": 4,
+    "failing": [],
+    "pass": true,
+    "scores": {
+      "hook": 4,
+      "acts": 4,
+      "wrong-answers": 3,
+      "component-fit": 3,
+      "classroom": 3,
+      "ending": 4,
+      "voice-and-respect": 4
+    }
+  },
+  "calibration": {
+    "targeted": [
+      "wrong-answers",
+      "classroom",
+      "voice-and-respect"
+    ],
+    "detected": [
+      "wrong-answers",
+      "classroom",
+      "voice-and-respect"
+    ],
+    "drift": [],
+    "sensitivity": 1
+  }
 }
