@@ -1,0 +1,27 @@
+/* next-word-model: tokens only, logical properties, tolerant of text expansion and Indic scripts. */
+.lm-nextword { display: grid; gap: var(--space-4); }
+.lm-nextword__label { font-weight: 600; }
+.lm-nextword__input,
+.lm-nextword__select {
+  flex: 1 1 12rem;
+  min-block-size: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  max-inline-size: 100%;
+}
+.lm-nextword__list { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+.lm-nextword__list li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); overflow-wrap: anywhere; }
+.lm-nextword__stats { font-weight: 600; }
+.lm-nextword__table { border-collapse: collapse; inline-size: 100%; max-inline-size: 36rem; }
+.lm-nextword__table caption { text-align: start; font-weight: 600; padding-block-end: var(--space-2); }
+.lm-nextword__table th,
+.lm-nextword__table td { text-align: start; padding: var(--space-2); border-block-end: 1px solid var(--color-border); overflow-wrap: anywhere; vertical-align: top; }
+.lm-nextword__written:focus { outline: none; }
+.lm-nextword__output { font-size: var(--text-h3); line-height: var(--leading-body); overflow-wrap: anywhere; }
+.lm-nextword__steps { padding-inline-start: var(--space-5); }
+.lm-nextword--class { font-size: 1.15em; }
+.lm-nextword--class .lm-nextword__output { font-size: var(--text-h2); }

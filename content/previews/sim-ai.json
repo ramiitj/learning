@@ -1,0 +1,354 @@
+{
+  "titleKey": "title",
+  "blocks": [
+    {
+      "id": "s1",
+      "type": "train-classifier",
+      "config": {
+        "promptKey": "tc.prompt",
+        "groups": [
+          "tc.small",
+          "tc.big"
+        ],
+        "features": [
+          {
+            "id": "weight",
+            "labelKey": "tc.weight"
+          },
+          {
+            "id": "height",
+            "labelKey": "tc.height"
+          }
+        ],
+        "items": [
+          {
+            "id": "mouse",
+            "labelKey": "tc.mouse",
+            "symbol": "🐭",
+            "features": {
+              "weight": 0.1,
+              "height": 0.1
+            }
+          },
+          {
+            "id": "cat",
+            "labelKey": "tc.cat",
+            "symbol": "🐱",
+            "features": {
+              "weight": 4,
+              "height": 0.3
+            }
+          },
+          {
+            "id": "horse",
+            "labelKey": "tc.horse",
+            "symbol": "🐴",
+            "features": {
+              "weight": 500,
+              "height": 1.6
+            }
+          },
+          {
+            "id": "elephant",
+            "labelKey": "tc.elephant",
+            "symbol": "🐘",
+            "features": {
+              "weight": 5000,
+              "height": 3
+            }
+          }
+        ],
+        "testItems": [
+          {
+            "id": "rabbit",
+            "labelKey": "tc.rabbit",
+            "symbol": "🐰",
+            "features": {
+              "weight": 2,
+              "height": 0.25
+            }
+          },
+          {
+            "id": "cow",
+            "labelKey": "tc.cow",
+            "symbol": "🐮",
+            "features": {
+              "weight": 600,
+              "height": 1.4
+            }
+          }
+        ],
+        "explainKey": "tc.explain"
+      },
+      "componentVersion": "1.0"
+    },
+    {
+      "id": "s2",
+      "type": "pixel-grid",
+      "config": {
+        "promptKey": "pg.prompt",
+        "size": 8,
+        "presets": [
+          {
+            "labelKey": "pg.one",
+            "rows": [
+              [
+                0,
+                9,
+                0
+              ],
+              [
+                9,
+                9,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ],
+              [
+                9,
+                9,
+                9
+              ]
+            ]
+          }
+        ],
+        "tools": [
+          "draw",
+          "erase",
+          "blur",
+          "shift"
+        ],
+        "explainKey": "pg.why",
+        "sameKey": "pg.same",
+        "differentKey": "pg.diff"
+      },
+      "componentVersion": "1.0"
+    },
+    {
+      "id": "s3",
+      "type": "next-word-model",
+      "config": {
+        "promptKey": "nw.prompt",
+        "starterSentencesKey": "nw.starters",
+        "maxSentences": 10,
+        "explainKey": "nw.why"
+      },
+      "componentVersion": "1.0"
+    },
+    {
+      "id": "s4",
+      "type": "layer-builder",
+      "config": {
+        "promptKey": "lb.prompt",
+        "dataset": {
+          "type": "wave",
+          "points": 10,
+          "noise": 0.5,
+          "seed": 3
+        },
+        "maxLayers": 3,
+        "maxWidth": 16,
+        "explainKey": "lb.explain",
+        "smallKey": "lb.small",
+        "bigKey": "lb.big"
+      },
+      "componentVersion": "1.0"
+    },
+    {
+      "id": "s5",
+      "type": "dilemma-vote",
+      "config": {
+        "promptKey": "dv.scenario",
+        "options": [
+          {
+            "id": "follow",
+            "labelKey": "dv.o1"
+          },
+          {
+            "id": "clue",
+            "labelKey": "dv.o2"
+          }
+        ],
+        "frameworks": [
+          {
+            "id": "outcomes",
+            "nameKey": "dv.f1.name",
+            "reasoningKey": "dv.f1.why",
+            "choice": "follow"
+          },
+          {
+            "id": "fairness",
+            "nameKey": "dv.f2.name",
+            "reasoningKey": "dv.f2.why",
+            "choice": "clue"
+          },
+          {
+            "id": "care",
+            "nameKey": "dv.f3.name",
+            "reasoningKey": "dv.f3.why",
+            "choice": null
+          }
+        ],
+        "reflectionKey": "dv.reflect"
+      },
+      "componentVersion": "1.0"
+    },
+    {
+      "id": "s6",
+      "type": "hillside",
+      "config": {
+        "promptKey": "hs.prompt",
+        "landscape": {
+          "type": "two-valleys",
+          "min": 0,
+          "max": 100
+        },
+        "start": 10,
+        "stepMin": 2,
+        "stepMax": 10,
+        "maxSteps": 12,
+        "leftKey": "hs.left",
+        "rightKey": "hs.right",
+        "goalKey": "hs.goal",
+        "fadeKey": "hs.fade"
+      },
+      "componentVersion": "1.0"
+    }
+  ],
+  "strings": {
+    "en": {
+      "title": "AI simulations",
+      "tc.prompt": "Label each animal as small or big, then train the machine on your labels.",
+      "tc.small": "Small",
+      "tc.big": "Big",
+      "tc.weight": "Weight (kg)",
+      "tc.height": "Height (m)",
+      "tc.mouse": "Mouse",
+      "tc.cat": "Cat",
+      "tc.horse": "Horse",
+      "tc.elephant": "Elephant",
+      "tc.rabbit": "Rabbit",
+      "tc.cow": "Cow",
+      "tc.explain": "The machine has no idea what an animal is. It finds the examples whose numbers are closest and copies their label.",
+      "pg.prompt": "Draw a digit. Then switch to numbers and see what the computer receives.",
+      "pg.one": "The digit 1",
+      "pg.why": "The computer never sees a picture, only these numbers.",
+      "pg.same": "Mostly the same numbers",
+      "pg.diff": "Very different numbers",
+      "nw.prompt": "Teach the machine some sentences, then ask it for the next word.",
+      "nw.starters": "The cat sat on the mat.|The cat ate the fish.|The dog sat on the step.",
+      "nw.why": "It only counts which word came next most often. There is no meaning or intention behind the choice.",
+      "lb.prompt": "Build a network and train it on the dots. Then see how it does on new dots.",
+      "lb.explain": "A network that memorises the training dots can still miss the pattern.",
+      "lb.small": "The small network",
+      "lb.big": "The big network",
+      "dv.scenario": "A school app suggests which students need extra help, based on last year's marks. Should teachers follow its list?",
+      "dv.o1": "Follow the list",
+      "dv.o2": "Use it only as one clue",
+      "dv.f1.name": "Outcomes",
+      "dv.f1.why": "Choose what helps the most students learn. If the list is usually right, following it helps many quickly.",
+      "dv.f2.name": "Fairness",
+      "dv.f2.why": "Last year's marks may carry last year's unfairness. Each student deserves to be seen as they are now.",
+      "dv.f3.name": "Care",
+      "dv.f3.why": "It depends on the student. A teacher who knows them is better placed than a list to decide.",
+      "dv.reflect": "Who should be responsible if the list is wrong?",
+      "hs.prompt": "You are on a hill in thick fog and want to reach the lowest ground. You can only feel the slope under your feet.",
+      "hs.left": "Step left",
+      "hs.right": "Step right",
+      "hs.goal": "Reach the lowest ground in as few steps as you can.",
+      "hs.fade": "This is how training works: the machine only knows the slope where it stands, and takes small steps downhill to make its error smaller."
+    },
+    "hi": {
+      "title": "AI सिमुलेशन",
+      "tc.prompt": "हर जानवर को छोटा या बड़ा बताइए, फिर अपने लेबल से मशीन को ट्रेन कीजिए।",
+      "tc.small": "छोटा",
+      "tc.big": "बड़ा",
+      "tc.weight": "वज़न (किलो)",
+      "tc.height": "ऊँचाई (मीटर)",
+      "tc.mouse": "चूहा",
+      "tc.cat": "बिल्ली",
+      "tc.horse": "घोड़ा",
+      "tc.elephant": "हाथी",
+      "tc.rabbit": "खरगोश",
+      "tc.cow": "गाय",
+      "tc.explain": "मशीन को नहीं पता कि जानवर क्या है। वह सबसे पास के अंकों वाले उदाहरण ढूँढकर उनका लेबल लगा देती है।",
+      "pg.prompt": "एक अंक बनाइए। फिर संख्याओं पर जाइए और देखिए कि कंप्यूटर को क्या मिलता है।",
+      "pg.one": "अंक 1",
+      "pg.why": "कंप्यूटर कभी तस्वीर नहीं देखता, सिर्फ़ ये संख्याएँ।",
+      "pg.same": "ज़्यादातर वही संख्याएँ",
+      "pg.diff": "बहुत अलग संख्याएँ",
+      "nw.prompt": "मशीन को कुछ वाक्य सिखाइए, फिर उससे अगला शब्द पूछिए।",
+      "nw.starters": "बिल्ली चटाई पर बैठी।|बिल्ली ने मछली खाई।|कुत्ता सीढ़ी पर बैठा।",
+      "nw.why": "यह सिर्फ़ गिनता है कि आगे कौन-सा शब्द सबसे ज़्यादा आया। इस चुनाव के पीछे कोई अर्थ या इरादा नहीं है।",
+      "lb.prompt": "एक नेटवर्क बनाइए और बिंदुओं पर ट्रेन कीजिए। फिर देखिए कि नए बिंदुओं पर कैसा करता है।",
+      "lb.explain": "जो नेटवर्क ट्रेनिंग के बिंदु रट लेता है, वह फिर भी पैटर्न चूक सकता है।",
+      "lb.small": "छोटा नेटवर्क",
+      "lb.big": "बड़ा नेटवर्क",
+      "dv.scenario": "एक स्कूल ऐप पिछले साल के अंकों के आधार पर बताता है कि किन विद्यार्थियों को अतिरिक्त मदद चाहिए। क्या शिक्षक उसकी सूची मानें?",
+      "dv.o1": "सूची मानें",
+      "dv.o2": "इसे सिर्फ़ एक सुराग मानें",
+      "dv.f1.name": "नतीजे",
+      "dv.f1.why": "वह चुनें जिससे सबसे ज़्यादा विद्यार्थी सीखें। अगर सूची अक्सर सही है, तो उसे मानने से कई लोगों को जल्दी मदद मिलती है।",
+      "dv.f2.name": "निष्पक्षता",
+      "dv.f2.why": "पिछले साल के अंकों में पिछले साल की नाइंसाफ़ी हो सकती है। हर विद्यार्थी को आज जैसा है, वैसा देखा जाना चाहिए।",
+      "dv.f3.name": "देखभाल",
+      "dv.f3.why": "यह विद्यार्थी पर निर्भर है। उन्हें जानने वाला शिक्षक सूची से बेहतर तय कर सकता है।",
+      "dv.reflect": "अगर सूची गलत हो, तो ज़िम्मेदार किसे होना चाहिए?",
+      "hs.prompt": "आप घने कोहरे में एक पहाड़ी पर हैं और सबसे नीची जगह पहुँचना चाहते हैं। आप सिर्फ़ पैरों के नीचे की ढलान महसूस कर सकते हैं।",
+      "hs.left": "बाएँ कदम",
+      "hs.right": "दाएँ कदम",
+      "hs.goal": "जितने कम कदमों में हो सके, सबसे नीची जगह पहुँचिए।",
+      "hs.fade": "ट्रेनिंग ऐसे ही होती है: मशीन को सिर्फ़ अपनी जगह की ढलान पता होती है, और वह अपनी गलती घटाने के लिए नीचे की ओर छोटे कदम लेती है।"
+    },
+    "te": {
+      "title": "AI సిమ్యులేషన్లు",
+      "tc.prompt": "ప్రతి జంతువును చిన్నది లేదా పెద్దది అని గుర్తించండి, తర్వాత మీ లేబుళ్లతో యంత్రాన్ని ట్రైన్ చేయండి.",
+      "tc.small": "చిన్నది",
+      "tc.big": "పెద్దది",
+      "tc.weight": "బరువు (కిలోలు)",
+      "tc.height": "ఎత్తు (మీటర్లు)",
+      "tc.mouse": "ఎలుక",
+      "tc.cat": "పిల్లి",
+      "tc.horse": "గుర్రం",
+      "tc.elephant": "ఏనుగు",
+      "tc.rabbit": "కుందేలు",
+      "tc.cow": "ఆవు",
+      "tc.explain": "జంతువు అంటే ఏమిటో యంత్రానికి తెలియదు. దగ్గరి సంఖ్యలున్న ఉదాహరణలను కనుగొని వాటి లేబుల్‌నే పెడుతుంది.",
+      "pg.prompt": "ఒక అంకె గీయండి. తర్వాత సంఖ్యలకు మారి కంప్యూటర్‌కు ఏమి అందుతుందో చూడండి.",
+      "pg.one": "అంకె 1",
+      "pg.why": "కంప్యూటర్ ఎప్పుడూ బొమ్మను చూడదు, ఈ సంఖ్యలను మాత్రమే.",
+      "pg.same": "చాలావరకు అవే సంఖ్యలు",
+      "pg.diff": "చాలా వేరే సంఖ్యలు",
+      "nw.prompt": "యంత్రానికి కొన్ని వాక్యాలు నేర్పండి, తర్వాత తదుపరి పదం అడగండి.",
+      "nw.starters": "పిల్లి చాప మీద కూర్చుంది.|పిల్లి చేపను తిన్నది.|కుక్క మెట్టు మీద కూర్చుంది.",
+      "nw.why": "తర్వాత ఏ పదం ఎక్కువసార్లు వచ్చిందో మాత్రమే లెక్కిస్తుంది. ఆ ఎంపిక వెనుక అర్థం లేదా ఉద్దేశం లేదు.",
+      "lb.prompt": "ఒక నెట్‌వర్క్ కట్టి చుక్కల మీద ట్రైన్ చేయండి. తర్వాత కొత్త చుక్కల మీద ఎలా చేస్తుందో చూడండి.",
+      "lb.explain": "ట్రైనింగ్ చుక్కలను బట్టీ పట్టిన నెట్‌వర్క్ కూడా నమూనాను తప్పిపోవచ్చు.",
+      "lb.small": "చిన్న నెట్‌వర్క్",
+      "lb.big": "పెద్ద నెట్‌వర్క్",
+      "dv.scenario": "గత సంవత్సరం మార్కుల ఆధారంగా ఏ విద్యార్థులకు అదనపు సహాయం కావాలో ఒక స్కూల్ యాప్ సూచిస్తుంది. ఉపాధ్యాయులు ఆ జాబితాను పాటించాలా?",
+      "dv.o1": "జాబితాను పాటించాలి",
+      "dv.o2": "దాన్ని ఒక ఆధారంగా మాత్రమే వాడాలి",
+      "dv.f1.name": "ఫలితాలు",
+      "dv.f1.why": "ఎక్కువ మంది విద్యార్థులు నేర్చుకునేదాన్ని ఎంచుకోండి. జాబితా తరచూ సరైనదైతే, దాన్ని పాటిస్తే చాలా మందికి త్వరగా సహాయం అందుతుంది.",
+      "dv.f2.name": "న్యాయం",
+      "dv.f2.why": "గత ఏడాది మార్కుల్లో గత ఏడాది అన్యాయం ఉండొచ్చు. ప్రతి విద్యార్థిని ఇప్పుడు ఉన్నట్టే చూడాలి.",
+      "dv.f3.name": "శ్రద్ధ",
+      "dv.f3.why": "అది విద్యార్థిపై ఆధారపడుతుంది. వారిని ఎరిగిన ఉపాధ్యాయుడు జాబితా కంటే బాగా నిర్ణయించగలరు.",
+      "dv.reflect": "జాబితా తప్పైతే ఎవరు బాధ్యత వహించాలి?",
+      "hs.prompt": "మీరు దట్టమైన పొగమంచులో ఒక కొండ మీద ఉన్నారు, అత్యంత లోతైన చోటుకు చేరాలనుకుంటున్నారు. మీ కాళ్ల కింది వాలును మాత్రమే అనుభవించగలరు.",
+      "hs.left": "ఎడమకు అడుగు",
+      "hs.right": "కుడికి అడుగు",
+      "hs.goal": "వీలైనన్ని తక్కువ అడుగుల్లో అత్యంత లోతైన చోటుకు చేరండి.",
+      "hs.fade": "ట్రైనింగ్ ఇలాగే జరుగుతుంది: యంత్రానికి తాను ఉన్న చోటి వాలు మాత్రమే తెలుసు, తన తప్పును తగ్గించడానికి కిందికి చిన్న అడుగులు వేస్తుంది."
+    }
+  }
+}

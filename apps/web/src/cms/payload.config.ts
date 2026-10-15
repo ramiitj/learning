@@ -9,6 +9,7 @@ import { ClassroomSessions, ClassroomVotes } from "./collections/Classroom";
 import { Agents, Decisions, Events, Feedback, PipelineRuns } from "./collections/System";
 import { Users } from "./collections/Users";
 import { OAuthGrants } from "./collections/OAuth";
+import { AnalyticsDaily } from "./collections/Analytics";
 import { Autonomy, Budget, Constitution } from "./globals";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -34,11 +35,12 @@ export default buildConfig({
         command: { Component: "/cms/views/CommandView#CommandView", path: "/command" },
         translations: { Component: "/cms/views/TranslationsView#TranslationsView", path: "/translations" },
         components: { Component: "/cms/views/ComponentsView#ComponentsView", path: "/components" },
+        analytics: { Component: "/cms/views/AnalyticsView#AnalyticsView", path: "/analytics" },
       },
     },
     importMap: { baseDir: path.resolve(dirname, "..") },
   },
-  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants],
+  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants, AnalyticsDaily],
   globals: [Constitution, Autonomy, Budget],
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI ?? "" },

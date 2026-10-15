@@ -3,6 +3,7 @@ import { Component, memo, useCallback, type CSSProperties, useEffect, useId, use
 import { DEPTHS, type Block, type CheckItem, type Depth, type Lesson } from "@lm/schema";
 import { EngineContext, useEngine, useLessonState, useStoreSelector, type EngineValue } from "./context";
 import { BlockIdContext } from "./live";
+import type { OnLessonEvent } from "./analytics";
 import { createLessonT, createUiT, FALLBACK_LOCALE } from "./i18n";
 import { engineMessages } from "./messages";
 import type { Registry } from "./registry";
@@ -21,6 +22,8 @@ export interface LessonViewProps {
   detours?: Record<string, Detour>;
   /** Overrides where progress is kept; defaults to the lesson id and version. */
   storageKey?: string;
+  /** Learning moments for anonymous analytics; the engine sends nothing anywhere itself. */
+  onEvent?: OnLessonEvent;
 }
 
 const depthRank = (d: Depth | undefined) => DEPTHS.indexOf(d ?? "core");
@@ -35,22 +38,34 @@ function useScope(opts: { blocks: readonly Block[]; locale: string; mode: Mode; 
 }
 
 /** Renders a whole lesson: header, controls, the six stages and their blocks, glossary and detours. */
-export function LessonView({ lesson, locale, mode = "personal", registry, glossary = {}, detours = {}, storageKey }: LessonViewProps) {
+export function LessonView({ lesson, locale, mode = "personal", registry, glossary = {}, detours = {}, storageKey, onEvent }: LessonViewProps) {
   const key = storageKey ?? `lm:lesson:${lesson.id}:v${lesson.version}`;
   const [glossaryOpen, setGlossaryOpen] = useState<{ focus?: string } | null>(null);
   const [detourId, setDetourId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
   const localGlossary = useMemo(() => ({ ...(glossary[FALLBACK_LOCALE] ?? {}), ...(glossary[locale] ?? {}) }), [glossary, locale]);
-  const openGlossary = useCallback((focus?: string) => setGlossaryOpen({ focus }), []);
+  const emit = useRef(onEvent);
+  useEffect(() => {
+    emit.current = onEvent;
+  }, [onEvent]);
+  const openGlossary = useCallback((focus?: string) => {
+    setGlossaryOpen({ focus });
+    emit.current?.({ type: "glossary", termId: focus });
+  }, []);
+  const openDetour = useCallback((id: string | null) => {
+    setDetourId(id);
+    if (id) emit.current?.({ type: "detour", detourId: id });
+  }, []);
   const announce = useCallback((m: string) => {
     setAnnouncement("");
     requestAnimationFrame(() => setAnnouncement(m));
   }, []);
   const blocks = useMemo(() => lesson.stages.flatMap((s) => s.blocks), [lesson]);
-  const scope = useScope({ blocks, locale, mode, registry, strings: lesson.strings, storageKey: key, glossary: localGlossary, detours, openGlossary, openDetour: setDetourId, announce });
+  const scope = useScope({ blocks, locale, mode, registry, strings: lesson.strings, storageKey: key, glossary: localGlossary, detours, openGlossary, openDetour, announce });
   const { store, t, ui } = scope;
   const state = useLessonState(store);
   const [hydrated, setHydrated] = useState(false);
+  useLearningMoments(store, blocks, registry, lesson.checks?.post ?? [], emit);
 
   useEffect(() => {
     setHydrated(true);
@@ -346,6 +361,45 @@ class BlockErrorBoundary extends Component<{ fallback: ReactNode; children: Reac
   override render() {
     return this.state.failed ? this.props.fallback : this.props.children;
   }
+}
+
+/**
+ * Watches lesson state for learning moments: a block first acted on, a first
+ * committed answer, a post-check, a depth change. Each is reported once per
+ * page, without identifiers.
+ */
+function useLearningMoments(store: LessonStore, blocks: readonly Block[], registry: Registry, post: CheckItem[], emit: { current: OnLessonEvent | undefined }) {
+  useEffect(() => {
+    let prev = store.getState();
+    const seen = new Set<string>();
+    const once = (k: string) => (seen.has(k) ? false : (seen.add(k), true));
+    emit.current?.({ type: "start", returning: prev.visits > 1 });
+    const unsubscribe = store.subscribe(() => {
+      const next = store.getState();
+      const send = emit.current;
+      if (send) {
+        for (const b of blocks) {
+          const s = next.blocks[b.id];
+          if (s === undefined || s === prev.blocks[b.id]) continue;
+          if (once(`act:${b.id}`)) send({ type: "act", blockId: b.id, component: b.type });
+          const plugin = registry.get(b.type, b.componentVersion);
+          const out = plugin?.outcome?.(s, b.config as never);
+          if (out && once(`answer:${b.id}`)) send({ type: "answer", blockId: b.id, component: b.type, ...out });
+        }
+        for (const item of post) {
+          const s = next.blocks[`__post:${item.id}`] as { checked?: string } | undefined;
+          const was = prev.blocks[`__post:${item.id}`] as { checked?: string } | undefined;
+          if (s?.checked !== undefined && s.checked !== was?.checked) send({ type: "post-check", itemId: item.id, correct: s.checked === item.answer, firstTry: once(`post:${item.id}`) });
+        }
+        if (next.depth !== prev.depth) send({ type: "depth", depth: next.depth });
+        for (const id of next.expanded) if (!prev.expanded.includes(id)) send({ type: "expand", blockId: id });
+      }
+      prev = next;
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [store, blocks, registry, post, emit]);
 }
 
 /** Wraps one block: first-use help, the component itself, words, detours and reset. */

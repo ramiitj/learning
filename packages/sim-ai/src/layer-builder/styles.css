@@ -1,0 +1,29 @@
+/* layer-builder: build a network, train it, compare training and test error. Tokens only. */
+
+.lm-layers-build { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4); margin-block: var(--space-4); }
+.lm-layers-build legend { font-weight: 700; padding-inline: var(--space-2); }
+.lm-layers-list { display: grid; gap: var(--space-3); }
+.lm-layers-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.lm-layers-name { font-weight: 600; min-inline-size: 6ch; }
+.lm-layers-stepper { display: inline-flex; align-items: center; gap: var(--space-2); }
+.lm-layers-step { min-inline-size: var(--target-min); min-block-size: var(--target-min); }
+.lm-layers-width { min-inline-size: 10ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
+.lm-layers-actions { flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-3); }
+.lm-layers-progress { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.lm-layers-progress progress { flex: 1 1 8rem; accent-color: var(--color-accent); }
+.lm-layers-status:empty { display: none; }
+
+.lm-layers-chart { margin: 0; max-inline-size: 28rem; }
+.lm-layers-chart svg { display: block; inline-size: 100%; block-size: auto; }
+.lm-layers-chart__bg { fill: var(--color-surface-2); stroke: var(--color-border); }
+.lm-layers-chart__curve { fill: none; stroke: var(--color-accent); stroke-width: 3; stroke-linejoin: round; }
+.lm-layers-chart__train { fill: var(--color-ink); }
+.lm-layers-chart__test { fill: var(--color-surface); stroke: var(--color-ink); stroke-width: 2; }
+.lm-layers-chart figcaption { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
+
+.lm-layers-errors__list { display: grid; gap: var(--space-3); margin: var(--space-3) 0; }
+.lm-layers-errors__list dt { font-weight: 600; }
+.lm-layers-errors__list dd { margin: 0; display: grid; grid-template-columns: 5ch 1fr; align-items: center; gap: var(--space-3); font-variant-numeric: tabular-nums; }
+
+.lm-layers-pair { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+[data-mode="classroom"] .lm-layers-width { font-size: var(--text-h3); }

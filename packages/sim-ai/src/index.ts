@@ -5,5 +5,13 @@
  * draws or sorts is sent anywhere.
  */
 import type { AnyPlugin } from "@lm/engine";
+import { trainClassifier } from "./train-classifier";
+import { pixelGrid } from "./pixel-grid";
+import { nextWordModel } from "./next-word-model";
+import { layerBuilder } from "./layer-builder";
+import { dilemmaVote } from "./dilemma-vote";
+import { hillside } from "./hillside";
 
-export const aiSimulations: readonly AnyPlugin[] = [];
+export const aiSimulations: readonly AnyPlugin[] = [trainClassifier, pixelGrid, nextWordModel, layerBuilder, dilemmaVote, hillside];
+
+export { trainClassifier, pixelGrid, nextWordModel, layerBuilder, dilemmaVote, hillside };

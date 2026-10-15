@@ -84,6 +84,7 @@ export interface Config {
     'classroom-votes': ClassroomVote;
     users: User;
     'oauth-grants': OauthGrant;
+    'analytics-daily': AnalyticsDaily;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -108,6 +109,7 @@ export interface Config {
     'classroom-votes': ClassroomVotesSelect<false> | ClassroomVotesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'oauth-grants': OauthGrantsSelect<false> | OauthGrantsSelect<true>;
+    'analytics-daily': AnalyticsDailySelect<false> | AnalyticsDailySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -790,6 +792,24 @@ export interface OauthGrant {
   createdAt: string;
 }
 /**
+ * Anonymous daily counts. See the Analytics view for the report.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-daily".
+ */
+export interface AnalyticsDaily {
+  id: number;
+  day: string;
+  lessonId: string;
+  locale: string;
+  mode: string;
+  metric: string;
+  key: string;
+  count: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -880,6 +900,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'oauth-grants';
         value: number | OauthGrant;
+      } | null)
+    | ({
+        relationTo: 'analytics-daily';
+        value: number | AnalyticsDaily;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1211,6 +1235,21 @@ export interface OauthGrantsSelect<T extends boolean = true> {
   tokenHash?: T;
   userId?: T;
   expiresAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-daily_select".
+ */
+export interface AnalyticsDailySelect<T extends boolean = true> {
+  day?: T;
+  lessonId?: T;
+  locale?: T;
+  mode?: T;
+  metric?: T;
+  key?: T;
+  count?: T;
   updatedAt?: T;
   createdAt?: T;
 }

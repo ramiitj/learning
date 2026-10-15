@@ -1,0 +1,35 @@
+/* pixel-grid: tokens only, logical properties, tolerant of text expansion. */
+.lm-pixel { display: grid; gap: var(--space-4); }
+.lm-pixel__bar { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center; }
+.lm-pixel__grid {
+  display: grid;
+  gap: 2px;
+  inline-size: min(100%, 28rem);
+  padding: 2px;
+  background: var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  touch-action: none;
+  user-select: none;
+}
+.lm-pixel--class .lm-pixel__grid { inline-size: min(100%, 44rem); }
+.lm-pixel__row { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 2px; }
+.lm-pixel__cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--color-ink) calc(var(--v) * 11.1%), var(--color-surface));
+  color: var(--color-ink);
+  font-size: clamp(0.7rem, 2.6vw, 1.1rem);
+  font-weight: 600;
+  line-height: 1;
+  cursor: crosshair;
+}
+.lm-pixel--class .lm-pixel__cell { font-size: clamp(1rem, 3.6vw, 2rem); }
+/* Numbers view: a light tint keeps every digit readable; the number carries the meaning. */
+.lm-pixel[data-view="numbers"] .lm-pixel__cell { background: color-mix(in srgb, var(--color-accent) calc(var(--v) * 4%), var(--color-surface)); }
+.lm-pixel__cell:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; position: relative; z-index: 1; }
+.lm-pixel__ops { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); }
+.lm-pixel__result { min-block-size: 1.5em; }
+@media (prefers-reduced-motion: no-preference) {
+  .lm-pixel__cell { transition: background var(--motion-fast) var(--motion-ease); }
+}

@@ -1,0 +1,17 @@
+/* dilemma-vote: a scenario, a vote, then equal cards for each way of thinking. Tokens only. */
+
+.lm-dilemma-reason { display: grid; gap: var(--space-2); margin-block: var(--space-4); }
+.lm-dilemma-reason label { font-weight: 600; }
+.lm-dilemma-reason textarea {
+  inline-size: 100%; box-sizing: border-box; padding: var(--space-3);
+  font: inherit; color: var(--color-ink); background: var(--color-surface);
+  border: 1px solid var(--color-border-strong); border-radius: var(--radius-md);
+  resize: vertical; min-block-size: 5rem;
+}
+
+/* Every card is identical: same size, weight and treatment, so none is favoured. */
+.lm-dilemma-cards { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.lm-dilemma-card { margin: 0; }
+.lm-dilemma-card h4 { margin-block: 0 var(--space-2); }
+.lm-dilemma-verdict { margin-block-end: 0; }
+.lm-dilemma-agree { display: block; margin-block-start: var(--space-1); }

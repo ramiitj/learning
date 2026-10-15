@@ -1,1 +1,7 @@
-/* Styles for the AI domain simulations. Use design tokens only (packages/tokens). Each simulation adds its own section. */
+/* Styles for the AI domain simulations. Design tokens only (packages/tokens). */
+@import "./src/train-classifier/styles.css";
+@import "./src/pixel-grid/styles.css";
+@import "./src/next-word-model/styles.css";
+@import "./src/layer-builder/styles.css";
+@import "./src/dilemma-vote/styles.css";
+@import "./src/hillside/styles.css";

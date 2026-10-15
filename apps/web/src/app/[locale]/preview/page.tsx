@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PreviewClient } from "@/components/LessonClient";
-import { detourIdsOf, getDetours, getGlossary, getLesson, glossaryFor } from "@/lib/content";
+import { detourIdsOf, getDetours, getGlossary, getLesson, getPreviewSet, glossaryFor } from "@/lib/content";
 
 const PREVIEW_LESSON = "every-primitive";
 
@@ -22,8 +22,10 @@ export default async function Preview({ params }: { params: Promise<{ locale: st
   const lesson = await getLesson(PREVIEW_LESSON);
   if (!lesson) return null;
   const [glossary, detours] = await Promise.all([getGlossary(), getDetours(detourIdsOf(lesson))]);
-  const byType = new Map<string, string>();
-  for (const s of lesson.stages) for (const b of s.blocks) if (!byType.has(b.type)) byType.set(b.type, b.id);
+  // The universal primitives from the test lesson, then the domain simulations from their preview set.
+  const sims = await getPreviewSet("sim-ai");
+  const byType = new Map<string, { blockId: string; doc: NonNullable<typeof lesson> }>();
+  for (const doc of [lesson, ...(sims ? [sims] : [])]) for (const s of doc.stages) for (const b of s.blocks) if (!byType.has(b.type)) byType.set(b.type, { blockId: b.id, doc });
   const g = glossaryFor(glossary, locale);
   return (
     <div className="preview">
@@ -37,17 +39,17 @@ export default async function Preview({ params }: { params: Promise<{ locale: st
           ))}
         </ul>
       </nav>
-      {[...byType.entries()].map(([type, blockId]) => (
+      {[...byType.entries()].map(([type, { blockId, doc }]) => (
         <section key={type} id={`c-${type}`} className="preview__component" aria-labelledby={`h-${type}`}>
           <h2 id={`h-${type}`}><code>{type}</code></h2>
           <div className="preview__pair">
             <div>
               <h3 className="lm-eyebrow">{t("personal")}</h3>
-              <PreviewClient lesson={lesson} blockId={blockId} locale={locale} mode="personal" glossary={g} detours={detours} />
+              <PreviewClient lesson={doc} blockId={blockId} locale={locale} mode="personal" glossary={g} detours={detours} />
             </div>
             <div>
               <h3 className="lm-eyebrow">{t("classroom")}</h3>
-              <PreviewClient lesson={lesson} blockId={blockId} locale={locale} mode="classroom" glossary={g} detours={detours} />
+              <PreviewClient lesson={doc} blockId={blockId} locale={locale} mode="classroom" glossary={g} detours={detours} />
             </div>
           </div>
         </section>

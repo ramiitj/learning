@@ -9,6 +9,12 @@ export const explainBack: ComponentPlugin<ExplainBackConfig & Record<string, unk
   personal: ExplainBack,
   classroom: ExplainBackClassroom,
   messages,
+  outcome: (state, config) => {
+    // Choosing shows the feedback at once, so the first choice is the answer.
+    if (config.mode !== "choose" || !state?.choice) return null;
+    const best = config.options?.find((o) => o.best)?.id;
+    return { choice: state.choice, correct: best ? state.choice === best : undefined };
+  },
   summarize: (state, config, t, _ui) => {
     if (!state) return null;
     if (state.text && state.text.trim()) return cleanInput(state.text, 120);

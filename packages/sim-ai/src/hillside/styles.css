@@ -1,0 +1,24 @@
+/* hillside: walk downhill in fog, then fade into the full curve and loss chart. Design tokens only. */
+.lm-hill { display: grid; gap: var(--space-4); }
+.lm-hill__svg { display: block; inline-size: 100%; max-inline-size: 36rem; block-size: auto; border: 2px solid var(--color-border-strong); border-radius: var(--radius-md); color: var(--color-ink); }
+.lm-hill__heading { font-size: var(--text-h3); margin: 0; }
+.lm-hill__readout p { margin-block: var(--space-1); }
+.lm-hill__height { font-variant-numeric: tabular-nums; }
+.lm-hill__trail { overflow-wrap: anywhere; }
+.lm-hill__controls { display: grid; gap: var(--space-3); }
+.lm-hill__size label { display: block; font-weight: 600; margin-block-end: var(--space-1); }
+.lm-hill__size input[type="range"] { flex: 1 1 auto; min-inline-size: 8rem; min-block-size: var(--target-min); accent-color: var(--color-accent); }
+.lm-hill__size output { min-inline-size: 4ch; font-variant-numeric: tabular-nums; font-weight: 700; text-align: end; }
+.lm-hill__status { margin: 0; color: var(--color-ink-muted); }
+.lm-hill__legend { display: grid; gap: var(--space-1); list-style: none; margin: 0; padding: 0; }
+.lm-hill__legend li { display: flex; gap: var(--space-2); align-items: center; }
+.lm-hill__swatch { flex: none; }
+.lm-hill__table summary { cursor: pointer; min-block-size: var(--target-min); display: flex; align-items: center; }
+.lm-hill__table table { border-collapse: collapse; inline-size: 100%; max-inline-size: 28rem; font-variant-numeric: tabular-nums; }
+.lm-hill__table caption { text-align: start; font-weight: 700; padding-block: var(--space-2); }
+.lm-hill__table th, .lm-hill__table td { text-align: start; padding: var(--space-1) var(--space-3); border-block-end: 1px solid var(--color-border); }
+.lm-hill__full { animation: lm-hill-fade var(--motion-slow) var(--motion-ease); }
+@keyframes lm-hill-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .lm-hill__full { animation: none; } }
+[data-mode="classroom"] .lm-hill { gap: var(--space-5); }
+[data-mode="classroom"] .lm-hill__svg { max-inline-size: 48rem; }

@@ -8,5 +8,6 @@ export const predict: ComponentPlugin<PredictConfig & Record<string, unknown>, P
   personal: Predict,
   classroom: PredictClassroom,
   messages,
+  outcome: (state, config) => (state?.committed && state.choice ? { choice: state.choice, correct: config.answer ? state.choice === config.answer : undefined } : null),
   summarize: (state, _config, t, ui) => (state?.committed && state.choice ? ui("summary", { choice: t.text(state.choice) }) : null),
 };

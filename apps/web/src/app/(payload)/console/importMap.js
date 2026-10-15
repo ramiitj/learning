@@ -7,6 +7,7 @@ import { PasskeySignIn as PasskeySignIn_18bd2f05299cb9a3bb252058797ba620 } from 
 import { CommandView as CommandView_be2aaad03e814bfd82a11cbc083ca2f5 } from '../../../cms/views/CommandView'
 import { TranslationsView as TranslationsView_bd6a646f414889a92a7a8b67e0c9dbc1 } from '../../../cms/views/TranslationsView'
 import { ComponentsView as ComponentsView_8ca45ccaf186eecaf543d579d676eeba } from '../../../cms/views/ComponentsView'
+import { AnalyticsView as AnalyticsView_162867a0f5a782e3b6a8bf5bd83990c4 } from '../../../cms/views/AnalyticsView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -20,5 +21,6 @@ export const importMap = {
   "/cms/views/CommandView#CommandView": CommandView_be2aaad03e814bfd82a11cbc083ca2f5,
   "/cms/views/TranslationsView#TranslationsView": TranslationsView_bd6a646f414889a92a7a8b67e0c9dbc1,
   "/cms/views/ComponentsView#ComponentsView": ComponentsView_8ca45ccaf186eecaf543d579d676eeba,
+  "/cms/views/AnalyticsView#AnalyticsView": AnalyticsView_162867a0f5a782e3b6a8bf5bd83990c4,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

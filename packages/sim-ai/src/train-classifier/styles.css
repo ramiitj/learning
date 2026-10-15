@@ -1,0 +1,16 @@
+/* train-classifier: label examples, train, read the machine's reasons. Design tokens only. */
+.lm-train { display: grid; gap: var(--space-4); }
+.lm-train__heading { font-size: var(--text-h3); margin-block: var(--space-3) var(--space-2); }
+.lm-train__list { display: grid; gap: var(--space-3); list-style: none; margin: 0; padding: 0; }
+.lm-train__row { display: grid; gap: var(--space-2); }
+.lm-train__features { overflow-wrap: anywhere; }
+.lm-train__cards { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+.lm-train__result { display: grid; gap: var(--space-2); align-content: start; }
+.lm-train__result[data-confused] { border-inline-start: 6px double var(--color-warm); }
+.lm-train__item, .lm-train__why { margin: 0; }
+.lm-train__why { font-size: var(--text-small); font-weight: 700; }
+.lm-train__says { margin: 0; }
+.lm-train__neighbours { margin: 0; padding-inline-start: var(--space-5); font-size: var(--text-small); }
+.lm-train__current { display: grid; gap: var(--space-3); }
+[data-mode="classroom"] .lm-train { gap: var(--space-5); }
+[data-mode="classroom"] .lm-train__cards { grid-template-columns: 1fr; }

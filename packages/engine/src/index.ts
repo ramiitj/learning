@@ -7,3 +7,4 @@ export { LessonView, BlockFrame, BlockPreview, GlossaryTerm, type LessonDoc, typ
 export { engineMessages } from "./messages";
 export * from "./ui";
 export { LiveVotesContext, BlockIdContext, useLiveCounts, useLiveItem, addCounts, type LiveVotes } from "./live";
+export type { LessonEvent, OnLessonEvent } from "./analytics";

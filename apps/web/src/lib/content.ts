@@ -153,3 +153,22 @@ export async function getLesson(id: string): Promise<Lesson | null> {
 export function detourIdsOf(lesson: Pick<Lesson, "stages">): string[] {
   return lesson.stages.flatMap((s) => s.blocks.flatMap((b) => [...(b.detours ?? []), ...(typeof b.config.detour === "string" ? [b.config.detour] : [])]));
 }
+
+/** A preview set (content/previews): blocks shown on the component preview page, wrapped as a lesson. */
+export async function getPreviewSet(name: string): Promise<Lesson | null> {
+  if (!/^[a-z0-9-]+$/.test(name)) return null;
+  const file = path.join(contentRoot(), "previews", `${name}.json`);
+  if (!existsSync(file)) return null;
+  const d = await readJson<{ titleKey: string; blocks: Lesson["stages"][number]["blocks"]; strings: Lesson["strings"] }>(file);
+  return {
+    id: `preview-${name}`,
+    schemaVersion: "1.0",
+    version: 1,
+    status: "draft",
+    meta: { titleKey: d.titleKey, subject: "preview", concepts: ["preview"], objectives: [{ id: "o1", textKey: d.titleKey }], prerequisites: [], audiences: ["school-13-17"], estimatedMinutes: 5 },
+    stages: [{ stage: "manipulate", blocks: d.blocks }],
+    checks: { pre: [], post: [] },
+    strings: d.strings,
+    localeStatus: Object.fromEntries(Object.keys(d.strings).map((l) => [l, "draft"])) as Lesson["localeStatus"],
+  };
+}

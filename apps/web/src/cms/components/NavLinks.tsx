@@ -3,6 +3,7 @@ export function NavLinks() {
   const links = [
     ["/console/command", "Command channel"],
     ["/console/translations", "Translation review"],
+    ["/console/analytics", "Analytics"],
     ["/console/components", "Component registry"],
   ];
   return (

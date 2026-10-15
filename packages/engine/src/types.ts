@@ -48,6 +48,12 @@ export interface ComponentPlugin<C extends BlockConfig = BlockConfig, S = unknow
   summarize?: (state: S | undefined, config: C, t: LessonT, ui: UiT) => string | null;
   /** Whether the first-use how-to hint applies to this config (default: always). */
   howToApplies?: (config: C) => boolean;
+  /**
+   * The learner's first committed answer, for anonymous misconception counts
+   * (docs/12): which option, and whether it matched the config's answer when
+   * there is one. Null until the learner commits.
+   */
+  outcome?: (state: S | undefined, config: C) => { choice: string; correct?: boolean } | null;
 }
 
 // Plugins are heterogeneous; the registry stores them with erased generics.
