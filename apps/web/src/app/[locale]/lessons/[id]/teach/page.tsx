@@ -32,6 +32,7 @@ export default async function TeachPage({ params }: { params: LessonParams }) {
         <Link href={`/lessons/${id}/classroom`}>{t("openClassroom")}</Link> · <Link href={`/lessons/${id}`}>{t("openPersonal")}</Link> · <Link href={`/lessons/${id}/parents`}>{t("parentPage")}</Link>
       </p>
       {found.fallback ? <p className="guide__notice" role="note">{t("fallback")}</p> : null}
+      {!found.fallback && found.locale !== "en" && lesson.localeStatus?.[found.locale as keyof typeof lesson.localeStatus] !== "reviewed" ? <p className="guide__notice" role="note">{t("unreviewed")}</p> : null}
       <div lang={found.locale}>
         <section aria-labelledby="g-obj">
           <h2 id="g-obj">{t("objectives")}</h2>

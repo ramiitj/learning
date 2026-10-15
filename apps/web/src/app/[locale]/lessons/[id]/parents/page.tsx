@@ -39,6 +39,7 @@ export default async function ParentsPage({ params }: { params: LessonParams }) 
         <section aria-labelledby="p-home">
           <h2 id="p-home">{t("atHome")}</h2>
           {found.fallback ? <p className="guide__notice" role="note">{t("fallback")}</p> : null}
+          {!found.fallback && found.locale !== "en" && lesson.localeStatus?.[found.locale as keyof typeof lesson.localeStatus] !== "reviewed" ? <p className="guide__notice" role="note">{t("unreviewed")}</p> : null}
           <p lang={found.locale}>{found.guide.parentNote}</p>
         </section>
       ) : null}

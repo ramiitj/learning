@@ -11,10 +11,10 @@ test("teacher guide: a 40-minute plan, misconceptions and a no-device path", asy
   await expect(page.getByRole("link", { name: "Open classroom mode" })).toHaveAttribute("href", "/en/lessons/every-primitive/classroom");
 });
 
-test("an untranslated guide says so and is marked as English", async ({ page }) => {
+test("a translated guide that no native speaker has checked yet says so", async ({ page }) => {
   await page.goto("/hi/lessons/every-primitive/teach");
-  await expect(page.getByRole("note")).toContainText("अंग्रेज़ी");
-  await expect(page.locator('div[lang="en"]')).toBeVisible();
+  await expect(page.getByRole("note")).toContainText("मूल भाषी");
+  await expect(page.locator('div[lang="hi"]')).toBeVisible();
 });
 
 test("parent page: what the child explored, in the parent's language, and nothing collected", async ({ page }) => {

@@ -93,7 +93,8 @@
     "misconceptions": "What students may say, and a good response",
     "discussion": "Questions for discussion",
     "noDevice": "No projector or no devices?",
-    "dontKnow": "If a student asks something you cannot answer"
+    "dontKnow": "If a student asks something you cannot answer",
+    "unreviewed": "This translation has not yet been checked by a native speaker."
   },
   "parents": {
     "title": "For parents: {lesson}",
@@ -105,7 +106,8 @@
     "tryIt": "Try it yourself",
     "tryItText": "The lesson is free and needs no account.",
     "open": "Open the lesson",
-    "privacy": "This page collects nothing about you or your child."
+    "privacy": "This page collects nothing about you or your child.",
+    "unreviewed": "This translation has not yet been checked by a native speaker."
   },
   "report": {
     "title": "Something wrong with this lesson?",
