@@ -15,7 +15,7 @@ Confirmed as proposed, with hosting on Vercel (functions in `bom1`, Mumbai) and 
 | CMS | Payload CMS on PostgreSQL | TypeScript-native, runs inside Next.js, code-defined schema, drafts and versions built in |
 | Database | PostgreSQL in an Indian region (Neon, `aws-ap-south-1`) | Data residency; relational model suits the concept graph and versions |
 | Hosting | Vercel, functions pinned to `bom1` (Mumbai); infrastructure in `infra/terraform` | Fast to ship; no personal data in v1, so edge processing outside India is acceptable (revisit before collecting any) |
-| Real-time classroom sessions | WebSockets via a managed real-time service | Class-code joining and live voting |
+| Real-time classroom sessions | Postgres (Mumbai) with Server-Sent Events and a polling fallback (decided 2026-10-15) | Class-code joining and live voting; no third party, data stays in India |
 | Internationalisation | ICU message format with a Next.js i18n library | Plurals and gender handled correctly across languages |
 | Offline | Progressive web app with a service worker; downloadable lesson packs | Low connectivity in many schools |
 | Animation | SVG, plus Lottie or Rive for complex animation | Lightweight, scalable, translatable text |
@@ -35,7 +35,7 @@ Components are grouped as universal primitives, domain simulations and media blo
 
 ## Classroom mode
 
-The teacher starts a session and receives a short class code. Students may join from phones without accounts to vote on predictions and contribute to group activities; where students have no devices, the teacher enters show-of-hands counts. The teacher controls pacing from the projected screen or a phone acting as a remote. Projection layouts use large type, high contrast and controls usable from across a room. No personal information ever appears on the shared screen. Session data is aggregated and discarded after the session unless the teacher's school has opted into anonymous analytics.
+The teacher starts a session and receives a short class code. Students may join from phones without accounts to vote on predictions and contribute to group activities; where students have no devices, the teacher enters show-of-hands counts. The teacher controls pacing from the projected screen or a phone acting as a remote. Projection layouts use large type, high contrast and controls usable from across a room. No personal information ever appears on the shared screen. Session data holds no personal information (no names, accounts or device identifiers) and is deleted 30 days after the session (decided 2026-10-15).
 
 ## Content platform
 
@@ -47,7 +47,7 @@ The **media pipeline** handles upload, transcoding to multiple resolutions, capt
 
 ## MCP connector
 
-An OAuth-protected MCP server exposes authoring tools so the creator can author through conversation with Claude in claude.ai or Claude Code.
+An OAuth-protected MCP server (`/api/mcp`, Streamable HTTP; OAuth 2.1 with PKCE and dynamic client registration; a client is connected only after the creator approves it with their passkey) exposes authoring tools so the creator can author through conversation with Claude in claude.ai or Claude Code.
 
 | Tool | Purpose |
 |---|---|

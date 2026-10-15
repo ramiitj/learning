@@ -8,6 +8,7 @@ import { Analogies, Audiences, Concepts, Detours, Glossary, Media, TeacherGuides
 import { ClassroomSessions, ClassroomVotes } from "./collections/Classroom";
 import { Agents, Decisions, Events, Feedback, PipelineRuns } from "./collections/System";
 import { Users } from "./collections/Users";
+import { OAuthGrants } from "./collections/OAuth";
 import { Autonomy, Budget, Constitution } from "./globals";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -30,7 +31,7 @@ export default buildConfig({
     },
     importMap: { baseDir: path.resolve(dirname, "..") },
   },
-  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users],
+  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants],
   globals: [Constitution, Autonomy, Budget],
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI ?? "" },

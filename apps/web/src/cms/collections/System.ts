@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { creatorOnly, isCreator, staffRead } from "../access";
+import { creatorOnly, isCreator, recentlyAuthenticated, staffRead } from "../access";
 import { auditHooks } from "../events";
 
 /** Append-only. The database refuses UPDATE and DELETE on this table (payload.config.ts onInit). */
@@ -29,6 +29,20 @@ export const Decisions: CollectionConfig = {
   access: { read: staffRead("decisions"), create: ({ req }) => !!req.user, update: creatorOnly, delete: () => false },
   hooks: {
     ...auditHooks("decisions"),
+    afterChange: [
+      ...auditHooks("decisions").afterChange,
+      // Approving a publish decision publishes the draft, as the creator, through the same publish gate.
+      async ({ doc, previousDoc, req }) => {
+        if (doc.kind === "publish" && doc.status === "approved" && previousDoc?.status !== "approved" && typeof doc.target === "string") {
+          const [collection, id] = doc.target.split("/");
+          if (collection === "lessons" && id) {
+            const draft = await req.payload.findByID({ collection: "lessons", id, draft: true, req, overrideAccess: false });
+            await req.payload.update({ collection: "lessons", id, data: { doc: draft.doc, _status: "published" }, req, overrideAccess: false, context: { reason: `decision ${doc.id}: ${doc.decisionReason}` } });
+          }
+        }
+        return doc;
+      },
+    ],
     beforeChange: [
       ({ data, originalDoc, req, operation }) => {
         // A decision always starts open: nobody, agent or creator, can file one already decided.
@@ -43,6 +57,9 @@ export const Decisions: CollectionConfig = {
           if (!isCreator(req)) throw new Error("Only the creator decides.");
           if (!data.decisionReason?.trim()) throw new Error("Record a short reason for the decision.");
           if (originalDoc.dissent && !data.dissentAcknowledged) throw new Error("Read the dissenting agent's reasoning before overriding.");
+          if (data.status === "approved" && ["publish", "permission-change", "amendment", "schema-change", "learner-data", "new-agent", "new-component"].includes(originalDoc.kind) && !recentlyAuthenticated(req)) {
+            throw new Error("This decision is always-ask: confirm with your passkey first.");
+          }
           data.decidedAt = new Date().toISOString();
         }
         return data;

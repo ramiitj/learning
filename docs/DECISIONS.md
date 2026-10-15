@@ -4,6 +4,23 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — Phases 2–6: live classroom, CMS, connector, creator sign-in
+
+**Creator**, asked to "build a full-fledged full-stack application":
+- **Live classroom sync:** Postgres in Mumbai with Server-Sent Events and a polling fallback. No third-party real-time service, so data stays in India. This replaces the "managed WebSocket service" in `docs/03`.
+- **Classroom data:** kept for 30 days, then deleted. It holds no personal information: no names, accounts or device identifiers, only a hash of a random per-session token.
+- **Creator sign-in:** passkeys only (WebAuthn). No passwords exist. The first passkey needs a one-time setup token from the server. Publishing and other always-ask decisions need a passkey confirmation from the last five minutes.
+
+**Engineering:**
+1. **The Creator Console is Payload's admin, at `/console`.**
+   - Payload provides content, version history, diffs and rollback.
+   - The console's other modules are collections or custom views: decision queue, pipeline, audit log, budget, agents, access.
+2. **Agents act as users with role "agent".** The CMS access rules enforce `platform/config/permissions.json` (transcribed from each profile's "May" and "May not") at the tool level. For example, the Localisation Specialist can change only Hindi and Telugu strings. *For the creator's approval:* permission changes are always-ask.
+3. **The event log is append-only in the database itself.** A trigger refuses UPDATE and DELETE.
+4. **Publishing has one path.** The creator approves, with a fresh passkey, either in the console or through a publish decision; the lesson must pass validation. The MCP connector has no publish tool.
+5. **Preview links are signed, expire after 72 hours, and open one lesson's drafts only.**
+6. **The learner site reads published content from the CMS when a database is configured**, and from `/content` otherwise (CI, offline packs). Lesson pages render on first visit and stay cached until the next publish.
+
 ## 2026-10-15 — Agents bound by rubrics, and measured
 
 **Engineering, at the creator's request** that every agent work to clear rubrics, as a team of experienced domain experts would, starting with the most important.

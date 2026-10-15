@@ -4,6 +4,7 @@
  * Run with TEST_DATABASE_URI set (CI provides one); skipped otherwise.
  * The database is wiped first.
  */
+import { beforeAll, describe, expect, it } from "vitest";
 import pg from "pg";
 import type { Payload } from "payload";
 import { readFileSync } from "node:fs";
@@ -81,10 +82,22 @@ describe.skipIf(!DB)("CMS rules", () => {
   });
 
   it("lets only the creator decide, with a reason, after reading any dissent", async () => {
-    const d = await payload.create({ collection: "decisions", data: { title: "Override", kind: "conflict", summary: "s", dissent: "The reviewer says this is false." }, user: agent("editor-in-chief"), overrideAccess: false });
+    const d = await payload.create({ collection: "decisions", data: { title: "Override", kind: "conflict", status: "approved", summary: "s", dissent: "The reviewer says this is false." }, user: agent("editor-in-chief"), overrideAccess: false });
     await expect(payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "fine" }, user: agent("editor-in-chief"), overrideAccess: false })).rejects.toThrow();
     await expect(payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "fine" }, user: fresh(), overrideAccess: false })).rejects.toThrow(/dissent/);
     const ok = await payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "fine", dissentAcknowledged: true }, user: fresh(), overrideAccess: false });
     expect(ok.status).toBe("approved");
+  });
+
+  it("publishes a requested draft only when the creator approves it with a fresh passkey", async () => {
+    const draftDoc = lessonDoc();
+    draftDoc.strings.en["hook.q"] = "A changed question?";
+    await payload.update({ collection: "lessons", id: lessonId, data: { doc: draftDoc, _status: "draft" }, user: fresh(), overrideAccess: false, draft: true });
+    const d = await payload.create({ collection: "decisions", data: { title: "Publish", kind: "publish", status: "open", summary: "s", target: `lessons/${lessonId}` }, user: agent("editor-in-chief"), overrideAccess: false });
+    await expect(payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "ok" }, user: stale(), overrideAccess: false })).rejects.toThrow(/passkey/);
+    const live = () => payload.find({ collection: "lessons", where: { lessonId: { equals: "every-primitive" } }, overrideAccess: false, user: null as never });
+    expect(((await live()).docs[0]!.doc as { strings: { en: Record<string, string> } }).strings.en["hook.q"]).not.toBe("A changed question?");
+    await payload.update({ collection: "decisions", id: d.id, data: { status: "approved", decisionReason: "ok" }, user: fresh(), overrideAccess: false });
+    expect(((await live()).docs[0]!.doc as { strings: { en: Record<string, string> } }).strings.en["hook.q"]).toBe("A changed question?");
   });
 });

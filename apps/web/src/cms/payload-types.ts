@@ -83,6 +83,7 @@ export interface Config {
     'classroom-sessions': ClassroomSession;
     'classroom-votes': ClassroomVote;
     users: User;
+    'oauth-grants': OauthGrant;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -106,6 +107,7 @@ export interface Config {
     'classroom-sessions': ClassroomSessionsSelect<false> | ClassroomSessionsSelect<true>;
     'classroom-votes': ClassroomVotesSelect<false> | ClassroomVotesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'oauth-grants': OauthGrantsSelect<false> | OauthGrantsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -727,6 +729,23 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Apps connected to the authoring connector. Delete a row to disconnect it.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "oauth-grants".
+ */
+export interface OauthGrant {
+  id: number;
+  kind: 'refresh-token' | 'used-code';
+  clientName?: string | null;
+  clientId?: string | null;
+  tokenHash: string;
+  userId?: string | null;
+  expiresAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -813,6 +832,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'oauth-grants';
+        value: number | OauthGrant;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1123,6 +1146,20 @@ export interface UsersSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "oauth-grants_select".
+ */
+export interface OauthGrantsSelect<T extends boolean = true> {
+  kind?: T;
+  clientName?: T;
+  clientId?: T;
+  tokenHash?: T;
+  userId?: T;
+  expiresAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
