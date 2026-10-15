@@ -102,3 +102,20 @@ export const joinTokens = (tokens: readonly string[]): string => tokens.reduce((
 
 /** Share as a whole percentage. */
 export const percent = (f: Pick<Follower, "count" | "total">): number => (f.total ? Math.round((f.count / f.total) * 100) : 0);
+
+/**
+ * A word that starts with a capital letter in the middle of a sentence is
+ * often a person's name. Returns the first such word, or null. "I" and its
+ * contractions are not names, and scripts without capitals never match.
+ */
+export function likelyName(sentence: string): string | null {
+  const words = sentence.split(/\s+/u).filter(Boolean);
+  let sentenceStart = true;
+  for (const raw of words) {
+    const word = raw.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+    const ends = /[.!?।॥]$/u.test(raw);
+    if (!sentenceStart && /^\p{Lu}/u.test(word) && !/^I(['’]|$)/u.test(word)) return word;
+    sentenceStart = ends;
+  }
+  return null;
+}

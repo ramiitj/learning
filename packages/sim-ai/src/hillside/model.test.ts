@@ -1,4 +1,4 @@
-import { clamp, curvePoints, fogRadius, globalMinimum, height, isLowPoint, majority, outcome, resolveWalk, slope, slopeKind, takeStep, type Landscape } from "./model";
+import { clamp, curvePoints, downhill, fogRadius, plurality, sizeOptions, globalMinimum, height, isLowPoint, majority, outcome, resolveWalk, slope, slopeKind, takeStep, type Landscape } from "./model";
 
 const bowl: Landscape = { type: "bowl", min: 0, max: 100 };
 const valleys: Landscape = { type: "two-valleys", min: 0, max: 100 };
@@ -34,8 +34,8 @@ describe("hillside model", () => {
     expect(takeStep(bowl, 50, "left", 5)).toBe(45);
     expect(clamp(bowl, -5)).toBe(0);
     expect(curvePoints(valleys, 0, 100, 10)).toEqual(curvePoints(valleys, 0, 100, 10));
-    expect(fogRadius(bowl, 30)).toBe(30);
-    expect(fogRadius(bowl, 2)).toBe(10);
+    expect(fogRadius(bowl, 30)).toBe(37.5);
+    expect(fogRadius(bowl, 1)).toBe(2);
   });
 
   it("classifies a walk as walking, bottom, trapped or out of budget", () => {
@@ -58,5 +58,15 @@ describe("hillside model", () => {
     const w = resolveWalk({ landscape: { type: "bowl", min: 10, max: 0 }, start: 99, stepMin: 5, stepMax: 1 });
     expect(w).toEqual({ landscape: { type: "bowl", min: 0, max: 10 }, start: 10, stepMin: 1, stepMax: 5, maxSteps: 15 });
     expect(resolveWalk({ landscape: { type: "bowl", min: 3, max: 3 }, start: 3, stepMin: 1, stepMax: 1 }).landscape.max).toBe(4);
+  });
+
+  it("picks the downhill direction by the rule, and offers distinct step sizes to vote on", () => {
+    expect(downhill(bowl, 20)).toBe("right");
+    expect(downhill(bowl, 80)).toBe("left");
+    expect(sizeOptions({ stepMin: 2, stepMax: 10 })).toEqual([{ id: "small", value: 2 }, { id: "medium", value: 6 }, { id: "large", value: 10 }]);
+    expect(sizeOptions({ stepMin: 3, stepMax: 3 })).toEqual([{ id: "small", value: 3 }]);
+    expect(plurality({ small: 2, large: 1 }, ["small", "medium", "large"])).toBe("small");
+    expect(plurality({ small: 1, large: 1 }, ["small", "medium", "large"])).toBeNull();
+    expect(plurality({}, ["small"])).toBeNull();
   });
 });

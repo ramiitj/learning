@@ -1,4 +1,5 @@
 import type { ComponentContract } from "@lm/schema";
+import { glossaryProperty } from "../glossary-schema";
 
 export interface NextWordModelConfig {
   promptKey: string;
@@ -10,6 +11,8 @@ export interface NextWordModelConfig {
   maxSentences?: number;
   explainKey?: string;
   mode?: string;
+  /** Glossary term ids to link under the intro (optional). */
+  glossary?: string[];
 }
 
 const keys = (...xs: (string | string[] | undefined)[]): string[] => xs.flat().filter((x): x is string => typeof x === "string" && x.length > 0);
@@ -31,6 +34,7 @@ export const nextWordModelContract: ComponentContract = {
       maxSentences: { type: "integer", minimum: 1, maximum: 50 },
       explainKey: { type: "string" },
       mode: { enum: ["class-contributions"] },
+      glossary: glossaryProperty,
     },
   },
   stringKeys: (c) => {

@@ -1,5 +1,6 @@
 import type { ComponentContract } from "@lm/schema";
 import { keys } from "@lm/primitives/shared/strings";
+import { glossaryProperty } from "../glossary-schema";
 
 export interface TrainFeature {
   id: string;
@@ -27,6 +28,8 @@ export interface TrainClassifierConfig {
   /** Id of an earlier `sort` block whose placements supply the learner's labels. */
   fromBlock?: string;
   explainKey?: string;
+  /** Glossary term ids to link under the intro (optional). */
+  glossary?: string[];
 }
 
 const itemSchema = {
@@ -78,6 +81,7 @@ export const trainClassifierContract: ComponentContract = {
       testItems: { type: "array", minItems: 1, items: itemSchema },
       fromBlock: { type: "string" },
       explainKey: { type: "string" },
+      glossary: glossaryProperty,
     },
   },
   stringKeys: (c) => {

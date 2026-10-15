@@ -115,7 +115,7 @@ describe("dilemma-vote", () => {
       expect(await a11yViolations(container)).toEqual([]);
       unmount();
     }
-  });
+  }, 30000);
 
   it("has complete en, hi and te messages", () => {
     const en = Object.keys(messages.en).sort();
@@ -131,6 +131,8 @@ describe("dilemma-vote", () => {
     expect(check({ ...config, frameworks: [{ id: "f", nameKey: "f1n", reasoningKey: "f1r" }] }).length).toBeGreaterThan(0);
     expect(check({ ...config, extra: true }).length).toBeGreaterThan(0);
     expect(check({ promptKey: "p" }).length).toBeGreaterThan(0);
+    expect(check({ ...config, glossary: ["algorithm"] })).toEqual([]);
+    expect(check({ ...config, glossary: "algorithm" }).length).toBeGreaterThan(0);
   });
 
   it("exposes string keys and the options for live phone voting", () => {

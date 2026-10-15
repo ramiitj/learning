@@ -76,9 +76,36 @@ export function globalMinimum(l: Landscape): { x: number; h: number } {
   return best;
 }
 
-/** How far the learner can see: a small window, never less than the biggest step. */
-export function fogRadius(l: Landscape, stepMax: number): number {
-  return Math.max((l.max - l.min) * 0.1, stepMax);
+/** How far the learner can see: about one step either way, so the next step lands just inside the window. */
+export function fogRadius(l: Landscape, step: number): number {
+  return Math.max(step * 1.25, (l.max - l.min) * 0.02);
+}
+
+/** The way the ground falls at x; flat ground counts as right. Used when the rule, not a person, picks the direction. */
+export function downhill(l: Landscape, x: number): Direction {
+  return slope(l, x) > 0 ? "left" : "right";
+}
+
+export interface SizeOption {
+  id: "small" | "medium" | "large";
+  value: number;
+}
+
+/** The step sizes a class can vote between: smallest, middle and largest, without duplicates. Fewer than two means there is nothing to vote on. */
+export function sizeOptions(w: Pick<Walk, "stepMin" | "stepMax">): SizeOption[] {
+  const all: SizeOption[] = [
+    { id: "small", value: w.stepMin },
+    { id: "medium", value: (w.stepMin + w.stepMax) / 2 },
+    { id: "large", value: w.stepMax },
+  ];
+  return all.filter((o, i) => all.findIndex((x) => Math.abs(x.value - o.value) < 1e-9) === i);
+}
+
+/** The option with the most hands, or null on a tie at the top or no hands at all. */
+export function plurality(counts: Record<string, number>, ids: readonly string[]): string | null {
+  const best = Math.max(0, ...ids.map((id) => counts[id] ?? 0));
+  const top = ids.filter((id) => (counts[id] ?? 0) === best);
+  return best > 0 && top.length === 1 ? top[0]! : null;
 }
 
 export function takeStep(l: Landscape, x: number, dir: Direction, size: number): number {

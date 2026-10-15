@@ -2,16 +2,20 @@
 import { useId } from "react";
 import { addCounts, Button, Tally, useFocusAfter, useLiveCounts, type BlockProps, type Counts } from "@lm/engine";
 import type { HillsideConfig } from "./contract";
+import { GlossaryRow } from "../glossary";
 import {
   curvePoints,
+  downhill,
   fogRadius,
   globalMinimum,
   height,
   HEIGHT_MAX,
   majority,
   outcome,
+  plurality,
   resolveWalk,
   slope,
+  sizeOptions,
   slopeKind,
   takeStep,
   type Direction,
@@ -30,6 +34,10 @@ export interface HillsideState {
   /** Classroom: hands counted for this step and whether the count is on screen. */
   counts?: Counts;
   tallyShown?: boolean;
+  /** Classroom: the one vote on step size (hands, whether shown) and whether the class has settled on it. */
+  sizeCounts?: Counts;
+  sizeShown?: boolean;
+  sizeChosen?: boolean;
 }
 
 type Props = BlockProps<HillsideConfig & Record<string, unknown>, HillsideState>;
@@ -64,10 +72,10 @@ function slopeText(l: Landscape, x: number, ui: Ui): string {
 }
 
 /** What the learner can see: a small window of the ground around them. Fog (hatching) fills the rest. */
-function FogView({ walk, positions, here, ui, locale }: { walk: Walk; positions: number[]; here: number; ui: Ui; locale: string }) {
+function FogView({ walk, positions, here, size, ui, locale }: { walk: Walk; positions: number[]; here: number; size: number; ui: Ui; locale: string }) {
   const id = useId();
   const f = fmtNum(locale);
-  const r = fogRadius(walk.landscape, walk.stepMax);
+  const r = fogRadius(walk.landscape, size);
   const lo = here - r;
   const frac = (x: number) => (x - lo) / (2 * r);
   const line = curvePoints(walk.landscape, lo, here + r, 50).map((p) => ({ x: sx(frac(p.x)), y: sy(p.h) }));
@@ -175,14 +183,14 @@ function StepTable({ walk, positions, ui, locale }: { walk: Walk; positions: num
   );
 }
 
-function SizeSlider({ walk, size, onChange, ui, locale, idPrefix }: { walk: Walk; size: number; onChange: (n: number) => void; ui: Ui; locale: string; idPrefix: string }) {
+function SizeSlider({ walk, size, onChange, ui, locale, idPrefix, inputRef }: { walk: Walk; size: number; onChange: (n: number) => void; ui: Ui; locale: string; idPrefix: string; inputRef?: React.Ref<HTMLInputElement> }) {
   const f = fmtNum(locale);
   const step = (walk.stepMax - walk.stepMin) / 9 || 1;
   return (
     <div className="lm-hill__size">
       <label htmlFor={`${idPrefix}-size`}>{ui("stepSize")}</label>
       <div className="lm-row">
-        <input id={`${idPrefix}-size`} type="range" min={walk.stepMin} max={walk.stepMax} step={step} value={size} disabled={walk.stepMin === walk.stepMax} onChange={(e) => onChange(Number(e.target.value))} aria-describedby={`${idPrefix}-size-out`} />
+        <input ref={inputRef} id={`${idPrefix}-size`} type="range" min={walk.stepMin} max={walk.stepMax} step={step} value={size} disabled={walk.stepMin === walk.stepMax} onChange={(e) => onChange(Number(e.target.value))} aria-describedby={`${idPrefix}-size-out`} />
         <output id={`${idPrefix}-size-out`} htmlFor={`${idPrefix}-size`}>{f(size)}</output>
       </div>
     </div>
@@ -219,7 +227,7 @@ function Surroundings({ walk, here, positions, ui, locale }: { walk: Walk; here:
 
 const OUTCOME_KEY: Record<Exclude<Outcome, "walking">, string> = { bottom: "outcomeBottom", trapped: "outcomeTrapped", budget: "outcomeBudget" };
 
-function Finish({ result, faded, onFade, config, t, ui, focusRef }: { result: Exclude<Outcome, "walking">; faded: boolean; onFade: (v: boolean) => void; config: HillsideConfig; t: T; ui: Ui; focusRef: React.RefObject<HTMLDivElement | null> }) {
+function Finish({ result, faded, onFade, onAgain, onResize, config, t, ui, focusRef }: { result: Exclude<Outcome, "walking">; faded: boolean; onFade: (v: boolean) => void; onAgain: () => void; onResize: () => void; config: HillsideConfig; t: T; ui: Ui; focusRef: React.RefObject<HTMLDivElement | null> }) {
   return (
     <div ref={focusRef} tabIndex={-1} className="lm-stack lm-hill__finish">
       <p className="lm-callout" data-tone={result === "bottom" ? "insight" : "warm"}>{ui(OUTCOME_KEY[result])}</p>
@@ -228,13 +236,23 @@ function Finish({ result, faded, onFade, config, t, ui, focusRef }: { result: Ex
         <span className="lm-muted lm-small">{ui("fadeHelp")}</span>
       </div>
       {faded && config.fadeKey ? <div className="lm-insight">{t.rich(config.fadeKey)}</div> : null}
+      {faded && config.breaksKey ? <div className="lm-callout" data-tone="warm">{t.rich(config.breaksKey)}</div> : null}
+      <div className="lm-row">
+        <Button variant="secondary" onClick={onAgain}>{ui("againStart")}</Button>
+        <Button variant="secondary" onClick={onResize}>{ui("againSize")}</Button>
+      </div>
     </div>
   );
 }
 
+/** Start the walk over: positions and the fade are cleared, the step size is kept unless asked otherwise. */
+const restart: Partial<HillsideState> = { positions: undefined, faded: false, counts: {}, tallyShown: false };
+
 export function Hillside({ block, config, state, setState, t, ui, locale }: Props) {
   const w = useWalk(config, state);
   const focus = useFocusAfter<HTMLDivElement>(w.done);
+  const controls = useFocusAfter<HTMLDivElement>(w.positions.length);
+  const slider = useFocusAfter<HTMLInputElement>(w.positions.length);
   const move = (dir: Direction) => {
     const next = [...w.positions, takeStep(w.walk.landscape, w.here, dir, w.size)];
     if (outcome(w.walk.landscape, next, w.walk.stepMin, w.walk.maxSteps) !== "walking") focus.arm();
@@ -245,65 +263,130 @@ export function Hillside({ block, config, state, setState, t, ui, locale }: Prop
     <div className="lm-hill">
       <p className="lm-lead">{t.rich(config.promptKey)}</p>
       {config.goalKey ? <p className="lm-notice">{t.rich(config.goalKey)}</p> : null}
-      {state?.faded && w.done ? <FullView walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : <FogView walk={w.walk} positions={w.positions} here={w.here} ui={ui} locale={locale} />}
+      <p className="lm-muted lm-small">{ui("glossHill")}</p>
+      <GlossaryRow ids={config.glossary} ui={ui} />
+      {state?.faded && w.done ? <FullView walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : <FogView size={w.size} walk={w.walk} positions={w.positions} here={w.here} ui={ui} locale={locale} />}
       <Surroundings walk={w.walk} here={w.here} positions={w.positions} ui={ui} locale={locale} />
       <Status walk={w.walk} positions={w.positions} here={w.here} t={t} ui={ui} locale={locale} config={config} />
-      {!w.done ? (
-        <div className="lm-hill__controls">
-          <SizeSlider walk={w.walk} size={w.size} onChange={(size) => setState((prev) => ({ ...prev, size }), { coalesce: true })} ui={ui} locale={locale} idPrefix={idPrefix} />
-          <div className="lm-row">
-            <Button variant="primary" onClick={() => move("left")}><span aria-hidden="true">← </span>{t.text(config.leftKey)}</Button>
-            <Button variant="primary" onClick={() => move("right")}>{t.text(config.rightKey)}<span aria-hidden="true"> →</span></Button>
+      <div ref={controls.ref} tabIndex={-1} className="lm-hill__focus">
+        {!w.done ? (
+          <div className="lm-hill__controls">
+            <SizeSlider walk={w.walk} size={w.size} onChange={(size) => setState((prev) => ({ ...prev, size }), { coalesce: true })} ui={ui} locale={locale} idPrefix={idPrefix} inputRef={slider.ref} />
+            <div className="lm-row">
+              <Button variant="primary" onClick={() => move("left")}><span aria-hidden="true">← </span>{t.text(config.leftKey)}</Button>
+              <Button variant="primary" onClick={() => move("right")}>{t.text(config.rightKey)}<span aria-hidden="true"> →</span></Button>
+            </div>
+            <p className="lm-muted lm-small">{ui("stepsLeft", { n: w.stepsLeft })}</p>
           </div>
-          <p className="lm-muted lm-small">{ui("stepsLeft", { n: w.stepsLeft })}</p>
-        </div>
-      ) : (
-        <Finish result={w.result as Exclude<Outcome, "walking">} faded={!!state?.faded} onFade={(faded) => setState((prev) => ({ ...prev, faded }))} config={config} t={t} ui={ui} focusRef={focus.ref} />
-      )}
+        ) : (
+          <Finish
+            result={w.result as Exclude<Outcome, "walking">}
+            faded={!!state?.faded}
+            onFade={(faded) => setState((prev) => ({ ...prev, faded }))}
+            onAgain={() => { controls.arm(); setState((prev) => ({ ...prev, ...restart })); }}
+            onResize={() => { slider.arm(); setState((prev) => ({ ...prev, ...restart })); }}
+            config={config}
+            t={t}
+            ui={ui}
+            focusRef={focus.ref}
+          />
+        )}
+      </div>
       {w.positions.length > 1 ? <StepTable walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : null}
     </div>
   );
 }
 
-/** Classroom: the class votes left or right for every step; the teacher takes it. */
-export function HillsideClassroom({ block, config, state, setState, t, ui, locale }: Props) {
+const SIZE_LABEL = { small: "sizeSmall", medium: "sizeMedium", large: "sizeLarge" } as const;
+
+/**
+ * Classroom: the class votes once on the step size. After that the walk follows
+ * the slope downhill by itself, one step per press. The class votes on a
+ * direction only at the trap moment, when every small step leads uphill.
+ */
+export function HillsideClassroom({ config, state, setState, t, ui, locale }: Props) {
   const w = useWalk(config, state);
   const focus = useFocusAfter<HTMLDivElement>(w.done);
+  const controls = useFocusAfter<HTMLDivElement>(`${w.positions.length}-${state?.sizeChosen ? 1 : 0}`);
   const phones = useLiveCounts();
+  const f = fmtNum(locale);
+  const sizes = sizeOptions(w.walk);
+  const sizeVote = sizes.length > 1;
+  const sizeSettled = !sizeVote || !!state?.sizeChosen;
+  const sizeCounts: Counts = state?.sizeCounts ?? {};
+  const sizeWinner = plurality(sizeCounts, sizes.map((o) => o.id));
+  const sizeShown = !!state?.sizeShown;
   const counts: Counts = state?.counts ?? {};
   const decision = majority(addCounts(counts, phones));
   const shown = !!state?.tallyShown;
+  const trapped = w.done && w.result === "trapped";
   const options = [
     { id: "left", label: t.rich(config.leftKey), text: t.text(config.leftKey) },
     { id: "right", label: t.rich(config.rightKey), text: t.text(config.rightKey) },
   ];
-  const take = () => {
-    if (!decision) return;
-    const next = [...w.positions, takeStep(w.walk.landscape, w.here, decision, w.size)];
+  const sizeLabel = (o: (typeof sizes)[number]) => ui(SIZE_LABEL[o.id], { n: f(o.value) });
+  const advance = (dir: Direction) => {
+    const next = [...w.positions, takeStep(w.walk.landscape, w.here, dir, w.size)];
     if (outcome(w.walk.landscape, next, w.walk.stepMin, w.walk.maxSteps) !== "walking") focus.arm();
     setState((prev) => ({ ...prev, positions: next, size: w.size, counts: {}, tallyShown: false }));
   };
-  const idPrefix = `hill-${block.id}-class`;
+  const useSize = () => {
+    const o = sizes.find((x) => x.id === sizeWinner);
+    if (o) setState((prev) => ({ ...prev, size: o.value, sizeChosen: true }));
+  };
+  const again = (resize: boolean) => {
+    controls.arm();
+    setState((prev) => ({ ...prev, ...restart, ...(resize ? { sizeChosen: false, sizeCounts: {}, sizeShown: false } : {}) }));
+  };
+  const chosen = sizes.find((o) => Math.abs(o.value - w.size) < 1e-9);
   return (
     <div className="lm-hill lm-hill--classroom">
       <p className="lm-lead">{t.rich(config.promptKey)}</p>
       {config.goalKey ? <p className="lm-notice">{t.rich(config.goalKey)}</p> : null}
-      {state?.faded && w.done ? <FullView walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : <FogView walk={w.walk} positions={w.positions} here={w.here} ui={ui} locale={locale} />}
+      <p className="lm-muted">{ui("glossHill")}</p>
+      <GlossaryRow ids={config.glossary} ui={ui} />
+      {state?.faded && w.done ? <FullView walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : <FogView size={w.size} walk={w.walk} positions={w.positions} here={w.here} ui={ui} locale={locale} />}
       <Surroundings walk={w.walk} here={w.here} positions={w.positions} ui={ui} locale={locale} />
       <Status walk={w.walk} positions={w.positions} here={w.here} t={t} ui={ui} locale={locale} config={config} />
-      {!w.done ? (
-        <div className="lm-hill__controls">
-          <h3 className="lm-hill__heading">{ui("classHeading")}</h3>
-          <p className="lm-muted">{ui("classIntro")}</p>
-          <SizeSlider walk={w.walk} size={w.size} onChange={(size) => setState((prev) => ({ ...prev, size }), { coalesce: true })} ui={ui} locale={locale} idPrefix={idPrefix} />
-          <Tally ui={ui} options={options} counts={counts} onChange={(c) => setState((prev) => ({ ...prev, counts: c }), { coalesce: true })} revealed={shown} onReveal={(v) => setState((prev) => ({ ...prev, tallyShown: v }))} highlight={shown ? (decision ?? undefined) : undefined} />
-          {shown && !decision ? <p className="lm-notice" role="status">{ui("classTie")}</p> : null}
-          <Button variant="primary" disabled={!shown || !decision} onClick={take}>{ui("classTake")}</Button>
-          <p className="lm-muted lm-small">{ui("stepsLeft", { n: w.stepsLeft })}</p>
-        </div>
-      ) : (
-        <Finish result={w.result as Exclude<Outcome, "walking">} faded={!!state?.faded} onFade={(faded) => setState((prev) => ({ ...prev, faded }))} config={config} t={t} ui={ui} focusRef={focus.ref} />
-      )}
+      <div ref={controls.ref} tabIndex={-1} className="lm-hill__focus">
+        {!sizeSettled ? (
+          <div className="lm-hill__controls">
+            <h3 className="lm-hill__heading">{ui("classSizeHeading")}</h3>
+            <p className="lm-muted">{ui("classSizeIntro")}</p>
+            <Tally
+              ui={ui}
+              options={sizes.map((o) => ({ id: o.id, label: sizeLabel(o), text: sizeLabel(o) }))}
+              counts={sizeCounts}
+              onChange={(c) => setState((prev) => ({ ...prev, sizeCounts: c }), { coalesce: true })}
+              revealed={sizeShown}
+              onReveal={(v) => setState((prev) => ({ ...prev, sizeShown: v }))}
+              highlight={sizeShown ? (sizeWinner ?? undefined) : undefined}
+            />
+            {sizeShown && !sizeWinner ? <p className="lm-notice" role="status">{ui("classTie")}</p> : null}
+            <Button variant="primary" disabled={!sizeShown || !sizeWinner} onClick={useSize}>{ui("classSizeUse")}</Button>
+          </div>
+        ) : !w.done ? (
+          <div className="lm-hill__controls">
+            <h3 className="lm-hill__heading">{ui("classWalkHeading")}</h3>
+            <p className="lm-muted">{ui("classWalkIntro", { size: chosen ? sizeLabel(chosen) : f(w.size) })}</p>
+            <Button variant="primary" onClick={() => advance(downhill(w.walk.landscape, w.here))}>{ui("classDownhill")}</Button>
+            <p className="lm-muted lm-small">{ui("stepsLeft", { n: w.stepsLeft })}</p>
+          </div>
+        ) : (
+          <>
+            <Finish result={w.result as Exclude<Outcome, "walking">} faded={!!state?.faded} onFade={(faded) => setState((prev) => ({ ...prev, faded }))} onAgain={() => again(false)} onResize={() => again(true)} config={config} t={t} ui={ui} focusRef={focus.ref} />
+            {trapped && !state?.faded ? (
+              <div className="lm-hill__controls">
+                <h3 className="lm-hill__heading">{ui("classTrapHeading")}</h3>
+                <p className="lm-muted">{ui("classTrapIntro")}</p>
+                <Tally ui={ui} options={options} counts={counts} onChange={(c) => setState((prev) => ({ ...prev, counts: c }), { coalesce: true })} revealed={shown} onReveal={(v) => setState((prev) => ({ ...prev, tallyShown: v }))} highlight={shown ? (decision ?? undefined) : undefined} />
+                {shown && !decision ? <p className="lm-notice" role="status">{ui("classTie")}</p> : null}
+                <Button variant="primary" disabled={!shown || !decision} onClick={() => decision && advance(decision)}>{ui("classTake")}</Button>
+              </div>
+            ) : null}
+          </>
+        )}
+      </div>
       {w.positions.length > 1 ? <StepTable walk={w.walk} positions={w.positions} ui={ui} locale={locale} /> : null}
     </div>
   );

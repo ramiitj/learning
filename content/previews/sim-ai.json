@@ -12,8 +12,8 @@
         ],
         "features": [
           {
-            "id": "weight",
-            "labelKey": "tc.weight"
+            "id": "length",
+            "labelKey": "tc.length"
           },
           {
             "id": "height",
@@ -26,8 +26,17 @@
             "labelKey": "tc.mouse",
             "symbol": "🐭",
             "features": {
-              "weight": 0.1,
-              "height": 0.1
+              "length": 8,
+              "height": 4
+            }
+          },
+          {
+            "id": "hamster",
+            "labelKey": "tc.hamster",
+            "symbol": "🐹",
+            "features": {
+              "length": 12,
+              "height": 6
             }
           },
           {
@@ -35,8 +44,8 @@
             "labelKey": "tc.cat",
             "symbol": "🐱",
             "features": {
-              "weight": 4,
-              "height": 0.3
+              "length": 46,
+              "height": 25
             }
           },
           {
@@ -44,8 +53,26 @@
             "labelKey": "tc.horse",
             "symbol": "🐴",
             "features": {
-              "weight": 500,
-              "height": 1.6
+              "length": 240,
+              "height": 160
+            }
+          },
+          {
+            "id": "bear",
+            "labelKey": "tc.bear",
+            "symbol": "🐻",
+            "features": {
+              "length": 200,
+              "height": 120
+            }
+          },
+          {
+            "id": "camel",
+            "labelKey": "tc.camel",
+            "symbol": "🐪",
+            "features": {
+              "length": 300,
+              "height": 210
             }
           },
           {
@@ -53,8 +80,8 @@
             "labelKey": "tc.elephant",
             "symbol": "🐘",
             "features": {
-              "weight": 5000,
-              "height": 3
+              "length": 550,
+              "height": 300
             }
           }
         ],
@@ -64,8 +91,17 @@
             "labelKey": "tc.rabbit",
             "symbol": "🐰",
             "features": {
-              "weight": 2,
-              "height": 0.25
+              "length": 45,
+              "height": 25
+            }
+          },
+          {
+            "id": "goat",
+            "labelKey": "tc.goat",
+            "symbol": "🐐",
+            "features": {
+              "length": 110,
+              "height": 65
             }
           },
           {
@@ -73,8 +109,8 @@
             "labelKey": "tc.cow",
             "symbol": "🐮",
             "features": {
-              "weight": 600,
-              "height": 1.4
+              "length": 250,
+              "height": 140
             }
           }
         ],
@@ -158,7 +194,8 @@
         "maxWidth": 16,
         "explainKey": "lb.explain",
         "smallKey": "lb.small",
-        "bigKey": "lb.big"
+        "bigKey": "lb.big",
+        "analogyKey": "lb.analogy"
       },
       "componentVersion": "1.0"
     },
@@ -218,7 +255,8 @@
         "leftKey": "hs.left",
         "rightKey": "hs.right",
         "goalKey": "hs.goal",
-        "fadeKey": "hs.fade"
+        "fadeKey": "hs.fade",
+        "breaksKey": "hs.breaks"
       },
       "componentVersion": "1.0"
     }
@@ -226,129 +264,147 @@
   "strings": {
     "en": {
       "title": "AI simulations",
-      "tc.prompt": "Label each animal as small or big, then train the machine on your labels.",
+      "tc.prompt": "Which animals count as small and which as big? Label each one, then see how the machine labels animals it has not seen.",
       "tc.small": "Small",
       "tc.big": "Big",
-      "tc.weight": "Weight (kg)",
-      "tc.height": "Height (m)",
+      "tc.height": "Height (cm)",
       "tc.mouse": "Mouse",
       "tc.cat": "Cat",
       "tc.horse": "Horse",
       "tc.elephant": "Elephant",
       "tc.rabbit": "Rabbit",
       "tc.cow": "Cow",
-      "tc.explain": "The machine has no idea what an animal is. It finds the examples whose numbers are closest and copies their label.",
-      "pg.prompt": "Draw a digit. Then switch to numbers and see what the computer receives.",
+      "tc.explain": "It finds the 3 examples whose numbers are closest and goes with the majority. It has no idea what an animal is.",
+      "pg.prompt": "What does a computer actually receive when you draw a digit? Draw one, then switch to Numbers to find out.",
       "pg.one": "The digit 1",
       "pg.why": "The computer never sees a picture, only these numbers.",
       "pg.same": "Mostly the same numbers",
       "pg.diff": "Very different numbers",
-      "nw.prompt": "Teach the machine some sentences, then ask it for the next word.",
+      "nw.prompt": "Which word will a model pick next? Teach it a few sentences, then guess before you look.",
       "nw.starters": "The cat sat on the mat.|The cat ate the fish.|The dog sat on the step.",
       "nw.why": "It only counts which word came next most often. There is no meaning or intention behind the choice.",
-      "lb.prompt": "Build a network and train it on the dots. Then see how it does on new dots.",
-      "lb.explain": "A network that memorises the training dots can still miss the pattern.",
+      "lb.prompt": "Can a network that fits the training dots also handle dots it has never seen? Build one, train it and find out.",
+      "lb.explain": "A network whose curve passes through every training dot can still miss the pattern in new dots.",
       "lb.small": "The small network",
       "lb.big": "The big network",
-      "dv.scenario": "A school app suggests which students need extra help, based on last year's marks. Should teachers follow its list?",
-      "dv.o1": "Follow the list",
-      "dv.o2": "Use it only as one clue",
+      "dv.scenario": "A school app suggests which students need extra help, based on last year's marks. One student was ill for two months last year, so her marks were low, but she is doing well now. The app puts her on the list. Should teachers follow the list as it is?",
+      "dv.o1": "Follow the list, so no one is missed",
+      "dv.o2": "Let teachers decide, with the list as one input",
       "dv.f1.name": "Outcomes",
-      "dv.f1.why": "Choose what helps the most students learn. If the list is usually right, following it helps many quickly.",
+      "dv.f1.why": "Count what happens to students under each choice. Suppose the list is right for 9 in 10 students and teachers working alone notice 7 in 10. Then following the list reaches more students who need help. The student who was ill is one extra name to check, while a student a busy teacher overlooks gets no help at all.",
       "dv.f2.name": "Fairness",
-      "dv.f2.why": "Last year's marks may carry last year's unfairness. Each student deserves to be seen as they are now.",
+      "dv.f2.why": "Last year's marks can carry last year's bad luck. The student who was ill is on the list for a reason that no longer applies, and a quiet student with good marks who is struggling now is not. A teacher can see the difference between the two. A list cannot.",
       "dv.f3.name": "Care",
-      "dv.f3.why": "It depends on the student. A teacher who knows them is better placed than a list to decide.",
+      "dv.f3.why": "Care does not pick an option by itself. It asks different questions: Does the student who was ill know she is on a list, and who can see it? Whichever option the school chooses, how is each student spoken to and supported? The answer depends on these students and this school.",
       "dv.reflect": "Who should be responsible if the list is wrong?",
-      "hs.prompt": "You are on a hill in thick fog and want to reach the lowest ground. You can only feel the slope under your feet.",
+      "hs.prompt": "If you could only feel the slope under your feet in thick fog, could you find the lowest ground? Try it.",
       "hs.left": "Step left",
       "hs.right": "Step right",
       "hs.goal": "Reach the lowest ground in as few steps as you can.",
-      "hs.fade": "This is how training works: the machine only knows the slope where it stands, and takes small steps downhill to make its error smaller."
+      "hs.fade": "This is how training works: the machine can only measure the slope where it stands, and takes small steps downhill to make its error (how wrong it is) smaller.",
+      "tc.length": "Length (cm)",
+      "tc.hamster": "Hamster",
+      "tc.bear": "Bear",
+      "tc.camel": "Camel",
+      "tc.goat": "Goat",
+      "lb.analogy": "Picture a team where each person turns one dial, and together they try to match the dots. Where this picture breaks: nobody on the team uses judgement. Every dial is turned by arithmetic, by a calculation that says which way and how far.",
+      "hs.breaks": "Where this picture breaks: a real model stands on a “hill” with millions of directions, and its step size follows a rule called the learning rate, not a choice."
     },
     "hi": {
       "title": "AI सिमुलेशन",
-      "tc.prompt": "हर जानवर को छोटा या बड़ा बताइए, फिर अपने लेबल से मशीन को ट्रेन कीजिए।",
+      "tc.prompt": "कौन-से जानवर छोटे माने जाएँ और कौन-से बड़े? हर एक को लेबल कीजिए, फिर देखिए कि मशीन उन जानवरों को कैसे लेबल करती है जो उसने देखे नहीं।",
       "tc.small": "छोटा",
       "tc.big": "बड़ा",
-      "tc.weight": "वज़न (किलो)",
-      "tc.height": "ऊँचाई (मीटर)",
+      "tc.height": "ऊँचाई (सेमी)",
       "tc.mouse": "चूहा",
       "tc.cat": "बिल्ली",
       "tc.horse": "घोड़ा",
       "tc.elephant": "हाथी",
       "tc.rabbit": "खरगोश",
       "tc.cow": "गाय",
-      "tc.explain": "मशीन को नहीं पता कि जानवर क्या है। वह सबसे पास के अंकों वाले उदाहरण ढूँढकर उनका लेबल लगा देती है।",
-      "pg.prompt": "एक अंक बनाइए। फिर संख्याओं पर जाइए और देखिए कि कंप्यूटर को क्या मिलता है।",
+      "tc.explain": "मशीन उन 3 उदाहरणों को ढूँढती है जिनकी संख्याएँ सबसे पास हैं और बहुमत वाला लेबल लगा देती है। उसे नहीं पता कि जानवर क्या होता है।",
+      "pg.prompt": "जब आप कोई अंक बनाते हैं तो कंप्यूटर को असल में क्या मिलता है? एक अंक बनाइए, फिर “संख्याएँ” पर जाकर देखिए।",
       "pg.one": "अंक 1",
       "pg.why": "कंप्यूटर कभी तस्वीर नहीं देखता, सिर्फ़ ये संख्याएँ।",
       "pg.same": "ज़्यादातर वही संख्याएँ",
       "pg.diff": "बहुत अलग संख्याएँ",
-      "nw.prompt": "मशीन को कुछ वाक्य सिखाइए, फिर उससे अगला शब्द पूछिए।",
+      "nw.prompt": "मॉडल अगला कौन-सा शब्द चुनेगा? उसे कुछ वाक्य सिखाइए, फिर देखने से पहले अनुमान लगाइए।",
       "nw.starters": "बिल्ली चटाई पर बैठी।|बिल्ली ने मछली खाई।|कुत्ता सीढ़ी पर बैठा।",
       "nw.why": "यह सिर्फ़ गिनता है कि आगे कौन-सा शब्द सबसे ज़्यादा आया। इस चुनाव के पीछे कोई अर्थ या इरादा नहीं है।",
-      "lb.prompt": "एक नेटवर्क बनाइए और बिंदुओं पर ट्रेन कीजिए। फिर देखिए कि नए बिंदुओं पर कैसा करता है।",
-      "lb.explain": "जो नेटवर्क ट्रेनिंग के बिंदु रट लेता है, वह फिर भी पैटर्न चूक सकता है।",
+      "lb.prompt": "क्या जो नेटवर्क ट्रेनिंग के बिंदुओं पर ठीक बैठता है, वह उन बिंदुओं पर भी चलेगा जो उसने कभी नहीं देखे? एक बनाइए, ट्रेन कीजिए और देखिए।",
+      "lb.explain": "जिस नेटवर्क का वक्र ट्रेनिंग के हर बिंदु से गुज़रता है, वह भी नए बिंदुओं का पैटर्न चूक सकता है।",
       "lb.small": "छोटा नेटवर्क",
       "lb.big": "बड़ा नेटवर्क",
-      "dv.scenario": "एक स्कूल ऐप पिछले साल के अंकों के आधार पर बताता है कि किन विद्यार्थियों को अतिरिक्त मदद चाहिए। क्या शिक्षक उसकी सूची मानें?",
-      "dv.o1": "सूची मानें",
-      "dv.o2": "इसे सिर्फ़ एक सुराग मानें",
+      "dv.scenario": "एक स्कूल ऐप पिछले साल के अंकों के आधार पर बताता है कि किन विद्यार्थियों को अतिरिक्त मदद चाहिए। एक छात्रा पिछले साल दो महीने बीमार रही, इसलिए उसके अंक कम थे, पर अब वह अच्छा कर रही है। ऐप उसे सूची में डाल देता है। क्या शिक्षक सूची को जैसी है वैसी मानें?",
+      "dv.o1": "सूची मानें, ताकि कोई छूटे नहीं",
+      "dv.o2": "शिक्षक तय करें, सूची एक आधार भर रहे",
       "dv.f1.name": "नतीजे",
-      "dv.f1.why": "वह चुनें जिससे सबसे ज़्यादा विद्यार्थी सीखें। अगर सूची अक्सर सही है, तो उसे मानने से कई लोगों को जल्दी मदद मिलती है।",
+      "dv.f1.why": "हर विकल्प में विद्यार्थियों का क्या होता है, गिनिए। मान लीजिए सूची 10 में से 9 विद्यार्थियों के लिए सही है और शिक्षक अकेले 10 में से 7 को पहचानते हैं। तब सूची मानने से मदद चाहने वाले ज़्यादा विद्यार्थियों तक पहुँच होती है। बीमार रही छात्रा जाँचने के लिए बस एक अतिरिक्त नाम है, जबकि व्यस्त शिक्षक से छूटे विद्यार्थी को कोई मदद नहीं मिलती।",
       "dv.f2.name": "निष्पक्षता",
-      "dv.f2.why": "पिछले साल के अंकों में पिछले साल की नाइंसाफ़ी हो सकती है। हर विद्यार्थी को आज जैसा है, वैसा देखा जाना चाहिए।",
+      "dv.f2.why": "पिछले साल के अंकों में पिछले साल की बदक़िस्मती हो सकती है। बीमार रही छात्रा ऐसे कारण से सूची में है जो अब लागू नहीं होता, और अच्छे अंकों वाला एक शांत विद्यार्थी जो अब संघर्ष कर रहा है, सूची में नहीं है। शिक्षक इन दोनों का फ़र्क़ देख सकता है। सूची नहीं देख सकती।",
       "dv.f3.name": "देखभाल",
-      "dv.f3.why": "यह विद्यार्थी पर निर्भर है। उन्हें जानने वाला शिक्षक सूची से बेहतर तय कर सकता है।",
+      "dv.f3.why": "देखभाल अकेले कोई विकल्प नहीं चुनती। वह अलग सवाल पूछती है: क्या बीमार रही छात्रा को पता है कि वह सूची में है, और उसे कौन देख सकता है? स्कूल जो भी विकल्प चुने, हर विद्यार्थी से कैसे बात की जाती है और उसे कैसे सहारा मिलता है? जवाब इन विद्यार्थियों और इस स्कूल पर निर्भर है।",
       "dv.reflect": "अगर सूची गलत हो, तो ज़िम्मेदार किसे होना चाहिए?",
-      "hs.prompt": "आप घने कोहरे में एक पहाड़ी पर हैं और सबसे नीची जगह पहुँचना चाहते हैं। आप सिर्फ़ पैरों के नीचे की ढलान महसूस कर सकते हैं।",
+      "hs.prompt": "अगर घने कोहरे में आप सिर्फ़ पैरों के नीचे की ढलान महसूस कर सकें, तो क्या सबसे नीची ज़मीन ढूँढ पाएँगे? आज़माइए।",
       "hs.left": "बाएँ कदम",
       "hs.right": "दाएँ कदम",
       "hs.goal": "जितने कम कदमों में हो सके, सबसे नीची जगह पहुँचिए।",
-      "hs.fade": "ट्रेनिंग ऐसे ही होती है: मशीन को सिर्फ़ अपनी जगह की ढलान पता होती है, और वह अपनी गलती घटाने के लिए नीचे की ओर छोटे कदम लेती है।"
+      "hs.fade": "ट्रेनिंग ऐसे ही होती है: मशीन सिर्फ़ अपनी जगह की ढलान नाप सकती है, और अपनी त्रुटि (वह कितनी ग़लत है) घटाने के लिए नीचे की ओर छोटे क़दम लेती है।",
+      "tc.length": "लंबाई (सेमी)",
+      "tc.hamster": "हैम्स्टर",
+      "tc.bear": "भालू",
+      "tc.camel": "ऊँट",
+      "tc.goat": "बकरी",
+      "lb.analogy": "सोचिए एक टीम है जिसमें हर व्यक्ति एक घुंडी घुमाता है, और सब मिलकर बिंदुओं से मेल बिठाने की कोशिश करते हैं। यह तस्वीर यहाँ टूटती है: टीम में कोई समझ-बूझ से काम नहीं लेता। हर घुंडी गणना से घुमाई जाती है, जो बताती है कि किस ओर और कितनी।",
+      "hs.breaks": "यह तस्वीर यहाँ टूटती है: असली मॉडल लाखों दिशाओं वाली “पहाड़ी” पर खड़ा होता है, और उसके क़दम का आकार सीखने की दर (लर्निंग रेट) नाम के नियम से तय होता है, किसी के चुनाव से नहीं।"
     },
     "te": {
       "title": "AI సిమ్యులేషన్లు",
-      "tc.prompt": "ప్రతి జంతువును చిన్నది లేదా పెద్దది అని గుర్తించండి, తర్వాత మీ లేబుళ్లతో యంత్రాన్ని ట్రైన్ చేయండి.",
+      "tc.prompt": "ఏ జంతువులను చిన్నవిగా, ఏవి పెద్దవిగా పరిగణించాలి? ప్రతిదానికి లేబుల్ ఇవ్వండి, తర్వాత యంత్రం చూడని జంతువులను ఎలా లేబుల్ చేస్తుందో చూడండి.",
       "tc.small": "చిన్నది",
       "tc.big": "పెద్దది",
-      "tc.weight": "బరువు (కిలోలు)",
-      "tc.height": "ఎత్తు (మీటర్లు)",
+      "tc.height": "ఎత్తు (సెం.మీ.)",
       "tc.mouse": "ఎలుక",
       "tc.cat": "పిల్లి",
       "tc.horse": "గుర్రం",
       "tc.elephant": "ఏనుగు",
       "tc.rabbit": "కుందేలు",
       "tc.cow": "ఆవు",
-      "tc.explain": "జంతువు అంటే ఏమిటో యంత్రానికి తెలియదు. దగ్గరి సంఖ్యలున్న ఉదాహరణలను కనుగొని వాటి లేబుల్‌నే పెడుతుంది.",
-      "pg.prompt": "ఒక అంకె గీయండి. తర్వాత సంఖ్యలకు మారి కంప్యూటర్‌కు ఏమి అందుతుందో చూడండి.",
+      "tc.explain": "యంత్రం సంఖ్యలు అత్యంత దగ్గరగా ఉన్న 3 ఉదాహరణలను కనుగొని, వాటిలో ఎక్కువ మందికి ఉన్న లేబుల్‌నే ఇస్తుంది. జంతువు అంటే ఏమిటో దానికి తెలియదు.",
+      "pg.prompt": "మీరు ఒక అంకె గీసినప్పుడు కంప్యూటర్‌కు నిజంగా ఏమి అందుతుంది? ఒక అంకె గీసి, “సంఖ్యలు” కి మారి చూడండి.",
       "pg.one": "అంకె 1",
       "pg.why": "కంప్యూటర్ ఎప్పుడూ బొమ్మను చూడదు, ఈ సంఖ్యలను మాత్రమే.",
       "pg.same": "చాలావరకు అవే సంఖ్యలు",
       "pg.diff": "చాలా వేరే సంఖ్యలు",
-      "nw.prompt": "యంత్రానికి కొన్ని వాక్యాలు నేర్పండి, తర్వాత తదుపరి పదం అడగండి.",
+      "nw.prompt": "మోడల్ తర్వాత ఏ పదం ఎంచుకుంటుంది? దానికి కొన్ని వాక్యాలు నేర్పండి, చూసే ముందు ఊహించండి.",
       "nw.starters": "పిల్లి చాప మీద కూర్చుంది.|పిల్లి చేపను తిన్నది.|కుక్క మెట్టు మీద కూర్చుంది.",
       "nw.why": "తర్వాత ఏ పదం ఎక్కువసార్లు వచ్చిందో మాత్రమే లెక్కిస్తుంది. ఆ ఎంపిక వెనుక అర్థం లేదా ఉద్దేశం లేదు.",
-      "lb.prompt": "ఒక నెట్‌వర్క్ కట్టి చుక్కల మీద ట్రైన్ చేయండి. తర్వాత కొత్త చుక్కల మీద ఎలా చేస్తుందో చూడండి.",
-      "lb.explain": "ట్రైనింగ్ చుక్కలను బట్టీ పట్టిన నెట్‌వర్క్ కూడా నమూనాను తప్పిపోవచ్చు.",
+      "lb.prompt": "ట్రైనింగ్ చుక్కలకు సరిపోయే నెట్‌వర్క్ ఎప్పుడూ చూడని చుక్కలనూ సరిగ్గా చేయగలదా? ఒకటి కట్టి, ట్రైన్ చేసి చూడండి.",
+      "lb.explain": "ట్రైనింగ్ ప్రతి చుక్క గుండా వెళ్ళే వక్రరేఖ ఉన్న నెట్‌వర్క్ కూడా కొత్త చుక్కల నమూనాను తప్పిపోవచ్చు.",
       "lb.small": "చిన్న నెట్‌వర్క్",
       "lb.big": "పెద్ద నెట్‌వర్క్",
-      "dv.scenario": "గత సంవత్సరం మార్కుల ఆధారంగా ఏ విద్యార్థులకు అదనపు సహాయం కావాలో ఒక స్కూల్ యాప్ సూచిస్తుంది. ఉపాధ్యాయులు ఆ జాబితాను పాటించాలా?",
-      "dv.o1": "జాబితాను పాటించాలి",
-      "dv.o2": "దాన్ని ఒక ఆధారంగా మాత్రమే వాడాలి",
+      "dv.scenario": "గత సంవత్సరం మార్కుల ఆధారంగా ఏ విద్యార్థులకు అదనపు సహాయం కావాలో ఒక స్కూల్ యాప్ సూచిస్తుంది. ఒక విద్యార్థిని గత ఏడాది రెండు నెలలు అనారోగ్యంతో ఉంది, అందుకే మార్కులు తక్కువ, కానీ ఇప్పుడు బాగా చదువుతోంది. యాప్ ఆమెను జాబితాలో పెట్టింది. ఉపాధ్యాయులు ఆ జాబితాను ఉన్నదున్నట్టు పాటించాలా?",
+      "dv.o1": "జాబితాను పాటించాలి, ఎవరూ మిగిలిపోకుండా",
+      "dv.o2": "ఉపాధ్యాయులు నిర్ణయించాలి, జాబితా ఒక ఆధారం మాత్రమే",
       "dv.f1.name": "ఫలితాలు",
-      "dv.f1.why": "ఎక్కువ మంది విద్యార్థులు నేర్చుకునేదాన్ని ఎంచుకోండి. జాబితా తరచూ సరైనదైతే, దాన్ని పాటిస్తే చాలా మందికి త్వరగా సహాయం అందుతుంది.",
+      "dv.f1.why": "ప్రతి ఎంపికలో విద్యార్థులకు ఏమవుతుందో లెక్కించండి. జాబితా 10 మందిలో 9 మందికి సరైనదని, ఉపాధ్యాయులు ఒంటరిగా 10 మందిలో 7 మందిని గుర్తిస్తారని అనుకుందాం. అప్పుడు జాబితాను పాటిస్తే సహాయం అవసరమైన ఎక్కువ మందికి చేరుతుంది. అనారోగ్యంతో ఉన్న విద్యార్థిని తనిఖీ చేయాల్సిన ఒక అదనపు పేరు మాత్రమే, కానీ బిజీ ఉపాధ్యాయుడు గమనించని విద్యార్థికి అసలు సహాయమే అందదు.",
       "dv.f2.name": "న్యాయం",
-      "dv.f2.why": "గత ఏడాది మార్కుల్లో గత ఏడాది అన్యాయం ఉండొచ్చు. ప్రతి విద్యార్థిని ఇప్పుడు ఉన్నట్టే చూడాలి.",
+      "dv.f2.why": "గత ఏడాది మార్కుల్లో గత ఏడాది దురదృష్టం ఉండొచ్చు. అనారోగ్యంతో ఉన్న విద్యార్థిని ఇప్పుడు వర్తించని కారణంతో జాబితాలో ఉంది, ఇప్పుడు ఇబ్బంది పడుతున్న మంచి మార్కులున్న మౌన విద్యార్థి జాబితాలో లేడు. ఈ రెండింటి తేడాను ఉపాధ్యాయుడు చూడగలరు. జాబితా చూడలేదు.",
       "dv.f3.name": "శ్రద్ధ",
-      "dv.f3.why": "అది విద్యార్థిపై ఆధారపడుతుంది. వారిని ఎరిగిన ఉపాధ్యాయుడు జాబితా కంటే బాగా నిర్ణయించగలరు.",
+      "dv.f3.why": "శ్రద్ధ తనంతట తానే ఒక ఎంపికను ఎంచుకోదు. అది వేరే ప్రశ్నలు అడుగుతుంది: అనారోగ్యంతో ఉన్న విద్యార్థినికి తాను జాబితాలో ఉన్నట్టు తెలుసా, దాన్ని ఎవరు చూడగలరు? స్కూల్ ఏ ఎంపిక చేసినా, ప్రతి విద్యార్థితో ఎలా మాట్లాడతారు, ఎలా తోడ్పడతారు? సమాధానం ఈ విద్యార్థులు, ఈ స్కూల్ మీద ఆధారపడుతుంది.",
       "dv.reflect": "జాబితా తప్పైతే ఎవరు బాధ్యత వహించాలి?",
-      "hs.prompt": "మీరు దట్టమైన పొగమంచులో ఒక కొండ మీద ఉన్నారు, అత్యంత లోతైన చోటుకు చేరాలనుకుంటున్నారు. మీ కాళ్ల కింది వాలును మాత్రమే అనుభవించగలరు.",
+      "hs.prompt": "దట్టమైన పొగమంచులో మీ కాళ్ల కింది వాలును మాత్రమే అనుభవించగలిగితే, అత్యంత లోతైన చోటును కనుగొనగలరా? ప్రయత్నించండి.",
       "hs.left": "ఎడమకు అడుగు",
       "hs.right": "కుడికి అడుగు",
       "hs.goal": "వీలైనన్ని తక్కువ అడుగుల్లో అత్యంత లోతైన చోటుకు చేరండి.",
-      "hs.fade": "ట్రైనింగ్ ఇలాగే జరుగుతుంది: యంత్రానికి తాను ఉన్న చోటి వాలు మాత్రమే తెలుసు, తన తప్పును తగ్గించడానికి కిందికి చిన్న అడుగులు వేస్తుంది."
+      "hs.fade": "ట్రైనింగ్ ఇలాగే జరుగుతుంది: యంత్రం తాను ఉన్న చోటి వాలును మాత్రమే కొలవగలదు, తన లోపాన్ని (అది ఎంత తప్పుగా ఉందో) తగ్గించడానికి కిందికి చిన్న అడుగులు వేస్తుంది.",
+      "tc.length": "పొడవు (సెం.మీ.)",
+      "tc.hamster": "హ్యామ్‌స్టర్",
+      "tc.bear": "ఎలుగుబంటి",
+      "tc.camel": "ఒంటె",
+      "tc.goat": "మేక",
+      "lb.analogy": "ఒక బృందాన్ని ఊహించండి: ప్రతి ఒక్కరూ ఒక నాబ్ తిప్పుతారు, అందరూ కలిసి చుక్కలకు సరిపోయేలా ప్రయత్నిస్తారు. ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: బృందంలో ఎవరూ విచక్షణ వాడరు. ప్రతి నాబ్ లెక్క ద్వారా తిరుగుతుంది, ఏ వైపు, ఎంత అని ఆ లెక్కే చెబుతుంది.",
+      "hs.breaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: నిజమైన మోడల్ లక్షలాది దిశలున్న “కొండ”పై నిలబడుతుంది, దాని అడుగు పరిమాణం లెర్నింగ్ రేట్ అనే నియమం ప్రకారం ఉంటుంది, ఎంపిక ప్రకారం కాదు."
     }
   }
 }

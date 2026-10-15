@@ -251,6 +251,14 @@ export function diagnose(trainError: number, testError: number): Diagnosis {
   return "good";
 }
 
+export type BetterOn = "train" | "new" | "same";
+
+/** Which points the network is closer to, for comparing with the learner's prediction. Close errors count as the same. */
+export function betterOn(trainError: number, testError: number, tolerance = 0.03): BetterOn {
+  if (Math.abs(testError - trainError) <= tolerance) return "same";
+  return trainError < testError ? "train" : "new";
+}
+
 /**
  * Train one or more fits in short slices so the page stays responsive. Each
  * slice is time-boxed; the result does not depend on how the work is sliced.

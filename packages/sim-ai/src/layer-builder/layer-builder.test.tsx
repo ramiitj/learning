@@ -9,6 +9,15 @@ const strings = { p: "Build a network that learns the wave.", explain: "A bigger
 const config = { promptKey: "p", dataset: { type: "wave", points: 10, noise: 0.5, seed: 3 }, maxLayers: 3, maxWidth: 16, explainKey: "explain" };
 const block = { id: "lb1", type: "layer-builder", config };
 const status = (c: HTMLElement) => c.querySelector(".lm-layers-status")!;
+const predict = (name = "Better on the new dots") => userEvent.click(screen.getByLabelText(name));
+const trainPersonal = async () => {
+  await predict();
+  await userEvent.click(screen.getByRole("button", { name: "Train 2,000 steps" }));
+};
+const revealVote = async () => {
+  await userEvent.click(screen.getByRole("button", { name: "One more for A big network" }));
+  await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
+};
 const voteBlock = { ...block, config: { ...config, smallKey: "small", bigKey: "big" } };
 
 describe("layer-builder", () => {
@@ -34,9 +43,9 @@ describe("layer-builder", () => {
     await userEvent.click(screen.getByRole("button", { name: "Add a layer" }));
     await userEvent.click(screen.getByRole("button", { name: "Add a layer" }));
     for (let i = 0; i < 13; i++) for (const n of [1, 2, 3]) await userEvent.click(screen.getByRole("button", { name: `More neurons in layer ${n}` }));
-    await userEvent.click(screen.getByRole("button", { name: "Train" }));
+    await trainPersonal();
     expect(screen.getByRole("progressbar", { name: "Training progress" })).toBeInTheDocument();
-    await screen.findByText("Overfitting", {}, { timeout: 15000 });
+    await screen.findByText(/^Overfitting \(/, {}, { timeout: 15000 });
     expect(screen.getByText("Error on training points")).toBeInTheDocument();
     expect(screen.getByText("Error on new points")).toBeInTheDocument();
     expect(status(container)).toHaveTextContent(/Training finished/);
@@ -46,49 +55,88 @@ describe("layer-builder", () => {
   it("names underfitting for a network that is too small", async () => {
     renderBlock(layerBuilder, { ...block, config: { ...config, maxWidth: 1 } }, strings);
     // widths start at min(3, maxWidth) = 1
-    await userEvent.click(screen.getByRole("button", { name: "Train" }));
-    await screen.findByText("Underfitting", {}, { timeout: 15000 });
+    await trainPersonal();
+    await screen.findByText(/^Underfitting \(/, {}, { timeout: 15000 });
   }, 30000);
 
   it("clears the result when the network changes, and undo brings it back", async () => {
     renderBlock(layerBuilder, block, strings);
-    await userEvent.click(screen.getByRole("button", { name: "Train" }));
+    await trainPersonal();
     await screen.findByText("Error on new points", {}, { timeout: 15000 });
     await userEvent.click(screen.getByRole("button", { name: "More neurons in layer 1" }));
     expect(screen.queryByText("Error on new points")).not.toBeInTheDocument();
     expect(screen.getByText("Press Train to see what this network learns.")).toBeInTheDocument();
+    expect(screen.queryByText(/You predicted/)).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Undo" }));
     expect(screen.getByText("Error on new points")).toBeInTheDocument();
   }, 30000);
 
   it("can stop training", async () => {
     const { container } = renderBlock(layerBuilder, block, strings);
-    fireEvent.click(screen.getByRole("button", { name: "Train" }));
+    fireEvent.click(screen.getByLabelText("About the same on both"));
+    fireEvent.click(screen.getByRole("button", { name: "Train 2,000 steps" }));
     fireEvent.click(screen.getByRole("button", { name: "Stop" }));
     expect(status(container)).toHaveTextContent("Training stopped.");
-    expect(screen.getByRole("button", { name: "Train" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Train 2,000 steps" })).toBeInTheDocument();
   });
 
   it("classroom: votes, trains both and compares them", async () => {
-    renderBlock(layerBuilder, voteBlock, strings, { mode: "classroom" });
+    const { container } = renderBlock(layerBuilder, voteBlock, strings, { mode: "classroom" });
     await userEvent.click(screen.getByRole("button", { name: "One more for A big network" }));
     expect(screen.getByText("1 vote in total")).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: "Train both networks" }));
+    await revealVote();
+    await userEvent.click(screen.getByRole("button", { name: "Train both networks (2,000 steps each)" }));
     await waitFor(() => expect(screen.getByText(/Lower error on new points|same error on new points/)).toBeInTheDocument(), { timeout: 15000 });
     expect(screen.getAllByText("Error on new points")).toHaveLength(2);
+    // The status line names both networks, not only one.
+    expect(status(container)).toHaveTextContent(/A small network: error [\d.]+ on training points, [\d.]+ on new points\. A big network: error/);
+    // Projection: bigger markers and no width cap on the chart.
+    const chart = container.querySelector(".lm-layers-chart--class")!;
+    expect(Number(chart.querySelector("circle")!.getAttribute("r"))).toBeGreaterThanOrEqual(7);
+    expect(Number(chart.querySelector("rect.lm-layers-chart__test")!.getAttribute("width"))).toBeGreaterThanOrEqual(14);
   }, 30000);
+
+  it("classroom: Train waits for the class result to be shown", async () => {
+    renderBlock(layerBuilder, voteBlock, strings, { mode: "classroom" });
+    expect(screen.getByRole("button", { name: /^Train both networks/ })).toBeDisabled();
+    expect(screen.getByText(/Count the hands and show the result first/)).toBeInTheDocument();
+    await revealVote();
+    expect(screen.getByRole("button", { name: /^Train both networks/ })).toBeEnabled();
+  });
+
+  it("personal: asks which points it will do better on, and Train waits for the answer", async () => {
+    renderBlock(layerBuilder, block, strings);
+    expect(screen.getByRole("button", { name: "Train 2,000 steps" })).toBeDisabled();
+    await predict("Better on the training dots");
+    expect(screen.getByRole("button", { name: "Train 2,000 steps" })).toBeEnabled();
+    await userEvent.click(screen.getByRole("button", { name: "Train 2,000 steps" }));
+    await screen.findByText(/^You predicted: Better on the training dots\. The result: /, {}, { timeout: 15000 });
+  }, 30000);
+
+  it("shows an analogy before the build, a □ legend and a generated chart description", () => {
+    const { container } = renderBlock(layerBuilder, { ...block, config: { ...config, analogyKey: "ana" } }, { ...strings, ana: "A team each turning one dial. It breaks because dials turn by arithmetic." });
+    const ana = screen.getByText(/A team each turning one dial/);
+    const build = container.querySelector(".lm-layers-build")!;
+    expect(ana.compareDocumentPosition(build) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(container.querySelector("figcaption")).toHaveTextContent("□ New test points (squares)");
+    expect(screen.getByRole("img")).toHaveAccessibleName(/^Chart of 10 training points \(circles\) and 10 new points \(squares\)\. The values run from -?[\d.]+ to -?[\d.]+\.$/);
+    expect(screen.getByText(/A neuron is a tiny calculator/)).toBeInTheDocument();
+  });
 
   it("classroom without vote keys still trains both", async () => {
     renderBlock(layerBuilder, block, strings, { mode: "classroom" });
     expect(screen.queryByText("Show of hands")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Train both networks" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Train both networks/ })).toBeEnabled();
   });
 
   it("has no accessibility violations in either mode, before and after training", async () => {
     for (const mode of ["personal", "classroom"] as const) {
-      const { container, unmount } = renderBlock(layerBuilder, voteBlock, strings, { mode });
+      const { container, unmount } = renderBlock(layerBuilder, { ...voteBlock, config: { ...voteBlock.config, analogyKey: "ana" } }, { ...strings, ana: "A team of dials." }, { mode });
       expect(await a11yViolations(container)).toEqual([]);
-      await userEvent.click(screen.getByRole("button", { name: mode === "personal" ? "Train" : "Train both networks" }));
+      if (mode === "personal") await predict();
+      else await revealVote();
+      expect(await a11yViolations(container)).toEqual([]);
+      await userEvent.click(screen.getByRole("button", { name: mode === "personal" ? "Train 2,000 steps" : /^Train both networks/ }));
       await screen.findAllByText("Error on new points", {}, { timeout: 15000 });
       expect(await a11yViolations(container)).toEqual([]);
       unmount();
@@ -112,10 +160,13 @@ describe("layer-builder", () => {
     expect(check({ ...config, dataset: { type: "spiral", points: 10, noise: 0, seed: 1 } }).length).toBeGreaterThan(0);
     expect(check({ ...config, extra: 1 }).length).toBeGreaterThan(0);
     expect(check({ promptKey: "p" }).length).toBeGreaterThan(0);
+    expect(check({ ...config, analogyKey: "p", glossary: ["error"] })).toEqual([]);
+    expect(check({ ...config, glossary: [3] }).length).toBeGreaterThan(0);
   });
 
   it("exposes string keys and a class vote only when both keys are present", () => {
     expect(layerBuilder.stringKeys(voteBlock.config)).toEqual(["p", "explain", "small", "big"]);
+    expect(layerBuilder.stringKeys({ ...voteBlock.config, analogyKey: "ana" })).toContain("ana");
     expect(layerBuilder.vote?.(voteBlock.config)?.options.map((o) => o.id)).toEqual(["small", "big"]);
     expect(layerBuilder.vote?.(config)).toBeNull();
   });

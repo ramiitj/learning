@@ -1,8 +1,10 @@
 "use client";
 import { useId, useMemo, useState } from "react";
-import { Button, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { Button, ChoiceGroup, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { seededShuffle } from "@lm/primitives/shared/strings";
+import { GlossaryRow } from "../glossary";
 import type { NextWordModelConfig } from "./contract";
-import { MAX_WORDS, buildModel, cleanSentence, followers, generate, isPunctuation, joinTokens, percent, splitSentences, startableWords, topCandidates } from "./model";
+import { MAX_WORDS, buildModel, cleanSentence, followers, generate, isPunctuation, joinTokens, likelyName, percent, splitSentences, startableWords, topCandidates } from "./model";
 
 export interface NextWordModelState {
   /** Sentences typed in this block (the learner's, or the class's through the teacher). */
@@ -13,6 +15,8 @@ export interface NextWordModelState {
   shown?: string;
   /** Start word for the generated sentence. */
   writeFrom?: string;
+  /** Personal: the candidate the learner committed to before looking, per current word. */
+  guesses?: Record<string, string>;
   /** Classroom: show-of-hands counts per word, and whether the tally is on screen. */
   votes?: Record<string, Counts>;
   tallyShown?: boolean;
@@ -43,7 +47,7 @@ export function NextWordModelClassroom(props: Props) {
 }
 
 function Sim(props: Props & { classroom: boolean }) {
-  const { config, state, setState, t, ui, classroom } = props;
+  const { config, state, setState, t, ui, classroom, block } = props;
   const max = config.maxSentences ?? DEFAULT_MAX;
   const own = state?.own ?? [];
   const base = baseSentences(config, props).slice(0, max);
@@ -56,6 +60,10 @@ function Sim(props: Props & { classroom: boolean }) {
   const rows = current ? followers(model, current) : [];
   const top = rows[0];
   const revealed = !!current && state?.shown === current;
+  // The candidates are shuffled with a fixed seed so their order never hints at which one the model picks.
+  const candidates = useMemo(() => seededShuffle(current ? topCandidates(model, current, 3) : [], `${block.id}:${current}`), [model, current, block.id]);
+  const guess = state?.guesses?.[current];
+  const guessed = guess && candidates.some((c) => c.word === guess) ? guess : undefined;
   const written = state?.writeFrom && model.vocabulary.has(state.writeFrom) ? generate(model, state.writeFrom) : null;
 
   const inputId = useId();
@@ -64,6 +72,7 @@ function Sim(props: Props & { classroom: boolean }) {
   const [hint, setHint] = useState("");
   const focus = useFocusAfter<HTMLDivElement>(state?.writeFrom);
   const stats = { s: model.sentences, v: model.vocabulary.size };
+  const name = classroom ? likelyName(draft) : null;
 
   const add = () => {
     const value = cleanSentence(draft);
@@ -78,7 +87,9 @@ function Sim(props: Props & { classroom: boolean }) {
   return (
     <div className={`lm-nextword${classroom ? " lm-nextword--class" : ""}`}>
       {classroom ? <h3 className="lm-prompt">{t.rich(config.promptKey)}</h3> : <p className="lm-lead">{t.rich(config.promptKey)}</p>}
-      <p className="lm-muted lm-small">{ui("privacyNote")}</p>
+      <p className="lm-muted lm-small">{ui(classroom ? "classroomPrivacy" : "privacyNote")}</p>
+      <p className="lm-muted lm-small">{ui("glossModel")}</p>
+      <GlossaryRow ids={config.glossary} ui={ui} />
       {classroom ? <p className="lm-notice" role="note">{ui("classroomNote")}</p> : null}
 
       <div className="lm-row">
@@ -87,9 +98,10 @@ function Sim(props: Props & { classroom: boolean }) {
         <Button variant="primary" onClick={add}>{ui("addLabel")}</Button>
       </div>
       <p className="lm-muted lm-small" role="status" aria-live="polite">{hint}</p>
+      {name ? <p className="lm-notice" role="note">{ui("nameWarning", { word: name })}</p> : null}
 
       {all.length ? (
-        <details className="lm-nextword__sentences">
+        <details className="lm-nextword__sentences" open>
           <summary>{ui("sentencesTitle")} ({all.length})</summary>
           <ul className="lm-nextword__list">
             {all.map((s, i) => (
@@ -105,7 +117,7 @@ function Sim(props: Props & { classroom: boolean }) {
       )}
 
       {model.sentences ? <p className="lm-nextword__stats">{ui("stats", { s: stats.s, v: stats.v })}</p> : null}
-      <p className="lm-callout" data-tone="warm">{ui("noIntention")}</p>
+      {state?.stats ? <p className="lm-callout" data-tone="warm">{ui("noIntention")}</p> : null}
 
       {words.length ? (
         <div className="lm-stack">
@@ -116,12 +128,22 @@ function Sim(props: Props & { classroom: boolean }) {
             </select>
           </div>
 
-          {!revealed ? <p className="lm-lead">{ui("guessFirst", { word: current })}</p> : null}
+          {classroom && !revealed ? <p className="lm-lead">{ui("guessFirst", { word: current })}</p> : null}
+
+          {!classroom && !revealed ? (
+            <ChoiceGroup
+              legend={ui("guessFirst", { word: current })}
+              name={`${block.id}-guess-${current}`}
+              choices={candidates.map((c) => ({ id: c.word, label: c.word }))}
+              value={guessed}
+              onChange={(word) => setState((p) => ({ ...p, guesses: { ...p?.guesses, [current]: word } }))}
+            />
+          ) : null}
 
           {classroom && !revealed ? (
             <Tally
               ui={ui}
-              options={topCandidates(model, current, 3).map((f) => ({ id: f.word, label: f.word, text: f.word }))}
+              options={candidates.map((f) => ({ id: f.word, label: f.word, text: f.word }))}
               counts={state?.votes?.[current] ?? {}}
               onChange={(counts) => setState((p) => ({ ...p, votes: { ...p?.votes, [current]: counts } }), { coalesce: true })}
               revealed={!!state?.tallyShown}
@@ -129,6 +151,7 @@ function Sim(props: Props & { classroom: boolean }) {
             />
           ) : null}
 
+          {revealed ? (
           <table className="lm-nextword__table">
             <caption>{ui("tableCaption", { word: current })}</caption>
             <thead>
@@ -147,13 +170,18 @@ function Sim(props: Props & { classroom: boolean }) {
               ))}
             </tbody>
           </table>
+          ) : null}
           {!rows.length ? <p className="lm-muted">{ui("noFollowers", { word: current })}</p> : null}
 
           {!revealed && rows.length ? (
-            <Button variant="primary" onClick={() => setState((p) => ({ ...p, shown: current, stats }))}>{ui("showPick")}</Button>
+            <>
+              <Button variant="primary" disabled={!classroom && !guessed} onClick={() => setState((p) => ({ ...p, shown: current, stats }))}>{ui("showPick")}</Button>
+              {!classroom && !guessed ? <p className="lm-muted lm-small">{ui("pickFirst")}</p> : null}
+            </>
           ) : null}
           {revealed && top ? (
             <div className="lm-insight" role="status">
+              {guessed ? <p>{ui("youGuessed", { guess: guessed, word: current, next: top.word, count: top.count, total: top.total })}</p> : null}
               <p>{ui("pickIs", { word: current, next: top.word, count: top.count, total: top.total, pct: percent(top) })}</p>
               <p className="lm-muted lm-small">{ui("tieNote")}</p>
             </div>

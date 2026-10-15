@@ -2,6 +2,7 @@
 import { useId, useMemo, type RefObject } from "react";
 import { Button, ChoiceGroup, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
 import { cleanInput, seededShuffle } from "@lm/primitives/shared/strings";
+import { GlossaryRow } from "../glossary";
 import type { DilemmaFramework, DilemmaVoteConfig } from "./contract";
 
 export interface DilemmaVoteState {
@@ -55,6 +56,7 @@ export function DilemmaVote({ config, state, setState, t, ui, block }: Props) {
 
   return (
     <div className="lm-dilemma">
+      <GlossaryRow ids={config.glossary} ui={ui} />
       <ChoiceGroup legend={t.rich(config.promptKey)} choices={choices} value={state?.choice} locked={committed} onChange={(choice) => setState({ ...state, choice })} />
       {!committed ? (
         <>
@@ -96,6 +98,7 @@ export function DilemmaVoteClassroom({ config, state, setState, t, ui, block }: 
   return (
     <div className="lm-dilemma">
       <h3 className="lm-prompt">{t.rich(config.promptKey)}</h3>
+      <GlossaryRow ids={config.glossary} ui={ui} />
       <p className="lm-muted">{ui("voteIntro")}</p>
       <Tally ui={ui} options={options} counts={state?.counts ?? {}} onChange={(counts) => setState((prev) => ({ ...prev, counts }), { coalesce: true })} revealed={!!state?.tallyShown} onReveal={(tallyShown) => setState((prev) => ({ ...prev, tallyShown }))} />
       <h3>{ui("frameworksHeading")}</h3>

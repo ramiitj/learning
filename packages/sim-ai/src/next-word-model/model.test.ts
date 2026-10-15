@@ -1,4 +1,4 @@
-import { buildModel, followers, generate, isPunctuation, joinTokens, percent, predictNext, splitSentences, startableWords, tokenise, topCandidates } from "./model";
+import { buildModel, followers, generate, isPunctuation, joinTokens, likelyName, percent, predictNext, splitSentences, startableWords, tokenise, topCandidates } from "./model";
 
 const cats = ["The cat sat on the mat.", "The cat ate the fish.", "The cat sat down.", "The dog sat on the mat."];
 
@@ -72,5 +72,15 @@ describe("model", () => {
     const hi = buildModel(["बिल्ली दूध पीती है।", "बिल्ली दूध पीती है।", "बिल्ली सोती है।"]);
     expect(predictNext(hi, "बिल्ली")).toEqual({ word: "दूध", count: 2, total: 3 });
     expect(joinTokens(generate(hi, "बिल्ली").tokens)).toBe("बिल्ली दूध पीती है।");
+  });
+});
+
+describe("likelyName", () => {
+  it("flags a capitalised word in the middle of a sentence", () => {
+    expect(likelyName("Today we saw Priya at school")).toBe("Priya");
+    expect(likelyName("It rained. Then we left")).toBeNull();
+    expect(likelyName("Then I said I'm here")).toBeNull();
+    expect(likelyName("बिल्ली दूध पीती है।")).toBeNull();
+    expect(likelyName("")).toBeNull();
   });
 });

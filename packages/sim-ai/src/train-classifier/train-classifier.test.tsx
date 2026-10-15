@@ -33,6 +33,11 @@ async function labelAll(labels: Record<string, string>) {
     await userEvent.click(within(g).getByLabelText(group));
   }
 }
+async function predictAndShow(name: string, guess: string) {
+  const card = screen.getByRole("region", { name });
+  await userEvent.click(within(card).getByLabelText(guess));
+  await userEvent.click(within(card).getByRole("button", { name: "Show what the machine picked" }));
+}
 const standard = { Mouse: "Small", Hamster: "Small", Gerbil: "Small", Horse: "Big", Cow: "Big", Camel: "Big" };
 
 describe("train-classifier", () => {
@@ -57,12 +62,41 @@ describe("train-classifier", () => {
     expect(screen.getByRole("button", { name: "Train the machine" })).toBeDisabled();
     await labelAll(standard);
     await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
+    expect(screen.getByText(/finds the 3 examples whose numbers are closest/)).toBeInTheDocument();
+    expect(screen.getByText(/how far apart the numbers are/, { selector: "p" })).toBeInTheDocument();
+    await predictAndShow("Rabbit", "Big");
     const rabbit = screen.getByRole("region", { name: "Rabbit" });
+    expect(within(rabbit).getByText("You predicted: Big.")).toBeInTheDocument();
     expect(within(rabbit).getByText("The machine says: Small")).toBeInTheDocument();
-    expect(within(rabbit).getByText(/3 of 3 neighbours agree \(100%\)/)).toBeInTheDocument();
-    expect(within(rabbit).getByText(/very sure/)).toBeInTheDocument();
-    expect(within(rabbit).getByText(/Hamster \(labelled Small/)).toBeInTheDocument();
+    expect(within(rabbit).getByText(/3 of the 3 closest examples have this label \(100%\)/)).toBeInTheDocument();
+    expect(within(rabbit).getByText(/All of them agree/)).toBeInTheDocument();
+    expect(within(rabbit).getByText(/Hamster: labelled Small, distance 1/)).toBeInTheDocument();
+    expect(screen.queryByText(strings.explain!)).not.toBeInTheDocument();
+    await predictAndShow("Elephant", "Big");
     expect(screen.getByText(strings.explain!)).toBeInTheDocument();
+  });
+
+  it("asks for a prediction first and holds the machine's answer back until then", async () => {
+    renderBlock(trainClassifier, block(), strings);
+    await labelAll(standard);
+    await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
+    const rabbit = screen.getByRole("region", { name: "Rabbit" });
+    expect(within(rabbit).getByText("Which group will it pick?")).toBeInTheDocument();
+    expect(within(rabbit).queryByText(/The machine says/)).not.toBeInTheDocument();
+    expect(within(rabbit).getByRole("button", { name: "Show what the machine picked" })).toBeDisabled();
+  });
+
+  it("works one distance out step by step, in plain numbers", async () => {
+    renderBlock(trainClassifier, block(), strings);
+    await labelAll(standard);
+    await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
+    await predictAndShow("Rabbit", "Small");
+    expect(screen.getByText("One distance, step by step: Rabbit and Hamster")).toBeInTheDocument();
+    expect(screen.getByText("Weight: 3 and 2 differ by 1. 1 × 1 = 1.")).toBeInTheDocument();
+    expect(screen.getByText("Add the squares: 1.")).toBeInTheDocument();
+    expect(screen.getByText(/Take the square root: 1\./)).toBeInTheDocument();
+    await predictAndShow("Elephant", "Big");
+    expect(screen.getAllByText(/One distance, step by step/)).toHaveLength(1);
   });
 
   it("says the machine is confused when examples disagree, and confidence drops", async () => {
@@ -70,10 +104,12 @@ describe("train-classifier", () => {
     renderBlock(trainClassifier, block(c), strings);
     await labelAll({ ...standard, Twin: "Big" });
     await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
-    expect(screen.getByText(/The machine is confused because some examples disagree/)).toBeInTheDocument();
+    expect(screen.getByText(/Some examples disagree: they have identical numbers/)).toBeInTheDocument();
+    expect(screen.getByText("Mouse and Twin")).toBeInTheDocument();
+    await predictAndShow("Rabbit", "Small");
     const rabbit = screen.getByRole("region", { name: "Rabbit" });
-    expect(within(rabbit).getByText(/2 of 3 neighbours agree \(67%\)/)).toBeInTheDocument();
-    expect(within(rabbit).getByText(/two examples that look exactly the same/)).toBeInTheDocument();
+    expect(within(rabbit).getByText(/2 of the 3 closest examples have this label \(67%\)/)).toBeInTheDocument();
+    expect(within(rabbit).getByText(/two examples with exactly the same numbers/)).toBeInTheDocument();
   });
 
   it("flags results as out of date when labels change after training, and retrains", async () => {
@@ -110,6 +146,7 @@ describe("train-classifier", () => {
       await userEvent.click(within(quick).getByRole("button", { name: group! }));
     }
     await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
+    await predictAndShow("Elephant", "Big");
     expect(within(screen.getByRole("region", { name: "Elephant" })).getByText("The machine says: Big")).toBeInTheDocument();
   });
 
@@ -140,10 +177,19 @@ describe("train-classifier", () => {
       expect(await a11yViolations(container)).toEqual([]);
       await labelAll(standard);
       await userEvent.click(screen.getByRole("button", { name: "Train the machine" }));
+      expect(await a11yViolations(container)).toEqual([]);
       if (mode === "classroom") await userEvent.click(screen.getByRole("button", { name: "Show what the machine chose" }));
+      else await predictAndShow("Rabbit", "Small");
       expect(await a11yViolations(container)).toEqual([]);
       unmount();
     }
+  }, 30000);
+
+  it("accepts an optional glossary list and rejects a malformed one", () => {
+    const issues = (c: object) => validateBlocks([{ ...block(c), componentVersion: "1.0" }] as never, { en: strings }, { contracts: [trainClassifier], locales: ["en"] }).filter((x) => x.check === "config");
+    expect(issues({ ...config, glossary: ["distance", "neighbour"] })).toEqual([]);
+    expect(issues({ ...config, glossary: "distance" }).length).toBeGreaterThan(0);
+    expect(issues({ ...config, glossary: ["a", "a"] }).length).toBeGreaterThan(0);
   });
 
   it("renders in Hindi and Telugu from the locale tables", () => {

@@ -1,5 +1,6 @@
 import type { ComponentContract } from "@lm/schema";
 import { keys } from "@lm/primitives/shared/strings";
+import { glossaryProperty } from "../glossary-schema";
 import type { DatasetConfig } from "./model";
 
 export interface LayerBuilderConfig {
@@ -15,6 +16,10 @@ export interface LayerBuilderConfig {
   /** Classroom vote: describes the small and the big network. Both are needed for a vote. */
   smallKey?: string;
   bigKey?: string;
+  /** An analogy shown before the build, with where it breaks down (optional). */
+  analogyKey?: string;
+  /** Glossary term ids to link under the prompt (optional). */
+  glossary?: string[];
 }
 
 const pair = { type: "array", items: { type: "number" }, minItems: 2, maxItems: 2 };
@@ -61,10 +66,12 @@ export const layerBuilderContract: ComponentContract = {
       explainKey: { type: "string" },
       smallKey: { type: "string" },
       bigKey: { type: "string" },
+      analogyKey: { type: "string" },
+      glossary: glossaryProperty,
     },
   },
   stringKeys: (c) => {
     const x = c as unknown as LayerBuilderConfig;
-    return keys(x.promptKey, x.explainKey, x.smallKey, x.bigKey);
+    return keys(x.promptKey, x.explainKey, x.smallKey, x.bigKey, x.analogyKey);
   },
 };

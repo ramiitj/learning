@@ -1,4 +1,4 @@
-import { createFit, diagnose, errorOn, MAX_EPOCHS, parameterCount, resolveDataset, resultOf, stepFit, trainAsync, type Dataset } from "./model";
+import { betterOn, createFit, diagnose, errorOn, MAX_EPOCHS, parameterCount, resolveDataset, resultOf, stepFit, trainAsync, type Dataset } from "./model";
 
 const line = (n: number): Dataset => {
   const f = (x: number) => 2 * x - 1;
@@ -64,5 +64,13 @@ describe("layer-builder model", () => {
     cancel();
     await new Promise((r) => setTimeout(r, 30));
     expect(other.epoch).toBe(0);
+  });
+});
+
+describe("betterOn", () => {
+  it("names which points the network is closer to, and calls near-equal errors the same", () => {
+    expect(betterOn(0.05, 0.4)).toBe("train");
+    expect(betterOn(0.4, 0.05)).toBe("new");
+    expect(betterOn(0.1, 0.12)).toBe("same");
   });
 });

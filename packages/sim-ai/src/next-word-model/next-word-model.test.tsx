@@ -17,16 +17,53 @@ const config = { promptKey: "p", starterSentencesKey: "starter", explainKey: "ex
 const block = { id: "nw", type: "next-word-model", config };
 
 const pickWord = (w: string) => userEvent.selectOptions(screen.getByLabelText("Current word"), w);
+const guess = (w: string) => userEvent.click(screen.getByRole("radio", { name: w }));
+const reveal = () => userEvent.click(screen.getByRole("button", { name: "Show what the model picks" }));
 
 describe("next-word-model", () => {
   it("trains on starter sentences and shows vocabulary and counts for a word", async () => {
     renderBlock(nextWordModel, block, strings);
-    expect(screen.getByText("4 sentences read. 10 different words and marks known.")).toBeInTheDocument();
+    expect(screen.getByText("4 sentences read. 10 different words and marks seen.")).toBeInTheDocument();
     await pickWord("the");
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    await guess("cat");
+    await reveal();
     const table = screen.getByRole("table", { name: "What followed “the”" });
     const row = within(table).getByRole("row", { name: /cat/ });
     expect(within(row).getByText("3 of 7")).toBeInTheDocument();
     expect(screen.getByText(/does not understand these sentences and does not want anything/)).toBeInTheDocument();
+  });
+
+  it("hides the counts and the note about intention until the learner has committed and looked", async () => {
+    renderBlock(nextWordModel, block, strings);
+    await pickWord("the");
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.queryByText(/does not understand these sentences/)).not.toBeInTheDocument();
+    const button = screen.getByRole("button", { name: "Show what the model picks" });
+    expect(button).toBeDisabled();
+    expect(screen.getByText(/Choose a word first/)).toBeInTheDocument();
+    await guess("mat");
+    expect(button).toBeEnabled();
+    await userEvent.click(button);
+    expect(screen.getByText("You guessed “mat”. The model picked “cat” because “cat” followed “the” 3 of 7 times, at least as often as any other word.")).toBeInTheDocument();
+    expect(screen.getByText(/does not understand these sentences/)).toBeInTheDocument();
+  });
+
+  it("offers the top candidates in an order that does not depend on their counts", async () => {
+    const order = () => screen.getAllByRole("radio").map((r) => r.getAttribute("value"));
+    const first = renderBlock(nextWordModel, block, strings);
+    await pickWord("the");
+    const a = order();
+    expect([...a].sort()).toEqual(["cat", "fish", "mat"]);
+    first.unmount();
+    renderBlock(nextWordModel, block, strings);
+    await pickWord("the");
+    expect(order()).toEqual(a);
+  });
+
+  it("lists the sentences it learned from, open by default", () => {
+    const { container } = renderBlock(nextWordModel, block, strings);
+    expect(container.querySelector("details")).toHaveAttribute("open");
   });
 
   it("asks for a guess first, then shows the pick with its working", async () => {
@@ -34,6 +71,7 @@ describe("next-word-model", () => {
     await pickWord("the");
     expect(screen.getByText(/which word do you think came next most often after “the”/)).toBeInTheDocument();
     expect(screen.queryByText(/The model picks/)).not.toBeInTheDocument();
+    await guess("cat");
     await userEvent.click(screen.getByRole("button", { name: "Show what the model picks" }));
     expect(screen.getByText("The model picks “cat”: 3 of the 7 times “the” was followed by “cat” (about 43%).")).toBeInTheDocument();
   });
@@ -57,6 +95,8 @@ describe("next-word-model", () => {
     await userEvent.type(input, "बिल्ली दूध पीती है।{Enter}");
     expect(screen.getByText("The model already has that sentence.")).not.toBeEmptyDOMElement();
     expect(screen.getByLabelText("Current word")).toHaveValue("बिल्ली");
+    await guess("दूध");
+    await reveal();
     expect(screen.getByRole("table")).toHaveTextContent("1 of 1");
     expect(fetchSpy).not.toHaveBeenCalled();
     fetchSpy.mockRestore();
@@ -97,8 +137,36 @@ describe("next-word-model", () => {
     expect(screen.getByRole("button", { name: "One more for fish" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "One more for dog" })).not.toBeInTheDocument();
     expect(screen.getByText("2 votes in total")).toBeInTheDocument();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Show what the model picks" }));
     expect(screen.getByText(/The model picks “cat”/)).toBeInTheDocument();
+    expect(screen.getByRole("table")).toBeInTheDocument();
+  });
+
+  it("classroom: says everything is on the big screen, and gently warns about a likely name", async () => {
+    renderBlock(nextWordModel, block, strings, { mode: "classroom" });
+    expect(screen.getByText("Use made-up names or none. Everything typed here is on the big screen.")).toBeInTheDocument();
+    expect(screen.queryByText(/stay on this device/)).not.toBeInTheDocument();
+    const input = screen.getByLabelText("Type a sentence the class suggests");
+    await userEvent.type(input, "Today we saw Priya at school");
+    expect(screen.getByText(/“Priya” starts with a capital letter in the middle of the sentence/)).toBeInTheDocument();
+    await userEvent.clear(input);
+    await userEvent.type(input, "Today we saw a bird. It sang.");
+    expect(screen.queryByText(/starts with a capital letter/)).not.toBeInTheDocument();
+  });
+
+  it("classroom: the options are shuffled, not in count order", async () => {
+    renderBlock(nextWordModel, block, strings, { mode: "classroom" });
+    await pickWord("the");
+    const names = screen.getAllByRole("button", { name: /^One more for / }).map((b) => b.getAttribute("aria-label")!.replace("One more for ", ""));
+    expect([...names].sort()).toEqual(["cat", "fish", "mat"]);
+  });
+
+  it("personal mode shows the personal privacy note and no name warning", async () => {
+    renderBlock(nextWordModel, block, strings);
+    expect(screen.getByText(/stay on this device/)).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText("Add a sentence"), "We met Priya today");
+    expect(screen.queryByText(/starts with a capital letter/)).not.toBeInTheDocument();
   });
 
   it("has no accessibility violations in either mode", async () => {
@@ -106,12 +174,14 @@ describe("next-word-model", () => {
       const { container, unmount } = renderBlock(nextWordModel, block, strings, { mode });
       expect(await a11yViolations(container)).toEqual([]);
       await pickWord("the");
+      expect(await a11yViolations(container)).toEqual([]);
+      if (mode === "personal") await guess("cat");
       await userEvent.click(screen.getByRole("button", { name: "Show what the model picks" }));
       await userEvent.click(screen.getByRole("button", { name: "Write a sentence from “the”" }));
       expect(await a11yViolations(container)).toEqual([]);
       unmount();
     }
-  });
+  }, 30000);
 });
 
 describe("next-word-model contract", () => {

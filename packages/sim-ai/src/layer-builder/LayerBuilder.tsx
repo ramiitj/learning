@@ -1,14 +1,18 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { Button, ChoiceGroup, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { GlossaryRow } from "../glossary";
 import type { LayerBuilderConfig } from "./contract";
-import { createFit, diagnose, parameterCount, resolveDataset, resultOf, sampleCurve, trainAsync, type Dataset, type Fit, type Point, type TrainResult } from "./model";
+import { MAX_EPOCHS, betterOn, createFit, diagnose, parameterCount, resolveDataset, resultOf, sampleCurve, trainAsync, type BetterOn, type Dataset, type Fit, type Point, type TrainResult } from "./model";
 
 export interface LayerBuilderState {
   /** Hidden layer widths the learner has built. */
   widths?: number[];
   /** What the last training run produced for exactly these widths. */
   result?: TrainResult;
+  /** Personal: what the learner predicted before pressing Train, and the prediction the shown result answers. */
+  guess?: BetterOn;
+  predicted?: BetterOn;
   /** Classroom: show-of-hands counts, whether the tally is on screen, and both trained networks. */
   counts?: Counts;
   tallyShown?: boolean;
@@ -23,8 +27,8 @@ const W = 320;
 const H = 200;
 const PAD = 14;
 
-function useNumber(locale: string) {
-  return (n: number) => new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+function useNumber(locale: string, digits = 2) {
+  return (n: number) => new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n);
 }
 
 function startWidths(c: LayerBuilderConfig): number[] {
@@ -34,7 +38,9 @@ const smallWidths = (c: LayerBuilderConfig): number[] => [Math.min(2, c.maxWidth
 const bigWidths = (c: LayerBuilderConfig): number[] => Array.from({ length: c.maxLayers }, () => c.maxWidth);
 
 /** The data, the fitted curve, and the two kinds of point told apart by shape as well as position. */
-function Chart({ data, curve, ui }: { data: Dataset; curve?: Point[]; ui: Ui }) {
+function Chart({ data, curve, ui, locale, big = false }: { data: Dataset; curve?: Point[]; ui: Ui; locale: string; big?: boolean }) {
+  const f1 = useNumber(locale, 1);
+  const r = big ? 7 : 4;
   const all = [...data.train, ...data.test, ...(curve ?? [])];
   const xs = all.map((p) => p[0]);
   const ys = all.map((p) => p[1]);
@@ -44,27 +50,31 @@ function Chart({ data, curve, ui }: { data: Dataset; curve?: Point[]; ui: Ui }) 
   const sy = (H - 2 * PAD) / (Math.max(...ys) - y0 || 1);
   const px = (x: number) => PAD + (x - x0) * sx;
   const py = (y: number) => H - PAD - (y - y0) * sy;
+  const dataYs = [...data.train, ...data.test].map((p) => p[1]);
+  const base = ui("chartLabel", { train: data.train.length, test: data.test.length, low: f1(Math.min(...dataYs)), high: f1(Math.max(...dataYs)) });
+  const cy = (curve ?? []).map((p) => p[1]);
+  const label = curve && curve.length > 1 ? `${base} ${ui("chartCurve", { start: f1(curve[0]![1]), end: f1(curve[curve.length - 1]![1]), low: f1(Math.min(...cy)), high: f1(Math.max(...cy)) })}` : base;
   return (
-    <figure className="lm-layers-chart">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={ui("chartLabel", { train: data.train.length, test: data.test.length })} focusable="false">
+    <figure className={`lm-layers-chart${big ? " lm-layers-chart--class" : ""}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} focusable="false">
         <rect className="lm-layers-chart__bg" x="0" y="0" width={W} height={H} rx="8" />
         {curve && curve.length > 1 ? <polyline className="lm-layers-chart__curve" points={curve.map(([x, y]) => `${px(x).toFixed(1)},${py(y).toFixed(1)}`).join(" ")} /> : null}
         {data.test.map(([x, y], i) => (
-          <rect key={`t${i}`} className="lm-layers-chart__test" x={px(x) - 4} y={py(y) - 4} width="8" height="8" />
+          <rect key={`t${i}`} className="lm-layers-chart__test" x={px(x) - r} y={py(y) - r} width={2 * r} height={2 * r} />
         ))}
         {data.train.map(([x, y], i) => (
-          <circle key={`r${i}`} className="lm-layers-chart__train" cx={px(x)} cy={py(y)} r="4" />
+          <circle key={`r${i}`} className="lm-layers-chart__train" cx={px(x)} cy={py(y)} r={r} />
         ))}
       </svg>
       <figcaption className="lm-small lm-muted">
-        <span>● {ui("legendTrain")}</span> <span>■ {ui("legendTest")}</span> <span>— {ui("legendCurve")}</span>
+        <span>● {ui("legendTrain")}</span> <span>□ {ui("legendTest")}</span> <span>— {ui("legendCurve")}</span>
       </figcaption>
     </figure>
   );
 }
 
 /** Both errors as numbers and as a pair of bars, with the pattern named in words. */
-function Errors({ result, ui, fmt }: { result: TrainResult; ui: Ui; fmt: (n: number) => string }) {
+function Errors({ result, ui, fmt, predicted }: { result: TrainResult; ui: Ui; fmt: (n: number) => string; predicted?: BetterOn }) {
   const verdict = diagnose(result.trainError, result.testError);
   const bar = (v: number) => `${Math.min(100, Math.max(0, v * 100))}%`;
   return (
@@ -86,6 +96,7 @@ function Errors({ result, ui, fmt }: { result: TrainResult; ui: Ui; fmt: (n: num
         </div>
       </dl>
       <p className="lm-small lm-muted">{ui("errorHelp")}</p>
+      {predicted ? <p>{ui("youPredicted", { guess: ui(`guess_${predicted}`), actual: ui(`guess_${betterOn(result.trainError, result.testError)}`) })}</p> : null}
       <div className="lm-notice" data-verdict={verdict}>
         <strong>{ui(`${verdict}Title`)}</strong> {ui(verdict)}
       </div>
@@ -155,8 +166,9 @@ function Stepper({ index, value, min, max, disabled, ui, onChange }: { index: nu
   );
 }
 
-export function LayerBuilder({ config, state, setState, t, ui, locale }: Props) {
+export function LayerBuilder({ block, config, state, setState, t, ui, locale }: Props) {
   const fmt = useNumber(locale);
+  const trainSteps = new Intl.NumberFormat(locale).format(MAX_EPOCHS);
   const data = useMemo(() => resolveDataset(config.dataset), [config.dataset]);
   const widths = state?.widths ?? startWidths(config);
   const result = state?.result;
@@ -164,17 +176,20 @@ export function LayerBuilder({ config, state, setState, t, ui, locale }: Props) 
   const running = !!trainer.run;
   const listFocus = useFocusAfter<HTMLDivElement>(widths.length);
 
-  const update = (next: number[]) => setState({ widths: next });
+  const update = (next: number[]) => setState((prev) => ({ widths: next, guess: prev?.guess }));
   const live = trainer.run?.curves[0] ?? result?.curve;
 
   const train = () => {
     const fit = createFit(widths, data);
-    trainer.start([fit], ([res]) => setState({ widths, result: res! }));
+    trainer.start([fit], ([res]) => setState((prev) => ({ widths, result: res!, predicted: prev?.guess })));
   };
 
   return (
     <div className="lm-layers">
       <p className="lm-lead">{t.rich(config.promptKey)}</p>
+      {config.analogyKey ? <div className="lm-callout" data-tone="insight">{t.rich(config.analogyKey)}</div> : null}
+      <p className="lm-small lm-muted">{ui("glossNetwork")}</p>
+      <GlossaryRow ids={config.glossary} ui={ui} />
       <fieldset className="lm-layers-build">
         <legend>{ui("yourNetwork")}</legend>
         <div ref={listFocus.ref} tabIndex={-1} className="lm-layers-list">
@@ -192,18 +207,28 @@ export function LayerBuilder({ config, state, setState, t, ui, locale }: Props) 
           {widths.length < config.maxLayers ? (
             <Button variant="secondary" disabled={running} onClick={() => update([...widths, Math.min(widths[widths.length - 1] ?? 3, config.maxWidth)])}>{ui("addLayer")}</Button>
           ) : null}
-          {running ? <Button variant="secondary" onClick={trainer.stop}>{ui("stop")}</Button> : <Button variant="primary" onClick={train}>{ui("train")}</Button>}
+          {running ? <Button variant="secondary" onClick={trainer.stop}>{ui("stop")}</Button> : <Button variant="primary" disabled={!state?.guess} onClick={train}>{ui("train", { n: trainSteps })}</Button>}
         </div>
+        {!running && !state?.guess ? <p className="lm-small lm-muted">{ui("predictFirst")}</p> : null}
         <p className="lm-small lm-muted">{ui("networkSize", { layers: widths.length, params: parameterCount(widths) })}</p>
       </fieldset>
+      {!running ? (
+        <ChoiceGroup
+          legend={ui("predictQuestion")}
+          name={`${block.id}-guess`}
+          choices={(["train", "new", "same"] as const).map((g) => ({ id: g, label: ui(`guess_${g}`) }))}
+          value={state?.guess}
+          onChange={(guess) => setState((prev) => ({ ...prev, guess: guess as BetterOn }))}
+        />
+      ) : null}
       <Progress run={trainer.run} ui={ui} />
       <p className="lm-layers-status" role="status">
         {running ? ui("trainingStarted") : result ? ui("trainDone", { train: fmt(result.trainError), test: fmt(result.testError) }) : trainer.note === "stopped" ? ui("stopped") : ""}
       </p>
-      <Chart data={data} curve={live} ui={ui} />
+      <Chart data={data} curve={live} ui={ui} locale={locale} />
       {result ? (
         <>
-          <Errors result={result} ui={ui} fmt={fmt} />
+          <Errors result={result} ui={ui} fmt={fmt} predicted={state?.predicted} />
           {config.explainKey ? <div className="lm-insight">{t.rich(config.explainKey)}</div> : null}
         </>
       ) : !running ? (
@@ -216,6 +241,7 @@ export function LayerBuilder({ config, state, setState, t, ui, locale }: Props) 
 /** Classroom: the class votes small or big, then the teacher trains both and the results go side by side. */
 export function LayerBuilderClassroom({ config, state, setState, t, ui, locale }: Props) {
   const fmt = useNumber(locale);
+  const trainSteps = new Intl.NumberFormat(locale).format(MAX_EPOCHS);
   const data = useMemo(() => resolveDataset(config.dataset), [config.dataset]);
   const trainer = useTrainer(`${state === undefined}`);
   const running = !!trainer.run;
@@ -236,6 +262,9 @@ export function LayerBuilderClassroom({ config, state, setState, t, ui, locale }
   return (
     <div className="lm-layers">
       <h3 className="lm-prompt">{t.rich(config.promptKey)}</h3>
+      {config.analogyKey ? <div className="lm-callout" data-tone="insight">{t.rich(config.analogyKey)}</div> : null}
+      <p className="lm-small lm-muted">{ui("glossNetwork")}</p>
+      <GlossaryRow ids={config.glossary} ui={ui} />
       {hasVote ? (
         <>
           <p className="lm-lead">{ui("voteIntro")}</p>
@@ -251,18 +280,19 @@ export function LayerBuilderClassroom({ config, state, setState, t, ui, locale }
         </>
       ) : null}
       <div className="lm-row lm-layers-actions">
-        {running ? <Button variant="secondary" onClick={trainer.stop}>{ui("stop")}</Button> : <Button variant="primary" onClick={trainBoth}>{ui("trainBoth")}</Button>}
+        {running ? <Button variant="secondary" onClick={trainer.stop}>{ui("stop")}</Button> : <Button variant="primary" disabled={hasVote && !state?.tallyShown} onClick={trainBoth}>{ui("trainBoth", { n: trainSteps })}</Button>}
       </div>
+      {hasVote && !state?.tallyShown && !running ? <p className="lm-small lm-muted">{ui("voteFirst")}</p> : null}
       <Progress run={trainer.run} ui={ui} />
       <p className="lm-layers-status" role="status">
-        {running ? ui("trainingStarted") : done ? ui("trainDone", { train: fmt(state!.big!.trainError), test: fmt(state!.big!.testError) }) : trainer.note === "stopped" ? ui("stopped") : ""}
+        {running ? ui("trainingStarted") : done ? ui("trainDoneBoth", { small: nets[0]!.name, smallTrain: fmt(state!.small!.trainError), smallTest: fmt(state!.small!.testError), big: nets[1]!.name, bigTrain: fmt(state!.big!.trainError), bigTest: fmt(state!.big!.testError) }) : trainer.note === "stopped" ? ui("stopped") : ""}
       </p>
       <div ref={focus.ref} tabIndex={-1} className="lm-layers-pair">
         {nets.map((n, i) => (
           <section key={n.id} className="lm-card" aria-label={n.name}>
             <h4>{n.name}</h4>
             <p className="lm-small lm-muted">{ui("shape", { layers: n.widths.length, widths: n.widths.join(", ") })}</p>
-            <Chart data={data} curve={trainer.run?.curves[i] ?? n.result?.curve} ui={ui} />
+            <Chart data={data} curve={trainer.run?.curves[i] ?? n.result?.curve} ui={ui} locale={locale} big />
             {n.result ? <Errors result={n.result} ui={ui} fmt={fmt} /> : null}
           </section>
         ))}

@@ -1,5 +1,6 @@
 import type { ComponentContract } from "@lm/schema";
 import { keys } from "@lm/primitives/shared/strings";
+import { glossaryProperty } from "../glossary-schema";
 
 export interface HillsideConfig {
   promptKey: string;
@@ -17,6 +18,10 @@ export interface HillsideConfig {
   goalKey?: string;
   /** Shown once the view has faded into the full curve: connects the hill to a loss curve. */
   fadeKey?: string;
+  /** Shown after the fade, with fadeKey: where this picture breaks down (optional). */
+  breaksKey?: string;
+  /** Glossary term ids to link under the prompt (optional). */
+  glossary?: string[];
 }
 
 export const DEFAULT_MAX_STEPS = 15;
@@ -53,10 +58,12 @@ export const hillsideContract: ComponentContract = {
       rightKey: { type: "string" },
       goalKey: { type: "string" },
       fadeKey: { type: "string" },
+      breaksKey: { type: "string" },
+      glossary: glossaryProperty,
     },
   },
   stringKeys: (c) => {
     const x = c as unknown as HillsideConfig;
-    return keys(x.promptKey, x.leftKey, x.rightKey, x.goalKey, x.fadeKey);
+    return keys(x.promptKey, x.leftKey, x.rightKey, x.goalKey, x.fadeKey, x.breaksKey);
   },
 };

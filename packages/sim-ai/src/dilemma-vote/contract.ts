@@ -1,5 +1,6 @@
 import type { ComponentContract } from "@lm/schema";
 import { keys } from "@lm/primitives/shared/strings";
+import { glossaryProperty } from "../glossary-schema";
 
 export interface DilemmaOption {
   id: string;
@@ -21,6 +22,8 @@ export interface DilemmaVoteConfig {
   options: DilemmaOption[];
   frameworks: DilemmaFramework[];
   reflectionKey?: string;
+  /** Glossary term ids to link under the scenario (optional). */
+  glossary?: string[];
 }
 
 export const dilemmaVoteContract: ComponentContract = {
@@ -65,6 +68,7 @@ export const dilemmaVoteContract: ComponentContract = {
         },
       },
       reflectionKey: { type: "string" },
+      glossary: glossaryProperty,
     },
   },
   stringKeys: (c) => {

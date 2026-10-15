@@ -58,10 +58,12 @@ describe("pixel-grid", () => {
     expect(cell(4, 4)).toHaveAccessibleName("Row 4, column 4, value 3");
     expect(cell(2, 4)).toHaveAccessibleName("Row 2, column 4, value 1");
     await userEvent.click(screen.getByRole("button", { name: "A digit 1" }));
+    await userEvent.click(screen.getByLabelText("Very different"));
     await userEvent.click(screen.getByRole("button", { name: "Right" }));
     expect(cell(4, 4)).toHaveAccessibleName("Row 4, column 4, value 0");
     expect(cell(4, 5)).toHaveAccessibleName("Row 4, column 5, value 9");
-    expect(screen.getByText("Shift: 6 of 64 squares now hold a different number.")).toBeInTheDocument();
+    expect(screen.getByText("Shift: 6 of 64 squares changed.")).toBeInTheDocument();
+    expect(screen.getByText("You predicted: Very different.")).toBeInTheDocument();
     expect(screen.getByText(/To the computer, the numbers are different/)).toBeInTheDocument();
     expect(screen.getByText("Why did the numbers change?")).toBeInTheDocument();
   });
@@ -76,6 +78,7 @@ describe("pixel-grid", () => {
   it("resets and undoes through the engine", async () => {
     renderBlock(pixelGrid, block, strings);
     await userEvent.click(screen.getByRole("button", { name: "A digit 1" }));
+    await userEvent.click(screen.getByLabelText("Mostly the same"));
     await userEvent.click(screen.getByRole("button", { name: "Right" }));
     expect(cell(4, 5)).toHaveAccessibleName("Row 4, column 5, value 9");
     await userEvent.click(screen.getByRole("button", { name: /^Undo/ }));
@@ -96,13 +99,33 @@ describe("pixel-grid", () => {
 
   it("classroom: the class predicts by show of hands before the teacher shifts", async () => {
     renderBlock(pixelGrid, block, strings, { mode: "classroom" });
+    expect(screen.getByText("If we move this drawing one square to the right, will the computer get mostly the same numbers or very different ones?")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "One more for Very different" })).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "One more for Very different" }));
     await userEvent.click(screen.getByRole("button", { name: "One more for Mostly the same" }));
     expect(screen.getByText("2 votes in total")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "A digit 1" }));
+    // The shift buttons stay locked until the class result is on screen.
+    expect(screen.getByRole("button", { name: "Down" })).toBeDisabled();
+    await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
+    expect(screen.getByRole("button", { name: "Down" })).toBeEnabled();
     await userEvent.click(screen.getByRole("button", { name: "Down" }));
-    expect(screen.getByText(/Shift: \d+ of 64/)).toBeInTheDocument();
+    expect(screen.getByText(/Shift: \d+ of 64 squares changed\./)).toBeInTheDocument();
+  });
+
+  it("personal: shifting waits for a prediction, and the 0 to 9 simplification is stated", async () => {
+    renderBlock(pixelGrid, block, strings);
+    await userEvent.click(screen.getByRole("button", { name: "A digit 1" }));
+    expect(screen.getByRole("button", { name: "Right" })).toBeDisabled();
+    expect(screen.getByText(/Real photos use 0 to 255, and three numbers per square for colour/)).toBeInTheDocument();
+    expect(screen.getByText(/Use Undo \(in the toolbar\)/)).toBeInTheDocument();
+    await userEvent.click(screen.getByLabelText("Mostly the same"));
+    expect(screen.getByRole("button", { name: "Right" })).toBeEnabled();
+  });
+
+  it("personal: uses built-in prediction options when the lesson gives no vote keys", async () => {
+    renderBlock(pixelGrid, { ...block, config: { promptKey: "p", presets: config.presets } }, strings);
+    expect(screen.getByLabelText("Very different numbers")).toBeInTheDocument();
   });
 
   it("classroom without vote keys shows no tally", () => {
@@ -118,9 +141,14 @@ describe("pixel-grid", () => {
       await userEvent.click(screen.getByRole("button", { name: "Numbers" }));
       await userEvent.click(screen.getByRole("button", { name: "Blur" }));
       expect(await a11yViolations(container)).toEqual([]);
+      if (mode === "personal") await userEvent.click(screen.getByLabelText("Mostly the same"));
+      else await userEvent.click(screen.getByRole("button", { name: "One more for Very different" }));
+      if (mode === "classroom") await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
+      await userEvent.click(screen.getByRole("button", { name: "Left" }));
+      expect(await a11yViolations(container)).toEqual([]);
       unmount();
     }
-  });
+  }, 30000);
 });
 
 describe("pixel-grid contract", () => {

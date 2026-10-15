@@ -27,3 +27,10 @@
 
 .lm-layers-pair { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
 [data-mode="classroom"] .lm-layers-width { font-size: var(--text-h3); }
+
+/* Projection: the chart fills the card, markers and the curve stay readable from the back of the room. */
+[data-mode="classroom"] .lm-layers-chart { max-inline-size: none; }
+.lm-layers-chart--class { max-inline-size: none; }
+.lm-layers-chart--class .lm-layers-chart__curve { stroke-width: 6; }
+.lm-layers-chart--class .lm-layers-chart__test { stroke-width: 3; }
+.lm-layers-chart--class figcaption { font-size: var(--text-body); }

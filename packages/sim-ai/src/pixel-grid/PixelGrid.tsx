@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { Button, Tally, type BlockProps, type Counts } from "@lm/engine";
+import { Button, ChoiceGroup, Tally, type BlockProps, type Counts } from "@lm/engine";
+import { GlossaryRow } from "../glossary";
 import type { PixelGridConfig, PixelTool } from "./contract";
 import { MAX_SHADE, blankGrid, blur, cellCount, clampSize, countChanged, fitGrid, inkCount, setCell, shift, toggleCell, type Direction, type Grid } from "./model";
 
@@ -13,6 +14,8 @@ export interface PixelGridState {
   /** Classroom: show-of-hands counts for the shift prediction. */
   counts?: Counts;
   tallyShown?: boolean;
+  /** Personal: what the learner predicted before shifting. */
+  guess?: "same" | "different";
 }
 
 type Props = BlockProps<PixelGridConfig & Record<string, unknown>, PixelGridState>;
@@ -27,7 +30,7 @@ export function PixelGridClassroom(props: Props) {
   return <Sim {...props} classroom />;
 }
 
-function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom: boolean }) {
+function Sim({ config, state, setState, t, ui, classroom, block }: Props & { classroom: boolean }) {
   const size = clampSize(config.size);
   const tools = config.tools ?? ALL_TOOLS;
   const canDraw = tools.includes("draw");
@@ -38,6 +41,10 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
   const cells = fitGrid(state?.cells, size);
   const ink = inkCount(cells);
   const vote = !!config.sameKey && !!config.differentKey;
+  const canShift = tools.includes("shift");
+  // Shifting waits for a prediction: the class's revealed count, or the learner's own choice.
+  const shiftLocked = canShift && (classroom ? vote && !state?.tallyShown : !state?.guess);
+  const guessLabel = (g: "same" | "different") => (vote ? t.text(g === "same" ? config.sameKey! : config.differentKey!) : ui(g === "same" ? "predictSame" : "predictDifferent"));
 
   const gridRef = useRef<HTMLDivElement>(null);
   const painting = useRef(false);
@@ -108,6 +115,7 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
   return (
     <div className={`lm-pixel${classroom ? " lm-pixel--class" : ""}`} data-view={view}>
       {prompt}
+      <GlossaryRow ids={config.glossary} ui={ui} />
       {classroom ? <p className="lm-notice" role="note">{ui("classroomPrompt")}</p> : null}
 
       <div className="lm-pixel__bar">
@@ -160,6 +168,7 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
         ))}
       </div>
       <p className="lm-muted lm-small">{ink ? ui("drewCount", { n: ink }) : ui("empty")}</p>
+      <p className="lm-muted lm-small">{ui("simplification")}</p>
       <p className="lm-sr-only" role="status" aria-live="polite">{announce}</p>
 
       {config.presets?.length ? (
@@ -171,7 +180,19 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
       ) : null}
       {paintable ? <Button variant="quiet" disabled={ink === 0} onClick={() => edit(() => blankGrid(size))}>{ui("clear")}</Button> : null}
 
-      {classroom && vote && tools.includes("shift") ? (
+      {!classroom && canShift ? (
+        <ChoiceGroup
+          legend={ui("predictQuestion")}
+          name={`${block.id}-guess`}
+          choices={(["same", "different"] as const).map((g) => ({ id: g, label: guessLabel(g) }))}
+          value={state?.guess}
+          onChange={(guess) => setState((p) => ({ ...p, guess: guess as "same" | "different" }))}
+        />
+      ) : null}
+
+      {classroom && vote && canShift ? (
+        <>
+        <p className="lm-lead">{ui("classQuestion")}</p>
         <Tally
           ui={ui}
           options={[config.sameKey!, config.differentKey!].map((k) => ({ id: k, label: t.rich(k), text: t.text(k) }))}
@@ -180,6 +201,7 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
           revealed={!!state?.tallyShown}
           onReveal={(tallyShown) => setState((p) => ({ ...p, tallyShown }))}
         />
+        </>
       ) : null}
 
       <div className="lm-pixel__ops">
@@ -193,9 +215,10 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
           <div role="group" aria-label={ui("shiftLabel")} className="lm-stack">
             <div className="lm-row">
               {DIRECTIONS.map((d) => (
-                <Button key={d} variant="secondary" disabled={ink === 0} onClick={() => operate("shift", (g) => shift(g, d))}>{ui(DIRECTION_KEY[d])}</Button>
+                <Button key={d} variant="secondary" disabled={ink === 0 || shiftLocked} onClick={() => operate("shift", (g) => shift(g, d))}>{ui(DIRECTION_KEY[d])}</Button>
               ))}
             </div>
+            {shiftLocked ? <p className="lm-muted lm-small">{ui(classroom ? "ready" : "predictFirst")}</p> : null}
             <p className="lm-muted lm-small">{ui("shiftHelp")}</p>
           </div>
         ) : null}
@@ -205,6 +228,7 @@ function Sim({ config, state, setState, t, ui, classroom }: Props & { classroom:
         {state?.last ? (
           <>
             <p>{ui("changed", { op: ui(state.last.op === "blur" ? "opBlur" : "opShift"), n: state.last.changed, total: state.last.total })}</p>
+            {state.last.op === "shift" && !classroom && state.guess ? <p>{ui("youPredictedShift", { guess: guessLabel(state.guess) })}</p> : null}
             {state.last.op === "shift" ? <p className="lm-insight">{ui("shiftInsight")}</p> : null}
           </>
         ) : null}

@@ -1,3 +1,7 @@
+/*
+ * Hindi and Telugu strings were drafted by the engineering team and still need
+ * review by a native speaker before the lesson is published in those locales.
+ */
 export const messages = {
   en: {
     howto: "Choose what you would do, and say why if you like. Then see how different ways of thinking would decide.",
