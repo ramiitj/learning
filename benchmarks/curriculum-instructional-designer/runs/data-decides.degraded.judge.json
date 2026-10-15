@@ -1,0 +1,42 @@
+{
+  "agent": "curriculum-instructional-designer",
+  "scores": [
+    {
+      "criterion": "prerequisites",
+      "score": 2,
+      "evidence": "The prerequisites list has only five entries, all 'assumed-everyday' or 'prior-lesson', and every detourOutline is empty. The module requires detours for 'what a sample is' and 'what a percentage means', and these appear only as in-text links ('Tap 'What is a percentage?'', 'Tap 'What is a sample?'', 'Tap 'Decimals and rounding''). None is listed as a prerequisite and none has an outline or a return point. The core numeracy (x2, x10, one addition) is declared and kept small, and percentage and sample are taught inline, so conceptual prerequisites are not simply assumed. Three named detours without outlines puts this at the bottom of level 2.",
+      "improve": "Add 'percentage', 'sample' and 'decimals and rounding' as prerequisites handled by detours, each with a short outline (pictures, 2-3 screens, a worked example) and an explicit return to the step the learner left."
+    },
+    {
+      "criterion": "experience-before-naming",
+      "score": 1,
+      "evidence": "Hook h1 opens with 'Before you start, here is what you will learn' and then gives the whole explanation before any act. It has the cook analogy mapped to the dataset and River School, 'C was closest' (before p1 is asked), 'This is called bias in data', 'A number written this way is a percentage', 'called its accuracy', 'River School accuracy: 60%' and 'A sample is...'. Its termsIntroduced lists 11 terms. Learners are told bias, accuracy, percentage, sample, dataset and confidence-related ideas before training, testing or splitting anything. The later steps (m1-m4, e2, e4) repeat these as if experienced, but the sequence as delivered explains first and asks the learner to apply after.",
+      "improve": "Remove the front-loaded explanation from h1 and keep only the trust decision about the 92/100 Number Reader. Each term should then appear only in the step where the learner has just experienced it (example in m1, dataset in m2, balanced in m3, bias in e2, and so on)."
+    },
+    {
+      "criterion": "stepwise-working",
+      "score": 3,
+      "evidence": "The calculations are fully worked: '10 x 10 = 100, so multiply both by 10. 6 x 10 = 60'. There is a learner-done step ('48 x 2 = 96'), '86 + 6 = 92', '48 + 30 = 78', and e5 runs as a scaffolded deeper layer with a warm-up (6/10 = 0.6), numbered steps and an explicit rounding rule. However, h1 states 'River School accuracy: 60%. Hill School accuracy: 96%' and the 86/90 working before the learner has seen any of those results, so at that point the numbers must be taken on trust. In the deeper layer, the 0.955... division is left to a calculator.",
+      "improve": "Make sure no result appears before the step that produces it, by removing the numbers pre-stated in h1. In e5, add one sentence showing why 86/90 is a little less than 1 (or a long-division hint), so the decimal is not taken purely on trust."
+    },
+    {
+      "criterion": "checks-aligned",
+      "score": 1,
+      "evidence": "Every post-check item is 'Which word did the lesson use for: <glossary definition>?' (post1-post7), and all are transfer:false. They test recall of glossary wording only. The objective mappings do not match the content: post1 (O1) asks for 'program', post2 and post3 (O2, percentages) ask for 'training' and 'example', post5 and post6 (O4) ask for 'test set' and 'balanced', and post7 (O5, transfer and responsibility) asks for 'pattern'. No post item tests computing a percentage, choosing a fix, the meaning of confidence, or applying the question to a new system. There is no transfer item. The pre-checks are well aligned, but the post-check does not measure the stated objectives.",
+      "improve": "Write post-check items that test each objective in a new situation. For example: O1, a new skewed dataset; O2, convert 18/20 and explain how a total hides a small group; O3, choose between 'double the pile' and 'rebalance', with distractors from misconception 5; O4, a 95%-confident wrong answer; O5, a transfer case plus a responsibility judgement. Mark at least one item transfer:true."
+    },
+    {
+      "criterion": "misconceptions",
+      "score": 2,
+      "evidence": "Steps m4 (misconception 5, bigger pile with the same mix), b1 (7, a confident wrong answer with prediction) and b2 (4, no learning from use, predict then reveal) are designed well. However, h1 gives away the answers before the learner predicts. It says 'C was closest. River School handwriting was not messy... The program did not choose to be unfair. It has no likes or dislikes' (misconceptions 8 and the stereotype distractor) before p1 asks for the guess. It also states 'Hill School numbers filled most of the test. So River School's results barely moved the total' (misconception 2) before h2 and p2 set up the surprise. The cook break point (misconception 1) is likewise stated up front. More than one misconception is therefore corrected by telling before the learner's own prediction can surface it.",
+      "improve": "Remove the reveal from h1 so that p1 and p2 surface misconceptions 8, 2 and the stereotype through the learner's own guess, with m2 and e2 correcting them by evidence."
+    },
+    {
+      "criterion": "cognitive-load",
+      "score": 2,
+      "evidence": "Most steps carry one idea in short, plain sentences, and none of the banned phrases appears. However, h1 is a very long wall of text that introduces about 11 new terms (accuracy, balanced, bias, confidence, dataset, example, pattern, percentage, program, sample, test set), two analogies, percentage arithmetic and decimal rounding in one hook screen. It is far beyond one idea per step and would overwhelm a class 8 learner reading in a second language on a phone (Article 14, walls of text).",
+      "improve": "Cut h1 down to the single trust decision (a few sentences) so every step carries at most one new idea."
+    }
+  ],
+  "overall": "Fail. Mean 1.83; blocking criteria fail (checks-aligned 1, prerequisites 2). The later steps (m1-b2, t1-t3) are well built, but the hook h1 front-loads the entire lesson: it names the terms, reveals the p1 answer and states the results before any act. This breaks experience-before-naming, prediction-driven misconception work and cognitive load. The post-check is entirely glossary-word recall with mismatched objective mappings and no transfer item, and the module's required detours (sample, percentage) have no outlines."
+}
