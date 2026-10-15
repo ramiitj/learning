@@ -10,9 +10,11 @@ import { Agents, Decisions, Events, Feedback, PipelineRuns } from "./collections
 import { Users } from "./collections/Users";
 import { OAuthGrants } from "./collections/OAuth";
 import { AnalyticsDaily } from "./collections/Analytics";
+import { UsabilityFindings } from "./collections/Pilot";
 import { LtiNonces, LtiPlatforms } from "./collections/Lti";
 import { Errors, Incidents } from "./collections/Reliability";
 import { Autonomy, Budget, Constitution } from "./globals";
+import { appOriginOrNull } from "../auth/origin";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,7 +24,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? "",
-  serverURL: process.env.APP_ORIGIN,
+  serverURL: appOriginOrNull() ?? undefined,
   routes: { admin: "/console", api: "/api/cms" },
   admin: {
     user: "users",
@@ -38,12 +40,14 @@ export default buildConfig({
         translations: { Component: "/cms/views/TranslationsView#TranslationsView", path: "/translations" },
         components: { Component: "/cms/views/ComponentsView#ComponentsView", path: "/components" },
         analytics: { Component: "/cms/views/AnalyticsView#AnalyticsView", path: "/analytics" },
+        pilotReport: { Component: "/cms/views/PilotReportView#PilotReportView", path: "/pilot-report" },
         export: { Component: "/cms/views/ExportView#ExportView", path: "/export" },
+        passkeys: { Component: "/cms/views/PasskeysView#PasskeysView", path: "/passkeys" },
       },
     },
     importMap: { baseDir: path.resolve(dirname, "..") },
   },
-  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants, AnalyticsDaily, Errors, Incidents, LtiPlatforms, LtiNonces],
+  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants, AnalyticsDaily, UsabilityFindings, Errors, Incidents, LtiPlatforms, LtiNonces],
   globals: [Constitution, Autonomy, Budget],
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI ?? "" },

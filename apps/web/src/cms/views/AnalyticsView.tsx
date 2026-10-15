@@ -2,6 +2,7 @@ import type { AdminViewServerProps } from "payload";
 import { DefaultTemplate } from "@payloadcms/next/templates";
 import { Gutter } from "@payloadcms/ui";
 import { allBlocks } from "@lm/schema";
+import { learningGains, type Row } from "../pilot";
 
 /** Counts below this are shown as "fewer than 5", so no small group can be singled out. */
 const K = 5;
@@ -33,6 +34,8 @@ export async function AnalyticsView({ initPageResult, params, searchParams }: Ad
   const blocks = doc ? [...allBlocks(doc)].map((b) => b.block) : [];
   const answerBlocks = blocks.filter((b) => rows.some((r) => r.metric === "answer" && r.key.startsWith(`${b.id}:`)));
 
+  const gains = learningGains(doc?.checks as Parameters<typeof learningGains>[0], rows as unknown as Row[]);
+  const hasPre = rows.some((r) => r.metric === "pre");
   const th: React.CSSProperties = { textAlign: "start", paddingInlineEnd: 16 };
   return (
     <DefaultTemplate i18n={req.i18n} locale={locale} params={params} payload={req.payload} permissions={permissions} searchParams={searchParams} user={req.user ?? undefined} visibleEntities={visibleEntities}>
@@ -103,9 +106,21 @@ export async function AnalyticsView({ initPageResult, params, searchParams }: Ad
                 return <li key={c.id}>{en[c.promptKey] ?? c.id}: {pct(right, all)} right first time ({fmt(all)} answers)</li>;
               })}
             </ul>
-            <p>
-              <strong>Learning gain</strong> compares pre-checks with post-checks. Pre-checks are not shown to learners yet (decision pending; DECISIONS 2026-09-24, deferred item 2), so this report cannot compute gains until you decide.
-            </p>
+            <h3>Learning gain</h3>
+            {gains.length === 0 ? <p>This lesson has no checks.</p> : (
+              <ul>
+                {gains.map((g) => (
+                  <li key={g.objective}>
+                    Objective <code>{g.objective}</code>: {g.gain === null ? `cannot be computed yet (${g.why})` : `${g.gain >= 0 ? "+" : ""}${g.gain} percentage points (pre-checks ${pct(g.pre.right, g.pre.all)} right, post-checks ${pct(g.post.right, g.post.all)} right first time)`}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {hasPre ? null : (
+              <p>
+                <strong>Learning gain</strong> compares pre-checks with post-checks. Pre-checks are not shown to learners yet (decision pending; DECISIONS 2026-09-24, deferred item 2), so this report cannot compute gains until you decide.
+              </p>
+            )}
 
             <h2>Help used</h2>
             <ul>

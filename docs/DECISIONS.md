@@ -4,6 +4,24 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — Deploy gaps closed: origin, setup token, passkey management, preview databases, CMS packs
+
+**Engineering** (docs/10 creator account security, docs/12; reversible). Closes gaps 2, 3, 4, 5, 11 and 12 in `docs/runbooks/deploy.md`; gap 6 is documented, not automated.
+
+1. **One origin helper** (`apps/web/src/auth/origin.ts`) used by passkeys (WebAuthn origin and rpID), OAuth and MCP metadata, LTI, preview links, invitation links and Payload's `serverURL`. Order: `APP_ORIGIN`; on a Vercel preview `https://$VERCEL_BRANCH_URL` (else `VERCEL_URL`); `http://localhost:3000` outside production only. Production with neither **fails closed**: passkey ceremonies and OAuth metadata answer 503 with an explanation. `APP_ORIGIN` must be an https origin with no path (an explicit `http://localhost` is allowed for `next start` in CI). *Why:* a localhost default in production silently breaks passkeys and could bind tokens to the wrong audience.
+2. **The setup token is closed for good** once a creator exists, or once `auth.creator-created` is in the append-only event log, whatever `CREATOR_SETUP_TOKEN` says; each attempt is logged `auth.setup-refused`. Terraform: `creator_setup_enabled` (default `true`) so the token and its Vercel variable can be removed.
+3. **"Your passkeys" console view** (`/console/passkeys`, API `/api/auth/passkeys`): list (name, added, last used; never key material), add (fresh confirmation, now also enforced on the final `register` step, which previously only checked it on `register-options`), rename, remove (fresh confirmation; the last passkey can never be removed). Every change and refusal is logged. *Schema change:* `users.passkeys` gains `addedAt` and `lastUsedAt` (creator and reviewer account metadata only, no learner data); its migration is to be generated with the phase's others.
+4. **Per-pull-request Neon branches** by `.github/workflows/preview-db.yml` (curl against the Neon and Vercel APIs). Untested until credentials exist. The shared `preview` branch stays as the fallback.
+5. **`ALERT_WEBHOOK_URL` in Terraform** as an optional sensitive variable.
+6. **No read-only backup role in Terraform.** The `kislerdm/neon` provider (0.18) has `neon_role` but no grants, and roles made through the Neon API belong to `neon_superuser`. The role is made once with SQL (`docs/runbooks/backup-restore.md`); the SQL was tested on local Postgres 16 (pg_dump succeeds; INSERT, DELETE and CREATE are refused).
+7. **`pnpm pack:lessons --from-cms`** reads published lessons, detours, glossary and teacher guides from `DATABASE_URI` in one READ ONLY transaction and builds from them, mirroring the live site's fallbacks; ids from the database are checked before they become file names. The default stays the repository. Test files are now left out of the pack build copy (some import routes the pack removes).
+
+**Awaiting the creator's decision:**
+- *The `users.passkeys` schema addition* (two date fields) before its migration is applied anywhere real.
+- *Account recovery* (docs/10 asks for a tested recovery procedure). With the setup token closed for good, losing every passkey now needs a recovery path. Proposed, not built: a break-glass script run by the creator with database access that issues a single-use, 15-minute passkey-registration link, logged `auth.recovery-issued`. Until then: keep two or more passkeys (the console now shows how many).
+
+---
+
 ## 2026-10-15 — LTI 1.3 launch and xAPI statements: built off by default, awaiting the creator
 
 **Engineering** (docs/03 "Interoperability and distribution", docs/11; reversible by the creator). LTI 1.3 launch and xAPI statements to a school's LRS were built behind `LTI_ENABLED=1` and `XAPI_ENABLED=1`, both unset everywhere, because they change how data can leave the platform (always-ask: `learner-data-change`). Launches read only the issuer, audience, nonce, version, message type, deployment, roles and the `lesson`/`mode`/`locale` custom parameters; identity claims are dropped unread and the event log records only the platform and lesson. xAPI statements use an anonymous actor (site origin plus a random per-tab-session UUID) and go only to the launching school's LRS. LMS registrations (`lti-platforms`) are creator-only and need a fresh passkey confirmation. Nothing is enabled until the creator decides, after legal review of the DPDP Act 2023 implications: see `docs/proposals/lti-xapi.md` for the data flows, the options and the open decisions.

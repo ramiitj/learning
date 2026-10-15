@@ -87,3 +87,48 @@ describe("engine messages", () => {
     for (const loc of ["hi", "te"]) expect(Object.keys(engineMessages[loc]!).sort()).toEqual(en);
   });
 });
+
+describe("LessonView pre-checks (off unless the app turns them on)", () => {
+  beforeEach(() => localStorage.clear());
+  const hi = { ...lesson, strings: { ...lesson.strings, hi: { ...lesson.strings.en }, te: { ...lesson.strings.en } } };
+
+  it("shows nothing by default", () => {
+    render(<LessonView lesson={lesson} locale="en" registry={registry} storageKey="p0" />);
+    expect(screen.queryByText("Before you start")).not.toBeInTheDocument();
+  });
+
+  it("is skipped in classroom mode", () => {
+    render(<LessonView lesson={lesson} locale="en" mode="classroom" preChecks registry={registry} storageKey="p1" />);
+    expect(screen.queryByText("Before you start")).not.toBeInTheDocument();
+  });
+
+  it("gives no right or wrong feedback, emits an anonymous tally, and does not come back", async () => {
+    const events: unknown[] = [];
+    const view = render(<LessonView lesson={lesson} locale="en" preChecks registry={registry} storageKey="p2" onEvent={(e) => events.push(e)} />);
+    expect(screen.getByText(/Just your first guess/)).toBeInTheDocument();
+    await userEvent.click(screen.getAllByLabelText("The dark one")[0]!);
+    expect(screen.queryByText(/Yes, that's it|another think/)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Start" }));
+    expect(events).toContainEqual({ type: "pre-check", itemId: "pre1", correct: false });
+    expect(screen.queryByText("Before you start")).not.toBeInTheDocument();
+    view.unmount();
+    render(<LessonView lesson={lesson} locale="en" preChecks registry={registry} storageKey="p2" />);
+    expect(screen.queryByText("Before you start")).not.toBeInTheDocument();
+  });
+
+  it("skips with one tap and reports nothing", async () => {
+    const events: { type: string }[] = [];
+    render(<LessonView lesson={lesson} locale="en" preChecks registry={registry} storageKey="p3" onEvent={(e) => events.push(e)} />);
+    await userEvent.click(screen.getByRole("button", { name: "Skip" }));
+    expect(events.some((e) => e.type === "pre-check")).toBe(false);
+    expect(screen.queryByText("Before you start")).not.toBeInTheDocument();
+  });
+
+  it.each([["en", "Before you start"], ["hi", "शुरू करने से पहले"], ["te", "మొదలుపెట్టే ముందు"]])("is accessible and localised in %s", async (loc, title) => {
+    const { container } = render(<LessonView lesson={hi} locale={loc} preChecks registry={registry} storageKey={`p4${loc}`} />);
+    expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
+    const axe = (await import("axe-core")).default;
+    const r = await axe.run(container, { rules: { "color-contrast": { enabled: false }, region: { enabled: false } } });
+    expect(r.violations.map((v) => v.id)).toEqual([]);
+  });
+});

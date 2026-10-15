@@ -18,7 +18,11 @@ test("a lesson visit becomes anonymous counts, with no cookies set", async ({ pa
   await b2.getByRole("radio", { name: /banned words/ }).check({ force: true });
   await b2.getByRole("radio", { name: "Not sure" }).check({ force: true });
   await b2.getByRole("button", { name: "Lock in my guess" }).click();
-  await page.goto("/en"); // leaving the lesson flushes its counts
+  // Hiding the page flushes its counts. (A beacon sent while the page unloads is not reliably seen by the test.)
+  await page.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", { configurable: true, get: () => "hidden" });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
   // A page may send more than one batch (each time it is hidden); together they hold the session's counts.
   const metrics = () => sent.filter(Boolean).flatMap((b) => JSON.parse(b).counts.map((c: [string, string, number]) => c[0]));
   await expect.poll(metrics).toEqual(expect.arrayContaining(["start", "reach", "act", "answer"]));

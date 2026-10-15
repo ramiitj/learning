@@ -8,7 +8,7 @@ import { useLtiXapi } from "./ltiXapi";
 
 const registry = new Registry([...primitives, ...aiSimulations]);
 
-export function LessonClient({ analytics, ...props }: { lesson: LessonDoc; locale: string; mode: Mode; glossary: Glossary; detours: Record<string, Detour>; analytics?: boolean }) {
+export function LessonClient({ analytics, ...props }: { lesson: LessonDoc; locale: string; mode: Mode; glossary: Glossary; detours: Record<string, Detour>; analytics?: boolean; preChecks?: boolean }) {
   const count = useAnonymousAnalytics({ lessonId: props.lesson.id, locale: props.locale, mode: props.mode, enabled: !!analytics });
   // Only for lessons launched from a school LMS with xAPI switched on (off by default; docs/proposals/lti-xapi.md).
   const xapi = useLtiXapi({ lessonId: props.lesson.id, locale: props.locale, mode: props.mode });

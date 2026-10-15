@@ -33,6 +33,8 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
   const [glossary, detours, t] = await Promise.all([getGlossary(), getDetours(detourIdsOf(lesson)), getTranslations("lesson")]);
   // Anonymous counts only where there is a server to count them, and never for the creator's draft previews.
   const analytics = !!process.env.DATABASE_URI && !(await draftMode()).isEnabled;
+  // Pre-checks are off until the creator decides (DECISIONS 2026-09-24, deferred item 2).
+  const preChecks = process.env.PRECHECKS_ENABLED === "1" && mode === "personal";
   return (
     <div data-mode={mode} className="lesson-page">
       {mode === "classroom" ? (
@@ -43,10 +45,10 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
       {mode === "classroom" && process.env.DATABASE_URI ? (
         // Live voting needs the server; offline packs and file-only builds keep show-of-hands only.
         <LiveClassroom lessonId={id} locale={locale}>
-          <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} analytics={analytics} />
+          <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} analytics={analytics} preChecks={preChecks} />
         </LiveClassroom>
       ) : (
-        <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} analytics={analytics} />
+        <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} analytics={analytics} preChecks={preChecks} />
       )}
       {mode === "personal" ? (
         <aside className="lesson-page__after">

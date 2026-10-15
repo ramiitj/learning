@@ -85,6 +85,7 @@ export interface Config {
     users: User;
     'oauth-grants': OauthGrant;
     'analytics-daily': AnalyticsDaily;
+    'usability-findings': UsabilityFinding;
     errors: Error;
     incidents: Incident;
     'lti-platforms': LtiPlatform;
@@ -114,6 +115,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     'oauth-grants': OauthGrantsSelect<false> | OauthGrantsSelect<true>;
     'analytics-daily': AnalyticsDailySelect<false> | AnalyticsDailySelect<true>;
+    'usability-findings': UsabilityFindingsSelect<false> | UsabilityFindingsSelect<true>;
     errors: ErrorsSelect<false> | ErrorsSelect<true>;
     incidents: IncidentsSelect<false> | IncidentsSelect<true>;
     'lti-platforms': LtiPlatformsSelect<false> | LtiPlatformsSelect<true>;
@@ -776,6 +778,8 @@ export interface User {
           | boolean
           | null;
         label?: string | null;
+        addedAt?: string | null;
+        lastUsedAt?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -815,6 +819,31 @@ export interface AnalyticsDaily {
   metric: string;
   key: string;
   count: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * What was seen in a usability session or reported by a teacher. Describe what happened, never who: do not record names, schools or anything that identifies a learner.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "usability-findings".
+ */
+export interface UsabilityFinding {
+  id: number;
+  /**
+   * Lesson id. Leave empty for a platform-wide finding.
+   */
+  lesson?: string | null;
+  locale?: ('en' | 'hi' | 'te') | null;
+  mode?: ('personal' | 'classroom') | null;
+  /**
+   * What was observed. No names or other personal data.
+   */
+  observed: string;
+  severity: 'blocker' | 'major' | 'minor';
+  source: 'usability-session' | 'teacher-report' | 'analytics' | 'review';
+  suggestedChange?: string | null;
+  status: 'open' | 'planned' | 'fixed' | 'wont-fix';
   updatedAt: string;
   createdAt: string;
 }
@@ -1032,6 +1061,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'analytics-daily';
         value: number | AnalyticsDaily;
+      } | null)
+    | ({
+        relationTo: 'usability-findings';
+        value: number | UsabilityFinding;
       } | null)
     | ({
         relationTo: 'errors';
@@ -1363,6 +1396,8 @@ export interface UsersSelect<T extends boolean = true> {
         counter?: T;
         transports?: T;
         label?: T;
+        addedAt?: T;
+        lastUsedAt?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1394,6 +1429,22 @@ export interface AnalyticsDailySelect<T extends boolean = true> {
   metric?: T;
   key?: T;
   count?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "usability-findings_select".
+ */
+export interface UsabilityFindingsSelect<T extends boolean = true> {
+  lesson?: T;
+  locale?: T;
+  mode?: T;
+  observed?: T;
+  severity?: T;
+  source?: T;
+  suggestedChange?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

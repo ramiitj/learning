@@ -24,6 +24,8 @@ export interface LessonViewProps {
   storageKey?: string;
   /** Learning moments for anonymous analytics; the engine sends nothing anywhere itself. */
   onEvent?: OnLessonEvent;
+  /** Show the short "Before you start" card with the lesson's pre-checks (personal mode only). Off unless the app turns it on. */
+  preChecks?: boolean;
 }
 
 const depthRank = (d: Depth | undefined) => DEPTHS.indexOf(d ?? "core");
@@ -38,7 +40,7 @@ function useScope(opts: { blocks: readonly Block[]; locale: string; mode: Mode; 
 }
 
 /** Renders a whole lesson: header, controls, the six stages and their blocks, glossary and detours. */
-export function LessonView({ lesson, locale, mode = "personal", registry, glossary = {}, detours = {}, storageKey, onEvent }: LessonViewProps) {
+export function LessonView({ lesson, locale, mode = "personal", registry, glossary = {}, detours = {}, storageKey, onEvent, preChecks = false }: LessonViewProps) {
   const key = storageKey ?? `lm:lesson:${lesson.id}:v${lesson.version}`;
   const [glossaryOpen, setGlossaryOpen] = useState<{ focus?: string } | null>(null);
   const [detourId, setDetourId] = useState<string | null>(null);
@@ -173,6 +175,8 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
         </header>
 
         <Toolbar depth={state.depth} hasGlossary={termsInLesson.length > 0} chapters={chapters} current={current} showChapter={!headingOnScreen} />
+
+        {preChecks && mode === "personal" && (lesson.checks?.pre?.length ?? 0) > 0 ? <PreChecks checks={lesson.checks!.pre} emit={emit} /> : null}
 
         {state.visits > 1 ? <RecallWarmup lesson={lesson} /> : null}
 
@@ -635,6 +639,42 @@ function Ending({ checks, chapterId, n }: { checks: CheckItem[]; chapterId: stri
       {checks.map((c) => (
         <PostCheck key={c.id} item={c} />
       ))}
+    </section>
+  );
+}
+
+interface PreCheckState {
+  done?: boolean;
+}
+
+/**
+ * "Before you start": the pre-checks as a first guess. No right or wrong
+ * feedback and no score; skippable with one tap. Only the anonymous
+ * right/wrong tally leaves the page, and only if the app counts it.
+ */
+function PreChecks({ checks, emit }: { checks: CheckItem[]; emit: { current: OnLessonEvent | undefined } }) {
+  const { store, t, ui } = useEngine();
+  const state = useStoreSelector(store, (s) => s.blocks["__pre"] as PreCheckState | undefined);
+  const [choices, setChoices] = useState<Record<string, string>>({});
+  const titleId = useId();
+  if (state?.done) return null;
+  const finish = (send: boolean) => {
+    if (send) for (const c of checks) if (choices[c.id] !== undefined) emit.current?.({ type: "pre-check", itemId: c.id, correct: choices[c.id] === c.answer });
+    store.setBlock<PreCheckState>("__pre", { done: true });
+  };
+  return (
+    <section className="lm-stage lm-precheck" aria-labelledby={titleId}>
+      <h2 id={titleId} className="lm-chapter__title">{ui("precheck.title")}</h2>
+      <p className="lm-lead">{ui("precheck.intro")}</p>
+      {checks.map((c) => (
+        <div key={c.id} className="lm-block lm-precheck__item">
+          <ChoiceGroup legend={t.rich(c.promptKey)} choices={c.options.map((o) => ({ id: o, label: t.rich(o) }))} value={choices[c.id]} onChange={(choice) => setChoices((p) => ({ ...p, [c.id]: choice }))} />
+        </div>
+      ))}
+      <p>
+        <Button variant="primary" disabled={Object.keys(choices).length === 0} onClick={() => finish(true)}>{ui("precheck.go")}</Button>{" "}
+        <Button variant="quiet" onClick={() => finish(false)}>{ui("precheck.skip")}</Button>
+      </p>
     </section>
   );
 }

@@ -9,6 +9,7 @@ export type LessonEvent =
   | { type: "act"; blockId: string; component: string }
   | { type: "answer"; blockId: string; component: string; choice: string; correct?: boolean }
   | { type: "post-check"; itemId: string; correct: boolean; firstTry: boolean }
+  | { type: "pre-check"; itemId: string; correct: boolean }
   | { type: "depth"; depth: string }
   | { type: "expand"; blockId: string }
   | { type: "detour"; detourId: string }

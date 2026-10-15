@@ -7,6 +7,7 @@ import { cmsClient } from "../client";
 import { actorOf, recentlyAuthenticated } from "../access";
 import { logEvent } from "../events";
 import { signInvite } from "@/auth/session";
+import { appOriginOrNull } from "@/auth/origin";
 import type { PayloadRequest } from "payload";
 
 async function me() {
@@ -33,8 +34,8 @@ export async function startRun(form: FormData) {
 }
 
 export async function kick() {
-  const origin = process.env.APP_ORIGIN ?? "http://localhost:3000";
-  if (process.env.CRON_SECRET) await fetch(`${origin}/api/pipeline/tick`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET}` } }).catch(() => undefined);
+  const origin = appOriginOrNull();
+  if (origin && process.env.CRON_SECRET) await fetch(`${origin}/api/pipeline/tick`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET}` } }).catch(() => undefined);
 }
 
 /** Invite a native-speaker reviewer for some locales; returns a link they open to create their passkey. */
@@ -42,12 +43,14 @@ export async function inviteReviewer(_prev: unknown, form: FormData): Promise<{ 
   const { payload, req, actor } = await me();
   if (actor.kind !== "creator") return { error: "Only the creator can invite reviewers." };
   if (!recentlyAuthenticated(req)) return { error: "Inviting someone is a permission change: confirm with your passkey first (top right)." };
+  const origin = appOriginOrNull();
+  if (!origin) return { error: "The site's public address (APP_ORIGIN) is not set, so an invitation link would not work." };
   const name = String(form.get("name") ?? "").trim();
   const locales = form.getAll("locales").map(String).filter((l) => ["hi", "te"].includes(l));
   if (!name || !locales.length) return { error: "Give a name and at least one language." };
   const user = await payload.create({ collection: "users", data: { name, role: "reviewer", reviewerLocales: locales }, overrideAccess: true, context: { system: true } });
   await logEvent(payload, req, { action: "access.reviewer-invited", target: `users/${user.id}`, data: { locales } });
-  return { link: `${process.env.APP_ORIGIN ?? ""}/console/login?invite=${encodeURIComponent(await signInvite(user.id))}` };
+  return { link: `${origin}/console/login?invite=${encodeURIComponent(await signInvite(user.id))}` };
 }
 
 /**

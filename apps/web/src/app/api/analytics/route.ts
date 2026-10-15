@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing";
 
 export const dynamic = "force-dynamic";
 
-const METRICS = new Set(["start", "return", "reach", "act", "answer", "post", "depth", "expand", "detour", "glossary", "complete"]);
+const METRICS = new Set(["start", "return", "reach", "act", "answer", "post", "pre", "depth", "expand", "detour", "glossary", "complete"]);
 const KEY = /^[\w.:-]{0,120}$/;
 
 /**

@@ -70,6 +70,8 @@ export function useAnonymousAnalytics(opts: { lessonId: string; locale: string; 
           return add("answer", `${e.blockId}:${e.choice}:${e.correct === undefined ? "-" : e.correct ? "1" : "0"}`);
         case "post-check":
           return e.firstTry ? add("post", `${e.itemId}:${e.correct ? "1" : "0"}`) : undefined;
+        case "pre-check":
+          return add("pre", `${e.itemId}:${e.correct ? "1" : "0"}`);
         case "depth":
           return add("depth", e.depth);
         case "expand":

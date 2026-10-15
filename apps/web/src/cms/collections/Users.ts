@@ -38,6 +38,8 @@ export const Users: CollectionConfig = {
         { name: "counter", type: "number", required: true },
         { name: "transports", type: "json" },
         { name: "label", type: "text" },
+        { name: "addedAt", type: "date" },
+        { name: "lastUsedAt", type: "date" },
       ],
     },
   ],
