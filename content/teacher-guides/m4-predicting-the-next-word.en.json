@@ -1,0 +1,89 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "Today we build a tiny machine that guesses the next word by counting, and we see that it picks what is likely, not what is meant.",
+    "We cut sentences into pieces called tokens, list the different ones (the vocabulary), and work out a probability as 'times out of all the times'.",
+    "We see that training means changing a model's settings step by step so that its error, how wrong it is, gets smaller."
+  ],
+  "before": [
+    "Click through the lesson once in classroom mode (10 minutes). Leave the deeper blocks hidden.",
+    "Write on the board: 'token = one piece of a sentence', 'probability = times out of all the times', 'error = how wrong the guesses are'.",
+    "You type the class's sentences. Have spares ready: 'I am going to school.', 'See you tomorrow.'"
+  ],
+  "timing": [
+    {
+      "segment": "Settle; hook (Happy birthday to ...)",
+      "minutes": 3,
+      "teacherDoes": "Read the half sentence aloud and pause. Ask how a phone could finish it.",
+      "studentsDo": "Finish the sentence aloud together."
+    },
+    {
+      "segment": "Predict how a keyboard picks words",
+      "minutes": 3,
+      "teacherDoes": "Read the three choices; count hands for each; enter the counts; reveal.",
+      "studentsDo": "Vote by show of hands."
+    },
+    {
+      "segment": "Class sentences, tokens, vocabulary",
+      "minutes": 7,
+      "teacherDoes": "Take 5 to 8 made-up sentences and type them. Then run the token and 'different tokens' questions as hand votes.",
+      "studentsDo": "Suggest sentences; count tokens on their fingers; vote."
+    },
+    {
+      "segment": "One prediction by hand",
+      "minutes": 5,
+      "teacherDoes": "Work the first two shares on the board (4 x 0.1 = 0.4), class checking each step; then press the button.",
+      "studentsDo": "Check each step aloud; say which word wins and why."
+    },
+    {
+      "segment": "The class model",
+      "minutes": 6,
+      "teacherDoes": "Pick a word, ask for guesses, show the counts; then let it write a sentence.",
+      "studentsDo": "Guess the next word by show of hands; spot repeats and loops."
+    },
+    {
+      "segment": "Two analogies and the probability check",
+      "minutes": 4,
+      "teacherDoes": "Read each analogy and its break point aloud. Run the check as a hand vote.",
+      "studentsDo": "Say where each comparison stops working; vote."
+    },
+    {
+      "segment": "Training and the foggy hill",
+      "minutes": 5,
+      "teacherDoes": "Run the predict vote. Then walk the hill: each step, count hands for left or right, enter the counts, take the step. Hands only, not phones.",
+      "studentsDo": "Vote each step; watch the height (error) fall."
+    },
+    {
+      "segment": "Break it, then wrap up",
+      "minutes": 4,
+      "teacherDoes": "Ask the class which attempt will break the model; open two. Show the chatbot question and the class card.",
+      "studentsDo": "Predict failures; discuss in pairs where they would trust or check a next-word model."
+    }
+  ],
+  "ifShortOfTime": "Skip the puzzle-piece analogy and its check, and open only two break-it attempts. Keep the hand prediction and the class model. The hill can move to the next period.",
+  "misconceptions": [
+    {
+      "studentsSay": "The phone understands what I want to say.",
+      "goodResponse": "It feels that way because the guesses often fit. But we watched our model: it only counted which word came next most often. No meaning, no wish."
+    },
+    {
+      "studentsSay": "Tokens are always whole words.",
+      "goodResponse": "Our small model used whole words. Big models often cut words into pieces, like 'play' plus 'ing'."
+    },
+    {
+      "studentsSay": "If it sounds confident, it must be right.",
+      "goodResponse": "It picks likely words. Likely is not the same as true, so facts still need checking."
+    },
+    {
+      "studentsSay": "Training means the machine starts to understand.",
+      "goodResponse": "Training changes number settings so the error gets smaller, like walking downhill. Nothing understands anything."
+    }
+  ],
+  "discussionPrompts": [
+    "Where would you trust a next-word model, and where would you check its answer?",
+    "If a tool works better in English than in Telugu or Hindi, whose job is it to fix that?"
+  ],
+  "noDeviceAlternative": "Do it on the board. Write 6 class sentences. Draw vertical lines between tokens and count them together. List the different tokens once each: that is the vocabulary. Pick the word 'I' and tally on the board which word followed it; work out each share as times out of all; circle the biggest: that is the prediction. For training, draw a U-shaped hill; a volunteer stands at one side and the class votes 'left' or 'right' for each step while you mark the height. Finish with the pair discussion.",
+  "ifYouDontKnow": "Say: 'Good question. I am not sure. Let us write it down and look it up together.' It is fine not to know how a particular app works; picking a likely next token is the core of how such tools write.",
+  "parentNote": "Today your child built a tiny model that guesses the next word by counting which word came next most often in a few made-up sentences. They learned that such tools pick what is likely, not what is meant or true. Nothing they typed left the device, and no personal information was asked for. You could ask: 'When does your phone's word suggestion get it wrong?'"
+}

@@ -1,0 +1,82 @@
+{
+  "id": "probability",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2",
+          "d.s3"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.a",
+          "d.b",
+          "d.c"
+        ],
+        "answer": "d.a",
+        "feedback": {
+          "d.b": "d.fb",
+          "d.c": "d.fc"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is probability?",
+      "d.text": "A <term-probability>probability</term-probability> says how often something happened, out of all the times it could.",
+      "d.s1": "It rained on 3 of the last 10 school days. Going by those days, the probability of rain is 3 out of 10, or 0.3.",
+      "d.s2": "A probability of 0 means it never happened. A probability of 1 means it happened every time.",
+      "d.s3": "A model’s probabilities come only from what it counted. Different sentences give different probabilities.",
+      "d.q": "In 5 sentences, “am” came after “I” in 4 of them. What is the probability of “am” after “I”, in these sentences?",
+      "d.a": "4 out of 5, or 0.8",
+      "d.b": "1 out of 5, or 0.2",
+      "d.c": "5 out of 4",
+      "d.fb": "1 out of 5 is how often something else came next. How many times did that word come?",
+      "d.fc": "The “out of” number is all the sentences: 5. A probability is never more than 1.",
+      "d.explain": "4 out of 5. 4 ÷ 5 = 0.8."
+    },
+    "hi": {
+      "d.title": "प्रायिकता क्या है?",
+      "d.text": "<term-probability>प्रायिकता</term-probability> बताती है कि कुल जितनी बार कुछ हो सकता था, उनमें से वह कितनी बार हुआ।",
+      "d.s1": "पिछले 10 स्कूल के दिनों में से 3 दिन बारिश हुई। उन दिनों के हिसाब से बारिश की प्रायिकता 10 में से 3, यानी 0.3 है।",
+      "d.s2": "0 प्रायिकता का मतलब है कि वह कभी नहीं हुआ। 1 का मतलब है कि वह हर बार हुआ।",
+      "d.s3": "मॉडल की प्रायिकताएँ सिर्फ़ उसकी गिनती से आती हैं। अलग वाक्य हों, तो प्रायिकताएँ भी अलग होंगी।",
+      "d.q": "5 वाक्यों में से 4 में “मैं” के बाद “स्कूल” आया। इन वाक्यों में “मैं” के बाद “स्कूल” की प्रायिकता क्या है?",
+      "d.a": "5 में से 4, यानी 0.8",
+      "d.b": "5 में से 1, यानी 0.2",
+      "d.c": "4 में से 5",
+      "d.fb": "5 में से 1 वह है जितनी बार कोई और शब्द आया। वह शब्द कितनी बार आया?",
+      "d.fc": "“में से” वाली संख्या सारे वाक्य हैं: 5। प्रायिकता कभी 1 से ज़्यादा नहीं होती।",
+      "d.explain": "5 में से 4। 4 ÷ 5 = 0.8।"
+    },
+    "te": {
+      "d.title": "సంభావ్యత అంటే ఏమిటి?",
+      "d.text": "ఒకటి జరగగలిగిన మొత్తం సార్లలో అది ఎన్నిసార్లు జరిగిందో <term-probability>సంభావ్యత</term-probability> చెబుతుంది.",
+      "d.s1": "గత 10 బడి రోజుల్లో 3 రోజులు వాన పడింది. ఆ రోజుల ప్రకారం వాన సంభావ్యత 10లో 3, అంటే 0.3.",
+      "d.s2": "సంభావ్యత 0 అంటే అది ఎప్పుడూ జరగలేదు. 1 అంటే అది ప్రతిసారీ జరిగింది.",
+      "d.s3": "మోడల్ సంభావ్యతలు అది లెక్కించినదాని నుండే వస్తాయి. వాక్యాలు వేరైతే, సంభావ్యతలూ వేరవుతాయి.",
+      "d.q": "5 వాక్యాల్లో 4 వాక్యాల్లో “నేను” తర్వాత “బడికి” వచ్చింది. ఈ వాక్యాల్లో “నేను” తర్వాత “బడికి” సంభావ్యత ఎంత?",
+      "d.a": "5లో 4, అంటే 0.8",
+      "d.b": "5లో 1, అంటే 0.2",
+      "d.c": "4లో 5",
+      "d.fb": "5లో 1 అంటే వేరే పదం వచ్చిన సార్లు. ఆ పదం ఎన్నిసార్లు వచ్చింది?",
+      "d.fc": "“లో” ముందు ఉండే సంఖ్య మొత్తం వాక్యాలు: 5. సంభావ్యత ఎప్పుడూ 1 కంటే ఎక్కువ కాదు.",
+      "d.explain": "5లో 4. 4 ÷ 5 = 0.8."
+    }
+  }
+}
