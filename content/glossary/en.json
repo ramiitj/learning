@@ -138,5 +138,41 @@
   "chatbot": {
     "term": "chatbot",
     "definition": "a program you type or talk to, which replies with sentences built from patterns in the very large amount of text it was trained on"
+  },
+  "neural-network": {
+    "term": "neural network",
+    "definition": "a program built from layers of neurons joined by weights; training sets the weights from examples"
+  },
+  "neuron": {
+    "term": "neuron",
+    "definition": "in a neural network, a tiny calculator: it multiplies each number it receives by a weight, adds them up, and passes on one number"
+  },
+  "weight": {
+    "term": "weight",
+    "definition": "in a neural network, a number that says how much one input counts; training adjusts the weights to make the error smaller"
+  },
+  "layer": {
+    "term": "layer",
+    "definition": "a group of neurons in a neural network that work side by side and pass their numbers on to the next layer"
+  },
+  "noise": {
+    "term": "noise",
+    "definition": "small random wobbles in data that are not part of the real pattern"
+  },
+  "loss-curve": {
+    "term": "loss curve",
+    "definition": "a chart of the error after each step of training; when training goes well, it slopes down"
+  },
+  "underfitting": {
+    "term": "underfitting",
+    "definition": "when a network is too simple to catch the pattern, so its error is high even on its training examples"
+  },
+  "overfitting": {
+    "term": "overfitting",
+    "definition": "when a network follows its training examples so closely, noise included, that its error on new examples is high"
+  },
+  "generalisation": {
+    "term": "generalisation",
+    "definition": "doing well on new examples a network was never trained on, not only on its training examples"
   }
 }

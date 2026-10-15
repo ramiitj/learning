@@ -1,0 +1,42 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "A neural network is layers of tiny calculators called neurons. Each multiplies its numbers by weights and adds them up.",
+    "Training changes the weights in small steps to make the error smaller.",
+    "Too small a network misses the pattern (underfitting). Too big for its data, it copies the noise and fails on new examples (overfitting)."
+  ],
+  "before": [
+    "Open the lesson in classroom mode on the projector.",
+    "Write on the board: weight = how much a number counts; error = how far answers are from the right ones; noise = random wobbles in data.",
+    "On the network screen expect: small network 0.20 (training) and 0.12 (new points); big network 0.00 and 0.35. Students only need to say which number is bigger.",
+    "Take hill-walk votes by show of hands only; phone votes on that screen add up across steps."
+  ],
+  "timing": [
+    {"segment": "Settle and hook", "minutes": 3, "teacherDoes": "Show the hook. Ask which machine will do better on new points.", "studentsDo": "Give quick answers."},
+    {"segment": "Predict", "minutes": 3, "teacherDoes": "Count hands for each choice, enter rough counts, reveal: usually Machine B.", "studentsDo": "Vote by show of hands."},
+    {"segment": "One neuron", "minutes": 4, "teacherDoes": "Ask which clues to switch on for the top cat score. Read the working aloud: 2 × 1 + 3 × 1 + (minus 4) × 0 = 5.", "studentsDo": "Call on or off for each clue; one student writes the sum."},
+    {"segment": "Hill walk", "minutes": 6, "teacherDoes": "Say: position is the weight, height is the error. Each step, read the slope, count hands, take the step. At the end, fade the fog and point to the loss curve going down.", "studentsDo": "Vote left or right and say why."},
+    {"segment": "Detectives in a relay", "minutes": 3, "teacherDoes": "Read the story, tap through the pairs, then show where it stops working: nobody gives layers jobs.", "studentsDo": "Say what a layer passes on (numbers)."},
+    {"segment": "Small or big network", "minutes": 7, "teacherDoes": "Ask which network will do better on new points. Count hands, show the tally, train both, compare the new-point numbers.", "studentsDo": "Vote, then explain why the big one scores 0 on training points but worse on new ones."},
+    {"segment": "Exam paper and sieve", "minutes": 4, "teacherDoes": "Show both comparisons and read each break point.", "studentsDo": "Match: misprints are the noise; tiny holes keep the dust."},
+    {"segment": "Check", "minutes": 2, "teacherDoes": "Read the 0.01 and 0.40 question; count hands.", "studentsDo": "Vote: underfitting, overfitting or good fit."},
+    {"segment": "Break it", "minutes": 4, "teacherDoes": "For each change ask “Will it break?”, then reveal. Stop on the no-noise case: some memorising is useful.", "studentsDo": "Predict and give a reason."},
+    {"segment": "Transfer and wrap-up", "minutes": 4, "teacherDoes": "Vote on the tomato app. Pose the “100% accurate” question to pairs. Show the class card.", "studentsDo": "Vote, then tell a partner their question."}
+  ],
+  "ifShortOfTime": "Skip the sieve and the tomato vote. Keep the small-or-big vote and the “100% accurate” question.",
+  "misconceptions": [
+    {"studentsSay": "Machine A is perfect, so it is the best.", "goodResponse": "Perfect on its practice points. The goal is new points, and copying the wobbles makes new points worse."},
+    {"studentsSay": "A bigger network is always better.", "goodResponse": "Only up to a point. With 15 points, the big one copied the noise. Bigger networks need more examples."},
+    {"studentsSay": "The programmer tells each layer what to look for.", "goodResponse": "Nobody gives layers jobs. Training sets the weights; people test afterwards to guess what parts respond to."},
+    {"studentsSay": "The network understands the points.", "goodResponse": "It only multiplies and adds numbers. Training adjusts the weights to shrink the error."},
+    {"studentsSay": "Memorising is always bad.", "goodResponse": "With no noise, copying exact points did no harm. Copying noise instead of the pattern is the problem."}
+  ],
+  "discussionPrompts": [
+    "When is memorising useful for you, and when does it trap you?",
+    "An app marks exams and claims 100% accuracy. What would you want to know first?",
+    "Who should test an AI system before people use it?"
+  ],
+  "noDeviceAlternative": "Draw 10 dots in a rough step pattern on the board, a few slightly off. One student draws a wiggly line through every dot (Machine A); another draws a simple step line (Machine B). Add three new dots on the true steps; the class votes which line is closer. For the neuron, rows work out scores from clues and weights on the board. For the hill, draw a bowl and move a chalk mark by hand votes.",
+  "ifYouDontKnow": "Say: “Good question. Let us find out together.” It is fine not to know. The main idea: a network adjusts numbers to fit its examples, and the real test is new examples.",
+  "parentNote": "Today your child built a small neural network and saw that a network can copy its practice examples so closely that it fails on new ones. Ask them how memorising last year's exam paper differs from learning the method, and what they would ask about an app that claims to be 100% accurate."
+}

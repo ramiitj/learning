@@ -1,0 +1,173 @@
+{
+  "id": "weights",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2",
+          "d.s3"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "knob",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.kprompt",
+        "model": {
+          "type": "linear",
+          "bias": 0,
+          "inputs": [
+            {
+              "id": "ayesha",
+              "labelKey": "d.ayesha",
+              "kind": "toggle",
+              "min": 0,
+              "max": 1,
+              "step": 1,
+              "initial": 0,
+              "weight": 3
+            },
+            {
+              "id": "ravi",
+              "labelKey": "d.ravi",
+              "kind": "toggle",
+              "min": 0,
+              "max": 1,
+              "step": 1,
+              "initial": 0,
+              "weight": 1
+            },
+            {
+              "id": "lalitha",
+              "labelKey": "d.lalitha",
+              "kind": "toggle",
+              "min": 0,
+              "max": 1,
+              "step": 1,
+              "initial": 0,
+              "weight": 2
+            }
+          ],
+          "output": {
+            "labelKey": "d.out",
+            "min": 0,
+            "max": 6
+          }
+        },
+        "outputTemplateKey": "d.sentence",
+        "decision": {
+          "threshold": 4,
+          "aboveKey": "d.go",
+          "belowKey": "d.skip"
+        },
+        "goal": {
+          "target": 4,
+          "tolerance": 0,
+          "goalKey": "d.goal",
+          "successKey": "d.success"
+        }
+      }
+    },
+    {
+      "id": "d3",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.o1",
+          "d.o2",
+          "d.o3"
+        ],
+        "answer": "d.o1",
+        "feedback": {
+          "d.o2": "d.f2",
+          "d.o3": "d.f3"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is a weight?",
+      "d.text": "A <term-weight>weight</term-weight> says how much something counts.",
+      "d.s1": "You want to know if a new film is worth watching. Three friends give advice.",
+      "d.s2": "You trust some friends more than others. Put that trust as a number: that number is a weight.",
+      "d.s3": "Where this stops working: in a network, nobody picks weights by trust. Training adjusts them. Weights can also be minus numbers, which pull the total down.",
+      "d.kprompt": "Switch on each friend who says “watch it”. Each yes adds that friend’s weight. If the total reaches 4, you go.",
+      "d.ayesha": "Ayesha says yes (you trust her a lot: weight 3)",
+      "d.ravi": "Ravi says yes (weight 1)",
+      "d.lalitha": "Lalitha says yes (weight 2)",
+      "d.out": "Trust total",
+      "d.sentence": "Trust total: {output}. So {decision}.",
+      "d.go": "you go to the film",
+      "d.skip": "you skip it",
+      "d.goal": "Challenge: make the total exactly 4.",
+      "d.success": "Ayesha and Ravi: 3 × 1 + 1 × 1 + 2 × 0 = 4. (× means times.) Ayesha’s yes counts three times as much as Ravi’s.",
+      "d.q": "Lalitha’s weight is 2 and Ravi’s is 1. Both say yes. Whose yes counts more?",
+      "d.o1": "Lalitha’s",
+      "d.o2": "Ravi’s",
+      "d.o3": "They count the same",
+      "d.f2": "Ravi’s weight is 1 and Lalitha’s is 2. Which number is bigger?",
+      "d.f3": "Both said yes, but their weights differ. A yes counts as much as its weight.",
+      "d.explain": "Lalitha’s yes adds 2 and Ravi’s adds 1. A bigger weight means the advice counts more."
+    },
+    "hi": {
+      "d.title": "वेट क्या होता है?",
+      "d.text": "<term-weight>वेट</term-weight> बताता है कि कोई चीज़ कितनी गिनी जाती है।",
+      "d.s1": "आप जानना चाहते हैं कि कोई नई फ़िल्म देखने लायक है या नहीं। तीन दोस्त सलाह देते हैं।",
+      "d.s2": "आप कुछ दोस्तों पर दूसरों से ज़्यादा भरोसा करते हैं। उस भरोसे को एक संख्या मानिए: वही संख्या वेट है।",
+      "d.s3": "यह तुलना कहाँ रुकती है: नेटवर्क में कोई भरोसे से वेट नहीं चुनता। ट्रेनिंग उन्हें बदलती है। वेट माइनस संख्याएँ भी हो सकते हैं, जो कुल को नीचे खींचते हैं।",
+      "d.kprompt": "हर उस दोस्त को चालू कीजिए जो कहता है “देखो”। हर हाँ उस दोस्त का वेट जोड़ती है। कुल 4 तक पहुँचे, तो आप जाएँगे।",
+      "d.ayesha": "आयशा हाँ कहती है (उस पर आपको बहुत भरोसा है: वेट 3)",
+      "d.ravi": "रवि हाँ कहता है (वेट 1)",
+      "d.lalitha": "ललिता हाँ कहती है (वेट 2)",
+      "d.out": "भरोसे का कुल",
+      "d.sentence": "भरोसे का कुल: {output}। इसलिए {decision}।",
+      "d.go": "आप फ़िल्म देखने जाएँगे",
+      "d.skip": "आप नहीं जाएँगे",
+      "d.goal": "चुनौती: कुल ठीक 4 बनाइए।",
+      "d.success": "आयशा और रवि: 3 × 1 + 1 × 1 + 2 × 0 = 4। (× यानी गुणा।) आयशा की हाँ रवि की हाँ से तीन गुना गिनी जाती है।",
+      "d.q": "ललिता का वेट 2 है और रवि का 1। दोनों हाँ कहते हैं। किसकी हाँ ज़्यादा गिनी जाती है?",
+      "d.o1": "ललिता की",
+      "d.o2": "रवि की",
+      "d.o3": "दोनों बराबर गिनी जाती हैं",
+      "d.f2": "रवि का वेट 1 है और ललिता का 2। कौन-सी संख्या बड़ी है?",
+      "d.f3": "दोनों ने हाँ कहा, पर उनके वेट अलग हैं। हर हाँ उतनी गिनी जाती है जितना उसका वेट है।",
+      "d.explain": "ललिता की हाँ 2 जोड़ती है और रवि की 1। बड़ा वेट यानी सलाह ज़्यादा गिनी जाती है।"
+    },
+    "te": {
+      "d.title": "వెయిట్ అంటే ఏమిటి?",
+      "d.text": "<term-weight>వెయిట్</term-weight> ఏదైనా ఎంత లెక్కలోకి వస్తుందో చెబుతుంది.",
+      "d.s1": "ఒక కొత్త సినిమా చూడదగ్గదో కాదో మీరు తెలుసుకోవాలనుకుంటున్నారు. ముగ్గురు స్నేహితులు సలహా ఇస్తారు.",
+      "d.s2": "మీరు కొందరు స్నేహితులను ఇతరుల కంటే ఎక్కువగా నమ్ముతారు. ఆ నమ్మకాన్ని ఒక సంఖ్యగా పెట్టండి: ఆ సంఖ్యే వెయిట్.",
+      "d.s3": "ఈ పోలిక ఎక్కడ ఆగుతుంది: నెట్‌వర్క్‌లో నమ్మకాన్ని బట్టి ఎవరూ వెయిట్‌లను ఎంచుకోరు. ట్రైనింగ్ వాటిని మారుస్తుంది. వెయిట్‌లు మైనస్ సంఖ్యలు కూడా కావచ్చు, అవి మొత్తాన్ని కిందకు లాగుతాయి.",
+      "d.kprompt": "“చూడు” అని చెప్పిన ప్రతి స్నేహితుడిని ఆన్ చేయండి. ప్రతి అవును ఆ స్నేహితుడి వెయిట్‌ను కలుపుతుంది. మొత్తం 4కు చేరితే, మీరు వెళ్తారు.",
+      "d.ayesha": "ఆయేషా అవును అంటుంది (ఆమెను మీరు బాగా నమ్ముతారు: వెయిట్ 3)",
+      "d.ravi": "రవి అవును అంటాడు (వెయిట్ 1)",
+      "d.lalitha": "లలిత అవును అంటుంది (వెయిట్ 2)",
+      "d.out": "నమ్మకం మొత్తం",
+      "d.sentence": "నమ్మకం మొత్తం: {output}. కాబట్టి {decision}.",
+      "d.go": "మీరు సినిమాకు వెళ్తారు",
+      "d.skip": "మీరు వెళ్లరు",
+      "d.goal": "సవాలు: మొత్తాన్ని సరిగ్గా 4 చేయండి.",
+      "d.success": "ఆయేషా, రవి: 3 × 1 + 1 × 1 + 2 × 0 = 4. (× అంటే గుణకారం.) ఆయేషా అవును రవి అవును కంటే మూడు రెట్లు లెక్కలోకి వస్తుంది.",
+      "d.q": "లలిత వెయిట్ 2, రవి వెయిట్ 1. ఇద్దరూ అవును అంటారు. ఎవరి అవును ఎక్కువగా లెక్కలోకి వస్తుంది?",
+      "d.o1": "లలితది",
+      "d.o2": "రవిది",
+      "d.o3": "రెండూ సమానంగా లెక్కలోకి వస్తాయి",
+      "d.f2": "రవి వెయిట్ 1, లలిత వెయిట్ 2. ఏ సంఖ్య పెద్దది?",
+      "d.f3": "ఇద్దరూ అవును అన్నారు, కానీ వారి వెయిట్‌లు వేరు. ప్రతి అవును దాని వెయిట్ అంత లెక్కలోకి వస్తుంది.",
+      "d.explain": "లలిత అవును 2 కలుపుతుంది, రవి అవును 1. పెద్ద వెయిట్ అంటే ఆ సలహా ఎక్కువగా లెక్కలోకి వస్తుంది."
+    }
+  }
+}
