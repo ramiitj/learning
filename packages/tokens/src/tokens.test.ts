@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { renderCss, school, type ThemeMode } from "./index";
+import { renderCss, school, stages, type ThemeMode } from "./index";
 import { contrast } from "./contrast";
 
 const modes: ThemeMode[] = ["light", "dark", "projection"];
@@ -49,4 +49,19 @@ describe("generated stylesheet", () => {
     const onDisk = readFileSync(new URL("../tokens.css", import.meta.url), "utf8");
     expect(onDisk).toBe(renderCss());
   });
+});
+
+describe("chapter hues", () => {
+  for (const mode of modes) {
+    const c = school[mode];
+    for (const [stage, v] of Object.entries(stages[mode])) {
+      it(`${mode}: ${stage} label text is readable on surface, bg and its soft tint`, () => {
+        const min = mode === "projection" ? 7 : 4.5;
+        expect(contrast(v.ink, c.surface)).toBeGreaterThanOrEqual(min);
+        expect(contrast(v.ink, c.bg)).toBeGreaterThanOrEqual(min);
+        expect(contrast(v.ink, v.soft)).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(c.ink, v.soft)).toBeGreaterThanOrEqual(min);
+      });
+    }
+  }
 });

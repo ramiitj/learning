@@ -67,4 +67,12 @@ export const te: Record<string, string> = {
   "ending.landed": "అవును, అదే.",
   "ending.again": "దీని గురించి మరోసారి ఆలోచించి, మళ్ళీ ప్రయత్నించండి.",
   "ending.done": "ఈ కథ ఇక్కడితో ముగిసింది. మీరు చేసింది ఈ పరికరంలోనే ఉంటుంది.",
+  "chapter.part": "భాగం {n}",
+  "chapter.current": "మీరు ఇక్కడ ఉన్నారు:",
+  "chapter.jump": "అధ్యాయాలు",
+  "act.predict": "ఊహించండి",
+  "act.explore": "ప్రయత్నించండి",
+  "act.build": "తయారు చేయండి",
+  "act.decide": "నిర్ణయించండి",
+  "act.explain": "వివరించండి",
 };

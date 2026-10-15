@@ -30,11 +30,22 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
   const [glossary, detours, t] = await Promise.all([getGlossary(), getDetours(detourIdsOf(lesson)), getTranslations("lesson")]);
   return (
     <div data-mode={mode} className="lesson-page">
-      <nav className="lesson-page__mode" aria-label={t("modeLabel")}>
-        <Link href={`/lessons/${id}`} aria-current={mode === "personal" ? "page" : undefined}>{t("personal")}</Link>
-        <Link href={`/lessons/${id}/classroom`} aria-current={mode === "classroom" ? "page" : undefined}>{t("classroom")}</Link>
-      </nav>
+      {mode === "classroom" ? (
+        <p className="lesson-page__exit">
+          <Link href={`/lessons/${id}`}>{t("leaveClassroom")}</Link>
+        </p>
+      ) : null}
       <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} />
+      {mode === "personal" ? (
+        <aside className="lesson-page__after">
+          <p>
+            {t("teaching")} <Link href={`/lessons/${id}/classroom`}>{t("openClassroom")}</Link>
+          </p>
+          <p>
+            <Link href="/">{t("moreStories")}</Link>
+          </p>
+        </aside>
+      ) : null}
     </div>
   );
 }

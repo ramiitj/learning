@@ -50,7 +50,15 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           <a className="site-skip" href="#main">{t("skip")}</a>
           <header className="site-header">
-            <Link href="/" className="site-brand">{t("name")}</Link>
+            <Link href="/" className="site-brand">
+              <svg aria-hidden="true" viewBox="0 0 32 32" width="28" height="28">
+                <rect width="32" height="32" rx="8" fill="var(--color-accent)" />
+                <circle cx="16" cy="14" r="6.5" fill="none" stroke="var(--color-accent-ink)" strokeWidth="2.6" />
+                <path d="M16 20.5v5" stroke="var(--color-accent-ink)" strokeWidth="2.6" strokeLinecap="round" />
+                <circle cx="16" cy="14" r="2.2" fill="var(--stage-hook)" />
+              </svg>
+              <span>{t("name")}</span>
+            </Link>
             <LanguageSwitcher />
           </header>
           <main id="main" tabIndex={-1}>{children}</main>

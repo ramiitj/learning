@@ -42,6 +42,7 @@ for (const [locale, e] of Object.entries(expected)) {
 
 test("language switcher keeps the page and moves between locales", async ({ page }) => {
   await page.goto("/en");
+  await page.locator(".site-lang summary").click();
   await page.getByRole("navigation", { name: "Language" }).getByRole("link", { name: "తెలుగు" }).click();
   await expect(page).toHaveURL(/\/te$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(expected.te.headline);

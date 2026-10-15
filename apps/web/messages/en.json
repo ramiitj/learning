@@ -14,12 +14,18 @@
     "classroom": "Run it with a class",
     "minutes": "{n, plural, one {# minute} other {# minutes}}",
     "scripts": "Read it in English, हिन्दी or తెలుగు.",
-    "preview": "Component preview"
+    "preview": "Component preview",
+    "inside": "Inside this issue",
+    "availableIn": "Read it in"
   },
   "lesson": {
     "personal": "Personal mode",
     "classroom": "Classroom mode",
-    "modeLabel": "Mode"
+    "modeLabel": "Mode",
+    "teaching": "Teaching this to a class?",
+    "openClassroom": "Open classroom mode",
+    "leaveClassroom": "Leave classroom mode",
+    "moreStories": "Back to the cover"
   },
   "preview": {
     "title": "Component preview",
@@ -32,5 +38,13 @@
     "transparency": "Lessons are made with AI assistance and reviewed and approved by the creator. Translations are reviewed by native speakers before they are published.",
     "privacy": "No personal information is collected. What you make stays on this device.",
     "offline": "Ready to use offline."
+  },
+  "stages": {
+    "hook": "A puzzle",
+    "predict": "Your guess",
+    "manipulate": "Try it",
+    "explain": "What's going on",
+    "break-it": "Break it",
+    "transfer-reflect": "Your turn"
   }
 }

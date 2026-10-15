@@ -1,5 +1,5 @@
 "use client";
-import { Component, memo, useCallback, useEffect, useId, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from "react";
+import { Component, memo, useCallback, type CSSProperties, useEffect, useId, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from "react";
 import { DEPTHS, type Block, type CheckItem, type Depth, type Lesson } from "@lm/schema";
 import { EngineContext, useEngine, useLessonState, useStoreSelector, type EngineValue } from "./context";
 import { createLessonT, createUiT, FALLBACK_LOCALE } from "./i18n";
@@ -7,7 +7,7 @@ import { engineMessages } from "./messages";
 import type { Registry } from "./registry";
 import { LessonStore } from "./store";
 import type { Detour, Glossary, GlossaryEntry, Mode, SetStateOptions, UiT } from "./types";
-import { Button, ChoiceGroup, Dialog, useFocusAfter } from "./ui";
+import { Button, ChoiceGroup, Dialog, Icon, useFocusAfter } from "./ui";
 
 export type LessonDoc = Pick<Lesson, "id" | "version" | "meta" | "stages" | "strings" | "localeStatus"> & Partial<Pick<Lesson, "checks">>;
 
@@ -65,6 +65,28 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
     }
   }, [key, store]);
 
+  // Classroom: a presenter's clicker sends Page Down / Page Up (or arrow keys). Move exactly one
+  // step (a chapter slide or a block) so the projected screen never lands half-way through one.
+  useEffect(() => {
+    if (mode !== "classroom") return;
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (e.altKey || e.ctrlKey || e.metaKey || document.querySelector("dialog[open]")) return;
+      if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
+      const forward = e.key === "PageDown" || e.key === "ArrowRight" || (e.key === " " && !target?.closest("button, a, label"));
+      const back = e.key === "PageUp" || e.key === "ArrowLeft";
+      if (!forward && !back) return;
+      const steps = [...document.querySelectorAll<HTMLElement>(".lm-lesson .lm-chapter, .lm-lesson .lm-block")];
+      const tops = steps.map((el) => el.getBoundingClientRect().top);
+      const next = forward ? steps[tops.findIndex((t) => t > 8)] : steps[tops.map((t) => t < -8).lastIndexOf(true)];
+      if (!next) return;
+      e.preventDefault();
+      next.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [mode]);
+
   const termsInLesson = useMemo(() => {
     const ids = new Set<string>();
     for (const s of lesson.stages) for (const b of s.blocks) b.glossaryTerms?.forEach((g) => ids.add(g));
@@ -81,6 +103,32 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
   }, [lesson]);
 
   const titleId = useId();
+  const chapters = useMemo(
+    () => [
+      ...lesson.stages.map((st, i) => ({ id: `${titleId}-c${i}`, stage: st.stage as string, n: i + 1 })),
+      ...((lesson.checks?.post?.length ?? 0) > 0 ? [{ id: `${titleId}-end`, stage: "ending", n: lesson.stages.length + 1 }] : []),
+    ],
+    [lesson, titleId],
+  );
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const els = chapters.map((c) => document.getElementById(c.id)).filter((e): e is HTMLElement => !!e);
+    // The chapter whose top has most recently crossed the upper third of the screen is "current".
+    const io = new IntersectionObserver(
+      () => {
+        const line = window.innerHeight / 3;
+        let idx = 0;
+        els.forEach((el, i) => {
+          if (el.getBoundingClientRect().top <= line) idx = i;
+        });
+        setCurrent(idx);
+      },
+      { rootMargin: "0px 0px -66% 0px", threshold: [0, 1] },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [chapters]);
   const draftLocale = locale !== FALLBACK_LOCALE && lesson.localeStatus[locale] !== "reviewed";
 
   return (
@@ -93,13 +141,19 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
           {draftLocale ? <p className="lm-notice" role="note">{ui("draft.translation")}</p> : null}
         </header>
 
-        <Toolbar depth={state.depth} hasGlossary={termsInLesson.length > 0} />
+        <Toolbar depth={state.depth} hasGlossary={termsInLesson.length > 0} chapters={chapters} current={current} />
 
         {state.visits > 1 ? <RecallWarmup lesson={lesson} /> : null}
 
         {lesson.stages.map((stage, si) => (
-          <section key={`${stage.stage}-${si}`} className="lm-stage" data-stage={stage.stage} aria-labelledby={`${titleId}-s${si}`}>
-            <h2 id={`${titleId}-s${si}`} className="lm-stage__eyebrow">{ui(`stage.${stage.stage}`)}</h2>
+          <section key={`${stage.stage}-${si}`} id={chapters[si]!.id} className="lm-stage" data-stage={stage.stage} style={stageVars(stage.stage)} aria-labelledby={`${chapters[si]!.id}-h`}>
+            <header className="lm-chapter">
+              <span className="lm-chapter__num" aria-hidden="true">{si + 1}</span>
+              <div>
+                <p className="lm-chapter__part">{ui("chapter.part", { n: si + 1 })}</p>
+                <h2 id={`${chapters[si]!.id}-h`} className="lm-chapter__title" tabIndex={-1}>{ui(`stage.${stage.stage}`)}</h2>
+              </div>
+            </header>
             {stage.blocks.map((block) =>
               depthRank(block.depth) <= depthRank(state.depth) || state.expanded.includes(block.id) ? (
                 <BlockFrame key={block.id} block={block} firstUse={firstOfType.has(block.id)} />
@@ -110,7 +164,7 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
           </section>
         ))}
 
-        <Ending checks={lesson.checks?.post ?? []} />
+        <Ending checks={lesson.checks?.post ?? []} chapterId={`${titleId}-end`} n={lesson.stages.length + 1} />
       </article>
 
       <GlossaryDialog open={glossaryOpen !== null} focus={glossaryOpen?.focus} termIds={termsInLesson} onClose={() => setGlossaryOpen(null)} />
@@ -120,33 +174,94 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
   );
 }
 
+/** Chapter colour variables for a stage (the ending uses the accent colour). */
+function stageVars(stage: string): CSSProperties {
+  return (stage === "ending"
+    ? { "--stage": "var(--color-accent)", "--stage-soft": "var(--color-accent-soft)" }
+    : { "--stage": `var(--stage-${stage})`, "--stage-soft": `var(--stage-${stage}-soft)` }) as CSSProperties;
+}
+
+interface Chapter {
+  id: string;
+  stage: string;
+  n: number;
+}
+
 /**
- * One compact row on every screen: the two things learners reach for (undo,
- * glossary) plus a "Lesson tools" panel for depth and starting again, so on a
- * phone the lesson's opening question is not pushed below the fold.
+ * One slim sticky row: which chapter you are in (tap to jump to another),
+ * undo, words and lesson tools. A thin segmented rail under it shows the
+ * chapters, so learners never lose their place in a long story. The rail marks
+ * where you are, not how much is "done": it is navigation, not a progress bar.
  */
-function Toolbar({ depth, hasGlossary }: { depth: Depth; hasGlossary: boolean }) {
+function Toolbar({ depth, hasGlossary, chapters, current }: { depth: Depth; hasGlossary: boolean; chapters: Chapter[]; current: number }) {
   const { store, ui, announce, openGlossary } = useEngine();
   const [confirm, setConfirm] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [chaptersOpen, setChaptersOpen] = useState(false);
   const confirmId = useId();
   const depthName = useId();
   const panelId = useId();
+  const chaptersId = useId();
   const helpId = useId();
+  const here = chapters[current] ?? chapters[0];
+  const chapterName = (c: Chapter) => (c.stage === "ending" ? ui("ending.title") : ui(`stage.${c.stage}`));
   const onUndo = () => {
     const blockId = store.undo();
     announce(ui(blockId ? "undo.done" : "undo.none"));
     if (blockId) document.getElementById(`block-${blockId}`)?.scrollIntoView({ block: "nearest" });
   };
+  const jump = (c: Chapter) => {
+    setChaptersOpen(false);
+    const h = document.getElementById(`${c.id}-h`);
+    document.getElementById(c.id)?.scrollIntoView({ block: "start" });
+    h?.focus({ preventScroll: true });
+  };
   return (
     <div className="lm-toolbar" role="group" aria-label={ui("lesson.controls")}>
       <div className="lm-toolbar__row">
-        <Button variant="quiet" onClick={onUndo}>{ui("undo")}</Button>
-        {hasGlossary ? <Button variant="quiet" onClick={() => openGlossary()}>{ui("glossary.open")}</Button> : null}
-        <Button variant="quiet" aria-expanded={toolsOpen} aria-controls={panelId} onClick={() => setToolsOpen(!toolsOpen)}>
-          {ui("tools.open")}
-        </Button>
+        {here ? (
+          <button type="button" className="lm-chapter-btn" style={stageVars(here.stage)} aria-expanded={chaptersOpen} aria-controls={chaptersId} onClick={() => { setChaptersOpen(!chaptersOpen); setToolsOpen(false); }}>
+            <span className="lm-chapter-btn__num" aria-hidden="true">{here.n}</span>
+            <span className="lm-chapter-btn__name">
+              <span className="lm-sr-only">{ui("chapter.current")} </span>
+              {chapterName(here)}
+            </span>
+            <Icon name="chevron" size={16} />
+          </button>
+        ) : null}
+        <span className="lm-toolbar__spacer" />
+        <button type="button" className="lm-tool" onClick={onUndo}>
+          <Icon name="undo" />
+          <span className="lm-tool__label">{ui("undo")}</span>
+        </button>
+        {hasGlossary ? (
+          <button type="button" className="lm-tool" onClick={() => openGlossary()}>
+            <Icon name="book" />
+            <span className="lm-tool__label">{ui("glossary.open")}</span>
+          </button>
+        ) : null}
+        <button type="button" className="lm-tool" aria-expanded={toolsOpen} aria-controls={panelId} onClick={() => { setToolsOpen(!toolsOpen); setChaptersOpen(false); }}>
+          <Icon name="sliders" />
+          <span className="lm-tool__label">{ui("tools.open")}</span>
+        </button>
       </div>
+      <ol className="lm-rail" aria-hidden="true">
+        {chapters.map((c, i) => (
+          <li key={c.id} style={stageVars(c.stage)} data-here={i === current || undefined} data-past={i < current || undefined} />
+        ))}
+      </ol>
+      <nav id={chaptersId} className="lm-toolbar__panel lm-chapters" hidden={!chaptersOpen} aria-label={ui("chapter.jump")}>
+        <ol>
+          {chapters.map((c, i) => (
+            <li key={c.id} style={stageVars(c.stage)}>
+              <button type="button" onClick={() => jump(c)} aria-current={i === current ? "step" : undefined}>
+                <span className="lm-chapter-btn__num" aria-hidden="true">{c.n}</span>
+                {chapterName(c)}
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>
       <div id={panelId} className="lm-toolbar__panel" hidden={!toolsOpen}>
         <fieldset className="lm-depth" aria-describedby={helpId}>
           <legend>{ui("depth.label")}</legend>
@@ -160,7 +275,10 @@ function Toolbar({ depth, hasGlossary }: { depth: Depth; hasGlossary: boolean })
             ))}
           </div>
         </fieldset>
-        <Button variant="quiet" onClick={() => setConfirm(true)}>{ui("resetAll")}</Button>
+        <Button variant="quiet" onClick={() => setConfirm(true)}>
+          <Icon name="reset" />
+          {ui("resetAll")}
+        </Button>
       </div>
       <Dialog open={confirm} onClose={() => setConfirm(false)} labelledBy={confirmId} className="lm-dialog--small">
         <p id={confirmId}>{ui("resetAll.confirm")}</p>
@@ -177,6 +295,7 @@ function DeeperTeaser({ blockId }: { blockId: string }) {
   const { store, ui } = useEngine();
   return (
     <div className="lm-deeper">
+      <Icon name="spark" />
       <span>{ui("deeper.teaser")}</span>
       <Button variant="quiet" onClick={() => store.expand(blockId)}>{ui("deeper.open")}</Button>
     </div>
@@ -219,12 +338,20 @@ export const BlockFrame = memo(function BlockFrame({ block, firstUse }: { block:
   const Render = mode === "classroom" ? plugin.classroom : plugin.personal;
   const showHowTo = firstUse && !howToSeen && componentUi("howto") !== "howto" && (plugin.howToApplies?.(config) ?? true);
 
+  const isAct = plugin.act !== "connective";
   return (
-    <div className="lm-block" id={`block-${block.id}`} data-type={block.type} tabIndex={-1} onFocusCapture={() => store.touch(block.id)}>
+    <div className={isAct ? "lm-block lm-act" : "lm-block"} id={`block-${block.id}`} data-type={block.type} data-act={plugin.act} tabIndex={-1} onFocusCapture={() => store.touch(block.id)}>
+      {isAct ? (
+        <p className="lm-act__label">
+          <span className="lm-act__dot" aria-hidden="true" />
+          {ui(`act.${plugin.act}`)}
+        </p>
+      ) : null}
       {showHowTo ? (
         <aside className="lm-howto" aria-label={ui("howto.title")}>
+          <Icon name="bulb" />
           <p>{componentUi("howto")}</p>
-          <Button variant="quiet" onClick={() => store.markHowToSeen(block.type)}>{ui("howto.dismiss")}</Button>
+          <button type="button" className="lm-howto__dismiss" onClick={() => store.markHowToSeen(block.type)}>{ui("howto.dismiss")}</button>
         </aside>
       ) : null}
       <BlockErrorBoundary fallback={missing}>
@@ -252,11 +379,15 @@ function BlockFooter({ block, canReset }: { block: Block; canReset: boolean }) {
       ) : null}
       {offered.map((d) => (
         <Button key={d} variant="quiet" className="lm-detour-offer" onClick={() => openDetour(d)}>
+          <Icon name="signpost" />
           {ui("detour.offer", { title: detourTitle(detours[d]!, locale) })}
         </Button>
       ))}
       {canReset ? (
-        <Button variant="quiet" className="lm-reset" onClick={() => store.resetBlock(block.id)}>{ui("reset")}</Button>
+        <Button variant="quiet" className="lm-reset" onClick={() => store.resetBlock(block.id)}>
+          <Icon name="reset" size={18} />
+          {ui("reset")}
+        </Button>
       ) : null}
     </div>
   );
@@ -405,18 +536,26 @@ function RecallWarmup({ lesson }: { lesson: LessonDoc }) {
  * The designed ending: the lesson's post-checks, framed as a chance to see how
  * far the learner has come, never as a test. Answers stay on the device.
  */
-function Ending({ checks }: { checks: CheckItem[] }) {
+function Ending({ checks, chapterId, n }: { checks: CheckItem[]; chapterId: string; n: number }) {
   const { ui } = useEngine();
-  const titleId = useId();
   if (!checks.length) return null;
   return (
-    <section className="lm-stage lm-ending" aria-labelledby={titleId}>
-      <h2 id={titleId} className="lm-stage__eyebrow">{ui("ending.title")}</h2>
+    <section id={chapterId} className="lm-stage lm-ending" style={stageVars("ending")} aria-labelledby={`${chapterId}-h`}>
+      <header className="lm-chapter">
+        <span className="lm-chapter__num" aria-hidden="true">{n}</span>
+        <div>
+          <p className="lm-chapter__part">{ui("chapter.part", { n })}</p>
+          <h2 id={`${chapterId}-h`} className="lm-chapter__title" tabIndex={-1}>{ui("ending.title")}</h2>
+        </div>
+      </header>
       <p className="lm-lead">{ui("ending.intro", { n: checks.length })}</p>
       {checks.map((c) => (
         <PostCheck key={c.id} item={c} />
       ))}
-      <p className="lm-ending__done">{ui("ending.done")}</p>
+      <p className="lm-ending__done">
+        <Icon name="check" />
+        {ui("ending.done")}
+      </p>
     </section>
   );
 }
@@ -433,7 +572,7 @@ function PostCheck({ item }: { item: CheckItem }) {
   const focus = useFocusAfter<HTMLDivElement>(state.checked);
   const landed = state.checked !== undefined && state.checked === item.answer;
   return (
-    <div className="lm-block lm-postcheck">
+    <div className="lm-block lm-act lm-postcheck">
       <ChoiceGroup
         legend={t.rich(item.promptKey)}
         choices={item.options.map((o) => ({ id: o, label: t.rich(o), tone: state.checked === o ? (landed ? "insight" : "warm") : undefined }))}

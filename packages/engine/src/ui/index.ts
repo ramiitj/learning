@@ -5,3 +5,4 @@ export { Confidence, type ConfidenceLevel } from "./Confidence";
 export { Tally, type Counts } from "./Tally";
 export { HintLadder } from "./HintLadder";
 export { useFocusAfter } from "./useFocusAfter";
+export { Icon, type IconName } from "./Icon";

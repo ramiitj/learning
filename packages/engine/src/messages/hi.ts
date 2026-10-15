@@ -67,4 +67,12 @@ export const hi: Record<string, string> = {
   "ending.landed": "हाँ, यही है।",
   "ending.again": "इस पर एक बार और सोचिए, फिर दोबारा कोशिश कीजिए।",
   "ending.done": "यह कहानी यहीं पूरी होती है। आपने जो बनाया वह इसी डिवाइस पर रहता है।",
+  "chapter.part": "भाग {n}",
+  "chapter.current": "आप यहाँ हैं:",
+  "chapter.jump": "अध्याय",
+  "act.predict": "अनुमान लगाइए",
+  "act.explore": "आज़माइए",
+  "act.build": "बनाइए",
+  "act.decide": "तय कीजिए",
+  "act.explain": "समझाइए",
 };

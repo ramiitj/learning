@@ -67,6 +67,7 @@ test("progress survives a reload and a language switch, returning to the same pl
   await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();
   await expect(page.locator("#block-b3").getByRole("region", { name: "Not yet sorted" }).getByRole("button", { name: /Maths homework/ })).toHaveCount(0);
 
+  await page.locator(".site-lang summary").click();
   await page.getByRole("navigation", { name: "Language" }).getByRole("link", { name: "తెలుగు" }).click();
   await expect(page).toHaveURL(/\/te\/lessons\/every-primitive#resume$/);
   await expect(page.locator("article[data-hydrated]")).toBeVisible();
@@ -93,4 +94,31 @@ test("classroom mode shows the show-of-hands path and no personal data", async (
   await expect(predict.getByText(/It adds up clues into a/)).toBeVisible();
   // Nothing personal on the shared screen: no text inputs pre-filled and no identifiers shown.
   expect(await page.locator("input[type=text], input:not([type]), textarea").evaluateAll((els) => els.filter((e) => (e as HTMLInputElement).value).length)).toBe(0);
+});
+
+test("classroom: a presenter's clicker moves exactly one step at a time", async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await open(page, "/en/lessons/every-primitive/classroom");
+  const atTop = () =>
+    page.evaluate(() => {
+      const el = [...document.querySelectorAll<HTMLElement>(".lm-lesson .lm-chapter, .lm-lesson .lm-block")].find((x) => Math.abs(x.getBoundingClientRect().top) < 12);
+      return el ? el.id || el.querySelector("h2")?.textContent : null;
+    });
+  const expected = ["A puzzle", "block-b1", "Your guess", "block-b2"];
+  for (const want of expected) {
+    await page.keyboard.press("PageDown");
+    await expect.poll(atTop).toBe(want);
+  }
+  await page.keyboard.press("PageUp");
+  await expect.poll(atTop).toBe("Your guess");
+});
+
+test("the chapter menu names where you are and jumps to another chapter", async ({ page }) => {
+  await open(page);
+  await page.locator("#block-b4").scrollIntoViewIfNeeded();
+  const chapterButton = page.getByRole("group", { name: "Lesson controls" }).getByRole("button", { name: /You are in:/ });
+  await expect(chapterButton).toContainText("Try it");
+  await chapterButton.click();
+  await page.getByRole("navigation", { name: "Chapters" }).getByRole("button", { name: /Break it/ }).click();
+  await expect(page.getByRole("heading", { level: 2, name: "Break it" })).toBeFocused();
 });

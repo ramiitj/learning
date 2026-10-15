@@ -16,6 +16,18 @@
   --color-border: #E3DDD1;
   --color-border-strong: #7E7868;
   --color-focus: #1D4ED8;
+  --stage-hook: #9A4A07;
+  --stage-hook-soft: #FDF0DC;
+  --stage-predict: #4338CA;
+  --stage-predict-soft: #E6E4FB;
+  --stage-manipulate: #0B6B63;
+  --stage-manipulate-soft: #DDF3EF;
+  --stage-explain: #6D28D9;
+  --stage-explain-soft: #EDE7FB;
+  --stage-break-it: #A63A0C;
+  --stage-break-it-soft: #FBE6DB;
+  --stage-transfer-reflect: #3F6212;
+  --stage-transfer-reflect-soft: #E9F2D6;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -64,6 +76,18 @@
     --color-border: #3A3846;
     --color-border-strong: #8A869A;
     --color-focus: #93C5FD;
+    --stage-hook: #FBBF24;
+    --stage-hook-soft: #3A2E14;
+    --stage-predict: #A5B4FC;
+    --stage-predict-soft: #2E2B52;
+    --stage-manipulate: #5EEAD4;
+    --stage-manipulate-soft: #133B37;
+    --stage-explain: #C4B5FD;
+    --stage-explain-soft: #33275A;
+    --stage-break-it: #FDBA74;
+    --stage-break-it-soft: #43271A;
+    --stage-transfer-reflect: #BEF264;
+    --stage-transfer-reflect-soft: #2A3714;
   }
 }
 
@@ -84,6 +108,18 @@
   --color-border: #3A3846;
   --color-border-strong: #8A869A;
   --color-focus: #93C5FD;
+  --stage-hook: #FBBF24;
+  --stage-hook-soft: #3A2E14;
+  --stage-predict: #A5B4FC;
+  --stage-predict-soft: #2E2B52;
+  --stage-manipulate: #5EEAD4;
+  --stage-manipulate-soft: #133B37;
+  --stage-explain: #C4B5FD;
+  --stage-explain-soft: #33275A;
+  --stage-break-it: #FDBA74;
+  --stage-break-it-soft: #43271A;
+  --stage-transfer-reflect: #BEF264;
+  --stage-transfer-reflect-soft: #2A3714;
 }
 
 /* Classroom mode projects: high contrast, large type, big targets. Scoped to any
@@ -106,13 +142,25 @@
   --color-border: #8C8C8C;
   --color-border-strong: #000000;
   --color-focus: #B45309;
+  --stage-hook: #7A3A00;
+  --stage-hook-soft: #FFEBCC;
+  --stage-predict: #2A1FA8;
+  --stage-predict-soft: #E4E2FF;
+  --stage-manipulate: #004D46;
+  --stage-manipulate-soft: #D2F2EC;
+  --stage-explain: #4C1D95;
+  --stage-explain-soft: #EBE3FF;
+  --stage-break-it: #7C2D06;
+  --stage-break-it-soft: #FFE3D3;
+  --stage-transfer-reflect: #2D4A0B;
+  --stage-transfer-reflect-soft: #E4F1CC;
   --text-body: max(30px, 1.56vw);
   --text-small: max(28px, 1.46vw);
   --text-h3: max(34px, 1.8vw);
   --text-h2: max(44px, 2.3vw);
   --text-h1: max(60px, 3.2vw);
   --target-min: 64px;
-  --measure: 60rem;
+  --measure: 78rem;
 }
 
 :lang(hi), :lang(te), :lang(mr), :lang(ta), :lang(bn) {

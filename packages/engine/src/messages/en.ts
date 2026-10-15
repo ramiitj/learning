@@ -67,4 +67,12 @@ export const en: Record<string, string> = {
   "ending.landed": "Yes, that's it.",
   "ending.again": "Have another think about this one, then try again.",
   "ending.done": "That's the end of this story. What you made stays on this device.",
+  "chapter.part": "Part {n}",
+  "chapter.current": "You are in:",
+  "chapter.jump": "Chapters",
+  "act.predict": "Make a guess",
+  "act.explore": "Try it",
+  "act.build": "Make it",
+  "act.decide": "Decide",
+  "act.explain": "Explain it",
 };
