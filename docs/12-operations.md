@@ -26,7 +26,9 @@ In v1, learners can share what they built only within their classroom session. N
 
 ## Distribution
 
-Pilot schools first. Lessons are tagged to curriculum objectives so teachers can place them in their plans. LTI and xAPI support follows in Phase 5; DIKSHA alignment is explored after. Offline lesson packs are available for schools with poor connectivity.
+Pilot schools first. Lessons are tagged to curriculum objectives so teachers can place them in their plans. LTI and xAPI support follows in Phase 5; DIKSHA alignment is explored after. Offline lesson packs are available for schools with poor connectivity: a zip of published lessons that runs on one computer with Node.js and serves the school network (`pnpm pack:lessons`, `docs/runbooks/lesson-packs.md`). Giving a pack to a school is a publication and needs the creator's approval.
+
+Deploying, rolling back and the pre-launch checklist are in `docs/runbooks/deploy.md`.
 
 ## Brand and identity
 
@@ -39,3 +41,9 @@ The creator sets a monthly budget covering agent API usage, hosting, real-time s
 ## Backups and export
 
 Daily automated backups, monthly restore test, full export available from the console at any time.
+
+Neon keeps 7 days of point-in-time restore. On top of that, a GitHub Actions workflow takes an encrypted `pg_dump` every day at 02:30 IST (kept 35 days) and a monthly workflow restores the latest one into a scratch database and checks it. "Export everything" (console, `/api/export`) gives the creator every collection, the globals, `platform/`, `docs/` and `schemas/` as JSON and Markdown with a checksum manifest, without credentials. Steps: `docs/runbooks/backup-restore.md`.
+
+## Error monitoring
+
+Errors are recorded in our own database, grouped by fingerprint, with no third-party tracker on children's content. A new fingerprint, or 20 of the same in 10 minutes, opens an "incident" decision for the creator and pings the optional `ALERT_WEBHOOK_URL`. Recent errors are on the console Overview. Steps: `docs/runbooks/incident-response.md`.

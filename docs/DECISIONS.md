@@ -4,6 +4,42 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — LTI 1.3 launch and xAPI statements: built off by default, awaiting the creator
+
+**Engineering** (docs/03 "Interoperability and distribution", docs/11; reversible by the creator). LTI 1.3 launch and xAPI statements to a school's LRS were built behind `LTI_ENABLED=1` and `XAPI_ENABLED=1`, both unset everywhere, because they change how data can leave the platform (always-ask: `learner-data-change`). Launches read only the issuer, audience, nonce, version, message type, deployment, roles and the `lesson`/`mode`/`locale` custom parameters; identity claims are dropped unread and the event log records only the platform and lesson. xAPI statements use an anonymous actor (site origin plus a random per-tab-session UUID) and go only to the launching school's LRS. LMS registrations (`lti-platforms`) are creator-only and need a fresh passkey confirmation. Nothing is enabled until the creator decides, after legal review of the DPDP Act 2023 implications: see `docs/proposals/lti-xapi.md` for the data flows, the options and the open decisions.
+
+## 2026-10-15 — Offline lesson packs and the deployment runbook
+
+**Engineering** (docs/03 "Interoperability and distribution", docs/12 "Distribution"; reversible by the creator). Lesson packs are already in the approved architecture; this records how they are built. Nothing here collects or moves learner data.
+1. **A pack is the Next.js standalone server, not a static export.** `pnpm pack:lessons` (`scripts/ops/build-pack.ts`) builds with `output: "standalone"` only when `LM_PACK=1`; normal and Vercel builds are unchanged. *Alternatives:* a static export (smallest, opens from any web server, but teacher guides and parent pages are dynamic routes and the app uses a proxy, so it would need page changes across the app; and it still needs a server for other devices to join); a Docker image (one command, but schools rarely have Docker and it is heavy on low-end laptops). The standalone server needs only Node.js 22 and serves the same pages as the site.
+2. **Files-only mode.** The pack build and its launcher remove `DATABASE_URI`, so lessons come from `content/`, classroom votes use show of hands and analytics are off. The console, `/api/*`, `/oauth/*` and `/.well-known/*` are removed from the pack build, so they are plain 404s: no route can try to reach a database on a school computer, and the pack has no sign-in surface.
+3. **Built in a copy of the repository.** Tracked and untracked, not-ignored files are copied to a work folder, so the build never collides with a running dev server's `.next` and never includes `.env` files. *Alternative:* a separate `distDir` in place; rejected because pruning lessons and routes would then have to happen in the working tree.
+4. **Only published lessons by default**, read from each lesson's JSON `status`. `--include` adds others for testing and marks the pack `-test` with a warning in its README. The manifest lists lesson ids, versions, locales, locale review status, the git commit and a SHA-256 for every file.
+5. **Flat `node_modules` in the pack** (`node-linker=hoisted` in the build copy only), so the zip contains no symlinks and can unpack on Windows.
+6. **Listens on every network interface (port 8080)** so other devices on the school network can join; `LM_PACK_HOST=127.0.0.1` limits it to one computer.
+7. **The GitHub workflow uploads packs as artifacts only.** Giving a pack to a school is a publication and stays the creator's act.
+8. **Deployment runbook** (`docs/runbooks/deploy.md`) written from the Terraform, Vercel and workflow files, with the gaps found listed rather than worked around.
+
+**Awaiting the creator's decision:**
+- *Terraform state backend* (runbook section 2). Options: an S3 bucket in `ap-south-1` (recommended: secrets stay in India, versioned, small cost, needs an AWS account), HCP Terraform (free, least setup, state outside India), or local state (free, no locking, risk of loss).
+- *Vercel plan:* the every-minute pipeline cron and a school pilot need a paid plan.
+- *Whether and when packs go to pilot schools*, and whether packs should later be built from the CMS rather than the repository.
+- *The Hindi and Telugu notes in the pack README* are drafts awaiting native-speaker review.
+
+---
+
+## 2026-10-15 — Reliability and ownership: export, backups, error monitoring, incident reports
+
+**Engineering** (docs/03 "Reliability and ownership", docs/11 incident response; reversible by the creator):
+1. **Export everything** is a console view (`/console/export`) and `GET /api/export`, creator-only and within five minutes of a passkey confirmation. It streams a zip: every collection as JSON (drafts and published, plus all lesson versions), globals (with constitution and autonomy history), `platform/`, `docs/` and `schemas/`, and a `manifest.json` with counts and a sha256 per file. Left out on purpose: passkeys and other sign-in material, connector grants, classroom sessions and votes (ephemeral learner activity), and media binaries (metadata is included). Analytics are daily totals already. `export.created` goes to the event log.
+2. **A 90-line zip writer instead of a library.** The route holds all of the creator's data, so it carries no extra dependency; `node:zlib` supplies deflate. Archives needing zip64 are refused rather than corrupted.
+3. **Backups.** Daily encrypted `pg_dump` (age) as a GitHub Actions artifact, 35 days; monthly automated restore test. *Trade-off for the creator:* the restore test needs the age private key as a repository secret (`BACKUP_AGE_IDENTITY`), so anyone with admin on the repository could decrypt backups. The alternative is to keep the key offline and run `scripts/ops/restore.sh` by hand each month; delete the secret and the workflow will then fail loudly, which is the intended reminder. Neon's 7-day point-in-time restore remains the first line of defence.
+4. **Self-hosted error monitoring.** `instrumentation.ts` (server) and `instrumentation-client.ts` (browser, at most five reports per page load) post scrubbed text (no emails, numbers or query strings) to our own `errors` collection. A new fingerprint or 20 in 10 minutes opens a Decision of a new kind, `incident`, and pings the optional `ALERT_WEBHOOK_URL`. The new Decisions option and the `errors` and `incidents` collections need a migration.
+5. **Incident reporting.** "Report a problem" at the end of every lesson (personal and classroom) posts to `/api/report`, which limits by an in-memory salted hash of the address (5 per hour) and creates a `feedback` document. The `incidents` collection is creator-only; a serious incident with no "schools informed at" date after 48 hours shows a warning above the list. One-click unpublish is Payload's built-in Unpublish on the lesson, verified by a test (it is logged as `lessons.unpublish` and learners stop seeing the lesson at once).
+6. **Hindi and Telugu strings for the report form (namespace `report`) are best-effort drafts and need native-speaker review.**
+
+---
+
 ## 2026-10-15 — Phases 4–5: orchestrator, console modules, simulations, analytics, modules
 
 **Engineering** (within the approved Phases 2–6 build; reversible by the creator):

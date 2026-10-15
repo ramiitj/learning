@@ -5,6 +5,7 @@ export function NavLinks() {
     ["/console/translations", "Translation review"],
     ["/console/analytics", "Analytics"],
     ["/console/components", "Component registry"],
+    ["/console/export", "Export everything"],
   ];
   return (
     <nav aria-label="Console modules" style={{ display: "grid", gap: 6, padding: "12px 0" }}>

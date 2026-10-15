@@ -1,0 +1,64 @@
+name: Backup
+
+# Daily logical backup (docs/12). Neon also keeps 7 days of point-in-time
+# restore (infra/terraform/main.tf); this adds an encrypted copy outside
+# Neon that survives deleting the Neon project.
+#
+# Secrets (repository settings > Secrets and variables > Actions):
+#   BACKUP_DATABASE_URL    read-only connection string for the production database
+#   BACKUP_AGE_RECIPIENT   age PUBLIC key (age1...). The private key is kept offline by the creator.
+#   ALERT_WEBHOOK_URL      optional: notified if a backup fails
+#
+# The artifact is kept 35 days. The creator can switch to their own storage
+# by replacing the upload step (an S3/R2 bucket, a drive): the file is already
+# encrypted, so any destination is safe. See docs/runbooks/backup-restore.md.
+
+on:
+  schedule:
+    - cron: "0 21 * * *" # 02:30 IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    name: Dump, encrypt, upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pg_dump 17 (matches Neon) and age
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17 age
+          pg_dump --version
+      - name: Back up
+        env:
+          BACKUP_DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+          BACKUP_AGE_RECIPIENT: ${{ secrets.BACKUP_AGE_RECIPIENT }}
+        run: |
+          test -n "$BACKUP_DATABASE_URL" || { echo "::error::BACKUP_DATABASE_URL is not set"; exit 1; }
+          test -n "$BACKUP_AGE_RECIPIENT" || { echo "::error::BACKUP_AGE_RECIPIENT is not set"; exit 1; }
+          mkdir -p out
+          scripts/ops/backup.sh out
+          ls -l out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lm-backup
+          path: out/*.dump.age
+          retention-days: 35
+          if-no-files-found: error
+      - name: Tell the creator if it failed (no data is sent)
+        if: failure()
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+        run: |
+          [ -n "$ALERT_WEBHOOK_URL" ] && curl -fsS -X POST -H 'content-type: application/json' -d '{"text":"The daily backup failed. Open the Backup workflow in GitHub Actions."}' "$ALERT_WEBHOOK_URL" || true

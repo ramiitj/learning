@@ -68,7 +68,7 @@ export const Decisions: CollectionConfig = {
   },
   fields: [
     { name: "title", type: "text", required: true },
-    { name: "kind", type: "select", required: true, options: ["publish", "conflict", "new-component", "new-agent", "permission-change", "amendment", "schema-change", "learner-data", "budget", "other"], index: true },
+    { name: "kind", type: "select", required: true, options: ["publish", "conflict", "new-component", "new-agent", "permission-change", "amendment", "schema-change", "learner-data", "budget", "incident", "other"], index: true },
     { name: "status", type: "select", required: true, defaultValue: "open", options: ["open", "approved", "rejected", "withdrawn"], index: true },
     { name: "summary", type: "textarea", required: true },
     { name: "positions", type: "json", admin: { description: "Both positions, each with the agent and the priority it serves." } },

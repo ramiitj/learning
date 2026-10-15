@@ -1,0 +1,83 @@
+name: Restore test
+
+# Monthly proof that backups can be restored (docs/12). Downloads the latest
+# successful backup artifact, decrypts it, restores it into a throwaway
+# Postgres container, and checks that the platform's data and the append-only
+# event-log trigger are all there. Any failure fails the run (GitHub emails
+# the repository owner); the optional webhook is also pinged.
+#
+# Secrets: BACKUP_AGE_IDENTITY (the age PRIVATE key, whole file contents).
+# Storing the private key in GitHub is a trade-off the creator chooses: it
+# lets this test run unattended, but anyone with admin access to the repo
+# could then read backups. If you prefer, delete this secret and run
+# scripts/ops/restore.sh by hand each month (docs/runbooks/backup-restore.md).
+
+on:
+  schedule:
+    - cron: "0 22 1 * *" # 03:30 IST on the 1st
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  restore:
+    name: Restore the latest backup and check it
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: restore
+          POSTGRES_PASSWORD: restore
+          POSTGRES_DB: restore
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U restore" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TARGET_URL: postgres://restore:restore@localhost:5432/restore
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install postgres client 17 and age
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17 age
+      - name: Download the latest successful backup
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id="$(gh run list --workflow backup.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId')"
+          test -n "$id" || { echo "::error::No successful backup run found. Backups may have stopped."; exit 1; }
+          gh run download "$id" --name lm-backup --dir backup
+          ls -l backup
+      - name: Restore
+        env:
+          BACKUP_AGE_IDENTITY: ${{ secrets.BACKUP_AGE_IDENTITY }}
+        run: |
+          test -n "$BACKUP_AGE_IDENTITY" || { echo "::error::BACKUP_AGE_IDENTITY is not set"; exit 1; }
+          umask 077
+          printf '%s\n' "$BACKUP_AGE_IDENTITY" > "$RUNNER_TEMP/identity.txt"
+          AGE_IDENTITY_FILE="$RUNNER_TEMP/identity.txt" scripts/ops/restore.sh "$(ls backup/*.dump.age | head -1)" "$TARGET_URL"
+          rm -f "$RUNNER_TEMP/identity.txt"
+      - run: pnpm install --frozen-lockfile
+      - name: Migration status against the restored database
+        env:
+          DATABASE_URI: ${{ env.TARGET_URL }}
+          PAYLOAD_SECRET: restore-test-secret-restore-test-secret
+          NODE_ENV: production
+        run: pnpm --filter @lm/web exec payload migrate:status
+      - name: Tell the creator if it failed (no data is sent)
+        if: failure()
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+        run: |
+          [ -n "$ALERT_WEBHOOK_URL" ] && curl -fsS -X POST -H 'content-type: application/json' -d '{"text":"The monthly restore test failed. Open the Restore test workflow in GitHub Actions."}' "$ALERT_WEBHOOK_URL" || true

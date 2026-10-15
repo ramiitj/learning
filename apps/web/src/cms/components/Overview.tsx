@@ -2,11 +2,12 @@ import type { Payload } from "payload";
 
 /** The console's front page: what needs the creator now, what is in progress, and what it costs. */
 export async function Overview({ payload }: { payload: Payload }) {
-  const [decisions, runs, events, budget] = await Promise.all([
+  const [decisions, runs, events, budget, errors] = await Promise.all([
     payload.find({ collection: "decisions", where: { status: { equals: "open" } }, limit: 10, sort: "-createdAt", overrideAccess: true, depth: 0 }),
     payload.find({ collection: "pipeline-runs", where: { status: { not_in: ["done"] } }, limit: 10, sort: "-updatedAt", overrideAccess: true, depth: 0 }),
     payload.find({ collection: "events", limit: 8, sort: "-createdAt", overrideAccess: true, depth: 0 }),
     payload.findGlobal({ slug: "budget", overrideAccess: true }),
+    payload.find({ collection: "errors", limit: 5, sort: "-lastSeen", overrideAccess: true, depth: 0 }).catch(() => ({ docs: [] as { id: number | string; message: string; count?: number | null; route?: string | null }[] })),
   ]);
   const monthStart = new Date();
   monthStart.setDate(1);
@@ -38,6 +39,13 @@ export async function Overview({ payload }: { payload: Payload }) {
         <h2 style={{ marginTop: 0 }}>Latest activity</h2>
         <ul>{events.docs.map((x) => <li key={x.id}><small>{x.actorId}</small> {x.action} {x.target}</li>)}</ul>
         <a href="/console/collections/events">Full audit log</a>
+      </div>
+      <div style={card}>
+        <h2 style={{ marginTop: 0 }}>Recent errors</h2>
+        {errors.docs.length === 0 ? <p>No errors recorded.</p> : (
+          <ul>{errors.docs.map((e) => <li key={e.id}><a href={`/console/collections/errors/${e.id}`}>{e.message.slice(0, 70)}</a> <small>x{e.count ?? 1}{e.route ? `, ${e.route}` : ""}</small></li>)}</ul>
+        )}
+        <a href="/console/collections/errors">All errors</a>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import * as migration_20261015_102216_initial from './20261015_102216_initial';
 import * as migration_20261015_103821_console_modules from './20261015_103821_console_modules';
 import * as migration_20261015_110132_analytics from './20261015_110132_analytics';
+import * as migration_20261015_112809_phase6_ops_lti from './20261015_112809_phase6_ops_lti';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20261015_110132_analytics.up,
     down: migration_20261015_110132_analytics.down,
-    name: '20261015_110132_analytics'
+    name: '20261015_110132_analytics',
+  },
+  {
+    up: migration_20261015_112809_phase6_ops_lti.up,
+    down: migration_20261015_112809_phase6_ops_lti.down,
+    name: '20261015_112809_phase6_ops_lti'
   },
 ];

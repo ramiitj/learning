@@ -106,5 +106,24 @@
     "tryItText": "The lesson is free and needs no account.",
     "open": "Open the lesson",
     "privacy": "This page collects nothing about you or your child."
+  },
+  "report": {
+    "title": "Something wrong with this lesson?",
+    "open": "Report a problem",
+    "noPersonal": "Do not include your name or contact details.",
+    "role": "I am a",
+    "roleLearner": "learner",
+    "roleTeacher": "teacher",
+    "roleOther": "someone else",
+    "message": "What went wrong?",
+    "send": "Send report",
+    "sending": "Sending",
+    "thanks": "Thank you. We read every report within a day.",
+    "error": "The report could not be sent. Check your connection and try again."
+  },
+  "lti": {
+    "title": "This lesson could not open",
+    "body": "The link from your school's learning system did not work. Ask your teacher to open the lesson again.",
+    "disabled": "Lessons cannot be opened from a school learning system yet."
   }
 }

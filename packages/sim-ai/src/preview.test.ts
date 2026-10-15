@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { validateBlocks } from "@lm/schema/validate";
 import { aiContracts } from "./contracts";
 
-const preview = JSON.parse(readFileSync(resolve(__dirname, "../../../content/previews/sim-ai.json"), "utf8")) as { blocks: { id: string; type: string; componentVersion: string; config: Record<string, unknown> }[]; strings: Record<string, Record<string, string>> };
+const preview = JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../content/previews/sim-ai.json"), "utf8")) as { blocks: { id: string; type: string; componentVersion: string; config: Record<string, unknown> }[]; strings: Record<string, Record<string, string>> };
 
 describe("content/previews/sim-ai.json", () => {
   it("passes every simulation's contract, with all strings present in en, hi and te", () => {

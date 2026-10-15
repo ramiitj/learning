@@ -10,6 +10,8 @@ import { Agents, Decisions, Events, Feedback, PipelineRuns } from "./collections
 import { Users } from "./collections/Users";
 import { OAuthGrants } from "./collections/OAuth";
 import { AnalyticsDaily } from "./collections/Analytics";
+import { LtiNonces, LtiPlatforms } from "./collections/Lti";
+import { Errors, Incidents } from "./collections/Reliability";
 import { Autonomy, Budget, Constitution } from "./globals";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -36,11 +38,12 @@ export default buildConfig({
         translations: { Component: "/cms/views/TranslationsView#TranslationsView", path: "/translations" },
         components: { Component: "/cms/views/ComponentsView#ComponentsView", path: "/components" },
         analytics: { Component: "/cms/views/AnalyticsView#AnalyticsView", path: "/analytics" },
+        export: { Component: "/cms/views/ExportView#ExportView", path: "/export" },
       },
     },
     importMap: { baseDir: path.resolve(dirname, "..") },
   },
-  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants, AnalyticsDaily],
+  collections: [Lessons, Detours, Glossary, Analogies, Concepts, TeacherGuides, Media, Audiences, Decisions, PipelineRuns, Events, Feedback, Agents, ClassroomSessions, ClassroomVotes, Users, OAuthGrants, AnalyticsDaily, Errors, Incidents, LtiPlatforms, LtiNonces],
   globals: [Constitution, Autonomy, Budget],
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI ?? "" },

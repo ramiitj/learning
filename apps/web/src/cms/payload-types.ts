@@ -85,6 +85,10 @@ export interface Config {
     users: User;
     'oauth-grants': OauthGrant;
     'analytics-daily': AnalyticsDaily;
+    errors: Error;
+    incidents: Incident;
+    'lti-platforms': LtiPlatform;
+    'lti-nonces': LtiNonce;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -110,6 +114,10 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     'oauth-grants': OauthGrantsSelect<false> | OauthGrantsSelect<true>;
     'analytics-daily': AnalyticsDailySelect<false> | AnalyticsDailySelect<true>;
+    errors: ErrorsSelect<false> | ErrorsSelect<true>;
+    incidents: IncidentsSelect<false> | IncidentsSelect<true>;
+    'lti-platforms': LtiPlatformsSelect<false> | LtiPlatformsSelect<true>;
+    'lti-nonces': LtiNoncesSelect<false> | LtiNoncesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -474,6 +482,7 @@ export interface Decision {
     | 'schema-change'
     | 'learner-data'
     | 'budget'
+    | 'incident'
     | 'other';
   status: 'open' | 'approved' | 'rejected' | 'withdrawn';
   summary: string;
@@ -810,6 +819,125 @@ export interface AnalyticsDaily {
   createdAt: string;
 }
 /**
+ * Errors from the site, grouped by fingerprint. No learner data is recorded.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "errors".
+ */
+export interface Error {
+  id: number;
+  fingerprint: string;
+  source: 'server' | 'client';
+  message: string;
+  stack?: string | null;
+  route?: string | null;
+  /**
+   * VERCEL_GIT_COMMIT_SHA of the deployment that saw it last.
+   */
+  release?: string | null;
+  count: number;
+  firstSeen: string;
+  lastSeen: string;
+  /**
+   * Start of the current 10-minute spike window.
+   */
+  windowStart?: string | null;
+  windowCount?: number | null;
+  spikeAlertedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Every incident gets a short review. Serious ones (safety, privacy, significant factual error): inform affected pilot schools within 48 hours.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "incidents".
+ */
+export interface Incident {
+  id: number;
+  title: string;
+  severity: 'minor' | 'serious';
+  status: 'open' | 'mitigated' | 'reviewed' | 'closed';
+  /**
+   * Lessons affected (lesson ids).
+   */
+  lessonIds?: string[] | null;
+  feedback?: (number | Feedback)[] | null;
+  whatHappened: string;
+  cause?: string | null;
+  preventionStep?: string | null;
+  /**
+   * When affected pilot schools were told. Required within 48 hours of the incident for serious ones.
+   */
+  schoolsInformedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * LMS platforms allowed to launch lessons (LTI 1.3). Off unless LTI_ENABLED=1. Read docs/proposals/lti-xapi.md before enabling one.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lti-platforms".
+ */
+export interface LtiPlatform {
+  id: number;
+  /**
+   * For you: which school or LMS this is.
+   */
+  name: string;
+  enabled?: boolean | null;
+  /**
+   * The platform's issuer (iss), exactly as it sends it.
+   */
+  issuer: string;
+  /**
+   * The client id the platform issued for this tool.
+   */
+  clientId: string;
+  /**
+   * Deployment ids allowed to launch. Launches from any other deployment are refused.
+   */
+  deploymentIds: string[];
+  /**
+   * OIDC authentication request URL.
+   */
+  authLoginUrl: string;
+  /**
+   * OAuth2 token URL (unused for now: no LTI services are called).
+   */
+  authTokenUrl?: string | null;
+  /**
+   * Where the platform publishes its signing keys.
+   */
+  jwksUrl: string;
+  /**
+   * Origins allowed to show lessons in a frame. Empty: the issuer's and login URL's origins.
+   */
+  frameOrigins?: string[] | null;
+  /**
+   * The LRS xAPI endpoint, e.g. https://lrs.school.in/xapi/
+   */
+  lrsEndpoint?: string | null;
+  lrsKey?: string | null;
+  /**
+   * Write-only. Leave empty to keep the stored secret.
+   */
+  lrsSecret?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lti-nonces".
+ */
+export interface LtiNonce {
+  id: number;
+  nonceHash: string;
+  expiresAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -904,6 +1032,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'analytics-daily';
         value: number | AnalyticsDaily;
+      } | null)
+    | ({
+        relationTo: 'errors';
+        value: number | Error;
+      } | null)
+    | ({
+        relationTo: 'incidents';
+        value: number | Incident;
+      } | null)
+    | ({
+        relationTo: 'lti-platforms';
+        value: number | LtiPlatform;
+      } | null)
+    | ({
+        relationTo: 'lti-nonces';
+        value: number | LtiNonce;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1250,6 +1394,73 @@ export interface AnalyticsDailySelect<T extends boolean = true> {
   metric?: T;
   key?: T;
   count?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "errors_select".
+ */
+export interface ErrorsSelect<T extends boolean = true> {
+  fingerprint?: T;
+  source?: T;
+  message?: T;
+  stack?: T;
+  route?: T;
+  release?: T;
+  count?: T;
+  firstSeen?: T;
+  lastSeen?: T;
+  windowStart?: T;
+  windowCount?: T;
+  spikeAlertedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "incidents_select".
+ */
+export interface IncidentsSelect<T extends boolean = true> {
+  title?: T;
+  severity?: T;
+  status?: T;
+  lessonIds?: T;
+  feedback?: T;
+  whatHappened?: T;
+  cause?: T;
+  preventionStep?: T;
+  schoolsInformedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lti-platforms_select".
+ */
+export interface LtiPlatformsSelect<T extends boolean = true> {
+  name?: T;
+  enabled?: T;
+  issuer?: T;
+  clientId?: T;
+  deploymentIds?: T;
+  authLoginUrl?: T;
+  authTokenUrl?: T;
+  jwksUrl?: T;
+  frameOrigins?: T;
+  lrsEndpoint?: T;
+  lrsKey?: T;
+  lrsSecret?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lti-nonces_select".
+ */
+export interface LtiNoncesSelect<T extends boolean = true> {
+  nonceHash?: T;
+  expiresAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -13,7 +13,8 @@
     "typecheck": "pnpm -r --parallel typecheck",
     "test": "vitest run",
     "test:e2e": "pnpm --filter @lm/web test:e2e",
-    "validate:content": "tsx scripts/validate-content.ts"
+    "validate:content": "tsx scripts/validate-content.ts",
+    "pack:lessons": "tsx scripts/ops/build-pack.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

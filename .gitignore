@@ -13,3 +13,6 @@ test-results/
 .vercel
 next-env.d.ts
 __pycache__/
+# Private keys (e.g. LTI_PRIVATE_KEY material) never belong in the repository.
+*.pem
+*.key

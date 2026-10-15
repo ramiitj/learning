@@ -11,7 +11,7 @@ Confirmed as proposed, with hosting on Vercel (functions in `bom1`, Mumbai) and 
 | Concern | Default | Reason |
 |---|---|---|
 | Language | TypeScript (strict) | One language across front end, CMS, MCP server and agents |
-| Web framework | Next.js (App Router) | Server rendering for speed on slow networks, static export of lessons for offline packs |
+| Web framework | Next.js (App Router) | Server rendering for speed on slow networks; the same app runs as a self-contained server for offline lesson packs (decided 2026-10-15) |
 | CMS | Payload CMS on PostgreSQL | TypeScript-native, runs inside Next.js, code-defined schema, drafts and versions built in |
 | Database | PostgreSQL in an Indian region (Neon, `aws-ap-south-1`) | Data residency; relational model suits the concept graph and versions |
 | Hosting | Vercel, functions pinned to `bom1` (Mumbai); infrastructure in `infra/terraform` | Fast to ship; no personal data in v1, so edge processing outside India is acceptable (revisit before collecting any) |
@@ -68,7 +68,7 @@ Described fully in `docs/09`. In summary: an orchestrator routes work through a 
 
 ## Interoperability and distribution
 
-LTI 1.3 so lessons can be launched from school learning management systems; xAPI statements for learning activity; alignment with DIKSHA explored in a later phase. Downloadable lesson packs run from a single laptop or a local server for schools without reliable internet.
+LTI 1.3 so lessons can be launched from school learning management systems; xAPI statements for learning activity; alignment with DIKSHA explored in a later phase. Downloadable lesson packs run from a single laptop or a local server for schools without reliable internet. A pack is the web app's standalone Node.js server in files-only mode: published lessons only, no database, no console or API routes, show-of-hands voting, nothing collected; other devices on the school network join by its address (decided 2026-10-15; `docs/runbooks/lesson-packs.md`).
 
 ## Reliability and ownership
 

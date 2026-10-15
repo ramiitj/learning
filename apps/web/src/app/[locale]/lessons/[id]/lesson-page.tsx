@@ -6,6 +6,7 @@ import type { Mode } from "@lm/engine";
 import { createLessonT } from "@lm/engine";
 import { LessonClient } from "@/components/LessonClient";
 import { LiveClassroom } from "@/components/LiveClassroom";
+import { ReportProblem } from "@/components/ReportProblem";
 import { Link } from "@/i18n/navigation";
 import { detourIdsOf, getDetours, getGlossary, getLesson, glossaryFor, listLessonIds } from "@/lib/content";
 
@@ -57,6 +58,8 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
           </p>
         </aside>
       ) : null}
+      {/* Reports need the server; offline packs have none. */}
+      {process.env.DATABASE_URI ? <ReportProblem lessonId={id} locale={locale} /> : null}
     </div>
   );
 }
