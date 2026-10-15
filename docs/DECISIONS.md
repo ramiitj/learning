@@ -51,7 +51,11 @@ Every decision that changes the specification is recorded here with its date and
 2. **One component catalogue (`packages/catalogue`) feeds the validator, the CMS, the MCP server and the web app**, so there is no second list of components to drift.
 3. **The six AI simulations are plugins in `packages/sim-ai`**: train-classifier, pixel-grid, next-word-model, layer-builder, dilemma-vote and hillside.
    - Each has a contract (config schema, string keys, live vote shape) and personal and classroom variants.
-   - A learning-experience review found 8 blocking issues, all of which were fixed. The review report is kept with the session notes.
+   - A learning-experience review found 8 blocking issues. All 8 were fixed, and a re-review confirmed them. The re-review found one new issue (the layer-builder prediction sat below the button that needs it), which was then fixed. Still open, advisory only:
+     - glossary ids in a simulation's `glossary` field are not checked by the validator yet (the contract needs a small hook in `@lm/schema`);
+     - `breaksKey` and `analogyKey` are optional, so a future lesson could show an analogy without its break point;
+     - train-classifier asks for seven labels before the first result;
+     - the projected layer-builder charts are still small inside their cards.
 4. **Analytics are anonymous daily totals.**
    - Rows are keyed by day, lesson, locale, mode, metric and key, with no identifiers or timestamps.
    - The browser sends nothing when Do Not Track or Global Privacy Control is on.

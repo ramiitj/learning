@@ -93,6 +93,9 @@ describe("dilemma-vote", () => {
     expect(screen.getByText("3 votes in total")).toBeInTheDocument();
     expect(container.querySelectorAll(".lm-dilemma-card")).toHaveLength(0);
     expect(screen.getByText("0 of 3 ways of thinking shown")).toBeInTheDocument();
+    // The ways of thinking wait until the class's own result is on screen.
+    expect(screen.getByRole("button", { name: "Show the next way of thinking" })).toBeDisabled();
+    await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
     await userEvent.click(screen.getByRole("button", { name: "Show the next way of thinking" }));
     expect(container.querySelectorAll(".lm-dilemma-card")).toHaveLength(1);
     await userEvent.click(screen.getByRole("button", { name: "Show the next way of thinking" }));

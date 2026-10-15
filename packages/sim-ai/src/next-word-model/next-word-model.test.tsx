@@ -79,6 +79,10 @@ describe("next-word-model", () => {
   it("writes a sentence deterministically, with its steps", async () => {
     renderBlock(nextWordModel, block, strings);
     await pickWord("dog");
+    // Writing shows every pick, so it waits until the learner has guessed and seen the model's pick.
+    expect(screen.queryByRole("button", { name: "Write a sentence from “dog”" })).not.toBeInTheDocument();
+    await guess("sat");
+    await reveal();
     await userEvent.click(screen.getByRole("button", { name: "Write a sentence from “dog”" }));
     expect(screen.getByText("dog sat on the cat sat on the cat sat on the")).toBeInTheDocument();
     expect(screen.getByText("After “dog”, “sat” won (1 of 1).")).toBeInTheDocument();

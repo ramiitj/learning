@@ -105,7 +105,7 @@ export function DilemmaVoteClassroom({ config, state, setState, t, ui, block }: 
       <p className="lm-muted" role="status">{ui("shown", { shown, total: frameworks.length })}</p>
       {shown > 0 ? <Cards frameworks={frameworks.slice(0, shown)} config={config} t={t} ui={ui} focusLast={focus.ref} /> : null}
       {shown < frameworks.length ? (
-        <Button variant="primary" onClick={() => { focus.arm(); setState((prev) => ({ ...prev, shown: shown + 1 })); }}>{ui("revealNext")}</Button>
+        <Button variant="primary" disabled={!state?.tallyShown} onClick={() => { focus.arm(); setState((prev) => ({ ...prev, shown: shown + 1 })); }}>{ui("revealNext")}</Button>
       ) : (
         <div className="lm-insight">
           <p>{ui("allShown")}</p>

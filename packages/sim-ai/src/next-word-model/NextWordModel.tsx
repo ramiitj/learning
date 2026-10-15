@@ -187,7 +187,8 @@ function Sim(props: Props & { classroom: boolean }) {
             </div>
           ) : null}
 
-          <Button variant="secondary" onClick={() => { focus.arm(); setState((p) => ({ ...p, writeFrom: current, stats })); }}>{ui("write", { word: current })}</Button>
+          {/* Writing a sentence shows each pick, so it waits for the reveal. */}
+          {revealed ? <Button variant="secondary" onClick={() => { focus.arm(); setState((p) => ({ ...p, writeFrom: current, stats })); }}>{ui("write", { word: current })}</Button> : null}
           <div ref={focus.ref} tabIndex={-1} className="lm-nextword__written">
             {written ? (
               <>

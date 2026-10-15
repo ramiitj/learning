@@ -190,6 +190,15 @@ export function LayerBuilder({ block, config, state, setState, t, ui, locale }: 
       {config.analogyKey ? <div className="lm-callout" data-tone="insight">{t.rich(config.analogyKey)}</div> : null}
       <p className="lm-small lm-muted">{ui("glossNetwork")}</p>
       <GlossaryRow ids={config.glossary} ui={ui} />
+      {!running ? (
+        <ChoiceGroup
+          legend={ui("predictQuestion")}
+          name={`${block.id}-guess`}
+          choices={(["train", "new", "same"] as const).map((g) => ({ id: g, label: ui(`guess_${g}`) }))}
+          value={state?.guess}
+          onChange={(guess) => setState((prev) => ({ ...prev, guess: guess as BetterOn }))}
+        />
+      ) : null}
       <fieldset className="lm-layers-build">
         <legend>{ui("yourNetwork")}</legend>
         <div ref={listFocus.ref} tabIndex={-1} className="lm-layers-list">
@@ -212,15 +221,6 @@ export function LayerBuilder({ block, config, state, setState, t, ui, locale }: 
         {!running && !state?.guess ? <p className="lm-small lm-muted">{ui("predictFirst")}</p> : null}
         <p className="lm-small lm-muted">{ui("networkSize", { layers: widths.length, params: parameterCount(widths) })}</p>
       </fieldset>
-      {!running ? (
-        <ChoiceGroup
-          legend={ui("predictQuestion")}
-          name={`${block.id}-guess`}
-          choices={(["train", "new", "same"] as const).map((g) => ({ id: g, label: ui(`guess_${g}`) }))}
-          value={state?.guess}
-          onChange={(guess) => setState((prev) => ({ ...prev, guess: guess as BetterOn }))}
-        />
-      ) : null}
       <Progress run={trainer.run} ui={ui} />
       <p className="lm-layers-status" role="status">
         {running ? ui("trainingStarted") : result ? ui("trainDone", { train: fmt(result.trainError), test: fmt(result.testError) }) : trainer.note === "stopped" ? ui("stopped") : ""}
