@@ -1,0 +1,93 @@
+{
+  "agent": "accuracy-safety-reviewer",
+  "checks": [
+    {"check": "factual-accuracy", "status": "flagged", "note": "Read every explanatory string, option, feedback line and glossary entry in en, hi and te. The predict, analogy, trade-off and glossary content is true. One absolute claim in deep.text is false."},
+    {"check": "numbers-and-working", "status": "flagged", "note": "Recomputed all scores from weights 1/2/3 and threshold 10. bh.i1 = 3+4+3 = 10, i3 = 3, i5 = 6+2+3 = 11, i7 = 4, and the output max 25 = 10+6+9. cmp variants give 0 and 10, and the ten-'!' strings score 10 in all locales. The break-it flags are consistent and the sort and check answers are right. knob.success contradicts the rule that 10 goes to junk, in all locales."},
+    {"check": "sourcing-and-honesty", "status": "pass", "note": "No statistics, studies or claims about what other learners or most people do. The 'early filters' and 'real filters' remarks are common knowledge."},
+    {"check": "currency", "status": "pass", "note": "No claims about current products or practice are presented as up to date beyond the general description of trained filters, which is current."},
+    {"check": "age-appropriateness", "status": "pass", "note": "Every example message (prize, locked account, fee, free phone, school, family, sport) is suitable for ages 13-17. No sexual, gambling, violent or drug content in any locale."},
+    {"check": "safe-suggestions", "status": "pass", "note": "All junk messages are made-up and live inside the lesson. Nothing tells the learner to click, reply, send to others or bypass a real filter. The fool-the-filter tasks apply only to the lesson's toy filter."},
+    {"check": "privacy", "status": "flagged", "note": "The your-data block (b13) asks for free-text messages with no notice that input stays on the device and no warning against real personal details. Its classroom mode allows up to 12 items."},
+    {"check": "fairness-representation", "status": "pass", "note": "No group is stereotyped. Grandma/nani/ammamma, friends and school contexts are neutral. Scams are not tied to region, religion, caste or class. Names are not used."},
+    {"check": "ai-framing", "status": "pass", "note": "The lesson repeatedly states that the filter only counts clues and never understands. 'Decide' is used mechanistically. Mind-framing appears only in distractor options (predict.c3, pre1.c, post2.a) and is corrected by feedback, and in the analogy break point."},
+    {"check": "analogy-integrity", "status": "pass", "note": "The exam/pass-mark analogy maps four relationships and states a real break point in an.break (the examiner reads and understands, the filter only counts). It fades into the formula in an.f1 to an.f3. The learner's own-analogy prompt requires a break point (eb.break), and the model answers state one in all locales."},
+    {"check": "respect-and-tone", "status": "pass", "note": "Checked all three locales against the banned-phrase lists. None found. Wrong-answer feedback (predict.f1, predict.f3, ch.f1, ch.f3) is curious, with no judgement."},
+    {"check": "accessibility-content", "status": "flagged", "note": "There is no colour-only meaning. Symbols are paired with text labels. The symbols ≥, × and → are explained in words. There is no audio or video. One instruction depends on the position of earlier content ('the points above')."},
+    {"check": "locale-fidelity", "status": "flagged", "note": "Compared every hi and te string with English. Numbers match throughout. The cricket and nani adaptations are acceptable locale variants. Two hi strings change the meaning of the source message."}
+  ],
+  "flags": [
+    {
+      "id": "f1",
+      "check": "numbers-and-working",
+      "severity": "blocking",
+      "locale": "all",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
+      "problem": "The rule (b4.config.decision.threshold = 10, bh.rule 'score is 10 or more goes to junk') sends a score of exactly 10 to junk. The string says it takes one more clue to reach junk, but a score of 10 is already junk. The same text appears in hi ('एक सुराग और, तो यह जंक में जाएगा') and te ('ఇంకో ఆధారం ఉంటే జంక్‌కి వెళ్తుంది'). It also contradicts knob.sentence, which will print 'goes to junk' at 10.",
+      "why": "Check numbers-and-working: text must match the configured rule. It also teaches the wrong meaning of 'at or above', which is the core objective o1. A learner who reaches the goal is told something false at the moment of success.",
+      "fix": "Rewrite in all three locales, for example: 'Score 10: exactly on the threshold, and 10 is enough to go to junk. One point fewer and it reaches the inbox.'"
+    },
+    {
+      "id": "f2",
+      "check": "factual-accuracy",
+      "severity": "blocking",
+      "locale": "all",
+      "stringKey": "deep.text",
+      "blockId": "b8",
+      "quote": "Nobody sets their points by hand: the filter works them out from millions of messages that people marked as junk.",
+      "problem": "The absolute claim is false. Many real filters, such as rule-based systems with hand-tuned or hand-reviewed scores, still have people set or adjust points or rules, and modern filters combine learned and hand-written parts. Also, learned filters need examples marked as junk and as not junk. The same absolute wording is in hi ('कोई हाथ से तय नहीं करता') and te ('ఎవరూ చేత్తో పెట్టరు').",
+      "why": "Check factual-accuracy: a simplification that becomes false. It reinforces misconception 3 in the other direction and overstates what is known about 'real filters'.",
+      "fix": "Say: 'Many real filters do not have their points set by hand: the filter works them out from millions of example messages that people marked as junk or as real. That is called training.' Apply the same softening and the 'junk or real' addition to hi and te."
+    },
+    {
+      "id": "f3",
+      "check": "privacy",
+      "severity": "blocking",
+      "locale": "all",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "Write up to five messages that you think would fool this filter.",
+      "problem": "The block invites free-text input with no statement that what is typed stays on this device and no instruction to keep real personal details out. yd.e1 ('reply with your address') models a message that asks for an address, and the classroom variant (maxItems 12) may display learners' messages to the class. The same applies to hi and te.",
+      "why": "Check privacy and the learner-online-safety reference: inputs like 'your own messages' must say what you type stays on this device and must never invite anything that identifies a person (Article 10; docs/11). Nothing personal may appear on a shared classroom screen.",
+      "fix": "Add to yd.prompt in all locales: 'Make up your messages. Do not use real names, phone numbers, addresses or school names. What you type stays on this device.' In classroom mode, show only counts or teacher-approved examples, not learner text."
+    },
+    {
+      "id": "f4",
+      "check": "accessibility-content",
+      "severity": "blocking",
+      "locale": "all",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "work out its score with the points above",
+      "problem": "The instruction depends on the position of earlier content. b13 is separated from the point values in b4 by many blocks, and in a linear or screen-reader reading, or after a detour, 'above' does not point to anything clear. The point values are not restated. Hindi ('ऊपर के अंकों से') and Telugu ('పై పాయింట్లతో') do the same.",
+      "why": "Check accessibility-content: instructions must name things in words and must not rely on position. It also breaks Article 6 (every step of a calculation is shown).",
+      "fix": "Restate the rule in the prompt: 'work out its score: 1 point for each “!”, 2 for each money word, 3 for each urgent word. Would it reach 10?' Do the same in hi and te."
+    },
+    {
+      "id": "f5",
+      "check": "locale-fidelity",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "sort.m6",
+      "blockId": "b3",
+      "quote": "क्रिकेट अभ्यास शुक्रवार को हो गया है",
+      "problem": "English says 'Football practice moved to Friday', a schedule change. The Hindi means 'Cricket practice has happened on Friday', which is a past event, and drops 'moved'. Switching football to cricket is an acceptable locale variant. The meaning change is not.",
+      "why": "Check locale-fidelity: nothing dropped or changed in meaning. A learner may read the message differently, and bh.i6 says it is a real, clue-free message.",
+      "fix": "Use 'क्रिकेट अभ्यास शुक्रवार को कर दिया गया है' or, more clearly, 'क्रिकेट अभ्यास अब शुक्रवार को होगा'."
+    },
+    {
+      "id": "f6",
+      "check": "locale-fidelity",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "ch.prompt",
+      "blockId": "b11",
+      "quote": "एक संदेश में लिखा है “मीटिंग 3 बजे हो गई है।”",
+      "problem": "English quotes 'Meeting moved to 3 pm.' The Hindi says the meeting has already happened at 3 and drops the idea of moving. Telugu ('మీటింగ్ మధ్యాహ్నం 3కి మారింది') keeps the meaning.",
+      "why": "Check locale-fidelity: the quoted message is a learning artifact and must say the same thing in each locale.",
+      "fix": "Use “मीटिंग अब 3 बजे होगी।” or “मीटिंग 3 बजे कर दी गई है।”"
+    }
+  ],
+  "summary": {"blocking": 6, "advisory": 0, "verdict": "needs-revision"}
+}

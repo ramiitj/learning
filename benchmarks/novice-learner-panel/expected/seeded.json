@@ -1,0 +1,183 @@
+{
+  "seeds": [
+    {
+      "id": "t01",
+      "check": "unknown-term",
+      "alsoAccept": [
+        "assumed-knowledge"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "knob.prompt"
+      ],
+      "block": "b4",
+      "personas": [
+        "asha"
+      ],
+      "note": "'linear classifier', 'three-dimensional feature vector' never explained."
+    },
+    {
+      "id": "t02",
+      "check": "assumed-knowledge",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "hook.text"
+      ],
+      "block": "b1",
+      "personas": [
+        "asha",
+        "meera"
+      ],
+      "note": "Assumes a computer science class and known algorithms."
+    },
+    {
+      "id": "t03",
+      "check": "unexplained-jump",
+      "alsoAccept": [
+        "unknown-term"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "bh.rule"
+      ],
+      "block": "b5",
+      "personas": [
+        "asha",
+        "meera"
+      ],
+      "note": "Rule stated in probability terms the lesson never introduced; breaks the score-and-threshold thread."
+    },
+    {
+      "id": "t04",
+      "check": "number-trouble",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "hi",
+      "keys": [
+        "knob.success"
+      ],
+      "block": "b4",
+      "personas": [
+        "rohit"
+      ],
+      "note": "Ratio 0.4 of the maximum appears with no steps (Rohit loses confidence with decimals)."
+    },
+    {
+      "id": "t05",
+      "check": "confusing-instruction",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "as.instruction"
+      ],
+      "block": "b10",
+      "personas": [
+        "asha",
+        "rohit",
+        "telugu-student",
+        "meera"
+      ],
+      "note": "No instruction about what to do with the pieces."
+    },
+    {
+      "id": "t06",
+      "check": "reading-load",
+      "alsoAccept": [],
+      "severity": "advisory",
+      "locale": "en",
+      "keys": [
+        "an.source"
+      ],
+      "block": "b7",
+      "personas": [
+        "asha",
+        "rohit"
+      ],
+      "note": "One 60-word sentence for a class 8 reader."
+    },
+    {
+      "id": "t07",
+      "check": "boredom",
+      "alsoAccept": [],
+      "severity": "advisory",
+      "locale": "en",
+      "keys": [
+        "cmp.explain"
+      ],
+      "block": "b6",
+      "personas": [
+        "meera"
+      ],
+      "note": "The same point made four times in a row (Meera skips or quits)."
+    },
+    {
+      "id": "t08",
+      "check": "unknown-term",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "hi",
+      "keys": [
+        "predict.reveal"
+      ],
+      "block": "b2",
+      "personas": [
+        "rohit"
+      ],
+      "note": "Untranslated English jargon in Hindi."
+    },
+    {
+      "id": "t09",
+      "check": "unknown-term",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "te",
+      "keys": [
+        "bh.rule"
+      ],
+      "block": "b5",
+      "personas": [
+        "telugu-student"
+      ],
+      "note": "Untranslated English jargon in Telugu."
+    },
+    {
+      "id": "t10",
+      "check": "lost-place",
+      "alsoAccept": [
+        "confusing-instruction"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "ch.prompt"
+      ],
+      "block": "b11",
+      "personas": [
+        "asha",
+        "rohit",
+        "meera"
+      ],
+      "note": "Points back to Part 2, but the rule was given in Part 3; also drops the threshold value."
+    },
+    {
+      "id": "t11",
+      "check": "unknown-term",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "sort.reveal"
+      ],
+      "block": "b3",
+      "personas": [
+        "asha"
+      ],
+      "note": "'features', 'ground truth', 'model' used before any explanation."
+    }
+  ]
+}

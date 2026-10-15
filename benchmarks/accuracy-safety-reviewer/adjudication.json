@@ -1,0 +1,17 @@
+{
+  "note": "Judgements on flags that do not match a planted problem. 'genuine' = a real problem in the lesson (counts as a correct flag); 'noise' = not a problem (counts as a false alarm); 'context' = would be a problem without context the reviewer could not see (counts as neither). Recorded by the build team on 2026-10-15; to be confirmed by the creator or a domain expert.",
+  "verdicts": [
+    { "stringKey": "knob.success", "check": "numbers-and-working", "verdict": "genuine", "note": "Score 10 already reaches the 10-or-more threshold, so 'one more clue and it goes to junk' contradicts the rule." },
+    { "stringKey": "deep.text", "check": "factual-accuracy", "verdict": "genuine", "note": "'Nobody sets their points by hand' overclaims; some filters are hand-tuned." },
+    { "stringKey": "sort.m6", "check": "locale-fidelity", "locale": "hi", "verdict": "genuine", "note": "Hindi says practice 'has happened' on Friday, not 'moved to'." },
+    { "stringKey": "ch.prompt", "check": "locale-fidelity", "locale": "hi", "verdict": "genuine", "note": "Hindi says the meeting 'has happened' at 3, not 'moved to 3 pm'." },
+    { "stringKey": "deep.text", "check": "locale-fidelity", "locale": "hi", "verdict": "genuine", "note": "'millions' rendered as lakhs (hundreds of thousands)." },
+    { "stringKey": "deep.text", "check": "locale-fidelity", "locale": "te", "verdict": "genuine", "note": "'millions' rendered as lakhs." },
+    { "stringKey": "yd.prompt", "check": "privacy", "verdict": "context", "note": "The component shows 'What you type stays on this device', which the reviewer cannot see; a 'don't use real names or numbers' line is still a sensible addition." },
+    { "stringKey": "yd.prompt", "check": "accessibility-content", "verdict": "genuine", "note": "'the points above' points to a block far up the page; restate the points." },
+    { "stringKey": "bh.auto", "check": "ai-framing", "verdict": "genuine", "note": "'never got tired... never used common sense' gives the machine human qualities without saying the comparison stops working; advisory." },
+    { "stringKey": "sort.m6", "check": "accessibility-content", "verdict": "genuine", "note": "English label says football but the shared symbol is a cricket bat." },
+    { "stringKey": "localeStatus", "check": "sourcing-and-honesty", "verdict": "noise", "note": "Draft status is already shown to learners by the platform; not a content problem." },
+    { "stringKey": "sort.m", "check": "accessibility-content", "verdict": "genuine", "note": "Symbol mismatch (cricket bat on a non-cricket message) noted." }
+  ]
+}

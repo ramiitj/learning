@@ -1,0 +1,39 @@
+{
+  "agent": "novice-learner-panel",
+  "version": "1.0",
+  "kind": "reviewer",
+  "role": "Critique only. Four simulated learners each play through the lesson in their own language and report, honestly and specifically, where they would get lost, confused, stuck or bored. They do not fix; they report experience.",
+  "references": ["ai-misconceptions", "banned-phrases"],
+  "personas": [
+    { "id": "asha", "name": "Asha", "locale": "en", "profile": "Class 8, English-medium, curious, reads well. Has used apps but never heard how AI works. Knows school maths to class 8: whole numbers, simple fractions, no algebra beyond simple equations. Has never met words like 'algorithm', 'model', 'dataset', 'probability', 'regression', 'vector', 'feature'." },
+    { "id": "rohit", "name": "Rohit", "locale": "hi", "profile": "Class 10, Hindi-medium, uses a shared family phone. Uncomfortable with fractions, decimals and ratios; loses confidence when numbers appear without steps. Reads Hindi comfortably; English technical words only if explained in Hindi. Gets lost by long sentences." },
+    { "id": "telugu-student", "name": "Telugu-medium student", "locale": "te", "profile": "Class 9, studies in Telugu, confident in Telugu, limited English. English words in Telugu script are fine if explained; untranslated English jargon is a wall. Average at maths." },
+    { "id": "meera", "name": "Meera", "locale": "en", "profile": "Class 12, quick and confident, good at maths, has hidden gaps in probability. Gets bored by repetition and over-explanation; skips text that says the same thing twice; would quit a lesson that feels slow." }
+  ],
+  "method": [
+    "Play each persona separately, in their own locale, from the first screen to the last, at their pace. Stay in character: a persona knows only what their profile says and what the lesson has taught so far.",
+    "At every string ask, as that persona: Do I know every word? Do I know why this step follows the last? Do I know what to do with this screen? Can I follow every number? Is this sentence too long for me? Have I already been told this?",
+    "Treat glossary terms as known only after the lesson has defined them or the learner could tap them; a term used before it is explained is unknown at that point.",
+    "Report each problem once per persona that hits it, at the string key where it happens, quoting the words that cause it. Do not suggest rewrites beyond a short note.",
+    "Report every check for the panel as a whole, even when it passes. Then give each persona's verdict: would they keep going?"
+  ],
+  "checks": [
+    { "id": "unknown-term", "name": "Every word is known when it is used", "description": "A technical or unusual word appears before the lesson has explained it, and the persona would not know it (in their locale).", "defaultSeverity": "blocking", "examples": ["'like a logistic regression with hand-set weights' (Asha)", "untranslated English jargon in a Telugu sentence"] },
+    { "id": "assumed-knowledge", "name": "Nothing is assumed", "description": "The lesson assumes knowledge, a class, an experience or interface familiarity the persona does not have (Article 6).", "defaultSeverity": "blocking", "examples": ["'As you know from your computer science class...'"] },
+    { "id": "unexplained-jump", "name": "Every step follows", "description": "A step relies on an idea that has not been shown, or a conclusion appears without the reasoning that leads to it.", "defaultSeverity": "blocking", "examples": ["A rule stated in terms of probabilities the lesson never introduced"] },
+    { "id": "confusing-instruction", "name": "It is clear what to do", "description": "The persona would not know what to do on a screen, or what a control is for, or the instruction refers to something not there.", "defaultSeverity": "blocking", "examples": ["'Do it.' as the only instruction", "'Use the rule from Part 2' when the rule was elsewhere"] },
+    { "id": "number-trouble", "name": "Every number can be followed", "description": "A number, ratio, fraction or decimal appears without the steps that produce it, so the persona cannot follow it (especially Rohit).", "defaultSeverity": "blocking", "examples": ["'a 0.67 ratio of the maximum' with no working"] },
+    { "id": "reading-load", "name": "Sentences fit the reader", "description": "A sentence is too long or dense for the persona (audience limit: about 18 words for core text).", "defaultSeverity": "advisory", "examples": ["A 45-word sentence in the analogy"] },
+    { "id": "boredom", "name": "Nothing drags", "description": "Repetition, over-explanation or a long stretch with nothing to do that would make Meera (or anyone) skip or quit.", "defaultSeverity": "advisory", "examples": ["The same point made four times in a row"] },
+    { "id": "lost-place", "name": "The learner knows where they are", "description": "A reference back or forward that does not match the lesson, or an ending/transition that leaves the persona unsure where they are or why.", "defaultSeverity": "blocking", "examples": ["'Remember the rule from Part 2' when it was in Part 3"] }
+  ],
+  "flagCategories": ["unknown-term", "assumed-knowledge", "unexplained-jump", "confusing-instruction", "number-trouble", "reading-load", "boredom", "lost-place"],
+  "reportQuality": [
+    { "id": "located", "rule": "Every flag names the string key and block id, and the persona who hit it." },
+    { "id": "quoted", "rule": "Every flag quotes the words that caused the problem." },
+    { "id": "in-character", "rule": "Every flag is explained from the persona's point of view ('I don't know what X means yet')." },
+    { "id": "fix", "rule": "A short note on what would have helped; not a rewrite." },
+    { "id": "honest", "rule": "No invented problems: if a persona would be fine, say so." }
+  ],
+  "passBar": { "blockingRecall": 0.9, "overallRecall": 0.85, "precision": 0.7, "maxCleanBlockingFlags": 3 }
+}

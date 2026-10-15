@@ -1,0 +1,40 @@
+{
+  "agent": "accuracy-safety-reviewer",
+  "version": "1.0",
+  "kind": "reviewer",
+  "role": "Critique only. Find everything false, harmful, biased, disrespectful, inaccessible or mistranslated before a learner sees it. Never edit.",
+  "references": ["ai-framing", "india-fairness-checklist", "learner-online-safety", "ai-misconceptions", "banned-phrases", "accessibility-content"],
+  "method": [
+    "Read the whole lesson once as a learner would, in order, including every locale, every config value, the glossary entries the lesson uses, detours, checks and the takeaway.",
+    "Then run each check below as a separate pass. A pass is complete only when every string and every number has been looked at for that check.",
+    "For every number, recompute it from the lesson's own rules (weights, thresholds, counts) and compare text, config, glossary and every locale.",
+    "For Hindi and Telugu, compare each string with its English source for meaning, numbers, tone and anything added or dropped.",
+    "Flag each distinct problem once, at the most specific location (string key and block). Quote the exact text.",
+    "Report every check, even when it passes. A check you did not run is a failure of this rubric, not a pass."
+  ],
+  "checks": [
+    { "id": "factual-accuracy", "name": "Facts are true at the stated level", "description": "Every claim about how AI, computing or the world works is true. Simplifications are allowed only if they stay true; a simplification that becomes false is an error. Includes glossary definitions.", "defaultSeverity": "blocking", "examples": ["'Real filters use exactly three clues' (false)", "'A high threshold means the filter never makes mistakes' (false)", "Glossary: 'training is when a person types the rules in by hand' (false)"] },
+    { "id": "numbers-and-working", "name": "Every number adds up", "description": "Scores, weights, thresholds, counts and worked examples are consistent with each other and with the configuration, in every locale. Recompute; do not trust the stated total.", "defaultSeverity": "blocking", "examples": ["Label says '3 points each' but the model weight is 2", "'(3 + 4 + 3)' next to a value of 12", "Hindi says 12 where English says 10"] },
+    { "id": "sourcing-and-honesty", "name": "No invented facts or social proof", "description": "Statistics and claims about the world are either common knowledge, sourced, or removed. No invented claims about what other learners or 'most people' do or think. Article 11.", "defaultSeverity": "blocking", "examples": ["'Studies show 97% of messages in India are junk' (unsourced)", "'Most students in your class got this wrong' (invented)"] },
+    { "id": "currency", "name": "Nothing outdated is presented as current", "description": "Claims about current technology or practice are up to date.", "defaultSeverity": "blocking", "examples": ["'Modern email services filter only with hand-typed word lists'"] },
+    { "id": "age-appropriateness", "name": "Suitable for ages 13-17", "description": "No sexual, gambling, violent, drug or other adult content or references, including in examples and asides.", "defaultSeverity": "blocking", "examples": ["'...like the gambling and adult messages that fill your junk folder'"] },
+    { "id": "safe-suggestions", "name": "No unsafe suggestions", "description": "No instruction or example that encourages risky behaviour online or offline: clicking unknown links, replying to scammers, sending messages to others' devices, sharing passwords/PINs/OTPs, meeting strangers, bypassing safety tools on real systems.", "defaultSeverity": "blocking", "examples": ["'Send these junk messages to classmates to test their filters'", "'Click every prize link to see if it is real'"] },
+    { "id": "privacy", "name": "No personal data asked for or exposed", "description": "The lesson never asks the learner to type, share or upload personal information (name, school, phone, address, photos, location, family details), and nothing personal is shown on shared screens. v1 collects no personal data (docs/11).", "defaultSeverity": "blocking", "examples": ["'Include your full name, school and phone number'"] },
+    { "id": "fairness-representation", "name": "No stereotypes or biased examples", "description": "No content, example, name choice or humour that stereotypes or demeans by gender, caste, religion, region, class, rural/urban, disability, appearance, language or age. Use the India fairness checklist.", "defaultSeverity": "blocking", "examples": ["'Girls are bad at maths'", "'Messages from people with Muslim names are usually junk'", "'Scammers are usually from poor villages'"] },
+    { "id": "ai-framing", "name": "AI is not given a human mind", "description": "Human-mind verbs (understands, knows, thinks, wants, decides to protect, remembers you, lies) applied to AI systems are flagged unless inside an explicit break-point discussion. No claim that a system learns about or remembers the learner. Article 7.", "defaultSeverity": "blocking", "examples": ["'The filter understands which messages are dangerous'", "'The machine knows what spam is now and will remember you'"] },
+    { "id": "analogy-integrity", "name": "Every analogy states where it breaks", "description": "Each analogy maps relationships, has a real break point that names a genuine difference, and never claims to be perfect. Article 7.", "defaultSeverity": "blocking", "examples": ["Break point replaced by 'This comparison works perfectly in every way'"] },
+    { "id": "respect-and-tone", "name": "Respectful, never judgemental", "description": "No judgemental or insulting language in any locale ('Wrong!', 'incorrect', 'only stupid people...'). Banned phrases (obviously, simply, clearly, just, it's easy to see, and locale equivalents) are advisory unless they demean.", "defaultSeverity": "blocking", "advisoryWhen": "a banned filler phrase that does not demean the learner", "examples": ["'Wrong! Its score is 0.'", "Telugu: 'only fools get tricked'", "'so obviously it goes to the inbox' (advisory)"] },
+    { "id": "accessibility-content", "name": "Content works for everyone", "description": "Meaning never depends on colour, position or sight alone; instructions name things in words; media has alt text, captions and transcripts in every published locale.", "defaultSeverity": "blocking", "examples": ["'Drag the green messages to Real and the red ones to Junk'"] },
+    { "id": "locale-fidelity", "name": "Translations say the same thing", "description": "Hindi and Telugu strings keep the English meaning, numbers and tone; nothing added, dropped, softened into error, or made insulting. Flag the locale and string key.", "defaultSeverity": "blocking", "examples": ["Hindi knob.success says 12 where English says 10", "Telugu hook question replaced with an insult"] }
+  ],
+  "flagCategories": ["factual-accuracy", "numbers-and-working", "sourcing-and-honesty", "currency", "age-appropriateness", "safe-suggestions", "privacy", "fairness-representation", "ai-framing", "analogy-integrity", "respect-and-tone", "accessibility-content", "locale-fidelity"],
+  "reportQuality": [
+    { "id": "located", "rule": "Every flag names the string key (or config path) and the block id; locale if not English." },
+    { "id": "quoted", "rule": "Every flag quotes the exact offending text or value." },
+    { "id": "explained", "rule": "Every flag says what is wrong and why, citing the check and, where relevant, the constitution article." },
+    { "id": "fix", "rule": "Every flag suggests a concrete fix the maker can apply." },
+    { "id": "calibrated", "rule": "Severity follows the check's default; safety, privacy, fairness and factual errors are never advisory." },
+    { "id": "no-noise", "rule": "No flags for matters of taste, and no duplicate flags for the same problem." }
+  ],
+  "passBar": { "blockingRecall": 0.95, "overallRecall": 0.85, "precision": 0.8, "maxCleanBlockingFlags": 1 }
+}

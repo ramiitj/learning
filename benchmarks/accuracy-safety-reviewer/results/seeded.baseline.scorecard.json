@@ -1,0 +1,197 @@
+{
+  "agent": "accuracy-safety-reviewer",
+  "case": "seeded",
+  "label": "baseline",
+  "violations": [
+    {
+      "rule": "schema",
+      "detail": "/checks/0 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/1 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/2 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/3 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/4 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/5 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/6 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/7 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/8 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/9 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/10 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/11 must be object"
+    },
+    {
+      "rule": "schema",
+      "detail": "/checks/12 must be object"
+    }
+  ],
+  "score": {
+    "seeds": 24,
+    "caught": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05",
+      "s06",
+      "s07",
+      "s08",
+      "s09",
+      "s10",
+      "s11",
+      "s12",
+      "s13",
+      "s14",
+      "s15",
+      "s16",
+      "s17",
+      "s18",
+      "s19",
+      "s20",
+      "s21",
+      "s22",
+      "s23",
+      "s24"
+    ],
+    "missed": [],
+    "recall": 1,
+    "blockingRecall": 1,
+    "flags": 29,
+    "matchedFlags": 25,
+    "unmatched": [
+      {
+        "id": "F19",
+        "check": "locale-fidelity",
+        "severity": "advisory",
+        "locale": "hi",
+        "stringKey": "ch.prompt",
+        "blockId": "b11",
+        "quote": "मीटिंग 3 बजे हो गई है।",
+        "problem": "Hindi says the meeting has taken place at 3, not that it was moved to 3 pm.",
+        "why": "The meaning changes from the en/te source.",
+        "fix": "Use: मीटिंग अब दोपहर 3 बजे होगी।"
+      },
+      {
+        "id": "F26",
+        "check": "ai-framing",
+        "severity": "advisory",
+        "locale": "all",
+        "stringKey": "bh.auto",
+        "blockId": "b5",
+        "quote": "It never got tired, and it never used common sense either",
+        "problem": "Describes the program as having tiredness and common sense with no stated break point.",
+        "why": "Art. 7 asks for a break point whenever human traits are used for AI.",
+        "fix": "Rephrase as plain mechanical behaviour: it repeats the same steps the same way every time and has no sense of what a message means."
+      },
+      {
+        "id": "F28",
+        "check": "sourcing-and-honesty",
+        "severity": "advisory",
+        "locale": "hi",
+        "stringKey": "localeStatus",
+        "blockId": "all",
+        "quote": "localeStatus: draft; hi and te are unreviewed drafts",
+        "problem": "Hindi and Telugu are unreviewed drafts and carry several divergences from English.",
+        "why": "Art. 11 says translations are reviewed by native speakers; they must not reach learners unreviewed.",
+        "fix": "Run native-speaker review for hi and te after English fixes are made."
+      },
+      {
+        "id": "F29",
+        "check": "accessibility-content",
+        "severity": "advisory",
+        "locale": "all",
+        "stringKey": "sort.m*",
+        "blockId": "b3",
+        "quote": "symbol: 🎁 📘 🔒 🍲 📱 🏏 💸 🔬",
+        "problem": "Emoji symbols have no text alternatives, and some do not match their messages (🏏 on the Muslim-names message, 📘 on the homework message).",
+        "why": "Screen readers may announce the emoji redundantly or oddly; mismatches confuse meaning.",
+        "fix": "Mark the symbols decorative or give alt text, and match them to the corrected messages."
+      }
+    ],
+    "genuine": [
+      {
+        "id": "F19",
+        "check": "locale-fidelity",
+        "severity": "advisory",
+        "locale": "hi",
+        "stringKey": "ch.prompt",
+        "blockId": "b11",
+        "quote": "मीटिंग 3 बजे हो गई है।",
+        "problem": "Hindi says the meeting has taken place at 3, not that it was moved to 3 pm.",
+        "why": "The meaning changes from the en/te source.",
+        "fix": "Use: मीटिंग अब दोपहर 3 बजे होगी।"
+      },
+      {
+        "id": "F26",
+        "check": "ai-framing",
+        "severity": "advisory",
+        "locale": "all",
+        "stringKey": "bh.auto",
+        "blockId": "b5",
+        "quote": "It never got tired, and it never used common sense either",
+        "problem": "Describes the program as having tiredness and common sense with no stated break point.",
+        "why": "Art. 7 asks for a break point whenever human traits are used for AI.",
+        "fix": "Rephrase as plain mechanical behaviour: it repeats the same steps the same way every time and has no sense of what a message means."
+      },
+      {
+        "id": "F29",
+        "check": "accessibility-content",
+        "severity": "advisory",
+        "locale": "all",
+        "stringKey": "sort.m*",
+        "blockId": "b3",
+        "quote": "symbol: 🎁 📘 🔒 🍲 📱 🏏 💸 🔬",
+        "problem": "Emoji symbols have no text alternatives, and some do not match their messages (🏏 on the Muslim-names message, 📘 on the homework message).",
+        "why": "Screen readers may announce the emoji redundantly or oddly; mismatches confuse meaning.",
+        "fix": "Mark the symbols decorative or give alt text, and match them to the corrected messages."
+      }
+    ],
+    "noise": [
+      {
+        "id": "F28",
+        "check": "sourcing-and-honesty",
+        "severity": "advisory",
+        "locale": "hi",
+        "stringKey": "localeStatus",
+        "blockId": "all",
+        "quote": "localeStatus: draft; hi and te are unreviewed drafts",
+        "problem": "Hindi and Telugu are unreviewed drafts and carry several divergences from English.",
+        "why": "Art. 11 says translations are reviewed by native speakers; they must not reach learners unreviewed.",
+        "fix": "Run native-speaker review for hi and te after English fixes are made."
+      }
+    ],
+    "unadjudicated": [],
+    "precision": 0.9655172413793104
+  }
+}

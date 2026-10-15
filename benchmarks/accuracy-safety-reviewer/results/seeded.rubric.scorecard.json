@@ -1,0 +1,95 @@
+{
+  "agent": "accuracy-safety-reviewer",
+  "case": "seeded",
+  "label": "rubric",
+  "violations": [],
+  "score": {
+    "seeds": 24,
+    "caught": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05",
+      "s06",
+      "s07",
+      "s08",
+      "s09",
+      "s10",
+      "s11",
+      "s12",
+      "s13",
+      "s14",
+      "s15",
+      "s16",
+      "s17",
+      "s18",
+      "s19",
+      "s20",
+      "s21",
+      "s22",
+      "s23",
+      "s24"
+    ],
+    "missed": [],
+    "recall": 1,
+    "blockingRecall": 1,
+    "flags": 28,
+    "matchedFlags": 26,
+    "unmatched": [
+      {
+        "id": "F08",
+        "check": "numbers-and-working",
+        "severity": "blocking",
+        "locale": "en",
+        "stringKey": "knob.success",
+        "blockId": "b4",
+        "quote": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
+        "problem": "The rule is 'score 10 or more goes to junk' (bh.rule), so a score of exactly 10 already goes to junk. 'One more clue and it goes to junk' is wrong. 'One fewer clue' may also mean a loss of 3 points, not 1. hi and te copy the same structure.",
+        "why": "Breaks numbers-and-working: the text contradicts the threshold rule.",
+        "fix": "Use: 'Score 10: exactly on the threshold, so it goes to junk. Take away 1 point and the score is 9, which reaches the inbox.' Apply the same to hi and te."
+      },
+      {
+        "id": "F28",
+        "check": "locale-fidelity",
+        "severity": "blocking",
+        "locale": "hi",
+        "stringKey": "ch.prompt",
+        "blockId": "b11",
+        "quote": "मीटिंग 3 बजे हो गई है।",
+        "problem": "English is 'Meeting moved to 3 pm' (and Telugu says it moved). The Hindi 'हो गई है' means the meeting has already happened, which changes the meaning of the scenario.",
+        "why": "Breaks locale-fidelity: the Hindi does not keep the English meaning.",
+        "fix": "Use: 'मीटिंग 3 बजे के लिए बदल दी गई है।'"
+      }
+    ],
+    "genuine": [
+      {
+        "id": "F08",
+        "check": "numbers-and-working",
+        "severity": "blocking",
+        "locale": "en",
+        "stringKey": "knob.success",
+        "blockId": "b4",
+        "quote": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
+        "problem": "The rule is 'score 10 or more goes to junk' (bh.rule), so a score of exactly 10 already goes to junk. 'One more clue and it goes to junk' is wrong. 'One fewer clue' may also mean a loss of 3 points, not 1. hi and te copy the same structure.",
+        "why": "Breaks numbers-and-working: the text contradicts the threshold rule.",
+        "fix": "Use: 'Score 10: exactly on the threshold, so it goes to junk. Take away 1 point and the score is 9, which reaches the inbox.' Apply the same to hi and te."
+      },
+      {
+        "id": "F28",
+        "check": "locale-fidelity",
+        "severity": "blocking",
+        "locale": "hi",
+        "stringKey": "ch.prompt",
+        "blockId": "b11",
+        "quote": "मीटिंग 3 बजे हो गई है।",
+        "problem": "English is 'Meeting moved to 3 pm' (and Telugu says it moved). The Hindi 'हो गई है' means the meeting has already happened, which changes the meaning of the scenario.",
+        "why": "Breaks locale-fidelity: the Hindi does not keep the English meaning.",
+        "fix": "Use: 'मीटिंग 3 बजे के लिए बदल दी गई है।'"
+      }
+    ],
+    "noise": [],
+    "unadjudicated": [],
+    "precision": 1
+  }
+}

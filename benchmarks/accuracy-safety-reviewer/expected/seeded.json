@@ -1,0 +1,314 @@
+{
+  "seeds": [
+    {
+      "id": "s01",
+      "check": "sourcing-and-honesty",
+      "alsoAccept": [
+        "factual-accuracy"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "hook.text"
+      ],
+      "block": "b1",
+      "note": "Invented statistic presented as research."
+    },
+    {
+      "id": "s02",
+      "check": "factual-accuracy",
+      "alsoAccept": [
+        "currency"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "deep.text"
+      ],
+      "block": "b8",
+      "note": "False claims about real filters and about training."
+    },
+    {
+      "id": "s03",
+      "check": "factual-accuracy",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "deepest.text"
+      ],
+      "block": "b9",
+      "note": "False: every threshold trades one kind of error for another."
+    },
+    {
+      "id": "s04",
+      "check": "factual-accuracy",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "training.definition",
+        "glossary:training",
+        "training"
+      ],
+      "block": null,
+      "note": "Glossary definition of training is wrong."
+    },
+    {
+      "id": "s05",
+      "check": "currency",
+      "alsoAccept": [
+        "factual-accuracy"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "predict.f1"
+      ],
+      "block": "b2",
+      "note": "Outdated claim presented as current."
+    },
+    {
+      "id": "s06",
+      "check": "sourcing-and-honesty",
+      "alsoAccept": [
+        "respect-and-tone"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "post2.fb"
+      ],
+      "block": null,
+      "note": "Invented social proof (Article 11) and judgemental framing."
+    },
+    {
+      "id": "s07",
+      "check": "numbers-and-working",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "knob.money",
+        "b4.config.model.inputs[1].weight"
+      ],
+      "block": "b4",
+      "note": "Label says money words are worth 2 points but the model weight is 3."
+    },
+    {
+      "id": "s08",
+      "check": "numbers-and-working",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "bh.i1",
+        "b5.config.items[0].value"
+      ],
+      "block": "b5",
+      "note": "Prize message working says 3 + 4 + 3 but its score is 12."
+    },
+    {
+      "id": "s09",
+      "check": "locale-fidelity",
+      "alsoAccept": [
+        "numbers-and-working"
+      ],
+      "severity": "blocking",
+      "locale": "hi",
+      "keys": [
+        "knob.success"
+      ],
+      "block": "b4",
+      "note": "Hindi changes the number 10 to 12."
+    },
+    {
+      "id": "s10",
+      "check": "privacy",
+      "alsoAccept": [
+        "ai-framing"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "yd.prompt"
+      ],
+      "block": "b13",
+      "note": "Asks a child for identifying personal data; also implies the system learns about the learner."
+    },
+    {
+      "id": "s11",
+      "check": "safe-suggestions",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "br.t1"
+      ],
+      "block": "b12",
+      "note": "Encourages sending messages to other people's devices."
+    },
+    {
+      "id": "s12",
+      "check": "safe-suggestions",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "eb.model"
+      ],
+      "block": "b14",
+      "note": "Encourages clicking unknown prize links."
+    },
+    {
+      "id": "s13",
+      "check": "age-appropriateness",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "br.r2"
+      ],
+      "block": "b12",
+      "note": "Adult/gambling content reference for 13-year-olds."
+    },
+    {
+      "id": "s14",
+      "check": "fairness-representation",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "sort.m2"
+      ],
+      "block": "b3",
+      "note": "Gender stereotype."
+    },
+    {
+      "id": "s15",
+      "check": "fairness-representation",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "sort.m6"
+      ],
+      "block": "b3",
+      "note": "Religious stereotype linking a community to scams."
+    },
+    {
+      "id": "s16",
+      "check": "fairness-representation",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "an.source"
+      ],
+      "block": "b7",
+      "note": "Rural/class stereotype."
+    },
+    {
+      "id": "s17",
+      "check": "fairness-representation",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "cmp.prompt"
+      ],
+      "block": "b6",
+      "note": "Gender stereotype."
+    },
+    {
+      "id": "s18",
+      "check": "ai-framing",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "predict.reveal"
+      ],
+      "block": "b2",
+      "note": "Mind framing without a break point."
+    },
+    {
+      "id": "s19",
+      "check": "ai-framing",
+      "alsoAccept": [
+        "privacy"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "take.card"
+      ],
+      "block": "b15",
+      "note": "Claims the system knows and remembers the learner, in the takeaway."
+    },
+    {
+      "id": "s20",
+      "check": "analogy-integrity",
+      "alsoAccept": [
+        "ai-framing"
+      ],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "an.break"
+      ],
+      "block": "b7",
+      "note": "Analogy has no break point; claims it is perfect."
+    },
+    {
+      "id": "s21",
+      "check": "respect-and-tone",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "ch.f1"
+      ],
+      "block": "b11",
+      "note": "Judgemental feedback (Article 8)."
+    },
+    {
+      "id": "s22",
+      "check": "respect-and-tone",
+      "alsoAccept": [],
+      "severity": "advisory",
+      "locale": "en",
+      "keys": [
+        "ch.explain"
+      ],
+      "block": "b11",
+      "note": "Banned phrase 'obviously' (Article 6)."
+    },
+    {
+      "id": "s23",
+      "check": "accessibility-content",
+      "alsoAccept": [],
+      "severity": "blocking",
+      "locale": "en",
+      "keys": [
+        "sort.instruction"
+      ],
+      "block": "b3",
+      "note": "Meaning carried by colour alone; also gives the answer away."
+    },
+    {
+      "id": "s24",
+      "check": "locale-fidelity",
+      "alsoAccept": [
+        "respect-and-tone"
+      ],
+      "severity": "blocking",
+      "locale": "te",
+      "keys": [
+        "hook.q"
+      ],
+      "block": "b1",
+      "note": "Telugu replaced the question with an insult ('only people without sense get fooled')."
+    }
+  ]
+}
