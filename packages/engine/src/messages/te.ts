@@ -46,6 +46,7 @@ export const te: Record<string, string> = {
   "tally.remove": "{option} నుండి ఒకటి తక్కువ",
   "tally.count": "{n, plural, =0 {చేతులు లేవు} one {# చేయి} other {# చేతులు}}",
   "tally.total": "{n, plural, =0 {ఇంకా ఓట్లు లేవు} one {మొత్తం # ఓటు} other {మొత్తం # ఓట్లు}}",
+  "tally.phones": "{n, plural, =0 {ఫోన్ల నుండి ఇంకా ఓట్లు లేవు} one {# ఫోన్ నుండి} other {# ఫోన్ల నుండి}}",
   "tally.show": "తరగతి ఫలితం చూపించండి",
   "tally.hide": "ఫలితం దాచండి",
   "hint.show": "ఒక సూచన ఇవ్వండి",

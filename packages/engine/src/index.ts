@@ -6,3 +6,4 @@ export { useEngine, useLessonState, useStoreSelector, useBlockState, useLessonBl
 export { LessonView, BlockFrame, BlockPreview, GlossaryTerm, type LessonDoc, type LessonViewProps } from "./LessonView";
 export { engineMessages } from "./messages";
 export * from "./ui";
+export { LiveVotesContext, BlockIdContext, useLiveCounts, useLiveItem, addCounts, type LiveVotes } from "./live";

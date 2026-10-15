@@ -648,6 +648,10 @@ export interface ClassroomSession {
    * The block on the shared screen.
    */
   blockId?: string | null;
+  /**
+   * For item-by-item votes: the item on the shared screen.
+   */
+  itemId?: string | null;
   revision: number;
   votingOpen?: boolean | null;
   /**
@@ -675,7 +679,7 @@ export interface ClassroomVote {
   id: number;
   session: number | ClassroomSession;
   blockId: string;
-  itemId: string;
+  itemId?: string | null;
   choice: string;
   /**
    * Hash of a random per-session token. Not linked to any person or device.
@@ -1105,6 +1109,7 @@ export interface ClassroomSessionsSelect<T extends boolean = true> {
   locale?: T;
   hostKeyHash?: T;
   blockId?: T;
+  itemId?: T;
   revision?: T;
   votingOpen?: T;
   hands?: T;

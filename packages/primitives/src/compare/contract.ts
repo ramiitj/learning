@@ -25,6 +25,10 @@ export const compareContract: ComponentContract = {
   type: "compare",
   versions: ["1.0"],
   act: "explore",
+  vote: (c) => {
+    const x = c as unknown as CompareConfig;
+    return x.predictKey ? { promptKey: x.predictKey, options: x.variants.map((v) => ({ id: v.id, labelKey: v.labelKey })) } : null;
+  },
   configSchema: {
     type: "object",
     required: ["promptKey", "model", "variants", "explainKey"],

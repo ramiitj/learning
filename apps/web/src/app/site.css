@@ -94,3 +94,30 @@ body:has(.lesson-page[data-mode="classroom"]) { background: #fff; }
 .preview__pair { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr)); align-items: start; }
 .lm-preview { border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); }
 .lm-preview[data-mode="classroom"] { --text-body: max(22px, 1.1vw); --text-h3: max(26px, 1.4vw); --text-small: max(18px, 0.95vw); }
+
+/* Live voting panel on the projected classroom screen (Phase 2). */
+.live-panel { max-inline-size: var(--measure); margin: var(--space-4) auto 0; padding: var(--space-4) var(--space-6); border: 2px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.live-panel__title { margin: 0 0 var(--space-2); font-size: var(--text-h3); }
+.live-panel__intro { margin: 0 0 var(--space-3); color: var(--color-ink-muted); }
+.live-panel__session { display: flex; gap: var(--space-6); align-items: center; flex-wrap: wrap; }
+.live-panel__qr { inline-size: 9rem; block-size: 9rem; background: #fff; }
+.live-panel__qr svg { inline-size: 100%; block-size: 100%; }
+.live-panel__join { margin: 0; }
+.live-panel__code { margin: var(--space-1) 0; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; line-height: 1; }
+.live-panel__start, .live-panel__end { min-block-size: 44px; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); font: inherit; cursor: pointer; }
+.live-panel__start { background: var(--color-accent); color: var(--color-accent-ink); border: 0; }
+.live-panel__end { background: transparent; border: 1px solid var(--color-ink-muted); color: var(--color-ink); }
+
+/* A student's phone in a live class: big targets, one question at a time. */
+.join { max-inline-size: 32rem; margin: 0 auto; padding: var(--space-6) var(--space-4); }
+.join__form { display: grid; gap: var(--space-2); }
+.join__input { font-size: 2rem; letter-spacing: 0.2em; text-transform: uppercase; padding: var(--space-2) var(--space-3); border: 2px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-ink); }
+.join__submit, .join__option { min-block-size: 56px; font: inherit; font-size: 1.125rem; border-radius: var(--radius-md); cursor: pointer; }
+.join__submit { background: var(--color-accent); color: var(--color-accent-ink); border: 0; }
+.join__options { display: grid; gap: var(--space-3); margin-block: var(--space-4); }
+.join__option { background: var(--color-surface); color: var(--color-ink); border: 2px solid var(--color-border-strong); text-align: start; padding: var(--space-3) var(--space-4); }
+.join__option[aria-pressed="true"] { border-color: var(--color-accent); background: var(--color-accent-soft); font-weight: 700; }
+.join__option[aria-pressed="true"]::before { content: "✓ "; }
+.join__item { font-size: 1.5rem; font-weight: 700; margin: 0; }
+.join__status { font-size: 1.25rem; margin-block: var(--space-6); }
+.join__privacy { color: var(--color-ink-muted); font-size: var(--text-small); }

@@ -68,7 +68,8 @@ resource "vercel_project" "web" {
     function_default_regions = ["bom1"] # Mumbai
   }
   install_command = "pnpm install --frozen-lockfile"
-  build_command   = "pnpm --filter @lm/web build"
+  # Database migrations run before every build, so the schema always matches the code being deployed.
+  build_command   = "pnpm --filter @lm/web cms:migrate && pnpm --filter @lm/web build"
 
   git_repository = {
     type              = "github"
@@ -79,7 +80,7 @@ resource "vercel_project" "web" {
 
 resource "vercel_project_environment_variable" "database_url_production" {
   project_id = vercel_project.web.id
-  key        = "DATABASE_URL"
+  key        = "DATABASE_URI"
   value      = neon_project.main.connection_uri
   target     = ["production"]
   sensitive  = true
@@ -87,7 +88,7 @@ resource "vercel_project_environment_variable" "database_url_production" {
 
 resource "vercel_project_environment_variable" "database_url_preview" {
   project_id = vercel_project.web.id
-  key        = "DATABASE_URL"
+  key        = "DATABASE_URI"
   value      = local.preview_database_url
   target     = ["preview"]
   sensitive  = true
@@ -103,5 +104,50 @@ resource "vercel_project_environment_variable" "payload_secret" {
   key        = "PAYLOAD_SECRET"
   value      = random_password.payload_secret.result
   target     = ["production", "preview"]
+  sensitive  = true
+}
+
+resource "vercel_project_environment_variable" "app_origin" {
+  project_id = vercel_project.web.id
+  key        = "APP_ORIGIN"
+  value      = var.app_origin
+  target     = ["production"]
+}
+
+# The scheduler sends this with each call to /api/cron/* (daily 30-day purge of classroom sessions).
+resource "random_password" "cron_secret" {
+  length  = 40
+  special = false
+}
+
+resource "vercel_project_environment_variable" "cron_secret" {
+  project_id = vercel_project.web.id
+  key        = "CRON_SECRET"
+  value      = random_password.cron_secret.result
+  target     = ["production", "preview"]
+  sensitive  = true
+}
+
+# One-time token for creating the creator account and its first passkey. Read it with
+# `terraform output -raw creator_setup_token`, use it once, then remove the variable in Vercel.
+resource "random_password" "creator_setup_token" {
+  length  = 32
+  special = false
+}
+
+resource "vercel_project_environment_variable" "creator_setup_token" {
+  project_id = vercel_project.web.id
+  key        = "CREATOR_SETUP_TOKEN"
+  value      = random_password.creator_setup_token.result
+  target     = ["production"]
+  sensitive  = true
+}
+
+resource "vercel_project_environment_variable" "anthropic_api_key" {
+  count      = var.anthropic_api_key == "" ? 0 : 1
+  project_id = vercel_project.web.id
+  key        = "ANTHROPIC_API_KEY"
+  value      = var.anthropic_api_key
+  target     = ["production"]
   sensitive  = true
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useId, useMemo, useState, type RefObject } from "react";
-import { Button, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { addCounts, Button, Tally, useFocusAfter, useLiveCounts, useLiveItem, type BlockProps, type Counts } from "@lm/engine";
 import { seededShuffle } from "../shared/strings";
 import type { SortConfig, SortItem } from "./contract";
 
@@ -177,6 +177,9 @@ export function SortClassroom({ block, config, state, setState, t, ui }: Props) 
   const counts: Counts = state?.counts ?? {};
   const tallyShown = !!state?.tallyShown;
   const focus = useFocusAfter<HTMLDivElement>(!current);
+  // In a live session, phones vote on the item on the shared screen; their votes count with the hands.
+  useLiveItem(current?.id);
+  const phones = useLiveCounts(current?.id);
 
   if (!items) return <ItemsUnavailable ui={ui} />;
 
@@ -184,8 +187,9 @@ export function SortClassroom({ block, config, state, setState, t, ui }: Props) 
 
   const place = () => {
     if (!current) return;
-    const max = Math.max(0, ...config.groups.map((g) => counts[g] ?? 0));
-    const winner = config.groups.find((g) => (counts[g] ?? 0) === max) ?? config.groups[0]!;
+    const all = addCounts(counts, phones);
+    const max = Math.max(0, ...config.groups.map((g) => all[g] ?? 0));
+    const winner = config.groups.find((g) => (all[g] ?? 0) === max) ?? config.groups[0]!;
     focus.arm();
     setState((prev) => ({ placed: { ...(prev?.placed ?? {}), [current.id]: winner }, counts: {}, tallyShown: false }));
   };
@@ -202,6 +206,7 @@ export function SortClassroom({ block, config, state, setState, t, ui }: Props) 
           <Tally
             ui={ui}
             options={options}
+            itemId={current.id}
             counts={counts}
             onChange={(c) => setState((prev) => ({ placed: prev?.placed ?? {}, counts: c }), { coalesce: true })}
             revealed={tallyShown}

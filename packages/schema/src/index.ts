@@ -91,6 +91,12 @@ export interface ComponentContract {
   blockRefs?: (config: BlockConfig) => string[];
   /** The learner act this component asks for (constitution, Article 4). */
   act: "decide" | "predict" | "build" | "explore" | "explain" | "connective";
+  /**
+   * What phones can vote on in a live classroom session, if anything. Option
+   * ids match the show-of-hands tally's. `perItem` votes are cast on one item
+   * at a time, the one on the shared screen (sort).
+   */
+  vote?: (config: BlockConfig) => { promptKey?: string; options: { id: string; labelKey: string }[]; perItem?: { id: string; labelKey: string }[] } | null;
 }
 
 /** Iterate every block in lesson order. */

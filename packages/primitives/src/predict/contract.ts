@@ -21,6 +21,10 @@ export const predictContract: ComponentContract = {
   type: "predict",
   versions: ["1.0"],
   act: "predict",
+  vote: (c) => {
+    const x = c as unknown as PredictConfig;
+    return { promptKey: x.promptKey, options: x.choices.map((k) => ({ id: k, labelKey: k })) };
+  },
   configSchema: {
     type: "object",
     required: ["promptKey", "choices", "revealKey"],

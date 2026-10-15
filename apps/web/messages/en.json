@@ -46,5 +46,31 @@
     "explain": "What's going on",
     "break-it": "Break it",
     "transfer-reflect": "Your turn"
+  },
+  "live": {
+    "title": "Live voting with phones",
+    "intro": "Optional. Students can vote from their phones; you can still count hands. Nothing personal is collected.",
+    "start": "Start live voting",
+    "starting": "Starting…",
+    "joinAt": "Students go to {url} and enter",
+    "code": "Class code",
+    "voters": "{n, plural, =0 {No phones yet} one {# phone joined} other {# phones joined}}",
+    "end": "End live voting",
+    "ended": "Live voting has ended.",
+    "offline": "Reconnecting…",
+    "failed": "Live voting could not start. You can still count hands."
+  },
+  "join": {
+    "title": "Join your class",
+    "codeLabel": "Class code from the board",
+    "submit": "Join",
+    "notFound": "No class with that code. Check the board and try again.",
+    "waiting": "Look at the board. A question will appear here when it is time to vote.",
+    "voteOn": "Vote on the board's question",
+    "item": "Which group does this go in?",
+    "voted": "Your vote is in. You can change it until the teacher moves on.",
+    "closed": "Voting on this question has closed.",
+    "ended": "The class session has ended. Thank you!",
+    "privacy": "Anonymous: no name, no account. Your vote is only counted."
   }
 }

@@ -45,9 +45,22 @@ jobs:
         run: pnpm validate:content
 
   e2e:
-    name: End-to-end, accessibility (WCAG 2.2 AA), offline and slow-3G
+    name: End-to-end, accessibility (WCAG 2.2 AA), offline, slow-3G and a live class of 40 devices
     needs: checks
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lm
+          POSTGRES_PASSWORD: lm
+          POSTGRES_DB: lm
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U lm" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URI: postgres://lm:lm@localhost:5432/lm
+      PAYLOAD_SECRET: ci-only-secret-ci-only-secret-ci-only
+      APP_ORIGIN: http://localhost:3000
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -57,6 +70,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @lm/web exec playwright install --with-deps chromium
+      - name: Create the schema and load the repository's content into the CMS
+        run: pnpm --filter @lm/web cms:migrate && PUBLISH=1 pnpm --filter @lm/web cms:import
       - run: pnpm build
       - run: pnpm test:e2e
       - uses: actions/upload-artifact@v4

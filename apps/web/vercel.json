@@ -1,7 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "regions": ["bom1"],
+  "regions": [
+    "bom1"
+  ],
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @lm/web build"
+  "buildCommand": "pnpm --filter @lm/web cms:migrate && pnpm --filter @lm/web build",
+  "crons": [
+    {
+      "path": "/api/cron/purge",
+      "schedule": "30 21 * * *"
+    }
+  ]
 }

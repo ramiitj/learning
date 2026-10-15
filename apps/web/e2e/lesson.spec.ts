@@ -36,9 +36,9 @@ test("glossary terms open in place and in the glossary", async ({ page }) => {
 
 test("the depth dial reveals deeper layers, and one can be opened on its own", async ({ page }) => {
   await open(page);
-  await expect(page.getByText("Real filters use hundreds of clues")).toBeHidden();
+  await expect(page.getByText("Real filters often use hundreds of clues")).toBeHidden();
   await page.getByRole("button", { name: "Show the deeper idea" }).first().click();
-  await expect(page.getByText("Real filters use hundreds of clues")).toBeVisible();
+  await expect(page.getByText("Real filters often use hundreds of clues")).toBeVisible();
   await expect(page.getByText("Choosing the threshold is a trade-off.")).toBeHidden();
   await page.getByRole("button", { name: "Lesson tools" }).click();
   await page.getByRole("radio", { name: "Deepest" }).click();

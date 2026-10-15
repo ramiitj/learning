@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Mode } from "@lm/engine";
 import { createLessonT } from "@lm/engine";
 import { LessonClient } from "@/components/LessonClient";
+import { LiveClassroom } from "@/components/LiveClassroom";
 import { Link } from "@/i18n/navigation";
 import { detourIdsOf, getDetours, getGlossary, getLesson, glossaryFor, listLessonIds } from "@/lib/content";
 
@@ -35,7 +36,14 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
           <Link href={`/lessons/${id}`}>{t("leaveClassroom")}</Link>
         </p>
       ) : null}
-      <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} />
+      {mode === "classroom" && process.env.DATABASE_URI ? (
+        // Live voting needs the server; offline packs and file-only builds keep show-of-hands only.
+        <LiveClassroom lessonId={id} locale={locale}>
+          <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} />
+        </LiveClassroom>
+      ) : (
+        <LessonClient lesson={lesson} locale={locale} mode={mode} glossary={glossaryFor(glossary, locale)} detours={detours} />
+      )}
       {mode === "personal" ? (
         <aside className="lesson-page__after">
           <p>

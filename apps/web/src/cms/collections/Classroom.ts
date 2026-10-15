@@ -19,6 +19,7 @@ export const ClassroomSessions: CollectionConfig = {
     { name: "locale", type: "text", required: true },
     { name: "hostKeyHash", type: "text", required: true, admin: { hidden: true } },
     { name: "blockId", type: "text", admin: { description: "The block on the shared screen." } },
+    { name: "itemId", type: "text", admin: { description: "For item-by-item votes: the item on the shared screen." } },
     { name: "revision", type: "number", required: true, defaultValue: 0 },
     { name: "votingOpen", type: "checkbox", defaultValue: false },
     { name: "hands", type: "json", admin: { description: "Show-of-hands counts entered by the teacher, by block." } },
@@ -35,7 +36,8 @@ export const ClassroomVotes: CollectionConfig = {
   fields: [
     { name: "session", type: "relationship", relationTo: "classroom-sessions", required: true, index: true },
     { name: "blockId", type: "text", required: true },
-    { name: "itemId", type: "text", required: true, defaultValue: "" },
+    // Always a string ("" for whole-block votes): Postgres treats NULLs as distinct, which would defeat the one-vote-per-phone index.
+    { name: "itemId", type: "text", defaultValue: "" },
     { name: "choice", type: "text", required: true },
     { name: "participant", type: "text", required: true, admin: { description: "Hash of a random per-session token. Not linked to any person or device." } },
   ],

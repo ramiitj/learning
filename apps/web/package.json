@@ -11,7 +11,8 @@
     "test:e2e": "playwright test",
     "cms:import": "payload run scripts/import-content.ts",
     "cms:types": "payload generate:types",
-    "cms:importmap": "payload generate:importmap"
+    "cms:importmap": "payload generate:importmap",
+    "cms:migrate": "payload migrate"
   },
   "dependencies": {
     "@lm/engine": "workspace:*",
@@ -30,6 +31,7 @@
     "next": "16.3.6",
     "next-intl": "^4.14.6",
     "payload": "3.90.2",
+    "qrcode-generator": "^2.0.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sharp": "^0.35.5",

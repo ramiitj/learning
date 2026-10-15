@@ -26,6 +26,10 @@ export const sortContract: ComponentContract = {
   type: "sort",
   versions: ["1.0"],
   act: "decide",
+  vote: (c) => {
+    const x = c as unknown as SortConfig;
+    return x.items ? { promptKey: x.instructionKey, options: x.groups.map((g) => ({ id: g, labelKey: g })), perItem: x.items.map((i) => ({ id: i.id, labelKey: i.labelKey })) } : null;
+  },
   configSchema: {
     type: "object",
     required: ["instructionKey", "groups"],

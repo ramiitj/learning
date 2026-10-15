@@ -9,3 +9,15 @@ variable "vercel_team" {
   type        = string
   default     = null
 }
+
+variable "app_origin" {
+  description = "The site's public origin, e.g. https://learn.example.in. Passkeys and the MCP connector are bound to it."
+  type        = string
+}
+
+variable "anthropic_api_key" {
+  description = "Claude API key for the agent pipeline. Leave empty to run without agents."
+  type        = string
+  default     = ""
+  sensitive   = true
+}

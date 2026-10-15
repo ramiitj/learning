@@ -1,5 +1,5 @@
 "use client";
-import { Button, ChoiceGroup, Tally, useFocusAfter, type BlockProps, type Counts } from "@lm/engine";
+import { addCounts, Button, ChoiceGroup, Tally, useFocusAfter, useLiveCounts, type BlockProps, type Counts } from "@lm/engine";
 import { evaluate, weightedSum, type ModelSpec, type Values } from "../shared/model";
 import type { CompareConfig, CompareVariant } from "./contract";
 
@@ -149,8 +149,9 @@ export function CompareClassroom({ config, state, setState, t, ui, locale, block
   const focus = useFocusAfter<HTMLDivElement>(ran);
   const winner = higherVariant(config, shared);
   const options = config.variants.map((v) => ({ id: v.id, label: t.rich(v.labelKey), text: t.text(v.labelKey) }));
+  const phones = useLiveCounts();
   const topVoted = () => {
-    const counts = state?.counts ?? {};
+    const counts = addCounts(state?.counts ?? {}, phones);
     const [a, b] = config.variants;
     return (counts[a.id] ?? 0) >= (counts[b.id] ?? 0) ? a.id : b.id;
   };

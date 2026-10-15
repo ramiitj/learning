@@ -22,6 +22,10 @@ export const explainBackContract: ComponentContract = {
   type: "explain-back",
   versions: ["1.0"],
   act: "explain",
+  vote: (c) => {
+    const x = c as unknown as ExplainBackConfig;
+    return x.mode === "choose" && x.options ? { promptKey: x.promptKey, options: x.options.map((o) => ({ id: o.id, labelKey: o.textKey })) } : null;
+  },
   configSchema: {
     type: "object",
     required: ["mode", "promptKey"],

@@ -21,6 +21,10 @@ export const checkContract: ComponentContract = {
   type: "check",
   versions: ["1.0"],
   act: "decide",
+  vote: (c) => {
+    const x = c as unknown as CheckConfig;
+    return { promptKey: x.promptKey, options: x.options.map((k) => ({ id: k, labelKey: k })) };
+  },
   configSchema: {
     type: "object",
     required: ["promptKey", "options", "answer"],

@@ -2,6 +2,7 @@
 import { Component, memo, useCallback, type CSSProperties, useEffect, useId, useMemo, useRef, useState, type ErrorInfo, type ReactNode } from "react";
 import { DEPTHS, type Block, type CheckItem, type Depth, type Lesson } from "@lm/schema";
 import { EngineContext, useEngine, useLessonState, useStoreSelector, type EngineValue } from "./context";
+import { BlockIdContext } from "./live";
 import { createLessonT, createUiT, FALLBACK_LOCALE } from "./i18n";
 import { engineMessages } from "./messages";
 import type { Registry } from "./registry";
@@ -372,7 +373,7 @@ export const BlockFrame = memo(function BlockFrame({ block, firstUse }: { block:
 
   const isAct = plugin.act !== "connective";
   return (
-    <div className={isAct ? "lm-block lm-act" : "lm-block"} id={`block-${block.id}`} data-type={block.type} data-act={plugin.act} tabIndex={-1} onFocusCapture={() => store.touch(block.id)}>
+    <div className={isAct ? "lm-block lm-act" : "lm-block"} id={`block-${block.id}`} data-type={block.type} data-act={plugin.act} data-block-id={block.id} tabIndex={-1} onFocusCapture={() => store.touch(block.id)}>
       {isAct ? (
         <p className="lm-act__label">
           <span className="lm-act__dot" aria-hidden="true" />
@@ -387,7 +388,9 @@ export const BlockFrame = memo(function BlockFrame({ block, firstUse }: { block:
         </aside>
       ) : null}
       <BlockErrorBoundary fallback={missing}>
-        <Render block={block} config={config} mode={mode} state={blockState} setState={setState} readBlock={readBlock} t={t} ui={componentUi} locale={locale} />
+        <BlockIdContext.Provider value={block.id}>
+          <Render block={block} config={config} mode={mode} state={blockState} setState={setState} readBlock={readBlock} t={t} ui={componentUi} locale={locale} />
+        </BlockIdContext.Provider>
       </BlockErrorBoundary>
       <BlockFooter block={block} canReset={blockState !== undefined} />
     </div>
