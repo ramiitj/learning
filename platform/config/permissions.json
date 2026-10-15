@@ -1,0 +1,37 @@
+{
+  "note": "What each agent may do through the platform's tools, transcribed from the 'May' and 'May not' sections of the profiles in platform/agents/. Enforced at the tool level by the CMS access rules and the orchestrator. No agent may publish, unpublish, delete published content, change profiles, permissions or the constitution, or touch learner data. Changes to this file are always-ask (docs/10).",
+  "agents": {
+    "editor-in-chief": {
+      "read": ["*"],
+      "write": ["lessons", "detours", "pipeline-runs"],
+      "actions": ["assign-task", "run-validation", "request-preview", "create-decision"]
+    },
+    "curriculum-instructional-designer": {
+      "read": ["lessons", "detours", "concepts", "glossary", "analogies", "audiences"],
+      "write": ["lessons", "detours", "glossary"],
+      "actions": ["run-validation", "propose-concept"]
+    },
+    "learning-experience-designer": {
+      "read": ["lessons", "detours", "concepts", "glossary", "analogies", "audiences", "media"],
+      "write": ["lessons"],
+      "actions": ["run-validation", "propose-component"]
+    },
+    "analogy-specialist": {
+      "read": ["lessons", "concepts", "analogies", "audiences"],
+      "write": ["analogies", "lessons:analogy-blocks"],
+      "actions": ["run-validation"]
+    },
+    "localisation-specialist": {
+      "read": ["lessons", "detours", "glossary", "analogies", "teacher-guides"],
+      "write": ["lessons:non-english-strings", "detours:non-english-strings", "glossary:non-english", "teacher-guides:non-english"],
+      "actions": ["run-validation", "propose-glossary-term"]
+    },
+    "educator-enablement": {
+      "read": ["lessons", "teacher-guides"],
+      "write": ["teacher-guides"],
+      "actions": []
+    },
+    "accuracy-safety-reviewer": { "read": ["lessons", "detours", "glossary", "analogies", "teacher-guides", "media"], "write": [], "actions": ["flag"] },
+    "novice-learner-panel": { "read": ["lessons", "detours", "glossary"], "write": [], "actions": ["flag"] }
+  }
+}

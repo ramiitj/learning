@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -7,7 +8,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ["@lm/engine", "@lm/primitives", "@lm/schema", "@lm/tokens"],
+  transpilePackages: ["@lm/engine", "@lm/primitives", "@lm/schema", "@lm/tokens", "@lm/validation"],
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   turbopack: { root: path.join(import.meta.dirname, "../..") },
   async headers() {
@@ -24,4 +25,4 @@ const config: NextConfig = {
   },
 };
 
-export default withNextIntl(config);
+export default withPayload(withNextIntl(config), { devBundleServerPackages: false });
