@@ -4,6 +4,34 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — Phases 4–5: orchestrator, console modules, simulations, analytics, modules
+
+**Engineering** (within the approved Phases 2–6 build; reversible by the creator):
+1. **The pipeline runs as a step machine (`packages/orchestrator`).**
+   - Stages follow `docs/09`: plan → draft → analogies → compose → localise → review → revise → localise the changed strings only → re-review → resolve → teacher guide → creator preview.
+   - A cron tick advances one step per run, and each step is one agent call under that agent's own CMS permissions.
+   - A run pauses when the budget reaches its alert level, when an agent it needs is switched off, or when a flag survives revision. An urgent run continues past the alert level, but never past the limit.
+   - It never publishes. It ends with one publish decision for the creator.
+2. **One component catalogue (`packages/catalogue`) feeds the validator, the CMS, the MCP server and the web app**, so there is no second list of components to drift.
+3. **The six AI simulations are plugins in `packages/sim-ai`**: train-classifier, pixel-grid, next-word-model, layer-builder, dilemma-vote and hillside.
+   - Each has a contract (config schema, string keys, live vote shape) and personal and classroom variants.
+   - A learning-experience review found 8 blocking issues, all of which were fixed. The review report is kept with the session notes.
+4. **Analytics are anonymous daily totals.**
+   - Rows are keyed by day, lesson, locale, mode, metric and key, with no identifiers or timestamps.
+   - The browser sends nothing when Do Not Track or Global Privacy Control is on.
+   - The console hides counts under 5.
+   - Learning gain needs the pre-check display decision (deferred item 2 from 2026-09-24).
+5. **Teacher guides and parent pages are public pages per lesson** (`/lessons/<id>/teach`, `/lessons/<id>/parents`). They show English with a notice until a guide is translated. The parent page collects nothing.
+6. **The six modules (`docs/13`) were drafted through the pipeline roles** by the build team's agents.
+   - They are drafts: Hindi and Telugu need native-speaker review, and the creator publishes.
+   - `examples/m1-how-do-machines-learn.json` now matches the current train-classifier shape.
+
+*For the creator's decision:*
+- **Pre-checks:** whether learners see them, which is needed to measure learning gain.
+- **Agent profiles:** adding a "Rubric:" line to each profile in `platform/agents/`.
+- **`platform/config/permissions.json`:** approval of the agent permissions.
+- **Hillside in classroom mode:** live votes currently accumulate across steps. Per-step votes need a per-item vote concept in the live classroom.
+
 ## 2026-10-15 — Phases 2–6: live classroom, CMS, connector, creator sign-in
 
 **Creator**, asked to "build a full-fledged full-stack application":
