@@ -3,7 +3,7 @@ import { actorOf, agentGrant, publishedOrStaff, recentlyAuthenticated, staffWrit
 import { auditHooks } from "../events";
 import { validateWithCms } from "../validation";
 import { revalidateLesson } from "../revalidate";
-import { contracts } from "@lm/primitives/contracts";
+import { catalogue as contracts } from "@lm/catalogue";
 
 type LessonDoc = { id: string; strings?: Record<string, Record<string, string>>; stages?: unknown[]; meta?: { titleKey?: string } };
 

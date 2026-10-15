@@ -10,7 +10,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { ROOT, loadAgent, runStructured, systemPrompt, enforceArtifact, enforceReviewer, reviewerOutputSchema, type AgentKit, type MakerRubric, type ReviewerOutput, type ReviewerRubric, type RunResult, type Violation } from "@lm/agents";
-import { contracts } from "@lm/primitives/contracts";
+import { catalogue as contracts } from "@lm/catalogue";
 import type { Lesson } from "@lm/schema";
 import type { ValidationReport } from "@lm/validation";
 

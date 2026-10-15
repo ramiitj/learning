@@ -1,8 +1,9 @@
 "use client";
 import { BlockPreview, LessonView, Registry, type Detour, type Glossary, type LessonDoc, type Mode } from "@lm/engine";
 import { primitives } from "@lm/primitives";
+import { aiSimulations } from "@lm/sim-ai";
 
-const registry = new Registry(primitives);
+const registry = new Registry([...primitives, ...aiSimulations]);
 
 export function LessonClient(props: { lesson: LessonDoc; locale: string; mode: Mode; glossary: Glossary; detours: Record<string, Detour> }) {
   return <LessonView {...props} registry={registry} />;

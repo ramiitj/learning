@@ -14,6 +14,7 @@
     "@lm/agents": "workspace:*",
     "@lm/schema": "workspace:*",
     "@lm/validation": "workspace:*",
-    "@lm/primitives": "workspace:*"
+    "@lm/primitives": "workspace:*",
+    "@lm/catalogue": "workspace:*"
   }
 }

@@ -1,8 +1,7 @@
 import type { AdminViewServerProps } from "payload";
 import { DefaultTemplate } from "@payloadcms/next/templates";
 import { Gutter } from "@payloadcms/ui";
-import { contracts } from "@lm/primitives/contracts";
-import { componentMessages } from "@lm/primitives/messages";
+import { catalogue as contracts, catalogueMessages as componentMessages } from "@lm/catalogue";
 
 /** Platform: the component registry. New components are always-ask: they are proposed in the decision queue, never added here. */
 export async function ComponentsView({ initPageResult, params, searchParams }: AdminViewServerProps) {

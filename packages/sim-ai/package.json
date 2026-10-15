@@ -1,0 +1,24 @@
+{
+  "name": "@lm/sim-ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contracts": "./src/contracts.ts",
+    "./messages": "./src/messages.ts",
+    "./styles.css": "./styles.css"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@lm/engine": "workspace:*",
+    "@lm/schema": "workspace:*",
+    "@lm/primitives": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

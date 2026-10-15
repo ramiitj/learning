@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { createLessonT } from "@lm/engine";
-import { contracts } from "@lm/primitives/contracts";
+import { catalogue as contracts } from "@lm/catalogue";
 import { allBlocks } from "@lm/schema";
 import { cmsClient } from "@/cms/client";
 import { findSession, normaliseCode } from "@/classroom/server";

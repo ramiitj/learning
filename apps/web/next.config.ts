@@ -8,7 +8,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const config: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ["@lm/engine", "@lm/primitives", "@lm/schema", "@lm/tokens", "@lm/validation", "@lm/agents", "@lm/orchestrator"],
+  transpilePackages: ["@lm/engine", "@lm/primitives", "@lm/schema", "@lm/tokens", "@lm/validation", "@lm/agents", "@lm/orchestrator", "@lm/catalogue", "@lm/sim-ai"],
   outputFileTracingRoot: path.join(import.meta.dirname, "../.."),
   turbopack: { root: path.join(import.meta.dirname, "../..") },
   async headers() {

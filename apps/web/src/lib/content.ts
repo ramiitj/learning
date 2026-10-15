@@ -5,7 +5,7 @@ import { cookies, draftMode } from "next/headers";
 import { readPreview } from "@/auth/session";
 import { unstable_cache } from "next/cache";
 import type { Detour, Glossary, GlossaryEntry } from "@lm/engine";
-import { contracts } from "@lm/primitives/contracts";
+import { catalogue as contracts } from "@lm/catalogue";
 import type { Lesson } from "@lm/schema";
 import { hasErrors, validateLesson } from "@lm/schema/validate";
 

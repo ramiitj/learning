@@ -6,7 +6,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import { contracts } from "@lm/primitives/contracts";
+import { catalogue as contracts } from "@lm/catalogue";
 import { hasErrors, validateBlocks, type Issue } from "@lm/schema/validate";
 import { validate } from "@lm/validation";
 import { repoContext } from "@lm/validation/repo";

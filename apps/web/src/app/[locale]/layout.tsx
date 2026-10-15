@@ -11,6 +11,7 @@ import { fontVariables } from "@/lib/fonts";
 import "@lm/tokens/tokens.css";
 import "@lm/engine/styles.css";
 import "@lm/primitives/styles.css";
+import "@lm/sim-ai/styles.css";
 import "../site.css";
 
 export function generateStaticParams() {

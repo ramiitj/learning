@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import { contracts } from "@lm/primitives/contracts";
-import { howToByLocale } from "@lm/primitives/messages";
+import { catalogue as contracts, howToByLocale } from "@lm/catalogue";
 import type { ValidationContext } from "./index";
 
 /**
