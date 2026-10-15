@@ -1,0 +1,112 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "When a program is used to decide something about a person, ask: what examples was it trained on, who checks it, and who is responsible?",
+    "Different ways of thinking about right and wrong can reach different answers to the same problem; explain the reason behind one.",
+    "A chatbot can say something false in the same sure voice as something true. It does not know when it is wrong.",
+    "Describe what a program does without saying it thinks or feels, and say why that matters."
+  ],
+  "before": [
+    "Open the lesson in classroom mode and set the projected language. Students need no devices.",
+    "Write the three questions on the board and cover them: What examples was it trained on? Who checks it? Who answers for it if it goes wrong?",
+    "Each student needs one sheet of paper for their principles card. You do not collect it."
+  ],
+  "timing": [
+    {
+      "segment": "Settle and hook",
+      "minutes": 3,
+      "teacherDoes": "Read the camp story: same marks, scores 82 and 61. Ask: was that fair?",
+      "studentsDo": "Thumbs up, down or sideways."
+    },
+    {
+      "segment": "Predict",
+      "minutes": 3,
+      "teacherDoes": "Read the three reasons, count hands, enter the tally, show the answer.",
+      "studentsDo": "Vote; two students say why."
+    },
+    {
+      "segment": "Camp vote",
+      "minutes": 6,
+      "teacherDoes": "Count hands, then press 'Show the next way of thinking' four times, reading each card.",
+      "studentsDo": "Vote; say which reason convinces them most."
+    },
+    {
+      "segment": "Who did what?",
+      "minutes": 4,
+      "teacherDoes": "Read each step; class votes 'person' or 'program'.",
+      "studentsDo": "Vote item by item."
+    },
+    {
+      "segment": "Homework chatbot vote",
+      "minutes": 5,
+      "teacherDoes": "Read Farhan's story (Aryabhata really launched in 1975). Count hands, reveal the four cards.",
+      "studentsDo": "Vote; pairs discuss who should do most."
+    },
+    {
+      "segment": "Name the ideas",
+      "minutes": 4,
+      "teacherDoes": "Show the four questions (ethical frameworks), run the Zoya check, uncover the board questions.",
+      "studentsDo": "Vote; copy the three questions."
+    },
+    {
+      "segment": "Confident and wrong",
+      "minutes": 5,
+      "teacherDoes": "Ask the prediction, then let students pick questions for the practice chatbot. Read answers aloud.",
+      "studentsDo": "Guess 'breaks' or 'holds up' first."
+    },
+    {
+      "segment": "The bluffing student",
+      "minutes": 3,
+      "teacherDoes": "Read the viva comparison and its break point.",
+      "studentsDo": "Say where the comparison stops working."
+    },
+    {
+      "segment": "What really happened?",
+      "minutes": 2,
+      "teacherDoes": "Read the headline and three sentences; count hands; show the strongest.",
+      "studentsDo": "Vote."
+    },
+    {
+      "segment": "My principles",
+      "minutes": 3,
+      "teacherDoes": "Type a few general rules the class suggests (no names or stories). Show the class card.",
+      "studentsDo": "Write up to three own rules on paper and keep it."
+    },
+    {
+      "segment": "Wrap-up",
+      "minutes": 2,
+      "teacherDoes": "Ask: who is responsible when a program is unfair?",
+      "studentsDo": "Answer: people, not the program."
+    }
+  ],
+  "ifShortOfTime": "Skip 'Who did what?' and say its result: four of six steps were people's choices. Skip the keyboard comparison; set the friendly-app vote as home discussion.",
+  "misconceptions": [
+    {
+      "studentsSay": "The program doesn't like Hindi (or Telugu).",
+      "goodResponse": "A program has no likes. Its training examples were mostly English, so English matched its patterns better. People chose those examples."
+    },
+    {
+      "studentsSay": "It sounds sure, so it must be right.",
+      "goodResponse": "True and false answers come from the same process and can sound equally sure. Check important facts in a trusted place."
+    },
+    {
+      "studentsSay": "The chatbot lied.",
+      "goodResponse": "Lying means knowing the truth and hiding it. The chatbot produced likely-sounding words; it has no reliable check for truth."
+    },
+    {
+      "studentsSay": "It's the computer's fault, so nobody is to blame.",
+      "goodResponse": "People chose the examples, built the program and used its scores. Responsibility stays with them."
+    },
+    {
+      "studentsSay": "Each vote must have one right answer.",
+      "goodResponse": "Thoughtful people disagree. Give a good reason and listen to other reasons."
+    }
+  ],
+  "discussionPrompts": [
+    "Which way of thinking feels closest to how you usually decide? Why?",
+    "Should a person always check a program's decision about a student?"
+  ],
+  "noDeviceAlternative": "Read each story aloud and write options A, B, C on the board; students vote with hands. Read the four ways of thinking one at a time and ask who agrees. List the six steps for 'Who did what?' and let students call out 'person' or 'program'. Read the chatbot's answers after students guess. Everyone writes their card on paper.",
+  "ifYouDontKnow": "Say: 'I am not sure. Let us write it down and check a trusted source together.' That is the habit this lesson teaches. You need not know how chatbots are built.",
+  "parentNote": "Today your child explored fairness and AI: why a program can treat people unfairly when it is trained on narrow examples, why chatbots can state false things confidently, and why people, not programs, are responsible. They wrote a few personal principles for using AI on paper. Ask them to show you their card and the three questions on it. Nothing they wrote was collected."
+}

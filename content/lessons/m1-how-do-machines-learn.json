@@ -1,0 +1,1361 @@
+{
+  "id": "m1-how-do-machines-learn",
+  "schemaVersion": "1.0",
+  "version": 1,
+  "status": "draft",
+  "meta": {
+    "titleKey": "title",
+    "subtitleKey": "subtitle",
+    "subject": "ai",
+    "course": "ai-for-kids",
+    "module": "m1",
+    "issue": "issue-01",
+    "concepts": [
+      "pattern",
+      "example",
+      "learning-from-examples"
+    ],
+    "objectives": [
+      {
+        "id": "o1",
+        "textKey": "obj.o1"
+      },
+      {
+        "id": "o2",
+        "textKey": "obj.o2"
+      },
+      {
+        "id": "o3",
+        "textKey": "obj.o3"
+      }
+    ],
+    "prerequisites": [],
+    "audiences": [
+      "school-13-17"
+    ],
+    "curriculumTags": [],
+    "estimatedMinutes": 40,
+    "teacherGuide": "m1-how-do-machines-learn",
+    "provenance": "agent pipeline v1 (AI-assisted draft); hi and te are unreviewed machine-assisted drafts; awaiting native-speaker and creator review"
+  },
+  "stages": [
+    {
+      "stage": "hook",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "hook.text",
+            "questionKey": "hook.q"
+          },
+          "glossaryTerms": [
+            "label",
+            "rule"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "predict",
+      "blocks": [
+        {
+          "id": "b2",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "predict.prompt",
+            "choices": [
+              "predict.c1",
+              "predict.c2",
+              "predict.c3"
+            ],
+            "answer": "predict.c2",
+            "confidence": true,
+            "revealKey": "predict.reveal",
+            "choiceFeedback": {
+              "predict.c1": "predict.f1",
+              "predict.c3": "predict.f3"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "example",
+            "pattern",
+            "rule"
+          ],
+          "detours": [
+            "rule",
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "manipulate",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "sort",
+          "componentVersion": "1.0",
+          "config": {
+            "instructionKey": "sort.instruction",
+            "groups": [
+              "sort.g1",
+              "sort.g2"
+            ],
+            "items": [
+              {
+                "id": "mango",
+                "labelKey": "sort.mango"
+              },
+              {
+                "id": "potato",
+                "labelKey": "sort.potato"
+              },
+              {
+                "id": "tomato",
+                "labelKey": "sort.tomato"
+              },
+              {
+                "id": "banana",
+                "labelKey": "sort.banana"
+              },
+              {
+                "id": "onion",
+                "labelKey": "sort.onion"
+              },
+              {
+                "id": "guava",
+                "labelKey": "sort.guava"
+              },
+              {
+                "id": "brinjal",
+                "labelKey": "sort.brinjal"
+              },
+              {
+                "id": "cucumber",
+                "labelKey": "sort.cucumber"
+              },
+              {
+                "id": "papaya",
+                "labelKey": "sort.papaya"
+              },
+              {
+                "id": "ladysfinger",
+                "labelKey": "sort.ladysfinger"
+              },
+              {
+                "id": "chikoo",
+                "labelKey": "sort.chikoo"
+              },
+              {
+                "id": "cauliflower",
+                "labelKey": "sort.cauliflower"
+              },
+              {
+                "id": "carrot",
+                "labelKey": "sort.carrot"
+              },
+              {
+                "id": "grapes",
+                "labelKey": "sort.grapes"
+              },
+              {
+                "id": "spinach",
+                "labelKey": "sort.spinach"
+              },
+              {
+                "id": "watermelon",
+                "labelKey": "sort.watermelon"
+              },
+              {
+                "id": "bottlegourd",
+                "labelKey": "sort.bottlegourd"
+              },
+              {
+                "id": "pomegranate",
+                "labelKey": "sort.pomegranate"
+              },
+              {
+                "id": "bittergourd",
+                "labelKey": "sort.bittergourd"
+              },
+              {
+                "id": "orange",
+                "labelKey": "sort.orange"
+              }
+            ],
+            "revealKey": "sort.reveal"
+          },
+          "classroom": {
+            "mode": "vote-per-item"
+          },
+          "glossaryTerms": [
+            "label",
+            "example"
+          ]
+        },
+        {
+          "id": "b4",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "p2.prompt",
+            "choices": [
+              "p2.c1",
+              "p2.c2",
+              "p2.c3"
+            ],
+            "confidence": true,
+            "revealKey": "p2.reveal",
+            "choiceFeedback": {
+              "p2.c1": "p2.f12",
+              "p2.c2": "p2.f12",
+              "p2.c3": "p2.f3"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        },
+        {
+          "id": "b5",
+          "type": "train-classifier",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "tc.prompt",
+            "groups": [
+              "sort.g1",
+              "sort.g2"
+            ],
+            "features": [
+              {
+                "id": "sweet",
+                "labelKey": "tc.f.sweet"
+              },
+              {
+                "id": "cooked",
+                "labelKey": "tc.f.cooked"
+              }
+            ],
+            "items": [
+              {
+                "id": "mango",
+                "labelKey": "sort.mango",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "potato",
+                "labelKey": "sort.potato",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "tomato",
+                "labelKey": "sort.tomato",
+                "features": {
+                  "sweet": 3,
+                  "cooked": 6
+                }
+              },
+              {
+                "id": "banana",
+                "labelKey": "sort.banana",
+                "features": {
+                  "sweet": 8,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "onion",
+                "labelKey": "sort.onion",
+                "features": {
+                  "sweet": 2,
+                  "cooked": 8
+                }
+              },
+              {
+                "id": "guava",
+                "labelKey": "sort.guava",
+                "features": {
+                  "sweet": 6,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "brinjal",
+                "labelKey": "sort.brinjal",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "cucumber",
+                "labelKey": "sort.cucumber",
+                "features": {
+                  "sweet": 2,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "papaya",
+                "labelKey": "sort.papaya",
+                "features": {
+                  "sweet": 7,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "ladysfinger",
+                "labelKey": "sort.ladysfinger",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "chikoo",
+                "labelKey": "sort.chikoo",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "cauliflower",
+                "labelKey": "sort.cauliflower",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 9
+                }
+              },
+              {
+                "id": "carrot",
+                "labelKey": "sort.carrot",
+                "features": {
+                  "sweet": 5,
+                  "cooked": 5
+                }
+              },
+              {
+                "id": "grapes",
+                "labelKey": "sort.grapes",
+                "features": {
+                  "sweet": 8,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "spinach",
+                "labelKey": "sort.spinach",
+                "features": {
+                  "sweet": 0,
+                  "cooked": 9
+                }
+              },
+              {
+                "id": "watermelon",
+                "labelKey": "sort.watermelon",
+                "features": {
+                  "sweet": 7,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "bottlegourd",
+                "labelKey": "sort.bottlegourd",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "pomegranate",
+                "labelKey": "sort.pomegranate",
+                "features": {
+                  "sweet": 7,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "bittergourd",
+                "labelKey": "sort.bittergourd",
+                "features": {
+                  "sweet": 0,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "orange",
+                "labelKey": "sort.orange",
+                "features": {
+                  "sweet": 7,
+                  "cooked": 0
+                }
+              }
+            ],
+            "testItems": [
+              {
+                "id": "litchi",
+                "labelKey": "tc.litchi",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 0
+                }
+              },
+              {
+                "id": "pumpkin",
+                "labelKey": "tc.pumpkin",
+                "features": {
+                  "sweet": 3,
+                  "cooked": 9
+                }
+              },
+              {
+                "id": "amla",
+                "labelKey": "tc.amla",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 2
+                }
+              },
+              {
+                "id": "rasgulla",
+                "labelKey": "tc.rasgulla",
+                "features": {
+                  "sweet": 10,
+                  "cooked": 10
+                }
+              }
+            ],
+            "fromBlock": "b3",
+            "explainKey": "tc.explain"
+          },
+          "glossaryTerms": [
+            "training",
+            "learning-from-examples",
+            "pattern"
+          ],
+          "detours": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "explain",
+      "blocks": [
+        {
+          "id": "b6",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "res.text",
+            "steps": [
+              "res.s1",
+              "res.s2",
+              "res.s3",
+              "res.s4",
+              "res.s5"
+            ]
+          }
+        },
+        {
+          "id": "b7",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "bankId": "child-learns-dog",
+            "concept": "learning-from-examples",
+            "titleKey": "an1.title",
+            "sourceKey": "an1.source",
+            "mappings": [
+              {
+                "sourceKey": "an1.m1s",
+                "targetKey": "an1.m1t"
+              },
+              {
+                "sourceKey": "an1.m2s",
+                "targetKey": "an1.m2t"
+              },
+              {
+                "sourceKey": "an1.m3s",
+                "targetKey": "an1.m3t"
+              },
+              {
+                "sourceKey": "an1.m4s",
+                "targetKey": "an1.m4t"
+              }
+            ],
+            "breakPointKey": "an1.break",
+            "fading": [
+              "an1.f1",
+              "an1.f2",
+              "an1.f3"
+            ]
+          },
+          "classroom": {
+            "mode": "teacher-led"
+          }
+        },
+        {
+          "id": "b8",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "bankId": "friends-handwriting",
+            "concept": "learning-from-examples",
+            "titleKey": "an2.title",
+            "sourceKey": "an2.source",
+            "mappings": [
+              {
+                "sourceKey": "an2.m1s",
+                "targetKey": "an2.m1t"
+              },
+              {
+                "sourceKey": "an2.m2s",
+                "targetKey": "an2.m2t"
+              },
+              {
+                "sourceKey": "an2.m3s",
+                "targetKey": "an2.m3t"
+              },
+              {
+                "sourceKey": "an2.m4s",
+                "targetKey": "an2.m4t"
+              }
+            ],
+            "breakPointKey": "an2.break"
+          },
+          "classroom": {
+            "mode": "teacher-led"
+          }
+        },
+        {
+          "id": "b9",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "dist.text",
+            "steps": [
+              "dist.s1",
+              "dist.s2",
+              "dist.s3",
+              "dist.s4",
+              "dist.s5"
+            ]
+          },
+          "depth": "deeper"
+        },
+        {
+          "id": "b10",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "ch.prompt",
+            "options": [
+              "ch.o1",
+              "ch.o2",
+              "ch.o3"
+            ],
+            "answer": "ch.o1",
+            "feedback": {
+              "ch.o2": "ch.f2",
+              "ch.o3": "ch.f3"
+            },
+            "hints": [
+              "ch.h1",
+              "ch.h2"
+            ],
+            "explainKey": "ch.explain",
+            "detour": "pattern"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "break-it",
+      "blocks": [
+        {
+          "id": "b11",
+          "type": "train-classifier",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "lab.prompt",
+            "groups": [
+              "sort.g1",
+              "sort.g2"
+            ],
+            "features": [
+              {
+                "id": "sweet",
+                "labelKey": "tc.f.sweet"
+              },
+              {
+                "id": "cooked",
+                "labelKey": "tc.f.cooked"
+              }
+            ],
+            "items": [
+              {
+                "id": "mango1",
+                "labelKey": "lab.mango1",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "mango2",
+                "labelKey": "lab.mango2",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "banana",
+                "labelKey": "lab.banana",
+                "features": {
+                  "sweet": 8,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "potato1",
+                "labelKey": "lab.potato1",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "potato2",
+                "labelKey": "lab.potato2",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              },
+              {
+                "id": "onion",
+                "labelKey": "lab.onion",
+                "features": {
+                  "sweet": 2,
+                  "cooked": 8
+                }
+              }
+            ],
+            "testItems": [
+              {
+                "id": "newmango",
+                "labelKey": "lab.newmango",
+                "features": {
+                  "sweet": 9,
+                  "cooked": 1
+                }
+              },
+              {
+                "id": "newpotato",
+                "labelKey": "lab.newpotato",
+                "features": {
+                  "sweet": 1,
+                  "cooked": 10
+                }
+              }
+            ],
+            "explainKey": "lab.explain"
+          }
+        },
+        {
+          "id": "b12",
+          "type": "break-it",
+          "componentVersion": "1.0",
+          "config": {
+            "challengeKey": "br.challenge",
+            "target": "b11",
+            "attempts": [
+              {
+                "id": "t1",
+                "labelKey": "br.t1",
+                "resultKey": "br.r1",
+                "breaks": true
+              },
+              {
+                "id": "t2",
+                "labelKey": "br.t2",
+                "resultKey": "br.r2",
+                "breaks": true
+              },
+              {
+                "id": "t3",
+                "labelKey": "br.t3",
+                "resultKey": "br.r3",
+                "breaks": false
+              },
+              {
+                "id": "t4",
+                "labelKey": "br.t4",
+                "resultKey": "br.r4",
+                "breaks": false
+              }
+            ],
+            "reflectKey": "br.reflect"
+          },
+          "classroom": {
+            "mode": "class-suggests"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "transfer-reflect",
+      "blocks": [
+        {
+          "id": "b13",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": {
+            "mode": "choose",
+            "promptKey": "eb1.prompt",
+            "options": [
+              {
+                "id": "e1",
+                "textKey": "eb1.o1",
+                "feedbackKey": "eb1.f1",
+                "best": true
+              },
+              {
+                "id": "e2",
+                "textKey": "eb1.o2",
+                "feedbackKey": "eb1.f2"
+              },
+              {
+                "id": "e3",
+                "textKey": "eb1.o3",
+                "feedbackKey": "eb1.f3"
+              }
+            ]
+          }
+        },
+        {
+          "id": "b14",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": {
+            "mode": "own-analogy",
+            "promptKey": "eb2.prompt",
+            "breakPointPromptKey": "eb2.break",
+            "modelAnswerKey": "eb2.model"
+          }
+        },
+        {
+          "id": "b15",
+          "type": "takeaway",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "take.title",
+            "cardKey": "take.card",
+            "includes": [
+              "b5",
+              "b11",
+              "b14"
+            ],
+            "labelKeys": [
+              "take.l1",
+              "take.l2",
+              "take.l3"
+            ]
+          },
+          "classroom": {
+            "mode": "class-card"
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pre": [
+      {
+        "id": "pre1",
+        "objective": "o1",
+        "promptKey": "pre1.q",
+        "options": [
+          "pre1.a",
+          "pre1.b",
+          "pre1.c"
+        ],
+        "answer": "pre1.b"
+      },
+      {
+        "id": "pre2",
+        "objective": "o2",
+        "promptKey": "pre2.q",
+        "options": [
+          "pre2.a",
+          "pre2.b",
+          "pre2.c"
+        ],
+        "answer": "pre2.b"
+      },
+      {
+        "id": "pre3",
+        "objective": "o3",
+        "promptKey": "pre3.q",
+        "options": [
+          "pre3.a",
+          "pre3.b",
+          "pre3.c"
+        ],
+        "answer": "pre3.b"
+      }
+    ],
+    "post": [
+      {
+        "id": "post1",
+        "objective": "o1",
+        "promptKey": "post1.q",
+        "options": [
+          "post1.a",
+          "post1.b",
+          "post1.c"
+        ],
+        "answer": "post1.b",
+        "feedbackKey": "post1.fb"
+      },
+      {
+        "id": "post2",
+        "objective": "o2",
+        "promptKey": "post2.q",
+        "options": [
+          "post2.a",
+          "post2.b",
+          "post2.c"
+        ],
+        "answer": "post2.c",
+        "feedbackKey": "post2.fb"
+      },
+      {
+        "id": "post3",
+        "objective": "o3",
+        "promptKey": "post3.q",
+        "options": [
+          "post3.a",
+          "post3.b",
+          "post3.c"
+        ],
+        "answer": "post3.b",
+        "feedbackKey": "post3.fb"
+      }
+    ]
+  },
+  "strings": {
+    "en": {
+      "title": "How do machines learn?",
+      "subtitle": "Teach one yourself, then try to mix it up.",
+      "obj.o1": "Explain that a machine like this learns a pattern from labelled examples, not from rules someone typed in.",
+      "obj.o2": "Explain why messy or inconsistent labels give a machine unreliable answers.",
+      "obj.o3": "Say what the machine does not do: it does not understand things, and it can only use the labels it was given.",
+      "hook.text": "A photo app is shown two pictures. Picture 1 is a ripe mango. The app gives it a <term-label>label</term-label>, a name for its group: “Mango. Very sure.” Picture 2 is a yellow tennis ball. The app’s label: “Mango. Very sure.”",
+      "hook.q": "Nobody typed in a <term-rule>rule</term-rule> for what a mango looks like. So how did the app choose its labels? And why is it so sure about the ball?",
+      "predict.prompt": "How do you think the app learned to label mangoes?",
+      "predict.c1": "Someone typed in a rule: round and yellow means mango.",
+      "predict.c2": "It was shown many photos that people had labelled “mango”, and it found what they share.",
+      "predict.c3": "It understands what a mango is, the way you do.",
+      "predict.f1": "Good thinking: that rule would call the ball a mango too! But try writing rules for every mango: ripe, raw, cut, in a basket. It gets very hard. Most photo apps learn from examples instead.",
+      "predict.f3": "It can look that way, because its labels are often right. But would anyone who understands mangoes call a tennis ball one? Keep that question in mind.",
+      "predict.reveal": "The app learned from <term-example>examples</term-example>: many photos, each with a label that a person gave it. It found a <term-pattern>pattern</term-pattern>, something the mango photos have in common. Nobody wrote a <term-rule>rule</term-rule> for it. Next, you will teach a machine yourself.",
+      "sort.instruction": "You are the teacher now. Put each of these 20 foods into a group: Fruit or Vegetable. Go with your own sense. Some are tricky, and nobody will mark your choices right or wrong.",
+      "sort.g1": "Fruit",
+      "sort.g2": "Vegetable",
+      "sort.mango": "Mango",
+      "sort.potato": "Potato",
+      "sort.tomato": "Tomato",
+      "sort.banana": "Banana",
+      "sort.onion": "Onion",
+      "sort.guava": "Guava",
+      "sort.brinjal": "Brinjal",
+      "sort.cucumber": "Cucumber",
+      "sort.papaya": "Papaya",
+      "sort.ladysfinger": "Lady’s finger (bhindi)",
+      "sort.chikoo": "Chikoo (sapota)",
+      "sort.cauliflower": "Cauliflower",
+      "sort.carrot": "Carrot",
+      "sort.grapes": "Grapes",
+      "sort.spinach": "Spinach (palak)",
+      "sort.watermelon": "Watermelon",
+      "sort.bottlegourd": "Bottle gourd (lauki)",
+      "sort.pomegranate": "Pomegranate",
+      "sort.bittergourd": "Bitter gourd (karela)",
+      "sort.orange": "Orange",
+      "sort.reveal": "Did tomato or cucumber make you pause? To a plant scientist, both are fruits. In most kitchens, they are vegetables. So a label is a choice that people make. Your labels are now the machine’s examples.",
+      "p2.prompt": "Soon your machine will meet four foods it has never seen. One is rasgulla, a sweet. What label will it give rasgulla?",
+      "p2.c1": "Fruit",
+      "p2.c2": "Vegetable",
+      "p2.c3": "Neither: it will say “a sweet”.",
+      "p2.f12": "Maybe! It depends on which of your examples turn out closest to rasgulla.",
+      "p2.f3": "That is what a person would say. But this machine has only two labels to choose from. Watch what it does.",
+      "p2.reveal": "The machine can only pick from the labels it was given: Fruit or Vegetable. It has no label for “sweet”. Which one it picks depends on your examples. Train it and find out.",
+      "tc.prompt": "Now the machine learns from your sorting. It cannot taste or see food. So we gave it two numbers for each food, from 0 to 10. One is how sweet the food is. The other is how often people cook it before eating. We chose these rough numbers ourselves. Press “Train the machine”, then see how it labels four new foods. In the results, “neighbours” are the examples with the closest numbers. “Away” shows how different their numbers are.",
+      "tc.f.sweet": "Sweetness (0 to 10)",
+      "tc.f.cooked": "How often cooked (0 to 10)",
+      "tc.litchi": "Litchi",
+      "tc.pumpkin": "Pumpkin",
+      "tc.amla": "Amla (Indian gooseberry)",
+      "tc.rasgulla": "Rasgulla",
+      "tc.explain": "Here is everything the machine does. For a new food, it finds the 3 examples with the closest numbers: its neighbours. Then it copies the label that most of them have. Finding a link between examples and labels like this is called <term-learning-from-examples>learning from examples</term-learning-from-examples>, or <term-training>training</term-training>. It never tastes, sees or understands the food. Look at rasgulla: it had to be Fruit or Vegetable. Look at amla: its 3 neighbours are cucumber, tomato and carrot. Your labels for those three decided its label.",
+      "res.text": "Back to the photo app. It works on the same idea, at a much bigger size.",
+      "res.s1": "To a computer, a photo is a long list of numbers about colours.",
+      "res.s2": "The app was trained on many thousands of photos that people had labelled.",
+      "res.s3": "It found a pattern linking those numbers to labels. A yellow, round ball gives numbers that fit its pattern for “Mango”.",
+      "res.s4": "“Very sure” only means a close fit to the pattern. It does not mean the label is right.",
+      "res.s5": "And if “ball” was never one of its labels, it could never say “ball”.",
+      "an1.title": "A comparison: a small child learning “dog”",
+      "an1.source": "A small child is learning the word “dog”. Nobody gives them a rulebook. They see many dogs, and a grown-up says “dog” each time. Soon they point at a dog they have never seen and say “dog!”",
+      "an1.m1s": "The dogs the child sees",
+      "an1.m1t": "The examples you sorted",
+      "an1.m2s": "The grown-up saying “dog”",
+      "an1.m2t": "Your labels: Fruit or Vegetable",
+      "an1.m3s": "The child’s growing sense of what dogs look like",
+      "an1.m3t": "The pattern the machine finds in the numbers",
+      "an1.m4s": "Pointing at a new dog",
+      "an1.m4t": "Labelling a new food",
+      "an1.break": "Here the comparison stops working. A child needs only a few dogs. A machine usually needs thousands of examples. Your machine managed with 20 because it looks at only two numbers. The child also understands what a dog is: alive, furry, barking. The machine only matches numbers to labels. It has no idea what a mango or a dog is.",
+      "an1.f1": "Child: sees dogs + hears “dog” → spots a new dog. (“→” means “leads to”.)",
+      "an1.f2": "Machine: your foods + your labels → finds a pattern → labels a new food.",
+      "an1.f3": "Examples + labels → pattern → a label for something new. This is learning from examples.",
+      "an2.title": "Another comparison: a new friend’s handwriting",
+      "an2.source": "A new classmate shares their notes with you. At first, some letters are hard to read. Is that a “u” or an “n”? After a few pages, you can read words you have never seen them write.",
+      "an2.m1s": "The pages of notes",
+      "an2.m1t": "The examples",
+      "an2.m2s": "The words you can already read on those pages",
+      "an2.m2t": "The labels",
+      "an2.m3s": "Getting used to how they shape each letter",
+      "an2.m3t": "The pattern",
+      "an2.m4s": "Reading a word you have not seen them write",
+      "an2.m4t": "Labelling a new example",
+      "an2.break": "Here it stops working. When a word makes no sense, you notice and ask your friend. The machine cannot notice or ask. It copies the labels it is given, even wrong ones. You are about to test that.",
+      "dist.text": "Each result shows how far “away” each neighbour is. Smaller means more alike. Here is the working for amla and cucumber.",
+      "dist.s1": "Amla: sweetness 1, cooked 2. Cucumber: sweetness 2, cooked 1.",
+      "dist.s2": "The differences: sweetness 2 − 1 = 1, and cooked 2 − 1 = 1. (“−” means minus.)",
+      "dist.s3": "Square each difference: 1 × 1 = 1, and 1 × 1 = 1. Add them: 1 + 1 = 2. (“×” means times.)",
+      "dist.s4": "Take the square root of 2. That is the number which, times itself, makes 2: about 1.41.",
+      "dist.s5": "So cucumber is 1.41 away from amla. It is like a straight line on a map, with sweetness and cooking as the two directions.",
+      "ch.prompt": "Your machine gives a new food a label. Where does that label come from?",
+      "ch.o1": "From the 3 examples with the closest numbers",
+      "ch.o2": "From tasting the food",
+      "ch.o3": "From a rule someone typed in for that food",
+      "ch.f2": "The machine cannot taste. It only gets two numbers for each food. What does it do with them?",
+      "ch.f3": "Nobody typed a rule for rasgulla or amla. So where else could the label come from?",
+      "ch.h1": "Look at the results again, under “It relied on these examples”.",
+      "ch.h2": "It finds the 3 examples with the closest numbers. Then it copies the label most of them have.",
+      "ch.explain": "The label comes from the 3 closest examples. And those labels came from you.",
+      "lab.prompt": "Now break it on purpose. Here are six foods, with the same two numbers as before. Label them the usual way, except one: label Mango 2 as Vegetable. Then press “Train the machine”.",
+      "lab.mango1": "Mango 1",
+      "lab.mango2": "Mango 2",
+      "lab.banana": "Banana",
+      "lab.potato1": "Potato 1",
+      "lab.potato2": "Potato 2",
+      "lab.onion": "Onion",
+      "lab.newmango": "A new mango",
+      "lab.newpotato": "A new potato",
+      "lab.explain": "If you labelled Mango 2 as Vegetable, look at the new mango. Mango 1 and Mango 2 have exactly the same numbers, but different labels. So its neighbours disagree, and the machine shows a warning. It cannot work out which label is the mistake. It copies whatever labels it gets.",
+      "br.challenge": "More ways to mess up the labels. For each one, predict first: will the machine’s answers go wrong? You can also try each one in the lab above.",
+      "br.t1": "Label both mangoes Vegetable. Label the rest the usual way.",
+      "br.r1": "It now calls the new mango a Vegetable. Its 3 closest examples are Mango 1 and Mango 2 (Vegetable) and Banana (Fruit). Two votes beat one. No warning appears this time, because the two wrong labels agree with each other.",
+      "br.t2": "Label all six foods Fruit.",
+      "br.r2": "It calls the new potato a Fruit, and it is very sure: all 3 neighbours say Fruit. Very sure does not mean right.",
+      "br.t3": "Label everything the usual way, except the onion: label it Fruit.",
+      "br.r3": "The new potato is still a Vegetable. Its two closest examples are the potatoes, and they agree. The onion’s wrong label only makes it less sure: 2 of 3.",
+      "br.t4": "Label everything the usual way, then press “Train again”.",
+      "br.r4": "Same labels, same answers, every time. The machine follows the same steps on the same examples.",
+      "br.reflect": "Real apps learn from thousands of examples labelled by people. What could go wrong if some people label carelessly, or disagree? Who should check the labels?",
+      "eb1.prompt": "A new case. A team trains a machine on 5,000 photos of crop leaves. A plant expert labelled each photo “healthy” or “sick”. Which sentence describes the machine best?",
+      "eb1.o1": "It found a pattern linking the photos to the expert’s labels.",
+      "eb1.f1": "Yes. It learned from labelled examples, like your machine, only much bigger.",
+      "eb1.o2": "It understands plant diseases, like a plant doctor does.",
+      "eb1.f2": "It may label leaves well. But it has no idea what a disease is. Remember rasgulla: it only matches numbers to labels.",
+      "eb1.o3": "It will catch any photos the expert labelled wrongly.",
+      "eb1.f3": "Remember your lab: the machine copies its labels, even wrong ones. It cannot tell which ones are mistakes.",
+      "eb2.prompt": "Your turn. Think of something people learn from examples, not from a rulebook. Describe it as your own comparison with a machine.",
+      "eb2.break": "Where does your comparison stop working?",
+      "eb2.model": "Picking a ripe mango at the market by watching a grandparent choose. You see many mangoes and hear “this one is ripe”. Where it stops working: you can smell and press a mango, and you know what ripe means. A machine only matches numbers to labels.",
+      "take.title": "My first trained machine",
+      "take.card": "I trained a machine today. It found a pattern in the examples I labelled, and copied labels onto new things. It never understood the food. Messy labels gave it wrong answers, sometimes with no warning.",
+      "take.l1": "My machine",
+      "take.l2": "My break-it lab",
+      "take.l3": "My own comparison",
+      "pre1.q": "How does a photo app usually learn to label mangoes?",
+      "pre1.a": "A programmer types in a rule: yellow and round",
+      "pre1.b": "It is trained on many photos that people labelled",
+      "pre1.c": "It knows about mangoes from the start",
+      "pre2.q": "Some of a machine’s example photos have wrong labels. What happens?",
+      "pre2.a": "It spots the wrong labels and fixes them",
+      "pre2.b": "It learns from the wrong labels too",
+      "pre2.c": "Wrong labels make no difference",
+      "pre3.q": "A machine has only two labels: Fruit and Vegetable. It is shown a rasgulla. What can it say?",
+      "pre3.a": "Sweet",
+      "pre3.b": "Fruit or Vegetable",
+      "pre3.c": "Nothing at all",
+      "post1.q": "A machine is trained on 1,000 recordings of bird songs. An expert labelled each one with the bird’s name. What does the machine get from them?",
+      "post1.a": "What each bird is and how it lives",
+      "post1.b": "A pattern linking the sounds to the labels",
+      "post1.c": "Rules a programmer wrote for each bird",
+      "post1.fb": "It finds a pattern linking sounds to labels. Nobody typed rules, and it has no idea what a bird is.",
+      "post2.q": "By mistake, many crow songs in the examples were labelled “sparrow”. What happens?",
+      "post2.a": "The machine spots the mistakes and fixes them",
+      "post2.b": "Nothing changes",
+      "post2.c": "It mixes up crows and sparrows, because it copies the labels it gets",
+      "post2.fb": "It cannot tell which labels are mistakes. It copies what it is given, so its answers mix the two birds up.",
+      "post3.q": "The bird machine has only two labels: crow and sparrow. It hears a car horn. What will it say?",
+      "post3.a": "Car horn",
+      "post3.b": "Crow or sparrow, whichever pattern fits more closely",
+      "post3.c": "Nothing, because it can tell this is not a bird",
+      "post3.fb": "It can only use the labels it was given. It will pick crow or sparrow, maybe even “very sure”."
+    },
+    "hi": {
+      "title": "मशीनें कैसे सीखती हैं?",
+      "subtitle": "ख़ुद एक मशीन को सिखाइए, फिर उसे गड़बड़ाने की कोशिश कीजिए।",
+      "obj.o1": "समझा पाएँ कि ऐसी मशीन लेबल लगे उदाहरणों से एक पैटर्न सीखती है, किसी के टाइप किए नियमों से नहीं।",
+      "obj.o2": "समझा पाएँ कि गड़बड़ या आपस में मेल न खाने वाले लेबलों से मशीन के जवाब भरोसे लायक़ क्यों नहीं रहते।",
+      "obj.o3": "बता पाएँ कि मशीन क्या नहीं करती: वह चीज़ों को समझती नहीं, और सिर्फ़ उन्हीं लेबलों का इस्तेमाल कर सकती है जो उसे दिए गए।",
+      "hook.text": "एक फ़ोटो ऐप को दो तस्वीरें दिखाई जाती हैं। तस्वीर 1 में एक पका आम है। ऐप उसे एक <term-label>लेबल</term-label> देता है, यानी उसके समूह का नाम: “आम। पूरी तरह पक्का।” तस्वीर 2 में एक पीली टेनिस बॉल है। ऐप का लेबल: “आम। पूरी तरह पक्का।”",
+      "hook.q": "किसी ने आम की पहचान का कोई <term-rule>नियम</term-rule> टाइप नहीं किया। तो ऐप ने अपने लेबल कैसे चुने? और बॉल के बारे में वह इतना पक्का क्यों है?",
+      "predict.prompt": "आपके हिसाब से ऐप ने आम पर लेबल लगाना कैसे सीखा?",
+      "predict.c1": "किसी ने एक नियम टाइप किया: गोल और पीला हो, तो आम।",
+      "predict.c2": "उसे बहुत सारी फ़ोटो दिखाई गईं जिन पर लोगों ने “आम” का लेबल लगाया था, और उसने ढूँढा कि उनमें क्या एक जैसा है।",
+      "predict.c3": "वह समझता है कि आम क्या होता है, जैसे आप समझते हैं।",
+      "predict.f1": "अच्छा सोचा: यह नियम बॉल को भी आम कह देता! पर हर तरह के आम के लिए नियम लिखकर देखिए: पका, कच्चा, कटा हुआ, टोकरी में रखा। यह बहुत मुश्किल हो जाता है। ज़्यादातर फ़ोटो ऐप इसकी जगह उदाहरणों से सीखते हैं।",
+      "predict.f3": "ऐसा लग सकता है, क्योंकि उसके लेबल अक्सर सही होते हैं। पर क्या आम को समझने वाला कोई टेनिस बॉल को आम कहेगा? यह सवाल याद रखिए।",
+      "predict.reveal": "ऐप ने <term-example>उदाहरणों</term-example> से सीखा: बहुत सारी फ़ोटो, हर एक पर किसी इंसान का लगाया लेबल। उसने एक <term-pattern>पैटर्न</term-pattern> ढूँढा, यानी वह बात जो आम की सभी फ़ोटो में एक जैसी है। किसी ने उसके लिए कोई <term-rule>नियम</term-rule> नहीं लिखा। अब आप ख़ुद एक मशीन को सिखाएँगे।",
+      "sort.instruction": "अब आप शिक्षक हैं। इन 20 खाने की चीज़ों में से हर एक को एक समूह में रखिए: फल या सब्ज़ी। अपनी समझ से चुनिए। कुछ चीज़ें उलझाने वाली हैं, और कोई आपके चुनाव को सही या ग़लत नहीं जाँचेगा।",
+      "sort.g1": "फल",
+      "sort.g2": "सब्ज़ी",
+      "sort.mango": "आम",
+      "sort.potato": "आलू",
+      "sort.tomato": "टमाटर",
+      "sort.banana": "केला",
+      "sort.onion": "प्याज़",
+      "sort.guava": "अमरूद",
+      "sort.brinjal": "बैंगन",
+      "sort.cucumber": "खीरा",
+      "sort.papaya": "पपीता",
+      "sort.ladysfinger": "भिंडी",
+      "sort.chikoo": "चीकू",
+      "sort.cauliflower": "फूलगोभी",
+      "sort.carrot": "गाजर",
+      "sort.grapes": "अंगूर",
+      "sort.spinach": "पालक",
+      "sort.watermelon": "तरबूज़",
+      "sort.bottlegourd": "लौकी",
+      "sort.pomegranate": "अनार",
+      "sort.bittergourd": "करेला",
+      "sort.orange": "संतरा",
+      "sort.reveal": "क्या टमाटर या खीरे पर आप रुके? पौधों के वैज्ञानिक के लिए दोनों फल हैं। ज़्यादातर रसोई में वे सब्ज़ी माने जाते हैं। यानी लेबल एक चुनाव है जो लोग करते हैं। आपके लेबल अब मशीन के उदाहरण हैं।",
+      "p2.prompt": "जल्द ही आपकी मशीन चार ऐसी खाने की चीज़ें देखेगी जो उसने पहले कभी नहीं देखीं। एक है रसगुल्ला, एक मिठाई। मशीन रसगुल्ले को कौन-सा लेबल देगी?",
+      "p2.c1": "फल",
+      "p2.c2": "सब्ज़ी",
+      "p2.c3": "दोनों में से कोई नहीं: वह कहेगी “मिठाई”।",
+      "p2.f12": "शायद! यह इस पर निर्भर है कि आपके कौन-से उदाहरण रसगुल्ले के सबसे क़रीब निकलते हैं।",
+      "p2.f3": "कोई इंसान यही कहता। पर इस मशीन के पास चुनने के लिए सिर्फ़ दो लेबल हैं। देखिए वह क्या करती है।",
+      "p2.reveal": "मशीन सिर्फ़ उन्हीं लेबलों में से चुन सकती है जो उसे दिए गए: फल या सब्ज़ी। उसके पास “मिठाई” का कोई लेबल नहीं है। वह कौन-सा चुनेगी, यह आपके उदाहरणों पर निर्भर है। उसे सिखाइए और पता कीजिए।",
+      "tc.prompt": "अब मशीन आपकी छँटाई से सीखेगी। वह खाना न चख सकती है, न देख सकती है। इसलिए हमने हर चीज़ के लिए उसे 0 से 10 तक की दो संख्याएँ दीं। एक बताती है कि चीज़ कितनी मीठी है। दूसरी बताती है कि लोग उसे खाने से पहले कितनी बार पकाते हैं। ये अंदाज़े वाली संख्याएँ हमने ख़ुद चुनी हैं। “मशीन को सिखाएँ” दबाइए, फिर देखिए वह चार नई चीज़ों पर कैसे लेबल लगाती है। नतीजों में “पड़ोसी” का मतलब है सबसे क़रीबी संख्याओं वाले उदाहरण, और “दूरी” बताती है कि संख्याएँ कितनी अलग हैं।",
+      "tc.f.sweet": "मिठास (0 से 10)",
+      "tc.f.cooked": "कितनी बार पकाते हैं (0 से 10)",
+      "tc.litchi": "लीची",
+      "tc.pumpkin": "कद्दू",
+      "tc.amla": "आँवला",
+      "tc.rasgulla": "रसगुल्ला",
+      "tc.explain": "मशीन जो कुछ करती है, वह यह है। किसी नई चीज़ के लिए वह आपके उदाहरणों में से सबसे क़रीबी संख्याओं वाले 3 उदाहरण ढूँढती है: उसके पड़ोसी। फिर वह वही लेबल लगा देती है जो उनमें से ज़्यादातर का है। उदाहरणों और लेबलों के बीच इस तरह संबंध ढूँढने को <term-learning-from-examples>उदाहरणों से सीखना</term-learning-from-examples> या <term-training>ट्रेनिंग</term-training> कहते हैं। वह खाने को कभी चखती, देखती या समझती नहीं। रसगुल्ले को देखिए: उसे फल या सब्ज़ी में से एक होना ही था। आँवले को देखिए: उसके 3 पड़ोसी खीरा, टमाटर और गाजर हैं। उन तीनों पर आपके लेबलों ने उसका लेबल तय किया।",
+      "res.text": "वापस फ़ोटो ऐप पर। वह भी इसी तरीके से काम करता है, पर कहीं बड़े पैमाने पर।",
+      "res.s1": "कंप्यूटर के लिए फ़ोटो रंगों के बारे में संख्याओं की एक लंबी सूची है।",
+      "res.s2": "ऐप को कई हज़ार ऐसी फ़ोटो पर ट्रेन किया गया जिन पर लोगों ने लेबल लगाए थे।",
+      "res.s3": "उसने उन संख्याओं और लेबलों के बीच एक पैटर्न ढूँढा। पीली, गोल बॉल की संख्याएँ उसके “आम” वाले पैटर्न में फ़िट हो जाती हैं।",
+      "res.s4": "“पूरी तरह पक्का” का मतलब सिर्फ़ यह है कि पैटर्न से मेल बहुत क़रीबी है। इसका मतलब यह नहीं कि लेबल सही है।",
+      "res.s5": "और अगर “बॉल” कभी उसका लेबल था ही नहीं, तो वह “बॉल” कह ही नहीं सकता।",
+      "an1.title": "एक तुलना: छोटा बच्चा “कुत्ता” सीखता है",
+      "an1.source": "एक छोटा बच्चा “कुत्ता” शब्द सीख रहा है। कोई उसे नियमों की किताब नहीं देता। वह बहुत से कुत्ते देखता है, और हर बार कोई बड़ा कहता है “कुत्ता”। जल्द ही वह एक ऐसे कुत्ते की ओर इशारा करता है जो उसने कभी नहीं देखा, और कहता है “कुत्ता!”",
+      "an1.m1s": "बच्चे के देखे हुए कुत्ते",
+      "an1.m1t": "आपके छाँटे हुए उदाहरण",
+      "an1.m2s": "बड़े का “कुत्ता” कहना",
+      "an1.m2t": "आपके लेबल: फल या सब्ज़ी",
+      "an1.m3s": "बच्चे की बढ़ती समझ कि कुत्ते कैसे दिखते हैं",
+      "an1.m3t": "संख्याओं में मशीन का ढूँढा पैटर्न",
+      "an1.m4s": "नए कुत्ते की ओर इशारा करना",
+      "an1.m4t": "नई खाने की चीज़ पर लेबल लगाना",
+      "an1.break": "यहाँ तुलना काम करना बंद कर देती है। बच्चे को कुछ ही कुत्ते देखने पड़ते हैं। मशीन को अक्सर हज़ारों उदाहरण चाहिए होते हैं। आपकी मशीन का काम 20 से चल गया, क्योंकि वह सिर्फ़ दो संख्याएँ देखती है। और बच्चा समझता है कि कुत्ता क्या है: जीता-जागता, रोएँदार, भौंकने वाला। मशीन सिर्फ़ संख्याओं को लेबलों से मिलाती है। उसे कोई अंदाज़ा नहीं कि आम या कुत्ता क्या होता है।",
+      "an1.f1": "बच्चा: कुत्ते देखता है + “कुत्ता” सुनता है → नया कुत्ता पहचानता है। (“→” का मतलब है “इससे यह होता है”।)",
+      "an1.f2": "मशीन: आपकी चीज़ें + आपके लेबल → पैटर्न ढूँढती है → नई चीज़ पर लेबल लगाती है।",
+      "an1.f3": "उदाहरण + लेबल → पैटर्न → किसी नई चीज़ का लेबल। इसी को उदाहरणों से सीखना कहते हैं।",
+      "an2.title": "एक और तुलना: नए दोस्त की लिखावट",
+      "an2.source": "कक्षा में कोई नया साथी आपको अपने नोट्स देता है। शुरू में कुछ अक्षर पढ़ना मुश्किल होता है। यह “म” है या “भ”? कुछ पन्नों के बाद आप ऐसे शब्द भी पढ़ लेते हैं जो आपने उनकी लिखावट में पहले कभी नहीं देखे।",
+      "an2.m1s": "नोट्स के पन्ने",
+      "an2.m1t": "उदाहरण",
+      "an2.m2s": "उन पन्नों के वे शब्द जो आप पहले से पढ़ पाते हैं",
+      "an2.m2t": "लेबल",
+      "an2.m3s": "उनके हर अक्षर बनाने के ढंग की आदत पड़ना",
+      "an2.m3t": "पैटर्न",
+      "an2.m4s": "ऐसा शब्द पढ़ना जो आपने उनकी लिखावट में नहीं देखा",
+      "an2.m4t": "किसी नए उदाहरण पर लेबल लगाना",
+      "an2.break": "यहाँ तुलना रुक जाती है। जब कोई शब्द समझ में नहीं आता, तो आप ध्यान देते हैं और दोस्त से पूछ लेते हैं। मशीन न ध्यान दे सकती है, न पूछ सकती है। उसे जो लेबल दिए जाते हैं, वह उन्हीं की नकल करती है, ग़लत लेबल की भी। आप अभी इसे परखने वाले हैं।",
+      "dist.text": "हर नतीजे में दिखता है कि हर पड़ोसी कितनी “दूरी” पर है। कम दूरी का मतलब है ज़्यादा मिलता-जुलता। आँवले और खीरे का हिसाब यह रहा।",
+      "dist.s1": "आँवला: मिठास 1, पकाना 2। खीरा: मिठास 2, पकाना 1।",
+      "dist.s2": "अंतर: मिठास में 2 − 1 = 1, और पकाने में 2 − 1 = 1। (“−” का मतलब है घटाना।)",
+      "dist.s3": "हर अंतर का वर्ग कीजिए: 1 × 1 = 1, और 1 × 1 = 1। इन्हें जोड़िए: 1 + 1 = 2। (“×” का मतलब है गुणा।)",
+      "dist.s4": "2 का वर्गमूल निकालिए। यह वह संख्या है जिसे उसी से गुणा करने पर 2 आता है: लगभग 1.41।",
+      "dist.s5": "तो खीरा आँवले से 1.41 दूर है। यह नक्शे पर एक सीधी रेखा नापने जैसा है, जहाँ मिठास और पकाना दो दिशाएँ हैं।",
+      "ch.prompt": "आपकी मशीन किसी नई खाने की चीज़ को लेबल देती है। वह लेबल आता कहाँ से है?",
+      "ch.o1": "सबसे क़रीबी संख्याओं वाले 3 उदाहरणों से",
+      "ch.o2": "खाने को चखकर",
+      "ch.o3": "उस चीज़ के लिए किसी के टाइप किए नियम से",
+      "ch.f2": "मशीन चख नहीं सकती। उसे हर चीज़ के लिए सिर्फ़ दो संख्याएँ मिलती हैं। वह उनका क्या करती है?",
+      "ch.f3": "रसगुल्ले या आँवले के लिए किसी ने कोई नियम टाइप नहीं किया। तो लेबल और कहाँ से आ सकता है?",
+      "ch.h1": "नतीजों को फिर से देखिए, “इन उदाहरणों के सहारे फ़ैसला हुआ” वाले हिस्से में।",
+      "ch.h2": "वह सबसे क़रीबी संख्याओं वाले 3 उदाहरण ढूँढती है। फिर वह लेबल लगाती है जो उनमें से ज़्यादातर का है।",
+      "ch.explain": "लेबल 3 सबसे क़रीबी उदाहरणों से आता है। और उन उदाहरणों के लेबल आपने लगाए थे।",
+      "lab.prompt": "अब इसे जान-बूझकर तोड़िए। यहाँ छह खाने की चीज़ें हैं, पहले वाली ही दो संख्याओं के साथ। इन पर हमेशा की तरह लेबल लगाइए, सिर्फ़ एक को छोड़कर: आम 2 को सब्ज़ी का लेबल दीजिए। फिर “मशीन को सिखाएँ” दबाइए।",
+      "lab.mango1": "आम 1",
+      "lab.mango2": "आम 2",
+      "lab.banana": "केला",
+      "lab.potato1": "आलू 1",
+      "lab.potato2": "आलू 2",
+      "lab.onion": "प्याज़",
+      "lab.newmango": "एक नया आम",
+      "lab.newpotato": "एक नया आलू",
+      "lab.explain": "अगर आपने आम 2 को सब्ज़ी का लेबल दिया, तो नए आम को देखिए। आम 1 और आम 2 की संख्याएँ बिल्कुल एक जैसी हैं, पर लेबल अलग हैं। इसलिए उसके पड़ोसी एकमत नहीं हैं, और मशीन एक चेतावनी दिखाती है। वह यह पता नहीं लगा सकती कि कौन-सा लेबल ग़लत है। उसे जो भी लेबल मिलते हैं, वह उन्हीं की नकल करती है।",
+      "br.challenge": "लेबल गड़बड़ करने के कुछ और तरीके। हर एक के लिए पहले अनुमान लगाइए: क्या मशीन के जवाब ग़लत हो जाएँगे? आप हर तरीका ऊपर की लैब में आज़मा भी सकते हैं।",
+      "br.t1": "दोनों आमों को सब्ज़ी का लेबल दीजिए। बाक़ी पर हमेशा की तरह लेबल लगाइए।",
+      "br.r1": "अब वह नए आम को सब्ज़ी कहती है। उसके 3 सबसे क़रीबी उदाहरण हैं आम 1 और आम 2 (सब्ज़ी), और केला (फल)। दो वोट एक पर भारी पड़े। इस बार कोई चेतावनी नहीं आती, क्योंकि दोनों ग़लत लेबल आपस में मेल खाते हैं।",
+      "br.t2": "छहों चीज़ों को फल का लेबल दीजिए।",
+      "br.r2": "वह नए आलू को फल कहती है, और पूरी तरह पक्की है: तीनों पड़ोसी फल कहते हैं। पूरी तरह पक्का होने का मतलब सही होना नहीं है।",
+      "br.t3": "प्याज़ को छोड़कर सब पर हमेशा की तरह लेबल लगाइए: प्याज़ को फल का लेबल दीजिए।",
+      "br.r3": "नया आलू अब भी सब्ज़ी है। उसके दो सबसे क़रीबी उदाहरण दोनों आलू हैं, और वे एकमत हैं। प्याज़ का ग़लत लेबल उसे सिर्फ़ थोड़ा कम पक्का बनाता है: 3 में से 2।",
+      "br.t4": "सब पर हमेशा की तरह लेबल लगाइए, फिर “फिर से सिखाएँ” दबाइए।",
+      "br.r4": "वही लेबल, वही जवाब, हर बार। मशीन वही उदाहरणों पर वही कदम दोहराती है।",
+      "br.reflect": "असली ऐप हज़ारों ऐसे उदाहरणों से सीखते हैं जिन पर लोगों ने लेबल लगाए। अगर कुछ लोग लापरवाही से लेबल लगाएँ, या आपस में असहमत हों, तो क्या गड़बड़ हो सकती है? लेबल किसे जाँचने चाहिए?",
+      "eb1.prompt": "एक नया मामला। एक टीम फ़सल की पत्तियों की 5,000 फ़ोटो पर एक मशीन को ट्रेन करती है। पौधों के एक विशेषज्ञ ने हर फ़ोटो पर “स्वस्थ” या “बीमार” का लेबल लगाया। कौन-सा वाक्य मशीन के बारे में सबसे सही है?",
+      "eb1.o1": "उसने फ़ोटो और विशेषज्ञ के लेबलों के बीच का पैटर्न ढूँढा।",
+      "eb1.f1": "हाँ। उसने लेबल लगे उदाहरणों से सीखा, आपकी मशीन की तरह, पर कहीं बड़े पैमाने पर।",
+      "eb1.o2": "वह पौधों की बीमारियाँ समझती है, जैसे पौधों का डॉक्टर समझता है।",
+      "eb1.f2": "वह पत्तियों पर अच्छे लेबल लगा सकती है। पर उसे कोई अंदाज़ा नहीं कि बीमारी क्या होती है। रसगुल्ला याद कीजिए: वह सिर्फ़ संख्याओं को लेबलों से मिलाती है।",
+      "eb1.o3": "विशेषज्ञ ने जिन फ़ोटो पर ग़लत लेबल लगाए, वह उन्हें पकड़ लेगी।",
+      "eb1.f3": "अपनी लैब याद कीजिए: मशीन अपने लेबलों की नकल करती है, ग़लत लेबलों की भी। वह नहीं बता सकती कि कौन-से लेबल ग़लत हैं।",
+      "eb2.prompt": "अब आपकी बारी। कोई ऐसी चीज़ सोचिए जो लोग नियमों की किताब से नहीं, उदाहरणों से सीखते हैं। उसे मशीन से अपनी तुलना के रूप में लिखिए।",
+      "eb2.break": "आपकी तुलना कहाँ काम करना बंद कर देती है?",
+      "eb2.model": "दादा-दादी या नाना-नानी को चुनते देखकर बाज़ार में पका आम चुनना सीखना। आप बहुत से आम देखते हैं और सुनते हैं “यह वाला पका है”। तुलना कहाँ रुकती है: आप आम को सूँघ और दबा सकते हैं, और जानते हैं कि पका होने का मतलब क्या है। मशीन सिर्फ़ संख्याओं को लेबलों से मिलाती है।",
+      "take.title": "मेरी पहली सिखाई हुई मशीन",
+      "take.card": "आज मैंने एक मशीन को सिखाया। उसने मेरे लेबल लगाए उदाहरणों में एक पैटर्न ढूँढा, और नई चीज़ों पर लेबल लगाए। उसने खाने को कभी समझा नहीं। गड़बड़ लेबलों से उसके जवाब ग़लत हुए, कभी-कभी बिना किसी चेतावनी के।",
+      "take.l1": "मेरी मशीन",
+      "take.l2": "मेरी तोड़ने वाली लैब",
+      "take.l3": "मेरी अपनी तुलना",
+      "pre1.q": "ज़्यादातर फ़ोटो ऐप आम पर लेबल लगाना कैसे सीखते हैं?",
+      "pre1.a": "एक प्रोग्रामर नियम टाइप करता है: पीला और गोल",
+      "pre1.b": "उसे बहुत सारी ऐसी फ़ोटो पर ट्रेन किया जाता है जिन पर लोगों ने लेबल लगाए",
+      "pre1.c": "उसे शुरू से ही आमों के बारे में पता होता है",
+      "pre2.q": "किसी मशीन की कुछ उदाहरण-फ़ोटो पर ग़लत लेबल लगे हैं। क्या होता है?",
+      "pre2.a": "वह ग़लत लेबल पकड़कर ठीक कर देती है",
+      "pre2.b": "वह ग़लत लेबलों से भी सीखती है",
+      "pre2.c": "ग़लत लेबलों से कोई फ़र्क़ नहीं पड़ता",
+      "pre3.q": "एक मशीन के पास सिर्फ़ दो लेबल हैं: फल और सब्ज़ी। उसे रसगुल्ला दिखाया जाता है। वह क्या कह सकती है?",
+      "pre3.a": "मिठाई",
+      "pre3.b": "फल या सब्ज़ी",
+      "pre3.c": "कुछ भी नहीं",
+      "post1.q": "एक मशीन को पक्षियों के गानों की 1,000 रिकॉर्डिंग पर ट्रेन किया जाता है। एक विशेषज्ञ ने हर रिकॉर्डिंग पर पक्षी का नाम लेबल किया। मशीन को इनसे क्या मिलता है?",
+      "post1.a": "हर पक्षी क्या है और कैसे रहता है",
+      "post1.b": "आवाज़ों और लेबलों को जोड़ने वाला एक पैटर्न",
+      "post1.c": "हर पक्षी के लिए किसी प्रोग्रामर के लिखे नियम",
+      "post1.fb": "वह आवाज़ों और लेबलों को जोड़ने वाला पैटर्न ढूँढती है। किसी ने नियम टाइप नहीं किए, और उसे कोई अंदाज़ा नहीं कि पक्षी क्या होता है।",
+      "post2.q": "ग़लती से उदाहरणों में कौवे के बहुत से गानों पर “गौरैया” का लेबल लग गया। क्या होता है?",
+      "post2.a": "मशीन ग़लतियाँ पकड़कर ठीक कर देती है",
+      "post2.b": "कुछ नहीं बदलता",
+      "post2.c": "वह कौवे और गौरैया में गड़बड़ करती है, क्योंकि वह मिले हुए लेबलों की नकल करती है",
+      "post2.fb": "वह नहीं बता सकती कि कौन-से लेबल ग़लत हैं। उसे जो दिया जाता है, वह उसकी नकल करती है, इसलिए उसके जवाबों में दोनों पक्षी गड़बड़ा जाते हैं।",
+      "post3.q": "पक्षियों वाली मशीन के पास सिर्फ़ दो लेबल हैं: कौवा और गौरैया। वह कार का हॉर्न सुनती है। वह क्या कहेगी?",
+      "post3.a": "कार का हॉर्न",
+      "post3.b": "कौवा या गौरैया, जिसका पैटर्न ज़्यादा क़रीब बैठे",
+      "post3.c": "कुछ नहीं, क्योंकि वह पहचान लेगी कि यह पक्षी नहीं है",
+      "post3.fb": "वह सिर्फ़ उन्हीं लेबलों का इस्तेमाल कर सकती है जो उसे दिए गए। वह कौवा या गौरैया चुनेगी, शायद “पूरी तरह पक्का” होकर भी।"
+    },
+    "te": {
+      "title": "యంత్రాలు ఎలా నేర్చుకుంటాయి?",
+      "subtitle": "మీరే ఒక యంత్రానికి నేర్పండి, తర్వాత దాన్ని తికమక పెట్టి చూడండి.",
+      "obj.o1": "ఇలాంటి యంత్రం ఎవరో టైప్ చేసిన నియమాల నుండి కాకుండా, లేబుల్ ఉన్న ఉదాహరణల నుండి ఒక ప్యాటర్న్ నేర్చుకుంటుందని వివరించగలగడం.",
+      "obj.o2": "గందరగోళమైన లేదా ఒకదానితో ఒకటి పొసగని లేబుళ్ల వల్ల యంత్రం జవాబులు ఎందుకు నమ్మదగినవిగా ఉండవో వివరించగలగడం.",
+      "obj.o3": "యంత్రం ఏం చేయదో చెప్పగలగడం: అది విషయాలను అర్థం చేసుకోదు, తనకు ఇచ్చిన లేబుళ్లను మాత్రమే వాడగలదు.",
+      "hook.text": "ఒక ఫోటో యాప్‌కు రెండు చిత్రాలు చూపించారు. చిత్రం 1లో పండిన మామిడి పండు ఉంది. యాప్ దానికి ఒక <term-label>లేబుల్</term-label> ఇస్తుంది, అంటే దాని సమూహం పేరు: “మామిడి. పూర్తిగా నమ్మకం.” చిత్రం 2లో పసుపు రంగు టెన్నిస్ బంతి ఉంది. యాప్ ఇచ్చిన లేబుల్: “మామిడి. పూర్తిగా నమ్మకం.”",
+      "hook.q": "మామిడి పండు ఎలా ఉంటుందో చెప్పే <term-rule>నియమం</term-rule> ఎవరూ టైప్ చేయలేదు. మరి యాప్ తన లేబుళ్లను ఎలా ఎంచుకుంది? బంతి విషయంలో దానికి అంత నమ్మకం ఎందుకు?",
+      "predict.prompt": "మామిడి పండ్లకు లేబుల్ ఇవ్వడం యాప్ ఎలా నేర్చుకుంది అని మీరు అనుకుంటున్నారు?",
+      "predict.c1": "ఎవరో ఒక నియమం టైప్ చేశారు: గుండ్రంగా, పసుపుగా ఉంటే మామిడి.",
+      "predict.c2": "మనుషులు “మామిడి” అని లేబుల్ ఇచ్చిన చాలా ఫోటోలను దానికి చూపించారు, వాటిలో ఉమ్మడిగా ఏముందో అది కనుగొంది.",
+      "predict.c3": "మామిడి పండు అంటే ఏమిటో మీకు అర్థమైనట్టే దానికీ అర్థమవుతుంది.",
+      "predict.f1": "మంచి ఆలోచన: ఆ నియమం బంతిని కూడా మామిడి అనేస్తుంది! కానీ ప్రతి రకం మామిడికి నియమాలు రాసి చూడండి: పండినది, పచ్చిది, కోసినది, బుట్టలో ఉన్నది. అది చాలా కష్టమవుతుంది. చాలా ఫోటో యాప్‌లు దానికి బదులు ఉదాహరణల నుండి నేర్చుకుంటాయి.",
+      "predict.f3": "అలా అనిపించవచ్చు, ఎందుకంటే దాని లేబుళ్లు తరచుగా సరిగ్గా ఉంటాయి. కానీ మామిడి అంటే ఏమిటో అర్థమైన ఎవరైనా టెన్నిస్ బంతిని మామిడి అంటారా? ఈ ప్రశ్నను గుర్తుంచుకోండి.",
+      "predict.reveal": "యాప్ <term-example>ఉదాహరణల</term-example> నుండి నేర్చుకుంది: చాలా ఫోటోలు, ప్రతి దానికీ ఒక మనిషి ఇచ్చిన లేబుల్. అది ఒక <term-pattern>ప్యాటర్న్</term-pattern>‌ను కనుగొంది, అంటే మామిడి ఫోటోలన్నింటిలో ఉమ్మడిగా ఉన్నది. దాని కోసం ఎవరూ <term-rule>నియమం</term-rule> రాయలేదు. ఇప్పుడు మీరే ఒక యంత్రానికి నేర్పబోతున్నారు.",
+      "sort.instruction": "ఇప్పుడు మీరే టీచర్. ఈ 20 ఆహార పదార్థాల్లో ప్రతి దాన్నీ ఒక సమూహంలో పెట్టండి: పండు లేదా కూరగాయ. మీకు ఎలా అనిపిస్తే అలా పెట్టండి. కొన్ని తికమక పెడతాయి, మీ ఎంపికలను ఎవరూ సరి లేదా తప్పు అని దిద్దరు.",
+      "sort.g1": "పండు",
+      "sort.g2": "కూరగాయ",
+      "sort.mango": "మామిడి పండు",
+      "sort.potato": "బంగాళాదుంప",
+      "sort.tomato": "టమాటా",
+      "sort.banana": "అరటి పండు",
+      "sort.onion": "ఉల్లిపాయ",
+      "sort.guava": "జామ పండు",
+      "sort.brinjal": "వంకాయ",
+      "sort.cucumber": "దోసకాయ",
+      "sort.papaya": "బొప్పాయి",
+      "sort.ladysfinger": "బెండకాయ",
+      "sort.chikoo": "సపోటా",
+      "sort.cauliflower": "కాలీఫ్లవర్",
+      "sort.carrot": "క్యారెట్",
+      "sort.grapes": "ద్రాక్ష",
+      "sort.spinach": "పాలకూర",
+      "sort.watermelon": "పుచ్చకాయ",
+      "sort.bottlegourd": "సొరకాయ",
+      "sort.pomegranate": "దానిమ్మ",
+      "sort.bittergourd": "కాకరకాయ",
+      "sort.orange": "నారింజ",
+      "sort.reveal": "టమాటా లేదా దోసకాయ దగ్గర మీరు ఆగారా? మొక్కల శాస్త్రవేత్తకు ఆ రెండూ పండ్లే. చాలా వంటింట్లో అవి కూరగాయలు. అంటే లేబుల్ అనేది మనుషులు చేసే ఎంపిక. మీ లేబుళ్లు ఇప్పుడు యంత్రానికి ఉదాహరణలు.",
+      "p2.prompt": "త్వరలో మీ యంత్రం ఇంతకు ముందు ఎప్పుడూ చూడని నాలుగు ఆహార పదార్థాలను చూస్తుంది. వాటిలో ఒకటి రసగుల్లా, ఒక స్వీటు. యంత్రం రసగుల్లాకు ఏ లేబుల్ ఇస్తుంది?",
+      "p2.c1": "పండు",
+      "p2.c2": "కూరగాయ",
+      "p2.c3": "రెండూ కాదు: అది “స్వీటు” అంటుంది.",
+      "p2.f12": "కావచ్చు! మీ ఉదాహరణల్లో ఏవి రసగుల్లాకు అతి దగ్గరగా ఉంటాయో దానిపై అది ఆధారపడి ఉంటుంది.",
+      "p2.f3": "ఒక మనిషి అలాగే అంటారు. కానీ ఈ యంత్రం దగ్గర ఎంచుకోవడానికి రెండు లేబుళ్లు మాత్రమే ఉన్నాయి. అది ఏం చేస్తుందో చూడండి.",
+      "p2.reveal": "యంత్రం తనకు ఇచ్చిన లేబుళ్లలో నుంచి మాత్రమే ఎంచుకోగలదు: పండు లేదా కూరగాయ. దాని దగ్గర “స్వీటు” అనే లేబుల్ లేదు. అది దేన్ని ఎంచుకుంటుందనేది మీ ఉదాహరణలపై ఆధారపడి ఉంటుంది. దానికి నేర్పి చూడండి.",
+      "tc.prompt": "ఇప్పుడు యంత్రం మీ వర్గీకరణ నుండి నేర్చుకుంటుంది. అది ఆహారాన్ని రుచి చూడలేదు, కంటితో చూడలేదు. అందుకే ప్రతి ఆహారానికి 0 నుండి 10 వరకు రెండు సంఖ్యలు ఇచ్చాం. ఒకటి అది ఎంత తియ్యగా ఉంటుందో చెబుతుంది. రెండోది తినే ముందు దాన్ని ఎంత తరచుగా వండుతారో చెబుతుంది. ఈ సుమారు సంఖ్యలను మేమే ఎంచుకున్నాం. “యంత్రానికి నేర్పండి” నొక్కండి, తర్వాత అది నాలుగు కొత్త ఆహారాలకు ఎలా లేబుల్ ఇస్తుందో చూడండి. ఫలితాల్లో “పొరుగులు” అంటే అతి దగ్గరి సంఖ్యలు ఉన్న ఉదాహరణలు, “దూరం” అంటే సంఖ్యలు ఎంత వేరుగా ఉన్నాయో చెప్పేది.",
+      "tc.f.sweet": "తీపి (0 నుండి 10)",
+      "tc.f.cooked": "ఎంత తరచుగా వండుతారు (0 నుండి 10)",
+      "tc.litchi": "లిచీ",
+      "tc.pumpkin": "గుమ్మడికాయ",
+      "tc.amla": "ఉసిరికాయ",
+      "tc.rasgulla": "రసగుల్లా",
+      "tc.explain": "యంత్రం చేసేది ఇదే. కొత్త ఆహారం కోసం, మీ ఉదాహరణల్లో దగ్గరి సంఖ్యలు ఉన్న 3 ఉదాహరణలను, అంటే తన పొరుగులను, అది వెతుకుతుంది. తర్వాత వాటిలో ఎక్కువ వాటికి ఉన్న లేబుల్‌నే అది కాపీ చేస్తుంది. ఉదాహరణలకూ లేబుళ్లకూ మధ్య ఇలా సంబంధం వెతకడాన్ని <term-learning-from-examples>ఉదాహరణల నుండి నేర్చుకోవడం</term-learning-from-examples> లేదా <term-training>ట్రైనింగ్</term-training> అంటారు. అది ఆహారాన్ని ఎప్పుడూ రుచి చూడదు, చూడదు, అర్థం చేసుకోదు. రసగుల్లాను చూడండి: అది పండు లేదా కూరగాయ కావాల్సిందే. ఉసిరికాయను చూడండి: దాని 3 పొరుగులు దోసకాయ, టమాటా, క్యారెట్. ఆ మూడింటికి మీరు ఇచ్చిన లేబుళ్లే దాని లేబుల్‌ను నిర్ణయించాయి.",
+      "res.text": "మళ్లీ ఫోటో యాప్ దగ్గరికి వెళ్దాం. అది కూడా ఇదే ఆలోచనతో పనిచేస్తుంది, కానీ చాలా పెద్ద స్థాయిలో.",
+      "res.s1": "కంప్యూటర్‌కు ఒక ఫోటో అంటే రంగుల గురించిన సంఖ్యల పొడవైన జాబితా.",
+      "res.s2": "మనుషులు లేబుల్ ఇచ్చిన వేల కొద్దీ ఫోటోలపై యాప్‌కు ట్రైనింగ్ ఇచ్చారు.",
+      "res.s3": "ఆ సంఖ్యలకూ లేబుళ్లకూ మధ్య అది ఒక ప్యాటర్న్ కనుగొంది. పసుపు రంగు గుండ్రటి బంతి సంఖ్యలు దాని “మామిడి” ప్యాటర్న్‌కు సరిపోతాయి.",
+      "res.s4": "“పూర్తిగా నమ్మకం” అంటే ప్యాటర్న్‌కు చాలా దగ్గరగా సరిపోయింది అని మాత్రమే అర్థం. లేబుల్ సరైనదని కాదు.",
+      "res.s5": "“బంతి” అనేది అసలు దాని లేబుళ్లలో ఒకటి కాకపోతే, అది ఎప్పటికీ “బంతి” అనలేదు.",
+      "an1.title": "ఒక పోలిక: చిన్న బిడ్డ “కుక్క” అనే మాట నేర్చుకోవడం",
+      "an1.source": "ఒక చిన్న బిడ్డ “కుక్క” అనే మాట నేర్చుకుంటోంది. ఎవరూ దానికి నియమాల పుస్తకం ఇవ్వరు. అది చాలా కుక్కలను చూస్తుంది, ప్రతిసారీ పెద్దవాళ్లు ఎవరో “కుక్క” అంటారు. త్వరలోనే అది ఇంతకు ముందు చూడని కుక్కను చూపించి “కుక్క!” అంటుంది.",
+      "an1.m1s": "బిడ్డ చూసే కుక్కలు",
+      "an1.m1t": "మీరు వర్గీకరించిన ఉదాహరణలు",
+      "an1.m2s": "పెద్దవాళ్లు “కుక్క” అనడం",
+      "an1.m2t": "మీ లేబుళ్లు: పండు లేదా కూరగాయ",
+      "an1.m3s": "కుక్కలు ఎలా ఉంటాయో బిడ్డకు పెరుగుతున్న అవగాహన",
+      "an1.m3t": "సంఖ్యల్లో యంత్రం కనుగొనే ప్యాటర్న్",
+      "an1.m4s": "కొత్త కుక్కను చూపించడం",
+      "an1.m4t": "కొత్త ఆహారానికి లేబుల్ ఇవ్వడం",
+      "an1.break": "ఇక్కడ పోలిక పనిచేయడం ఆగిపోతుంది. బిడ్డకు కొన్ని కుక్కలను చూస్తే చాలు. యంత్రానికి సాధారణంగా వేల కొద్దీ ఉదాహరణలు కావాలి. మీ యంత్రం 20తో పని నడిపింది, ఎందుకంటే అది రెండు సంఖ్యలను మాత్రమే చూస్తుంది. బిడ్డకు కుక్క అంటే ఏమిటో అర్థమవుతుంది కూడా: ప్రాణం ఉన్నది, బొచ్చు ఉన్నది, మొరిగేది. యంత్రం సంఖ్యలను లేబుళ్లతో జత చేయడం మాత్రమే చేస్తుంది. మామిడి అంటే ఏమిటో, కుక్క అంటే ఏమిటో దానికి ఏమాత్రం తెలియదు.",
+      "an1.f1": "బిడ్డ: కుక్కలను చూస్తుంది + “కుక్క” అనే మాట వింటుంది → కొత్త కుక్కను గుర్తిస్తుంది. (“→” అంటే “దాని వల్ల ఇది జరుగుతుంది”.)",
+      "an1.f2": "యంత్రం: మీ ఆహారాలు + మీ లేబుళ్లు → ప్యాటర్న్ కనుగొంటుంది → కొత్త ఆహారానికి లేబుల్ ఇస్తుంది.",
+      "an1.f3": "ఉదాహరణలు + లేబుళ్లు → ప్యాటర్న్ → కొత్త దానికి లేబుల్. దీన్నే ఉదాహరణల నుండి నేర్చుకోవడం అంటారు.",
+      "an2.title": "మరో పోలిక: కొత్త స్నేహితుల చేతిరాత",
+      "an2.source": "తరగతిలో కొత్తగా చేరిన ఒకరు తమ నోట్స్ మీకు ఇస్తారు. మొదట్లో కొన్ని అక్షరాలు చదవడం కష్టం. ఇది “ప” నా, “వ” నా? కొన్ని పేజీలు చదివాక, వాళ్లు రాయగా మీరు ఎప్పుడూ చూడని మాటలను కూడా చదవగలుగుతారు.",
+      "an2.m1s": "నోట్స్ పేజీలు",
+      "an2.m1t": "ఉదాహరణలు",
+      "an2.m2s": "ఆ పేజీల్లో మీరు ఇప్పటికే చదవగలిగే మాటలు",
+      "an2.m2t": "లేబుళ్లు",
+      "an2.m3s": "వాళ్లు ఒక్కో అక్షరాన్ని ఎలా రాస్తారో అలవాటు పడటం",
+      "an2.m3t": "ప్యాటర్న్",
+      "an2.m4s": "వాళ్లు రాయగా మీరు చూడని మాటను చదవడం",
+      "an2.m4t": "కొత్త ఉదాహరణకు లేబుల్ ఇవ్వడం",
+      "an2.break": "ఇక్కడ పోలిక ఆగిపోతుంది. ఏదైనా మాట అర్థం కాకపోతే, మీరు గమనించి మీ స్నేహితులను అడుగుతారు. యంత్రం గమనించలేదు, అడగలేదు. తనకు ఇచ్చిన లేబుళ్లను, తప్పువైనా సరే, అది కాపీ చేస్తుంది. దీన్ని మీరు ఇప్పుడే పరీక్షించబోతున్నారు.",
+      "dist.text": "ప్రతి ఫలితం ప్రతి పొరుగు ఎంత “దూరం”లో ఉందో చూపిస్తుంది. దూరం తక్కువైతే ఎక్కువ పోలిక ఉన్నట్టు. ఉసిరికాయ, దోసకాయల లెక్క ఇదిగో.",
+      "dist.s1": "ఉసిరికాయ: తీపి 1, వండటం 2. దోసకాయ: తీపి 2, వండటం 1.",
+      "dist.s2": "తేడాలు: తీపిలో 2 − 1 = 1, వండటంలో 2 − 1 = 1. (“−” అంటే తీసివేత.)",
+      "dist.s3": "ప్రతి తేడాకు వర్గం చేయండి: 1 × 1 = 1, 1 × 1 = 1. వాటిని కలపండి: 1 + 1 = 2. (“×” అంటే గుణకారం.)",
+      "dist.s4": "2 యొక్క వర్గమూలం తీసుకోండి. అంటే, తనతో తానే గుణిస్తే 2 వచ్చే సంఖ్య: సుమారు 1.41.",
+      "dist.s5": "కాబట్టి దోసకాయ ఉసిరికాయకు 1.41 దూరంలో ఉంది. ఇది మ్యాప్ మీద ఒక సరళ రేఖను కొలవడం లాంటిది, తీపి, వండటం అనేవి రెండు దిశలు.",
+      "ch.prompt": "మీ యంత్రం ఒక కొత్త ఆహారానికి లేబుల్ ఇస్తుంది. ఆ లేబుల్ ఎక్కడి నుండి వస్తుంది?",
+      "ch.o1": "అతి దగ్గరి సంఖ్యలు ఉన్న 3 ఉదాహరణల నుండి",
+      "ch.o2": "ఆహారాన్ని రుచి చూడటం నుండి",
+      "ch.o3": "ఆ ఆహారం కోసం ఎవరో టైప్ చేసిన నియమం నుండి",
+      "ch.f2": "యంత్రం రుచి చూడలేదు. దానికి ప్రతి ఆహారానికి రెండు సంఖ్యలు మాత్రమే వస్తాయి. వాటితో అది ఏం చేస్తుంది?",
+      "ch.f3": "రసగుల్లాకు గానీ ఉసిరికాయకు గానీ ఎవరూ నియమం టైప్ చేయలేదు. మరి లేబుల్ ఇంకెక్కడి నుండి రావచ్చు?",
+      "ch.h1": "ఫలితాలను మళ్లీ చూడండి, “ఇది ఈ ఉదాహరణలపై ఆధారపడింది” అనే భాగంలో.",
+      "ch.h2": "అది అతి దగ్గరి సంఖ్యలు ఉన్న 3 ఉదాహరణలను వెతుకుతుంది. తర్వాత వాటిలో ఎక్కువ వాటికి ఉన్న లేబుల్‌ను కాపీ చేస్తుంది.",
+      "ch.explain": "లేబుల్ అతి దగ్గరి 3 ఉదాహరణల నుండి వస్తుంది. ఆ ఉదాహరణల లేబుళ్లు మీరు ఇచ్చినవే.",
+      "lab.prompt": "ఇప్పుడు కావాలనే దాన్ని పాడుచేయండి. ఇక్కడ ఆరు ఆహార పదార్థాలు ఉన్నాయి, ఇంతకు ముందు ఉన్న రెండు సంఖ్యలతోనే. వాటికి ఎప్పటిలాగే లేబుళ్లు ఇవ్వండి, ఒక్కటి తప్ప: మామిడి 2కు కూరగాయ అని లేబుల్ ఇవ్వండి. తర్వాత “యంత్రానికి నేర్పండి” నొక్కండి.",
+      "lab.mango1": "మామిడి 1",
+      "lab.mango2": "మామిడి 2",
+      "lab.banana": "అరటి పండు",
+      "lab.potato1": "బంగాళాదుంప 1",
+      "lab.potato2": "బంగాళాదుంప 2",
+      "lab.onion": "ఉల్లిపాయ",
+      "lab.newmango": "ఒక కొత్త మామిడి",
+      "lab.newpotato": "ఒక కొత్త బంగాళాదుంప",
+      "lab.explain": "మీరు మామిడి 2కు కూరగాయ అని లేబుల్ ఇచ్చి ఉంటే, కొత్త మామిడిని చూడండి. మామిడి 1, మామిడి 2లకు సరిగ్గా ఒకే సంఖ్యలు ఉన్నాయి, కానీ లేబుళ్లు వేరు. అందుకే దాని పొరుగులు ఏకీభవించడం లేదు, యంత్రం ఒక హెచ్చరిక చూపిస్తుంది. ఏ లేబుల్ తప్పో అది కనిపెట్టలేదు. దానికి ఏ లేబుళ్లు వస్తే వాటినే అది కాపీ చేస్తుంది.",
+      "br.challenge": "లేబుళ్లను గందరగోళం చేసే మరికొన్ని మార్గాలు. ప్రతి దానికీ ముందు ఊహించండి: యంత్రం జవాబులు తప్పుగా మారతాయా? ప్రతి దాన్నీ పైన ఉన్న ల్యాబ్‌లో ప్రయత్నించి కూడా చూడవచ్చు.",
+      "br.t1": "రెండు మామిడులకూ కూరగాయ అని లేబుల్ ఇవ్వండి. మిగతావాటికి ఎప్పటిలాగే ఇవ్వండి.",
+      "br.r1": "ఇప్పుడు అది కొత్త మామిడిని కూరగాయ అంటుంది. దానికి అతి దగ్గరి 3 ఉదాహరణలు మామిడి 1, మామిడి 2 (కూరగాయ), అరటి పండు (పండు). రెండు ఓట్లు ఒక ఓటును గెలిచాయి. ఈసారి హెచ్చరిక కనిపించదు, ఎందుకంటే రెండు తప్పు లేబుళ్లూ ఒకదానితో ఒకటి ఏకీభవిస్తున్నాయి.",
+      "br.t2": "ఆరింటికీ పండు అని లేబుల్ ఇవ్వండి.",
+      "br.r2": "అది కొత్త బంగాళాదుంపను పండు అంటుంది, దానికి పూర్తిగా నమ్మకం కూడా: 3 పొరుగులూ పండు అంటున్నాయి. పూర్తిగా నమ్మకం ఉండటం అంటే సరైనది అని కాదు.",
+      "br.t3": "ఉల్లిపాయ తప్ప అన్నింటికీ ఎప్పటిలాగే లేబుళ్లు ఇవ్వండి: ఉల్లిపాయకు పండు అని ఇవ్వండి.",
+      "br.r3": "కొత్త బంగాళాదుంప ఇంకా కూరగాయే. దానికి అతి దగ్గరి రెండు ఉదాహరణలు బంగాళాదుంపలే, అవి ఏకీభవిస్తున్నాయి. ఉల్లిపాయ తప్పు లేబుల్ దాని నమ్మకాన్ని కొంచెం మాత్రమే తగ్గిస్తుంది: 3లో 2.",
+      "br.t4": "అన్నింటికీ ఎప్పటిలాగే లేబుళ్లు ఇవ్వండి, తర్వాత “మళ్లీ నేర్పండి” నొక్కండి.",
+      "br.r4": "అవే లేబుళ్లు, అవే జవాబులు, ప్రతిసారీ. యంత్రం అవే ఉదాహరణలపై అవే అడుగులు పాటిస్తుంది.",
+      "br.reflect": "నిజమైన యాప్‌లు మనుషులు లేబుల్ ఇచ్చిన వేల కొద్దీ ఉదాహరణల నుండి నేర్చుకుంటాయి. కొందరు అజాగ్రత్తగా లేబుల్ ఇస్తే, లేదా ఒకరితో ఒకరు విభేదిస్తే, ఏం తప్పు జరగవచ్చు? లేబుళ్లను ఎవరు సరిచూడాలి?",
+      "eb1.prompt": "ఒక కొత్త సందర్భం. ఒక బృందం పంట ఆకుల 5,000 ఫోటోలపై ఒక యంత్రానికి ట్రైనింగ్ ఇస్తుంది. ఒక మొక్కల నిపుణులు ప్రతి ఫోటోకు “ఆరోగ్యంగా ఉంది” లేదా “జబ్బుగా ఉంది” అని లేబుల్ ఇచ్చారు. యంత్రాన్ని ఏ వాక్యం బాగా వివరిస్తుంది?",
+      "eb1.o1": "ఫోటోలకూ నిపుణుల లేబుళ్లకూ మధ్య ఉన్న ప్యాటర్న్‌ను అది కనుగొంది.",
+      "eb1.f1": "అవును. మీ యంత్రంలాగే అది లేబుల్ ఉన్న ఉదాహరణల నుండి నేర్చుకుంది, కానీ చాలా పెద్ద స్థాయిలో.",
+      "eb1.o2": "మొక్కల డాక్టర్‌లాగా దానికి మొక్కల జబ్బులు అర్థమవుతాయి.",
+      "eb1.f2": "అది ఆకులకు బాగానే లేబుళ్లు ఇవ్వవచ్చు. కానీ జబ్బు అంటే ఏమిటో దానికి ఏమాత్రం తెలియదు. రసగుల్లాను గుర్తు చేసుకోండి: అది సంఖ్యలను లేబుళ్లతో జత చేయడం మాత్రమే చేస్తుంది.",
+      "eb1.o3": "నిపుణులు తప్పుగా లేబుల్ ఇచ్చిన ఫోటోలను అది పట్టుకుంటుంది.",
+      "eb1.f3": "మీ ల్యాబ్‌ను గుర్తు చేసుకోండి: యంత్రం తన లేబుళ్లను, తప్పువైనా సరే, కాపీ చేస్తుంది. వాటిలో ఏవి తప్పో అది చెప్పలేదు.",
+      "eb2.prompt": "ఇప్పుడు మీ వంతు. మనుషులు నియమాల పుస్తకం నుండి కాకుండా ఉదాహరణల నుండి నేర్చుకునే ఒక విషయం ఆలోచించండి. దాన్ని యంత్రంతో మీ సొంత పోలికగా రాయండి.",
+      "eb2.break": "మీ పోలిక ఎక్కడ పనిచేయడం ఆగిపోతుంది?",
+      "eb2.model": "తాతయ్యో అమ్మమ్మో మామిడి పండ్లు ఎంచుకోవడం చూసి, మార్కెట్లో పండిన మామిడిని ఎంచుకోవడం నేర్చుకోవడం. మీరు చాలా మామిడి పండ్లను చూస్తారు, “ఇది పండింది” అని వింటారు. పోలిక ఎక్కడ ఆగుతుంది: మీరు మామిడిని వాసన చూసి, నొక్కి చూడగలరు, పండటం అంటే ఏమిటో మీకు తెలుసు. యంత్రం సంఖ్యలను లేబుళ్లతో జత చేయడం మాత్రమే చేస్తుంది.",
+      "take.title": "నేను నేర్పిన మొదటి యంత్రం",
+      "take.card": "ఈరోజు నేను ఒక యంత్రానికి నేర్పాను. నేను లేబుల్ ఇచ్చిన ఉదాహరణల్లో అది ఒక ప్యాటర్న్ కనుగొంది, కొత్త వాటికి లేబుళ్లు కాపీ చేసింది. అది ఆహారాన్ని ఎప్పుడూ అర్థం చేసుకోలేదు. గందరగోళమైన లేబుళ్ల వల్ల దాని జవాబులు తప్పయ్యాయి, కొన్నిసార్లు ఏ హెచ్చరికా లేకుండానే.",
+      "take.l1": "నా యంత్రం",
+      "take.l2": "నా పాడుచేసే ల్యాబ్",
+      "take.l3": "నా సొంత పోలిక",
+      "pre1.q": "ఒక ఫోటో యాప్ సాధారణంగా మామిడి పండ్లకు లేబుల్ ఇవ్వడం ఎలా నేర్చుకుంటుంది?",
+      "pre1.a": "ఒక ప్రోగ్రామర్ నియమం టైప్ చేస్తారు: పసుపుగా, గుండ్రంగా",
+      "pre1.b": "మనుషులు లేబుల్ ఇచ్చిన చాలా ఫోటోలపై దానికి ట్రైనింగ్ ఇస్తారు",
+      "pre1.c": "దానికి మొదటి నుంచే మామిడి పండ్ల గురించి తెలుసు",
+      "pre2.q": "ఒక యంత్రానికి ఇచ్చిన కొన్ని ఉదాహరణ ఫోటోలకు తప్పు లేబుళ్లు ఉన్నాయి. ఏం జరుగుతుంది?",
+      "pre2.a": "అది తప్పు లేబుళ్లను గుర్తించి సరిచేస్తుంది",
+      "pre2.b": "అది తప్పు లేబుళ్ల నుండి కూడా నేర్చుకుంటుంది",
+      "pre2.c": "తప్పు లేబుళ్ల వల్ల ఏ తేడా ఉండదు",
+      "pre3.q": "ఒక యంత్రం దగ్గర రెండు లేబుళ్లు మాత్రమే ఉన్నాయి: పండు, కూరగాయ. దానికి రసగుల్లా చూపించారు. అది ఏం అనగలదు?",
+      "pre3.a": "స్వీటు",
+      "pre3.b": "పండు లేదా కూరగాయ",
+      "pre3.c": "ఏమీ అనదు",
+      "post1.q": "పక్షుల పాటల 1,000 రికార్డింగ్‌లపై ఒక యంత్రానికి ట్రైనింగ్ ఇచ్చారు. ఒక నిపుణులు ప్రతి దానికీ ఆ పక్షి పేరుతో లేబుల్ ఇచ్చారు. వాటి నుండి యంత్రానికి ఏం దొరుకుతుంది?",
+      "post1.a": "ప్రతి పక్షి ఏమిటో, అది ఎలా బతుకుతుందో",
+      "post1.b": "శబ్దాలను లేబుళ్లతో కలిపే ఒక ప్యాటర్న్",
+      "post1.c": "ప్రతి పక్షి కోసం ఒక ప్రోగ్రామర్ రాసిన నియమాలు",
+      "post1.fb": "అది శబ్దాలను లేబుళ్లతో కలిపే ప్యాటర్న్‌ను కనుగొంటుంది. ఎవరూ నియమాలు టైప్ చేయలేదు, పక్షి అంటే ఏమిటో దానికి ఏమాత్రం తెలియదు.",
+      "post2.q": "పొరపాటున, ఉదాహరణల్లో చాలా కాకి పాటలకు “పిచ్చుక” అని లేబుల్ పడింది. ఏం జరుగుతుంది?",
+      "post2.a": "యంత్రం పొరపాట్లను గుర్తించి సరిచేస్తుంది",
+      "post2.b": "ఏమీ మారదు",
+      "post2.c": "అది కాకులను, పిచ్చుకలను కలగలిపేస్తుంది, ఎందుకంటే తనకు వచ్చిన లేబుళ్లనే అది కాపీ చేస్తుంది",
+      "post2.fb": "ఏ లేబుళ్లు తప్పో అది చెప్పలేదు. తనకు ఇచ్చినదాన్నే కాపీ చేస్తుంది, అందుకే దాని జవాబుల్లో రెండు పక్షులూ కలగలిసిపోతాయి.",
+      "post3.q": "పక్షుల యంత్రం దగ్గర రెండు లేబుళ్లు మాత్రమే ఉన్నాయి: కాకి, పిచ్చుక. అది ఒక కారు హారన్ వింటుంది. అది ఏం అంటుంది?",
+      "post3.a": "కారు హారన్",
+      "post3.b": "కాకి లేదా పిచ్చుక, ఏ ప్యాటర్న్ దగ్గరగా సరిపోతే అది",
+      "post3.c": "ఏమీ అనదు, ఎందుకంటే ఇది పక్షి కాదని అది గుర్తిస్తుంది",
+      "post3.fb": "తనకు ఇచ్చిన లేబుళ్లను మాత్రమే అది వాడగలదు. అది కాకి లేదా పిచ్చుకను ఎంచుకుంటుంది, బహుశా “పూర్తిగా నమ్మకం”తో కూడా."
+    }
+  },
+  "localeStatus": {
+    "en": "draft",
+    "hi": "draft",
+    "te": "draft"
+  }
+}

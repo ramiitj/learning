@@ -1,0 +1,74 @@
+{
+  "id": "rule",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2",
+          "d.s3"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.yes",
+          "d.no"
+        ],
+        "answer": "d.yes",
+        "feedback": {
+          "d.no": "d.fno"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is a rule?",
+      "d.text": "A rule says exactly what to do in a situation. It does the same thing every time.",
+      "d.s1": "A school rule: if you arrive after the bell, sign the late register.",
+      "d.s2": "A rule for a machine: if it is round and yellow, call it a mango. A person has to write it.",
+      "d.s3": "A rule does only what it says. It cannot handle cases its writer did not think of.",
+      "d.q": "The rule is: “If it is round and yellow, call it a mango.” A yellow tennis ball arrives. What does the rule say?",
+      "d.yes": "Mango",
+      "d.no": "Ball",
+      "d.fno": "A person would say ball. But the rule checks only two things: round, and yellow. Is the ball round and yellow?",
+      "d.explain": "The rule says mango. A rule follows its words exactly, even when the answer is silly. Writing rules for every case is hard. That is one reason many machines learn from examples instead."
+    },
+    "hi": {
+      "d.title": "नियम क्या होता है?",
+      "d.text": "नियम ठीक-ठीक बताता है कि किसी हालत में क्या करना है। वह हर बार एक ही काम करता है।",
+      "d.s1": "स्कूल का एक नियम: अगर आप घंटी के बाद पहुँचें, तो देर से आने वालों के रजिस्टर में दस्तख़त करें।",
+      "d.s2": "मशीन के लिए एक नियम: अगर चीज़ गोल और पीली है, तो उसे आम कहो। इसे किसी इंसान को लिखना पड़ता है।",
+      "d.s3": "नियम सिर्फ़ वही करता है जो उसमें लिखा है। जिन हालात के बारे में लिखने वाले ने नहीं सोचा, उन्हें वह नहीं सँभाल सकता।",
+      "d.q": "नियम है: “अगर चीज़ गोल और पीली है, तो उसे आम कहो।” एक पीली टेनिस बॉल आती है। नियम क्या कहता है?",
+      "d.yes": "आम",
+      "d.no": "बॉल",
+      "d.fno": "कोई इंसान बॉल कहता। पर नियम सिर्फ़ दो बातें जाँचता है: गोल, और पीला। क्या बॉल गोल और पीली है?",
+      "d.explain": "नियम आम कहता है। नियम अपने शब्दों पर ठीक-ठीक चलता है, जवाब बेतुका हो तब भी। हर हालत के लिए नियम लिखना मुश्किल है। यह एक वजह है कि बहुत-सी मशीनें इसकी जगह उदाहरणों से सीखती हैं।"
+    },
+    "te": {
+      "d.title": "నియమం అంటే ఏమిటి?",
+      "d.text": "ఒక సందర్భంలో సరిగ్గా ఏం చేయాలో నియమం చెబుతుంది. అది ప్రతిసారీ ఒకేలా చేస్తుంది.",
+      "d.s1": "బడిలో ఒక నియమం: గంట మోగిన తర్వాత వస్తే, ఆలస్యంగా వచ్చినవారి రిజిస్టర్‌లో సంతకం చేయాలి.",
+      "d.s2": "యంత్రం కోసం ఒక నియమం: గుండ్రంగా, పసుపుగా ఉంటే దాన్ని మామిడి అను. దీన్ని ఒక మనిషి రాయాలి.",
+      "d.s3": "నియమం అందులో ఉన్నదే చేస్తుంది. రాసినవాళ్లు ఆలోచించని సందర్భాలను అది సంభాళించలేదు.",
+      "d.q": "నియమం ఇది: “గుండ్రంగా, పసుపుగా ఉంటే దాన్ని మామిడి అను.” ఒక పసుపు టెన్నిస్ బంతి వచ్చింది. నియమం ఏం చెబుతుంది?",
+      "d.yes": "మామిడి",
+      "d.no": "బంతి",
+      "d.fno": "ఒక మనిషి బంతి అంటారు. కానీ నియమం రెండే విషయాలు చూస్తుంది: గుండ్రంగా ఉందా, పసుపుగా ఉందా. బంతి గుండ్రంగా, పసుపుగా ఉందా?",
+      "d.explain": "నియమం మామిడి అంటుంది. జవాబు వింతగా ఉన్నా, నియమం తన మాటలను యథాతథంగా పాటిస్తుంది. ప్రతి సందర్భానికీ నియమాలు రాయడం కష్టం. చాలా యంత్రాలు దానికి బదులు ఉదాహరణల నుండి నేర్చుకోవడానికి ఇది ఒక కారణం."
+    }
+  }
+}

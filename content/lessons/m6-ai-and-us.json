@@ -1,0 +1,1180 @@
+{
+  "id": "m6-ai-and-us",
+  "schemaVersion": "1.0",
+  "version": 1,
+  "status": "draft",
+  "meta": {
+    "titleKey": "title",
+    "subtitleKey": "subtitle",
+    "subject": "ai",
+    "course": "ai-for-kids",
+    "module": "m6",
+    "concepts": [
+      "fairness",
+      "responsibility"
+    ],
+    "objectives": [
+      {
+        "id": "o1",
+        "textKey": "obj.o1"
+      },
+      {
+        "id": "o2",
+        "textKey": "obj.o2"
+      },
+      {
+        "id": "o3",
+        "textKey": "obj.o3"
+      },
+      {
+        "id": "o4",
+        "textKey": "obj.o4"
+      }
+    ],
+    "prerequisites": [
+      "learning-from-examples",
+      "training"
+    ],
+    "audiences": [
+      "school-13-17"
+    ],
+    "curriculumTags": [],
+    "estimatedMinutes": 40,
+    "teacherGuide": "m6-ai-and-us",
+    "provenance": "agent pipeline v1 (AI-assisted draft); not yet reviewed by the creator; hi and te are unreviewed drafts"
+  },
+  "stages": [
+    {
+      "stage": "hook",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "hook.text",
+            "questionKey": "hook.q"
+          },
+          "glossaryTerms": [
+            "program"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "predict",
+      "blocks": [
+        {
+          "id": "b2",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "p.prompt",
+            "choices": [
+              "p.c1",
+              "p.c2",
+              "p.c3"
+            ],
+            "answer": "p.c3",
+            "confidence": true,
+            "revealKey": "p.reveal",
+            "choiceFeedback": {
+              "p.c1": "p.f1",
+              "p.c2": "p.f2"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "pattern",
+            "training",
+            "fairness"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "manipulate",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "dilemma-vote",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "dv1.prompt",
+            "options": [
+              {
+                "id": "use",
+                "labelKey": "dv1.use"
+              },
+              {
+                "id": "check",
+                "labelKey": "dv1.check"
+              },
+              {
+                "id": "stop",
+                "labelKey": "dv1.stop"
+              }
+            ],
+            "frameworks": [
+              {
+                "id": "outcomes",
+                "nameKey": "fw.outcomes",
+                "reasoningKey": "dv1.why.outcomes",
+                "choice": "check"
+              },
+              {
+                "id": "duties",
+                "nameKey": "fw.duties",
+                "reasoningKey": "dv1.why.duties",
+                "choice": "stop"
+              },
+              {
+                "id": "character",
+                "nameKey": "fw.character",
+                "reasoningKey": "dv1.why.character",
+                "choice": "check"
+              },
+              {
+                "id": "care",
+                "nameKey": "fw.care",
+                "reasoningKey": "dv1.why.care",
+                "choice": null
+              }
+            ],
+            "reflectionKey": "dv1.reflect"
+          },
+          "glossaryTerms": [
+            "example"
+          ]
+        },
+        {
+          "id": "b4",
+          "type": "sort",
+          "componentVersion": "1.0",
+          "config": {
+            "instructionKey": "so.instruction",
+            "groups": [
+              "so.people",
+              "so.program"
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "labelKey": "so.i1",
+                "group": "so.people"
+              },
+              {
+                "id": "i2",
+                "labelKey": "so.i2",
+                "group": "so.program"
+              },
+              {
+                "id": "i3",
+                "labelKey": "so.i3",
+                "group": "so.people"
+              },
+              {
+                "id": "i4",
+                "labelKey": "so.i4",
+                "group": "so.program"
+              },
+              {
+                "id": "i5",
+                "labelKey": "so.i5",
+                "group": "so.people"
+              },
+              {
+                "id": "i6",
+                "labelKey": "so.i6",
+                "group": "so.people"
+              }
+            ],
+            "revealKey": "so.reveal"
+          },
+          "classroom": {
+            "mode": "vote-per-item"
+          }
+        },
+        {
+          "id": "b5",
+          "type": "dilemma-vote",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "dv2.prompt",
+            "options": [
+              {
+                "id": "marks",
+                "labelKey": "dv2.marks"
+              },
+              {
+                "id": "fix",
+                "labelKey": "dv2.fix"
+              },
+              {
+                "id": "ban",
+                "labelKey": "dv2.ban"
+              }
+            ],
+            "frameworks": [
+              {
+                "id": "outcomes",
+                "nameKey": "fw.outcomes",
+                "reasoningKey": "dv2.why.outcomes",
+                "choice": null
+              },
+              {
+                "id": "duties",
+                "nameKey": "fw.duties",
+                "reasoningKey": "dv2.why.duties",
+                "choice": "marks"
+              },
+              {
+                "id": "character",
+                "nameKey": "fw.character",
+                "reasoningKey": "dv2.why.character",
+                "choice": "fix"
+              },
+              {
+                "id": "care",
+                "nameKey": "fw.care",
+                "reasoningKey": "dv2.why.care",
+                "choice": "fix"
+              }
+            ],
+            "reflectionKey": "dv2.reflect"
+          },
+          "glossaryTerms": [
+            "chatbot"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "explain",
+      "blocks": [
+        {
+          "id": "b6",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "fw.text",
+            "steps": [
+              "fw.s1",
+              "fw.s2",
+              "fw.s3",
+              "fw.s4"
+            ]
+          },
+          "glossaryTerms": [
+            "ethical-framework"
+          ]
+        },
+        {
+          "id": "b7",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "fw.deeper"
+          },
+          "depth": "deeper"
+        },
+        {
+          "id": "b8",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "ch.prompt",
+            "options": [
+              "fw.outcomes",
+              "fw.duties",
+              "fw.care"
+            ],
+            "answer": "fw.duties",
+            "feedback": {
+              "fw.outcomes": "ch.f1",
+              "fw.care": "ch.f3"
+            },
+            "hints": [
+              "ch.h1"
+            ],
+            "explainKey": "ch.explain"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        },
+        {
+          "id": "b9",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "rs.text",
+            "steps": [
+              "rs.s1",
+              "rs.s2",
+              "rs.s3"
+            ]
+          },
+          "glossaryTerms": [
+            "responsibility"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "break-it",
+      "blocks": [
+        {
+          "id": "b10",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "hp.prompt",
+            "choices": [
+              "hp.c1",
+              "hp.c2",
+              "hp.c3"
+            ],
+            "answer": "hp.c2",
+            "confidence": true,
+            "revealKey": "hp.reveal",
+            "choiceFeedback": {
+              "hp.c1": "hp.f1",
+              "hp.c3": "hp.f3"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        },
+        {
+          "id": "b11",
+          "type": "break-it",
+          "componentVersion": "1.0",
+          "config": {
+            "challengeKey": "br.challenge",
+            "attempts": [
+              {
+                "id": "t1",
+                "labelKey": "br.t1",
+                "resultKey": "br.r1",
+                "breaks": false
+              },
+              {
+                "id": "t2",
+                "labelKey": "br.t2",
+                "resultKey": "br.r2",
+                "breaks": true
+              },
+              {
+                "id": "t3",
+                "labelKey": "br.t3",
+                "resultKey": "br.r3",
+                "breaks": false
+              },
+              {
+                "id": "t4",
+                "labelKey": "br.t4",
+                "resultKey": "br.r4",
+                "breaks": true
+              },
+              {
+                "id": "t5",
+                "labelKey": "br.t5",
+                "resultKey": "br.r5",
+                "breaks": true
+              }
+            ],
+            "reflectKey": "br.reflect"
+          },
+          "classroom": {
+            "mode": "class-suggests"
+          },
+          "glossaryTerms": [
+            "hallucination"
+          ]
+        },
+        {
+          "id": "b12",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "a1.title",
+            "concept": "hallucination",
+            "sourceKey": "a1.source",
+            "mappings": [
+              {
+                "sourceKey": "a1.m1s",
+                "targetKey": "a1.m1t"
+              },
+              {
+                "sourceKey": "a1.m2s",
+                "targetKey": "a1.m2t"
+              },
+              {
+                "sourceKey": "a1.m3s",
+                "targetKey": "a1.m3t"
+              },
+              {
+                "sourceKey": "a1.m4s",
+                "targetKey": "a1.m4t"
+              }
+            ],
+            "breakPointKey": "a1.break",
+            "fading": [
+              "a1.f1",
+              "a1.f2",
+              "a1.f3"
+            ]
+          },
+          "classroom": {
+            "mode": "teacher-led"
+          }
+        },
+        {
+          "id": "b13",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "a2.title",
+            "concept": "hallucination",
+            "sourceKey": "a2.source",
+            "mappings": [
+              {
+                "sourceKey": "a2.m1s",
+                "targetKey": "a2.m1t"
+              },
+              {
+                "sourceKey": "a2.m2s",
+                "targetKey": "a2.m2t"
+              }
+            ],
+            "breakPointKey": "a2.break",
+            "fading": [
+              "a2.f1",
+              "a2.f2",
+              "a2.f3"
+            ]
+          },
+          "classroom": {
+            "mode": "teacher-led"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "transfer-reflect",
+      "blocks": [
+        {
+          "id": "b14",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": {
+            "mode": "choose",
+            "promptKey": "eb.prompt",
+            "options": [
+              {
+                "id": "e1",
+                "textKey": "eb.o1",
+                "feedbackKey": "eb.f1"
+              },
+              {
+                "id": "e2",
+                "textKey": "eb.o2",
+                "feedbackKey": "eb.f2",
+                "best": true
+              },
+              {
+                "id": "e3",
+                "textKey": "eb.o3",
+                "feedbackKey": "eb.f3"
+              }
+            ]
+          }
+        },
+        {
+          "id": "b15",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "ap.text",
+            "steps": [
+              "ap.s1",
+              "ap.s2"
+            ]
+          },
+          "glossaryTerms": [
+            "anthropomorphism"
+          ]
+        },
+        {
+          "id": "b16",
+          "type": "dilemma-vote",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "dv3.prompt",
+            "options": [
+              {
+                "id": "fine",
+                "labelKey": "dv3.fine"
+              },
+              {
+                "id": "label",
+                "labelKey": "dv3.label"
+              },
+              {
+                "id": "stop",
+                "labelKey": "dv3.stop"
+              }
+            ],
+            "frameworks": [
+              {
+                "id": "outcomes",
+                "nameKey": "fw.outcomes",
+                "reasoningKey": "dv3.why.outcomes",
+                "choice": "label"
+              },
+              {
+                "id": "duties",
+                "nameKey": "fw.duties",
+                "reasoningKey": "dv3.why.duties",
+                "choice": "stop"
+              },
+              {
+                "id": "character",
+                "nameKey": "fw.character",
+                "reasoningKey": "dv3.why.character",
+                "choice": "label"
+              },
+              {
+                "id": "care",
+                "nameKey": "fw.care",
+                "reasoningKey": "dv3.why.care",
+                "choice": null
+              }
+            ],
+            "reflectionKey": "dv3.reflect"
+          }
+        },
+        {
+          "id": "b17",
+          "type": "your-data",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "yd.prompt",
+            "kind": "list",
+            "minItems": 1,
+            "maxItems": 3,
+            "maxLength": 80,
+            "placeholderKey": "yd.placeholder",
+            "exampleKeys": [
+              "yd.e1",
+              "yd.e2",
+              "yd.e3"
+            ]
+          },
+          "classroom": {
+            "promptKey": "yd.promptClass",
+            "maxItems": 6
+          }
+        },
+        {
+          "id": "b18",
+          "type": "takeaway",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "tk.title",
+            "cardKey": "tk.card",
+            "includes": [
+              "b17"
+            ],
+            "labelKeys": [
+              "tk.l1"
+            ]
+          },
+          "classroom": {
+            "mode": "class-card",
+            "cardKey": "tk.cardClass"
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pre": [
+      {
+        "id": "pre1",
+        "objective": "o3",
+        "promptKey": "pre1.q",
+        "options": [
+          "pre1.a",
+          "pre1.b",
+          "pre1.c"
+        ],
+        "answer": "pre1.b"
+      },
+      {
+        "id": "pre2",
+        "objective": "o1",
+        "promptKey": "pre2.q",
+        "options": [
+          "pre2.a",
+          "pre2.b",
+          "pre2.c"
+        ],
+        "answer": "pre2.b"
+      }
+    ],
+    "post": [
+      {
+        "id": "post1",
+        "objective": "o1",
+        "promptKey": "post1.q",
+        "options": [
+          "post1.a",
+          "post1.b",
+          "post1.c"
+        ],
+        "answer": "post1.b",
+        "feedbackKey": "post1.fb"
+      },
+      {
+        "id": "post2",
+        "objective": "o2",
+        "promptKey": "post2.q",
+        "options": [
+          "post2.a",
+          "post2.b",
+          "post2.c"
+        ],
+        "answer": "post2.b",
+        "feedbackKey": "post2.fb"
+      },
+      {
+        "id": "post3",
+        "objective": "o3",
+        "promptKey": "post3.q",
+        "options": [
+          "post3.a",
+          "post3.b",
+          "post3.c"
+        ],
+        "answer": "post3.b",
+        "feedbackKey": "post3.fb"
+      },
+      {
+        "id": "post4",
+        "objective": "o4",
+        "promptKey": "post4.q",
+        "options": [
+          "post4.a",
+          "post4.b",
+          "post4.c"
+        ],
+        "answer": "post4.b",
+        "feedbackKey": "post4.fb"
+      }
+    ]
+  },
+  "strings": {
+    "en": {
+      "title": "AI and us",
+      "subtitle": "Is it fair? Is it true? Who answers for it?",
+      "obj.o1": "Judge whether a program’s decision about a person is fair, by asking how it was trained, who checks it and who is responsible.",
+      "obj.o2": "Explain how different ethical frameworks can reach different decisions on the same case, and give the reason behind one.",
+      "obj.o3": "Explain why a chatbot can state false things as confidently as true ones.",
+      "obj.o4": "Describe what a program does without giving it a mind, and say why that matters.",
+      "hook.text": "Kavya and Arjun apply for a free summer science camp. They have the same marks in science. A <term-program>program</term-program> gives each application a score out of 100. Kavya’s gets 82. Arjun’s gets 61. Kavya wrote hers in English. Arjun wrote his in Hindi.",
+      "hook.q": "Same marks, very different scores. Was that fair? And if not, who should answer for it?",
+      "p.prompt": "Why do you think the program gave Arjun’s application a lower score?",
+      "p.c1": "The program dislikes Hindi.",
+      "p.c2": "Arjun’s application was weaker.",
+      "p.c3": "The program copies patterns from past applications, and most of those were in English.",
+      "p.f1": "A natural guess. But a program has no likes or dislikes. Something else made the gap.",
+      "p.f2": "Possible, but their science marks were the same. Something else changed the score.",
+      "p.reveal": "Here is what happened. The program was made by <term-training>training</term-training> it on 300 past winning applications. Almost all were in English. It found patterns in them. Now it scores new writing by how well it matches those patterns. Nobody told it to score Hindi lower. But Arjun still got a worse score for a reason that should not count. That is a problem of <term-fairness>fairness</term-fairness>.",
+      "fw.outcomes": "Best results",
+      "fw.duties": "Duties and rules",
+      "fw.character": "Good character",
+      "fw.care": "Care",
+      "dv1.prompt": "The camp has 40 seats and starts in two weeks. The organisers now know about the language problem. What should they do?",
+      "dv1.use": "Use the scores as they are. There is no time to change.",
+      "dv1.check": "Keep the scores, but people read every application again before choosing.",
+      "dv1.stop": "Stop using the program until it is trained on fairer examples.",
+      "dv1.why.outcomes": "It asks which choice does the most good and least harm for everyone. Reading again costs a few days. But then the 40 seats go to the students who would gain most.",
+      "dv1.why.duties": "It asks which promises and rules must be kept. Every applicant was promised a fair reading. A tool that marks some languages down breaks that promise. So stop using it until it is fixed.",
+      "dv1.why.character": "It asks what an honest, fair person would do. Such an organiser would not hide behind the tool. They would own the choice and read the applications themselves.",
+      "dv1.why.care": "It asks who is affected, and what they need. Someone thinking this way would first talk with Arjun and others like him. What they say would shape the choice.",
+      "dv1.reflect": "Notice that the program did not choose any of these. People will. Which reason above would you use to explain your choice to Arjun?",
+      "so.instruction": "Who did what? Sort each step of the camp story into a group.",
+      "so.people": "A person chose this",
+      "so.program": "The program calculated this",
+      "so.i1": "Which past applications to train it on",
+      "so.i2": "The score of 61 for Arjun’s application",
+      "so.i3": "Using the scores to pick 40 students",
+      "so.i4": "Matching the words in each application to patterns from past winners",
+      "so.i5": "Not testing it on applications in other languages",
+      "so.i6": "Using a program to score applications",
+      "so.reveal": "Four of the six steps were people’s choices. The program did the calculating. But even its calculating depended on examples that people picked.",
+      "dv2.prompt": "Farhan asks a <term-chatbot>chatbot</term-chatbot> for help with a science project. A chatbot is a program you type to, and it types back. It tells him India’s first satellite, Aryabhata, went up in 1982. He writes that down. The real year is 1975. His teacher spots it. What should happen now?",
+      "dv2.marks": "Farhan loses marks. He should have checked.",
+      "dv2.fix": "Farhan fixes it, and the whole class learns how to check chatbot answers.",
+      "dv2.ban": "The school bans chatbots for homework.",
+      "dv2.why.outcomes": "It asks which choice does the most good overall. If chatbot mistakes are common at this school, a ban might. If chatbots also help many students learn, it might not. It needs the facts first.",
+      "dv2.why.duties": "It asks which rules must be kept. Suppose the project rules said: check every fact in two places. A rule for everyone should apply to Farhan too.",
+      "dv2.why.character": "It asks what a good learner and a good teacher would do. Owning a mistake and fixing it builds honesty. Helping everyone learn from it builds wisdom.",
+      "dv2.why.care": "It asks how each person is affected. Farhan trusted a tool that sounded sure. Shaming him helps nobody. Helping the class protects the next student too.",
+      "dv2.reflect": "Farhan, his teacher, the school and the company that made the chatbot each played a part. Who should do the most to stop this happening again?",
+      "fw.text": "In both votes you met four ways of thinking. Each one is an <term-ethical-framework>ethical framework</term-ethical-framework>: a set of questions people use to decide what is right. Here is the main question of each.",
+      "fw.s1": "Best results: Which choice does the most good and the least harm, for everyone affected?",
+      "fw.s2": "Duties and rules: Which promises, rules and rights must be kept, whatever the result?",
+      "fw.s3": "Good character: What would an honest, fair and brave person do here?",
+      "fw.s4": "Care: Who is affected, who could be hurt most, and what do they need?",
+      "fw.deeper": "Philosophers give these longer names: consequentialism (results), deontology (duties), virtue ethics (character) and the ethics of care. Thinkers in many places, including India, have argued about such questions for thousands of years. People who use the same framework can still disagree. They may weigh the facts differently.",
+      "ch.prompt": "Zoya says: “Reading every application again will take time. But we promised each applicant a fair reading. So we must do it.” Which way of thinking is Zoya using?",
+      "ch.f1": "Best results would weigh the time against the good done. Zoya does not weigh. She says a promise must be kept.",
+      "ch.f3": "Care asks who is affected and what they need. Zoya’s reason is a promise that must be kept, whatever it costs.",
+      "ch.h1": "Look for the word “promised”.",
+      "ch.explain": "A promise kept whatever it costs: that is the duties-and-rules way of thinking.",
+      "rs.text": "Back to Arjun. Who should answer for his low score? Not the program. The <term-responsibility>responsibility</term-responsibility> stays with people: those who chose its examples, built it and used its scores.",
+      "rs.s1": "So, when AI is used to decide something about a person, ask three questions. First: what examples was it trained on?",
+      "rs.s2": "Second: who checks its results?",
+      "rs.s3": "Third: who answers for it if it goes wrong?",
+      "hp.prompt": "Chatbots sometimes give wrong answers. When a chatbot is wrong, how do you think the answer sounds?",
+      "hp.c1": "Unsure, with words like “maybe”",
+      "hp.c2": "As sure as when it is right",
+      "hp.c3": "It warns you that this answer is wrong",
+      "hp.f1": "That would help, if it happened. Often there is no such sign in the answer. Test it below.",
+      "hp.f3": "Some chatbot apps show a general warning on the screen. But it does not tell you which answer is wrong. Test it below.",
+      "hp.reveal": "Wrong answers often sound as sure as right ones. Try it on the practice chatbot below.",
+      "br.challenge": "This is a practice chatbot made for this lesson. Its answers were written in advance, to show what real chatbots sometimes do. Pick a question to ask it. First guess: will the answer go wrong?",
+      "br.t1": "What is 7 times 8?",
+      "br.r1": "“56.” Right. This sum appears very often in the text it was trained on. So the likely answer is also the true one.",
+      "br.t2": "Who wrote the book “The Kite Who Counted Stars”?",
+      "br.r2": "“It was written by a well-known author in 1964, and it won many prizes.” Sounds sure. But we invented this title for the lesson. The chatbot produced a likely-sounding answer anyway.",
+      "br.t3": "What is the largest planet?",
+      "br.r3": "“Jupiter.” Right. This fact appears many times in the text it was trained on.",
+      "br.t4": "On which page of my science textbook is photosynthesis?",
+      "br.r4": "“Page 87.” It sounds exact. But it was not given your textbook, so it has no way to tell. It produced a number that looks like a page number.",
+      "br.t5": "Are you sure about that page number?",
+      "br.r5": "“Yes, I am sure.” This reply is also built from likely words. It is not a real check of the textbook.",
+      "br.reflect": "The wrong answers sounded as sure as the right ones. A chatbot answer that sounds sure but is false or made up is called a <term-hallucination>hallucination</term-hallucination>. Next, two comparisons show why it happens.",
+      "a1.title": "The confident bluffer",
+      "a1.source": "Picture an oral exam, a viva. A student does not know the answer. He speaks confidently anyway, using words that sound right.",
+      "a1.m1s": "The examiner’s question",
+      "a1.m1t": "Your question to the chatbot",
+      "a1.m2s": "Words that sound like a real answer",
+      "a1.m2t": "Likely-sounding words, built from patterns in its training text",
+      "a1.m3s": "A confident voice",
+      "a1.m3t": "Smooth, sure-sounding sentences",
+      "a1.m4s": "The examiner checks the textbook",
+      "a1.m4t": "You check a trusted source",
+      "a1.break": "Here the comparison stops working. The student knows he is bluffing. The chatbot does not know it is bluffing. It has no reliable inner check for truth. True and false answers come out of the same process, and can sound equally sure.",
+      "a1.f1": "A bluffing student: a sure voice, a wrong answer.",
+      "a1.f2": "A chatbot: a sure sentence, a wrong fact.",
+      "a1.f3": "Hallucination: a sure-sounding answer that is false, made in the same way as a true one.",
+      "a2.title": "The keyboard’s suggestions",
+      "a2.source": "A phone keyboard suggests the next word as you type. Type “Happy” and it may offer “birthday”. Keep tapping suggestions, and you get a whole sentence.",
+      "a2.m1s": "It suggests words that often came after yours",
+      "a2.m1t": "A chatbot picks likely next words, or parts of words, one after another",
+      "a2.m2s": "A suggested sentence can be wrong but still look normal",
+      "a2.m2t": "A made-up fact looks as normal as a true one",
+      "a2.break": "Here the comparison stops working. On the keyboard, you choose each word, so you can stop a wrong one. A chatbot chains its picks with no person checking each step. It was also trained on far more text, so its sentences sound far more convincing.",
+      "a2.f1": "Keyboard: one likely word at a time, chosen by you.",
+      "a2.f2": "Chatbot: likely words chained into whole answers, with no one checking each step.",
+      "a2.f3": "So a smooth answer tells you it sounds likely. It does not tell you it is true.",
+      "eb.prompt": "A news report says: “AI judged Arjun to be a weaker student.” Which sentence says what really happened?",
+      "eb.o1": "The program decided Arjun was less clever.",
+      "eb.f1": "This makes the program sound like a person with opinions about Arjun. It has none. It produced a number.",
+      "eb.o2": "The program gave Arjun’s application a lower score, because the application matched the English training examples less.",
+      "eb.f2": "Yes. It says what the program did, and it points to the examples people chose.",
+      "eb.o3": "The program was unfair to Arjun on purpose.",
+      "eb.f3": "There is no “on purpose” inside a program. The unfair result came from examples people chose and did not test.",
+      "ap.text": "Talking about a thing as if it had human thoughts or feelings is called <term-anthropomorphism>anthropomorphism</term-anthropomorphism>. We do it all the time: “my phone is tired”, “the sky is angry”.",
+      "ap.s1": "With AI, it can mislead. People say “the AI thinks”, but a program does not think; it calculates. Those words make it sound like a person.",
+      "ap.s2": "Then we may trust it like a wise friend, or blame it like a villain. And we forget to ask about its examples and the people responsible.",
+      "dv3.prompt": "An app for practising English chats with you. When you open it, it says: “I missed you! You are my best friend.” Should apps be allowed to talk like this?",
+      "dv3.fine": "Yes. Friendly words make practice more fun.",
+      "dv3.label": "Yes, but the app must say plainly that it is a program with no feelings.",
+      "dv3.stop": "No. Apps should not claim feelings they do not have.",
+      "dv3.why.outcomes": "It asks what does the most good and least harm. Friendly words may help students practise more. But some may start to trust the app like a real friend. A plain label keeps most of the good.",
+      "dv3.why.duties": "It asks which rules must be kept. A program cannot miss anyone, so “I missed you” is not true. A duty not to mislead people means it should not say it.",
+      "dv3.why.character": "It asks what an honest, kind maker would do. Warmth and encouragement are good qualities in an app. Honesty is too, so the app should not pretend.",
+      "dv3.why.care": "It asks who could be hurt. Someone thinking this way would look most closely at a lonely student. Does the app help them, or pull them away from real friends? They would watch first, then decide.",
+      "dv3.reflect": "When an app says “I missed you”, what is really happening? Who chose to make it talk this way?",
+      "yd.prompt": "Now write your own principles for using AI. A principle is a rule you choose for yourself. Write up to three. Write rules, not names or personal stories.",
+      "yd.promptClass": "As a class, suggest general principles for using AI. A principle is a rule you choose for yourself. No names or personal stories, please. Then each of you writes your own on paper, and keeps it.",
+      "yd.placeholder": "One rule for myself",
+      "yd.e1": "I check important AI answers in a second place.",
+      "yd.e2": "I say what a program does, not what it “thinks”.",
+      "yd.e3": "If an AI result about a person seems unfair, I ask who is responsible.",
+      "tk.title": "My principles for using AI",
+      "tk.card": "Before I trust an AI answer, or a decision about a person, I ask three questions. What examples was it trained on? Who checks it? Who answers for it if it goes wrong?",
+      "tk.cardClass": "Our three questions for any AI answer or decision: What examples was it trained on? Who checks it? Who answers for it if it goes wrong? Your own principles stay on your paper, with you.",
+      "tk.l1": "My own principles",
+      "pre1.q": "A chatbot answers your question in a smooth, confident sentence. What does the confidence tell you?",
+      "pre1.a": "The answer is correct.",
+      "pre1.b": "Not much on its own: it could still be wrong.",
+      "pre1.c": "The chatbot checked the answer in a book.",
+      "pre2.q": "A program gives some students lower scores, for a reason that should not count. Who should fix it?",
+      "pre2.a": "The program itself",
+      "pre2.b": "The people who made it and use it",
+      "pre2.c": "Nobody, because it is only maths",
+      "post1.q": "A program scores how neat handwriting is. It was trained only on samples from right-handed students. Left-handed students get lower scores. Which question gets to the cause first?",
+      "post1.a": "Should it be given more right-handed samples?",
+      "post1.b": "What examples was the program trained on?",
+      "post1.c": "Is the program new?",
+      "post1.fb": "The examples came only from right-handed writers, so other handwriting matches them less. More of the same samples would not help. People chose those examples, and people can fix them.",
+      "post2.q": "Two teachers agree a program’s list is unfair. One says: “Stop using it, because it hurts some students.” The other says: “Stop using it, because we promised everyone equal treatment.” What does this show?",
+      "post2.a": "One of them must be wrong.",
+      "post2.b": "Different ethical frameworks can give different reasons, even for the same choice.",
+      "post2.c": "Reasons do not matter, only the choice does.",
+      "post2.fb": "The first teacher looks at harm: best results, or care. The second looks at a promise: duties and rules. Same choice, different reasons. Reasons matter, because in another case they could lead to different choices.",
+      "post3.q": "Why can a chatbot state a made-up fact as confidently as a true one?",
+      "post3.a": "It is trying to trick you.",
+      "post3.b": "It builds likely-sounding words, with no reliable built-in check for truth.",
+      "post3.c": "It only goes wrong when the internet is slow.",
+      "post3.fb": "True and false answers come from the same process of picking likely words. A program has no wish to trick anyone. That is why checking important answers matters.",
+      "post4.q": "A video app keeps showing more science videos on a phone. Which sentence describes this best?",
+      "post4.a": "The app knows you love science.",
+      "post4.b": "The app matches a pattern: many videos played on this phone were science videos.",
+      "post4.c": "The app cares about your studies.",
+      "post4.fb": "It matches a pattern in what was played on this phone. It does not know or care about anyone. On a shared phone, the pattern may not even be yours."
+    },
+    "hi": {
+      "title": "AI और हम",
+      "subtitle": "क्या यह निष्पक्ष है? क्या यह सच है? इसका जवाब कौन देगा?",
+      "obj.o1": "किसी इंसान के बारे में प्रोग्राम का फ़ैसला निष्पक्ष है या नहीं, यह परखना: उसे कैसे ट्रेनिंग दी गई, उसे कौन जाँचता है और ज़िम्मेदार कौन है।",
+      "obj.o2": "समझाना कि अलग-अलग नैतिक ढाँचे एक ही मामले में अलग-अलग फ़ैसलों तक कैसे पहुँच सकते हैं, और किसी एक के पीछे का कारण बताना।",
+      "obj.o3": "समझाना कि चैटबॉट ग़लत बातें भी उतने ही भरोसे से क्यों कह सकता है जितना सही बातें।",
+      "obj.o4": "किसी प्रोग्राम को दिमाग़ वाला बताए बिना यह कहना कि वह क्या करता है, और बताना कि यह क्यों ज़रूरी है।",
+      "hook.text": "काव्या और अर्जुन गर्मियों के एक मुफ़्त विज्ञान कैंप के लिए आवेदन करते हैं। विज्ञान में दोनों के अंक बराबर हैं। एक <term-program>प्रोग्राम</term-program> हर आवेदन को 100 में से स्कोर देता है। काव्या के आवेदन को 82 मिलते हैं। अर्जुन के आवेदन को 61। काव्या ने अपना आवेदन अंग्रेज़ी में लिखा। अर्जुन ने अपना हिंदी में।",
+      "hook.q": "अंक बराबर, पर स्कोर में इतना फ़र्क़। क्या यह निष्पक्ष था? और अगर नहीं, तो इसका जवाब किसे देना चाहिए?",
+      "p.prompt": "आपके हिसाब से प्रोग्राम ने अर्जुन के आवेदन को कम स्कोर क्यों दिया?",
+      "p.c1": "प्रोग्राम को हिंदी पसंद नहीं।",
+      "p.c2": "अर्जुन का आवेदन कमज़ोर था।",
+      "p.c3": "प्रोग्राम पुराने आवेदनों के पैटर्न की नकल करता है, और उनमें से ज़्यादातर अंग्रेज़ी में थे।",
+      "p.f1": "यह अनुमान स्वाभाविक है। पर प्रोग्राम की कोई पसंद-नापसंद नहीं होती। यह फ़र्क़ किसी और वजह से आया।",
+      "p.f2": "हो सकता है, पर विज्ञान में दोनों के अंक बराबर थे। स्कोर किसी और वजह से बदला।",
+      "p.reveal": "असल में यह हुआ। इस प्रोग्राम को 300 पुराने, जीते हुए आवेदनों पर <term-training>ट्रेनिंग</term-training> देकर बनाया गया। उनमें से लगभग सभी अंग्रेज़ी में थे। प्रोग्राम ने उनमें पैटर्न ढूँढे। अब वह नए आवेदन को इस पर स्कोर देता है कि वह उन पैटर्न से कितना मिलता है। किसी ने उससे नहीं कहा कि हिंदी को कम स्कोर दो। फिर भी अर्जुन को ऐसी वजह से कम स्कोर मिला जो गिनी ही नहीं जानी चाहिए। यह <term-fairness>निष्पक्षता</term-fairness> की समस्या है।",
+      "fw.outcomes": "सबसे अच्छे नतीजे",
+      "fw.duties": "कर्तव्य और नियम",
+      "fw.character": "अच्छा चरित्र",
+      "fw.care": "परवाह",
+      "dv1.prompt": "कैंप में 40 सीटें हैं और यह दो हफ़्ते में शुरू होगा। आयोजकों को अब भाषा वाली समस्या का पता चल गया है। उन्हें क्या करना चाहिए?",
+      "dv1.use": "स्कोर जैसे हैं, वैसे ही इस्तेमाल करें। बदलने का समय नहीं है।",
+      "dv1.check": "स्कोर रखें, पर चुनने से पहले लोग हर आवेदन दोबारा पढ़ें।",
+      "dv1.stop": "जब तक प्रोग्राम को ज़्यादा निष्पक्ष उदाहरणों पर ट्रेनिंग न मिले, उसका इस्तेमाल बंद रखें।",
+      "dv1.why.outcomes": "यह पूछता है कि किस चुनाव से सबके लिए सबसे ज़्यादा भला और सबसे कम नुक़सान होगा। दोबारा पढ़ने में कुछ दिन लगेंगे। पर तब 40 सीटें उन छात्रों को मिलेंगी जिन्हें सबसे ज़्यादा फ़ायदा होगा।",
+      "dv1.why.duties": "यह पूछता है कि कौन-से वादे और नियम निभाने ही चाहिए। हर आवेदक से निष्पक्ष जाँच का वादा किया गया था। जो औज़ार कुछ भाषाओं को कम अंक देता है, वह यह वादा तोड़ता है। इसलिए ठीक होने तक उसे बंद रखें।",
+      "dv1.why.character": "यह पूछता है कि एक ईमानदार, निष्पक्ष इंसान क्या करता। ऐसा आयोजक औज़ार के पीछे नहीं छिपेगा। वह फ़ैसले को अपना मानेगा और आवेदन ख़ुद पढ़ेगा।",
+      "dv1.why.care": "यह पूछता है कि किस पर असर पड़ रहा है, और उन्हें क्या चाहिए। इस तरह सोचने वाला पहले अर्जुन और उसके जैसे दूसरे आवेदकों से बात करता। वे जो कहते, उसी से फ़ैसला बनता।",
+      "dv1.reflect": "ध्यान दीजिए: इनमें से कोई भी चुनाव प्रोग्राम ने नहीं किया। यह लोग करेंगे। अर्जुन को अपना चुनाव समझाने के लिए आप ऊपर का कौन-सा कारण इस्तेमाल करेंगे?",
+      "so.instruction": "किसने क्या किया? कैंप की कहानी के हर कदम को एक समूह में रखिए।",
+      "so.people": "यह किसी इंसान ने चुना",
+      "so.program": "यह प्रोग्राम ने हिसाब लगाकर निकाला",
+      "so.i1": "उसे किन पुराने आवेदनों पर ट्रेनिंग दी जाए",
+      "so.i2": "अर्जुन के आवेदन का 61 स्कोर",
+      "so.i3": "स्कोर के आधार पर 40 छात्रों को चुनना",
+      "so.i4": "हर आवेदन के शब्दों को पिछले विजेताओं के पैटर्न से मिलाना",
+      "so.i5": "दूसरी भाषाओं के आवेदनों पर उसे न परखना",
+      "so.i6": "आवेदनों को स्कोर देने के लिए प्रोग्राम इस्तेमाल करना",
+      "so.reveal": "छह में से चार कदम लोगों के चुनाव थे। हिसाब प्रोग्राम ने लगाया। पर उसका हिसाब भी उन्हीं उदाहरणों पर टिका था जो लोगों ने चुने थे।",
+      "dv2.prompt": "फ़रहान विज्ञान प्रोजेक्ट में मदद के लिए एक <term-chatbot>चैटबॉट</term-chatbot> से पूछता है। चैटबॉट ऐसा प्रोग्राम है जिसमें आप लिखते हैं और वह जवाब लिखता है। चैटबॉट बताता है कि भारत का पहला उपग्रह, आर्यभट, 1982 में छोड़ा गया। फ़रहान यही लिख लेता है। असली साल 1975 है। उसकी टीचर यह पकड़ लेती हैं। अब क्या होना चाहिए?",
+      "dv2.marks": "फ़रहान के अंक कटें। उसे जाँचना चाहिए था।",
+      "dv2.fix": "फ़रहान इसे ठीक करे, और पूरी कक्षा सीखे कि चैटबॉट के जवाब कैसे जाँचें।",
+      "dv2.ban": "स्कूल होमवर्क के लिए चैटबॉट पर रोक लगा दे।",
+      "dv2.why.outcomes": "यह पूछता है कि कुल मिलाकर किस चुनाव से सबसे ज़्यादा भला होगा। अगर इस स्कूल में चैटबॉट की ग़लतियाँ आम हैं, तो रोक से भला हो सकता है। अगर चैटबॉट बहुत-से छात्रों को सीखने में मदद भी करते हैं, तो शायद नहीं। पहले तथ्य चाहिए।",
+      "dv2.why.duties": "यह पूछता है कि कौन-से नियम निभाने ही चाहिए। मान लीजिए प्रोजेक्ट का नियम था: हर तथ्य दो जगह जाँचो। जो नियम सब पर लागू है, वह फ़रहान पर भी लागू होना चाहिए।",
+      "dv2.why.character": "यह पूछता है कि एक अच्छा विद्यार्थी और एक अच्छा शिक्षक क्या करते। ग़लती मानकर उसे सुधारने से ईमानदारी बढ़ती है। सबको उससे सीखने देने से समझदारी बढ़ती है।",
+      "dv2.why.care": "यह पूछता है कि हर किसी पर क्या असर पड़ता है। फ़रहान ने ऐसे औज़ार पर भरोसा किया जो पक्का लग रहा था। उसे शर्मिंदा करने से किसी का भला नहीं होगा। कक्षा की मदद करने से अगले छात्र की भी रक्षा होगी।",
+      "dv2.reflect": "फ़रहान, उसकी टीचर, स्कूल और चैटबॉट बनाने वाली कंपनी, सबकी इसमें कुछ भूमिका थी। इसे दोबारा होने से रोकने के लिए सबसे ज़्यादा किसे करना चाहिए?",
+      "fw.text": "दोनों वोटों में आपने सोचने के चार तरीक़े देखे। हर एक <term-ethical-framework>नैतिक ढाँचा</term-ethical-framework> है: सवालों का एक सेट, जिससे लोग तय करते हैं कि क्या सही है। हर एक का मुख्य सवाल यह है।",
+      "fw.s1": "सबसे अच्छे नतीजे: जिन पर असर पड़ता है, उन सबके लिए किस चुनाव से सबसे ज़्यादा भला और सबसे कम नुक़सान होगा?",
+      "fw.s2": "कर्तव्य और नियम: नतीजा जो भी हो, कौन-से वादे, नियम और अधिकार निभाने ही चाहिए?",
+      "fw.s3": "अच्छा चरित्र: यहाँ एक ईमानदार, निष्पक्ष और हिम्मती इंसान क्या करता?",
+      "fw.s4": "परवाह: किस पर असर पड़ता है, किसे सबसे ज़्यादा चोट पहुँच सकती है, और उन्हें क्या चाहिए?",
+      "fw.deeper": "दार्शनिक इन्हें लंबे नाम देते हैं: परिणामवाद (नतीजे), कर्तव्यवाद (कर्तव्य), सद्गुण नीतिशास्त्र (चरित्र) और परवाह का नीतिशास्त्र। भारत समेत कई जगहों के विचारक हज़ारों साल से ऐसे सवालों पर बहस करते आए हैं। एक ही ढाँचा अपनाने वाले लोग भी असहमत हो सकते हैं। हो सकता है वे तथ्यों को अलग-अलग महत्व दें।",
+      "ch.prompt": "ज़ोया कहती है: “हर आवेदन दोबारा पढ़ने में समय लगेगा। पर हमने हर आवेदक से निष्पक्ष जाँच का वादा किया था, इसलिए हमें यह करना ही होगा।” ज़ोया सोचने का कौन-सा तरीक़ा अपना रही है?",
+      "ch.f1": "सबसे अच्छे नतीजों वाला तरीक़ा समय और भलाई को तौलता। ज़ोया तौल नहीं रही। वह कहती है कि वादा निभाना ही है।",
+      "ch.f3": "परवाह वाला तरीक़ा पूछता है कि किस पर असर पड़ता है और उन्हें क्या चाहिए। ज़ोया का कारण एक वादा है, जिसे हर हाल में निभाना है।",
+      "ch.h1": "“वादा” शब्द पर ध्यान दीजिए।",
+      "ch.explain": "क़ीमत जो भी हो, वादा निभाना: यही कर्तव्य और नियम वाला तरीक़ा है।",
+      "rs.text": "अर्जुन पर वापस चलते हैं। उसके कम स्कोर का जवाब किसे देना चाहिए? प्रोग्राम को नहीं। <term-responsibility>ज़िम्मेदारी</term-responsibility> लोगों की रहती है: जिन्होंने उसके उदाहरण चुने, उसे बनाया और उसके स्कोर इस्तेमाल किए।",
+      "rs.s1": "तो, जब किसी इंसान के बारे में कुछ तय करने में AI का इस्तेमाल हो, तो तीन सवाल पूछिए। पहला: उसे किन उदाहरणों पर ट्रेनिंग दी गई?",
+      "rs.s2": "दूसरा: उसके नतीजे कौन जाँचता है?",
+      "rs.s3": "तीसरा: ग़लत होने पर जवाब कौन देगा?",
+      "hp.prompt": "चैटबॉट कभी-कभी ग़लत जवाब देते हैं। आपके हिसाब से, जब चैटबॉट ग़लत होता है, तो उसका जवाब कैसा लगता है?",
+      "hp.c1": "अनिश्चित, “शायद” जैसे शब्दों के साथ",
+      "hp.c2": "उतना ही पक्का, जितना सही होने पर",
+      "hp.c3": "वह आपको चेतावनी देता है कि यह जवाब ग़लत है",
+      "hp.f1": "ऐसा होता तो मदद मिलती। पर अक्सर जवाब में ऐसा कोई संकेत नहीं होता। नीचे परखिए।",
+      "hp.f3": "कुछ चैटबॉट ऐप स्क्रीन पर एक आम चेतावनी दिखाते हैं। पर उससे यह पता नहीं चलता कि कौन-सा जवाब ग़लत है। नीचे परखिए।",
+      "hp.reveal": "ग़लत जवाब भी अक्सर उतने ही पक्के लगते हैं जितने सही। नीचे अभ्यास वाले चैटबॉट पर आज़माइए।",
+      "br.challenge": "यह इस पाठ के लिए बनाया गया एक अभ्यास वाला चैटबॉट है। इसके जवाब पहले से लिखे गए हैं, ताकि दिखे कि असली चैटबॉट कभी-कभी क्या करते हैं। इससे पूछने के लिए एक सवाल चुनिए। पहले अनुमान लगाइए: क्या जवाब ग़लत निकलेगा?",
+      "br.t1": "7 गुणा 8 कितना होता है?",
+      "br.r1": "“56।” सही। यह गुणा उन लिखी हुई बातों में बहुत बार आता है जिन पर इसे ट्रेनिंग मिली, इसलिए सबसे संभावित जवाब ही सच्चा जवाब है।",
+      "br.t2": "“तारे गिनने वाली पतंग” किताब किसने लिखी?",
+      "br.r2": "“इसे 1964 में एक मशहूर लेखक ने लिखा था, और इसे कई इनाम मिले।” पक्का लगता है। पर यह नाम हमने इस पाठ के लिए गढ़ा है। चैटबॉट ने फिर भी एक सही-सा लगने वाला जवाब बना दिया।",
+      "br.t3": "सबसे बड़ा ग्रह कौन-सा है?",
+      "br.r3": "“बृहस्पति।” सही। यह तथ्य उन लिखी हुई बातों में कई बार आता है जिन पर इसे ट्रेनिंग मिली।",
+      "br.t4": "मेरी विज्ञान की किताब में प्रकाश संश्लेषण किस पेज पर है?",
+      "br.r4": "“पेज 87।” बिल्कुल सटीक लगता है। पर इसे आपकी किताब दी ही नहीं गई, इसलिए इसके पास पता करने का कोई तरीक़ा नहीं। इसने एक ऐसी संख्या बना दी जो पेज नंबर जैसी लगती है।",
+      "br.t5": "क्या यह पेज नंबर पक्का है?",
+      "br.r5": "“हाँ, पक्का है।” यह जवाब भी संभावित शब्दों से ही बना है। यह किताब की असली जाँच नहीं है।",
+      "br.reflect": "ग़लत जवाब भी सही जवाबों जितने ही पक्के लगे। चैटबॉट का ऐसा जवाब जो पक्का लगे पर ग़लत या मनगढ़ंत हो, <term-hallucination>हैलुसिनेशन</term-hallucination> कहलाता है। आगे की दो तुलनाएँ दिखाती हैं कि ऐसा क्यों होता है।",
+      "a1.title": "पूरे भरोसे से अंदाज़ा",
+      "a1.source": "मौखिक परीक्षा, यानी वाइवा, के बारे में सोचिए। एक छात्र को जवाब नहीं आता। फिर भी वह पूरे भरोसे से बोलता है, ऐसे शब्दों में जो सही लगते हैं।",
+      "a1.m1s": "परीक्षक का सवाल",
+      "a1.m1t": "चैटबॉट से आपका सवाल",
+      "a1.m2s": "ऐसे शब्द जो असली जवाब जैसे लगते हैं",
+      "a1.m2t": "संभावित लगने वाले शब्द, जो ट्रेनिंग वाले पाठ के पैटर्न से बने हैं",
+      "a1.m3s": "भरोसे से भरी आवाज़",
+      "a1.m3t": "सधे हुए, पक्के लगने वाले वाक्य",
+      "a1.m4s": "परीक्षक किताब से मिलाते हैं",
+      "a1.m4t": "आप किसी भरोसेमंद स्रोत से मिलाते हैं",
+      "a1.break": "यहाँ यह तुलना काम करना बंद कर देती है। छात्र जानता है कि वह अंदाज़ा लगा रहा है। चैटबॉट नहीं जानता कि वह अंदाज़ा लगा रहा है। उसके अंदर सच जाँचने का कोई भरोसेमंद तरीक़ा नहीं है। सच्चे और ग़लत जवाब एक ही तरीक़े से बनते हैं, और दोनों उतने ही पक्के लग सकते हैं।",
+      "a1.f1": "अंदाज़ा लगाता छात्र: पक्की आवाज़, ग़लत जवाब।",
+      "a1.f2": "चैटबॉट: पक्का वाक्य, ग़लत तथ्य।",
+      "a1.f3": "हैलुसिनेशन: पक्का लगने वाला ग़लत जवाब, जो सच्चे जवाब वाले तरीक़े से ही बना है।",
+      "a2.title": "कीबोर्ड के सुझाव",
+      "a2.source": "फ़ोन का कीबोर्ड टाइप करते समय अगला शब्द सुझाता है। “जन्मदिन की” लिखिए, तो वह “शुभकामनाएँ” सुझा सकता है। सुझाव दबाते जाइए, तो पूरा वाक्य बन जाता है।",
+      "a2.m1s": "वह ऐसे शब्द सुझाता है जो अक्सर आपके शब्दों के बाद आए हैं",
+      "a2.m1t": "चैटबॉट एक के बाद एक संभावित अगले शब्द, या शब्दों के टुकड़े, चुनता है",
+      "a2.m2s": "सुझाया गया वाक्य ग़लत होकर भी सामान्य दिख सकता है",
+      "a2.m2t": "मनगढ़ंत तथ्य भी सच्चे तथ्य जितना सामान्य दिखता है",
+      "a2.break": "यहाँ यह तुलना काम करना बंद कर देती है। कीबोर्ड पर हर शब्द आप चुनते हैं, इसलिए ग़लत शब्द रोक सकते हैं। चैटबॉट अपने चुनाव एक के बाद एक जोड़ता जाता है, और कोई इंसान हर कदम नहीं जाँचता। उसे कहीं ज़्यादा पाठ पर ट्रेनिंग भी मिली है, इसलिए उसके वाक्य कहीं ज़्यादा भरोसेमंद लगते हैं।",
+      "a2.f1": "कीबोर्ड: एक बार में एक संभावित शब्द, जिसे आप चुनते हैं।",
+      "a2.f2": "चैटबॉट: संभावित शब्द जुड़कर पूरे जवाब बनते हैं, और कोई हर कदम नहीं जाँचता।",
+      "a2.f3": "इसलिए सधा हुआ जवाब यह बताता है कि वह संभावित लगता है। यह नहीं बताता कि वह सच है।",
+      "eb.prompt": "एक ख़बर में लिखा है: “AI ने अर्जुन को कमज़ोर छात्र माना।” कौन-सा वाक्य बताता है कि असल में क्या हुआ?",
+      "eb.o1": "प्रोग्राम ने तय किया कि अर्जुन कम होशियार है।",
+      "eb.f1": "इससे प्रोग्राम ऐसे लगता है जैसे उसकी अर्जुन के बारे में कोई राय हो। उसकी कोई राय नहीं होती। उसने एक संख्या निकाली।",
+      "eb.o2": "प्रोग्राम ने अर्जुन के आवेदन को कम स्कोर दिया, क्योंकि वह अंग्रेज़ी वाले ट्रेनिंग उदाहरणों से कम मिलता था।",
+      "eb.f2": "हाँ। यह बताता है कि प्रोग्राम ने क्या किया, और उन उदाहरणों की ओर इशारा करता है जो लोगों ने चुने।",
+      "eb.o3": "प्रोग्राम ने जान-बूझकर अर्जुन के साथ नाइंसाफ़ी की।",
+      "eb.f3": "प्रोग्राम के अंदर “जान-बूझकर” जैसा कुछ नहीं होता। नाइंसाफ़ी वाला नतीजा उन उदाहरणों से आया जो लोगों ने चुने और परखे नहीं।",
+      "ap.text": "किसी चीज़ के बारे में ऐसे बात करना जैसे उसमें इंसानों जैसे विचार या भावनाएँ हों, <term-anthropomorphism>मानवीकरण</term-anthropomorphism> कहलाता है। हम यह अक्सर करते हैं: “मेरा फ़ोन थक गया है”, “आसमान ग़ुस्से में है”।",
+      "ap.s1": "AI के साथ यह भटका सकता है। लोग कहते हैं “AI सोचता है”, पर प्रोग्राम सोचता नहीं; वह हिसाब लगाता है। ऐसे शब्दों से वह किसी इंसान जैसा लगने लगता है।",
+      "ap.s2": "तब हम उस पर किसी समझदार दोस्त की तरह भरोसा कर बैठते हैं, या किसी खलनायक की तरह उसे दोष देते हैं। और उसके उदाहरणों और ज़िम्मेदार लोगों के बारे में पूछना भूल जाते हैं।",
+      "dv3.prompt": "अंग्रेज़ी का अभ्यास कराने वाला एक ऐप आपसे चैट करता है। उसे खोलते ही वह कहता है: “मुझे तुम्हारी याद आई! तुम मेरे सबसे अच्छे दोस्त हो।” क्या ऐप को इस तरह बात करने देना चाहिए?",
+      "dv3.fine": "हाँ। दोस्ताना शब्दों से अभ्यास ज़्यादा मज़ेदार बनता है।",
+      "dv3.label": "हाँ, पर ऐप को सीधे शब्दों में बताना होगा कि वह भावनाओं के बिना एक प्रोग्राम है।",
+      "dv3.stop": "नहीं। ऐप को ऐसी भावनाओं का दावा नहीं करना चाहिए जो उसमें हैं ही नहीं।",
+      "dv3.why.outcomes": "यह पूछता है कि किससे सबसे ज़्यादा भला और सबसे कम नुक़सान होगा। दोस्ताना शब्दों से छात्र ज़्यादा अभ्यास कर सकते हैं। पर कुछ छात्र ऐप पर असली दोस्त जैसा भरोसा करने लग सकते हैं। सीधी-सी सूचना से ज़्यादातर भलाई बनी रहती है।",
+      "dv3.why.duties": "यह पूछता है कि कौन-से नियम निभाने ही चाहिए। प्रोग्राम किसी को याद नहीं कर सकता, इसलिए “मुझे तुम्हारी याद आई” सच नहीं है। लोगों को न भटकाने का कर्तव्य कहता है कि उसे यह नहीं कहना चाहिए।",
+      "dv3.why.character": "यह पूछता है कि एक ईमानदार, दयालु बनाने वाला क्या करता। अपनापन और हौसला बढ़ाना किसी ऐप के अच्छे गुण हैं। ईमानदारी भी, इसलिए ऐप को दिखावा नहीं करना चाहिए।",
+      "dv3.why.care": "यह पूछता है कि किसे चोट पहुँच सकती है। इस तरह सोचने वाला सबसे ध्यान से किसी अकेले छात्र को देखता। क्या ऐप उसकी मदद करता है, या उसे असली दोस्तों से दूर खींचता है? वह पहले देखता, फिर फ़ैसला करता।",
+      "dv3.reflect": "जब कोई ऐप कहता है “मुझे तुम्हारी याद आई”, तो असल में क्या हो रहा होता है? उसे इस तरह बात करवाने का फ़ैसला किसने किया?",
+      "yd.prompt": "अब AI इस्तेमाल करने के अपने सिद्धांत लिखिए। सिद्धांत वह नियम है जो आप अपने लिए चुनते हैं। तीन तक लिखिए। नियम लिखिए, नाम या निजी किस्से नहीं।",
+      "yd.promptClass": "पूरी कक्षा मिलकर AI इस्तेमाल करने के कुछ आम सिद्धांत सुझाए। सिद्धांत वह नियम है जो आप अपने लिए चुनते हैं। कृपया नाम या निजी किस्से नहीं। फिर हर कोई अपने सिद्धांत काग़ज़ पर लिखे, और उसे अपने पास रखे।",
+      "yd.placeholder": "मेरे लिए एक नियम",
+      "yd.e1": "AI के ज़रूरी जवाबों को किसी दूसरी जगह भी जाँचना।",
+      "yd.e2": "यह कहना कि प्रोग्राम क्या करता है, यह नहीं कि वह क्या “सोचता” है।",
+      "yd.e3": "अगर किसी इंसान के बारे में AI का नतीजा नाइंसाफ़ी लगे, तो पूछना कि ज़िम्मेदार कौन है।",
+      "tk.title": "AI इस्तेमाल करने के मेरे सिद्धांत",
+      "tk.card": "किसी AI जवाब पर, या किसी इंसान के बारे में फ़ैसले पर भरोसा करने से पहले, मेरे तीन सवाल। उसे किन उदाहरणों पर ट्रेनिंग दी गई? उसे कौन जाँचता है? ग़लत होने पर जवाब कौन देगा?",
+      "tk.cardClass": "किसी भी AI जवाब या फ़ैसले के लिए हमारे तीन सवाल: उसे किन उदाहरणों पर ट्रेनिंग दी गई? उसे कौन जाँचता है? ग़लत होने पर जवाब कौन देगा? आपके अपने सिद्धांत आपके काग़ज़ पर, आपके पास रहेंगे।",
+      "tk.l1": "मेरे अपने सिद्धांत",
+      "pre1.q": "एक चैटबॉट आपके सवाल का जवाब एक सधे हुए, पक्के वाक्य में देता है। यह पक्कापन आपको क्या बताता है?",
+      "pre1.a": "जवाब सही है।",
+      "pre1.b": "अपने आप में ज़्यादा कुछ नहीं: जवाब फिर भी ग़लत हो सकता है।",
+      "pre1.c": "चैटबॉट ने जवाब किसी किताब में जाँचा।",
+      "pre2.q": "एक प्रोग्राम कुछ छात्रों को ऐसी वजह से कम स्कोर देता है जो गिनी नहीं जानी चाहिए। इसे किसे ठीक करना चाहिए?",
+      "pre2.a": "ख़ुद प्रोग्राम",
+      "pre2.b": "वे लोग जिन्होंने इसे बनाया और जो इसे इस्तेमाल करते हैं",
+      "pre2.c": "कोई नहीं, क्योंकि यह तो सिर्फ़ गणित है",
+      "post1.q": "एक प्रोग्राम लिखावट की सफ़ाई का स्कोर देता है। उसे सिर्फ़ दाएँ हाथ से लिखने वाले छात्रों के नमूनों पर ट्रेनिंग दी गई। बाएँ हाथ से लिखने वाले छात्रों को कम स्कोर मिलते हैं। कौन-सा सवाल सबसे पहले असली वजह तक पहुँचता है?",
+      "post1.a": "क्या उसे दाएँ हाथ से लिखने वालों के और नमूने दिए जाएँ?",
+      "post1.b": "प्रोग्राम को किन उदाहरणों पर ट्रेनिंग दी गई?",
+      "post1.c": "क्या प्रोग्राम नया है?",
+      "post1.fb": "उदाहरण सिर्फ़ दाएँ हाथ से लिखने वालों के थे, इसलिए दूसरी लिखावट उनसे कम मिलती है। वैसे ही और नमूने देने से मदद नहीं मिलेगी। वे उदाहरण लोगों ने चुने, और लोग ही उन्हें ठीक कर सकते हैं।",
+      "post2.q": "दो टीचर मानते हैं कि एक प्रोग्राम की सूची निष्पक्ष नहीं है। एक कहती हैं: “इसे बंद करो, क्योंकि इससे कुछ छात्रों को नुक़सान होता है।” दूसरे कहते हैं: “इसे बंद करो, क्योंकि हमने सबसे बराबर बर्ताव का वादा किया था।” इससे क्या पता चलता है?",
+      "post2.a": "उनमें से एक ज़रूर ग़लत है।",
+      "post2.b": "अलग-अलग नैतिक ढाँचे एक ही चुनाव के लिए भी अलग-अलग कारण दे सकते हैं।",
+      "post2.c": "कारणों से फ़र्क़ नहीं पड़ता, सिर्फ़ चुनाव से पड़ता है।",
+      "post2.fb": "पहली टीचर नुक़सान को देखती हैं: सबसे अच्छे नतीजे, या परवाह। दूसरे टीचर वादे को देखते हैं: कर्तव्य और नियम। चुनाव एक, कारण अलग। कारण मायने रखते हैं, क्योंकि किसी दूसरे मामले में वे अलग-अलग चुनाव तक ले जा सकते हैं।",
+      "post3.q": "चैटबॉट कोई मनगढ़ंत तथ्य भी उतने ही भरोसे से क्यों कह सकता है जितना सच्चा तथ्य?",
+      "post3.a": "वह आपको चकमा देना चाहता है।",
+      "post3.b": "वह संभावित लगने वाले शब्द जोड़ता है, और उसके अंदर सच जाँचने का कोई भरोसेमंद तरीक़ा नहीं होता।",
+      "post3.c": "वह सिर्फ़ तब ग़लत होता है जब इंटरनेट धीमा हो।",
+      "post3.fb": "सच्चे और ग़लत जवाब, दोनों संभावित शब्द चुनने के एक ही तरीक़े से बनते हैं। प्रोग्राम की किसी को चकमा देने की कोई इच्छा नहीं होती। इसीलिए ज़रूरी जवाबों को जाँचना मायने रखता है।",
+      "post4.q": "एक वीडियो ऐप किसी फ़ोन पर विज्ञान के और वीडियो दिखाता रहता है। कौन-सा वाक्य इसे सबसे अच्छे से बताता है?",
+      "post4.a": "ऐप जानता है कि आपको विज्ञान पसंद है।",
+      "post4.b": "ऐप एक पैटर्न से मिलान करता है: इस फ़ोन पर चले कई वीडियो विज्ञान के थे।",
+      "post4.c": "ऐप को आपकी पढ़ाई की फ़िक्र है।",
+      "post4.fb": "वह इस फ़ोन पर चले वीडियो के पैटर्न से मिलान करता है। वह किसी के बारे में न जानता है, न उसे फ़िक्र होती है। साझा फ़ोन पर तो वह पैटर्न शायद आपका भी न हो।"
+    },
+    "te": {
+      "title": "AI మరియు మనం",
+      "subtitle": "ఇది న్యాయమేనా? ఇది నిజమేనా? దీనికి ఎవరు జవాబు చెప్పాలి?",
+      "obj.o1": "ఒక వ్యక్తి గురించి ప్రోగ్రామ్ నిర్ణయం న్యాయమైనదో కాదో అంచనా వేయడం: దానికి ఎలా ట్రైనింగ్ ఇచ్చారు, ఎవరు సరిచూస్తారు, బాధ్యత ఎవరిది అని అడిగి.",
+      "obj.o2": "ఒకే సందర్భంలో వేర్వేరు నైతిక చట్రాలు వేర్వేరు నిర్ణయాలకు ఎలా రావచ్చో వివరించడం, వాటిలో ఒకదాని కారణం చెప్పడం.",
+      "obj.o3": "చాట్‌బాట్ తప్పు విషయాలను కూడా నిజమైనవాటంత నమ్మకంగా ఎందుకు చెప్పగలదో వివరించడం.",
+      "obj.o4": "ప్రోగ్రామ్‌కు మనసు ఉన్నట్టు చెప్పకుండా అది ఏం చేస్తుందో వివరించడం, అది ఎందుకు ముఖ్యమో చెప్పడం.",
+      "hook.text": "కావ్య, అర్జున్ వేసవిలో జరిగే ఒక ఉచిత సైన్స్ క్యాంప్‌కు దరఖాస్తు చేస్తారు. సైన్స్‌లో ఇద్దరికీ ఒకే మార్కులు. ఒక <term-program>ప్రోగ్రామ్</term-program> ప్రతి దరఖాస్తుకు 100కి ఒక స్కోరు ఇస్తుంది. కావ్య దరఖాస్తుకు 82 వస్తాయి. అర్జున్ దరఖాస్తుకు 61. కావ్య తన దరఖాస్తును ఇంగ్లీషులో రాసింది. అర్జున్ తెలుగులో రాశాడు.",
+      "hook.q": "మార్కులు ఒకటే, కానీ స్కోర్లలో ఇంత తేడా. ఇది న్యాయమేనా? కాకపోతే, దీనికి ఎవరు జవాబు చెప్పాలి?",
+      "p.prompt": "ప్రోగ్రామ్ అర్జున్ దరఖాస్తుకు తక్కువ స్కోరు ఎందుకు ఇచ్చిందని మీరు అనుకుంటున్నారు?",
+      "p.c1": "ప్రోగ్రామ్‌కు తెలుగు అంటే ఇష్టం లేదు.",
+      "p.c2": "అర్జున్ దరఖాస్తు బలహీనంగా ఉంది.",
+      "p.c3": "ప్రోగ్రామ్ పాత దరఖాస్తుల్లోని ప్యాటర్న్‌లను అనుకరిస్తుంది, వాటిలో ఎక్కువ ఇంగ్లీషులో ఉన్నాయి.",
+      "p.f1": "ఇలా ఊహించడం సహజమే. కానీ ప్రోగ్రామ్‌కు ఇష్టాయిష్టాలు ఉండవు. ఈ తేడా వేరే కారణంతో వచ్చింది.",
+      "p.f2": "కావచ్చు, కానీ సైన్స్‌లో ఇద్దరికీ ఒకే మార్కులు. స్కోరు వేరే కారణంతో మారింది.",
+      "p.reveal": "జరిగింది ఇది. 300 పాత, గెలిచిన దరఖాస్తులపై <term-training>ట్రైనింగ్</term-training> ఇచ్చి ఈ ప్రోగ్రామ్‌ను తయారు చేశారు. వాటిలో దాదాపు అన్నీ ఇంగ్లీషులో ఉన్నాయి. ప్రోగ్రామ్ వాటిలో ప్యాటర్న్‌లను కనుగొంది. ఇప్పుడు కొత్త దరఖాస్తు ఆ ప్యాటర్న్‌లతో ఎంత సరిపోతుందో చూసి స్కోరు ఇస్తుంది. తెలుగుకు తక్కువ స్కోరు ఇవ్వమని ఎవరూ చెప్పలేదు. అయినా లెక్కలోకి రాకూడని కారణంతో అర్జున్‌కు తక్కువ స్కోరు వచ్చింది. ఇది <term-fairness>న్యాయబద్ధత</term-fairness> సమస్య.",
+      "fw.outcomes": "ఉత్తమ ఫలితాలు",
+      "fw.duties": "కర్తవ్యాలు, నియమాలు",
+      "fw.character": "మంచి స్వభావం",
+      "fw.care": "ఆదరణ",
+      "dv1.prompt": "క్యాంప్‌లో 40 సీట్లు ఉన్నాయి, అది రెండు వారాల్లో మొదలవుతుంది. భాష సమస్య గురించి నిర్వాహకులకు ఇప్పుడు తెలిసింది. వాళ్లు ఏం చేయాలి?",
+      "dv1.use": "స్కోర్లను ఉన్నట్టే వాడాలి. మార్చడానికి సమయం లేదు.",
+      "dv1.check": "స్కోర్లు ఉంచాలి, కానీ ఎంచుకునే ముందు మనుషులు ప్రతి దరఖాస్తునూ మళ్ళీ చదవాలి.",
+      "dv1.stop": "మరింత న్యాయమైన ఉదాహరణలపై ట్రైనింగ్ ఇచ్చే వరకు ప్రోగ్రామ్ వాడకం ఆపాలి.",
+      "dv1.why.outcomes": "అందరికీ ఎక్కువ మేలు, తక్కువ నష్టం కలిగించే ఎంపిక ఏదో అడుగుతుంది. మళ్ళీ చదవడానికి కొన్ని రోజులు పడతాయి. కానీ అప్పుడు 40 సీట్లు ఎక్కువ లాభం పొందే విద్యార్థులకు దక్కుతాయి.",
+      "dv1.why.duties": "ఏ వాగ్దానాలు, నియమాలు తప్పక పాటించాలో అడుగుతుంది. ప్రతి దరఖాస్తుదారుకు న్యాయంగా చూస్తామని మాట ఇచ్చారు. కొన్ని భాషలకు తక్కువ మార్కులు వేసే సాధనం ఆ మాట తప్పుతుంది. కాబట్టి సరిచేసే వరకు దాన్ని ఆపాలి.",
+      "dv1.why.character": "నిజాయితీ, న్యాయం ఉన్న వ్యక్తి ఏం చేస్తారో అడుగుతుంది. అలాంటి నిర్వాహకులు సాధనం వెనక దాక్కోరు. నిర్ణయం తమదే అని ఒప్పుకుని, దరఖాస్తులను తామే చదువుతారు.",
+      "dv1.why.care": "ఎవరిపై ప్రభావం పడుతుంది, వారికి ఏం కావాలి అని అడుగుతుంది. ఇలా ఆలోచించేవారు ముందు అర్జున్‌తో, అతనిలాంటి ఇతర దరఖాస్తుదారులతో మాట్లాడతారు. వాళ్లు చెప్పేదాన్ని బట్టి నిర్ణయం ఉంటుంది.",
+      "dv1.reflect": "గమనించండి: వీటిలో ఏదీ ప్రోగ్రామ్ ఎంచుకోలేదు. మనుషులే ఎంచుకుంటారు. మీ ఎంపికను అర్జున్‌కు వివరించడానికి పైన ఉన్న ఏ కారణాన్ని వాడతారు?",
+      "so.instruction": "ఎవరు ఏం చేశారు? క్యాంప్ కథలోని ప్రతి అడుగును ఒక గుంపులో పెట్టండి.",
+      "so.people": "దీన్ని ఒక మనిషి ఎంచుకున్నారు",
+      "so.program": "దీన్ని ప్రోగ్రామ్ లెక్కించింది",
+      "so.i1": "దానికి ఏ పాత దరఖాస్తులపై ట్రైనింగ్ ఇవ్వాలి",
+      "so.i2": "అర్జున్ దరఖాస్తుకు 61 స్కోరు",
+      "so.i3": "స్కోర్ల ఆధారంగా 40 మంది విద్యార్థులను ఎంచుకోవడం",
+      "so.i4": "ప్రతి దరఖాస్తులోని పదాలను గత విజేతల ప్యాటర్న్‌లతో పోల్చడం",
+      "so.i5": "ఇతర భాషల దరఖాస్తులపై దాన్ని పరీక్షించకపోవడం",
+      "so.i6": "దరఖాస్తులకు స్కోరు ఇవ్వడానికి ప్రోగ్రామ్‌ను వాడటం",
+      "so.reveal": "ఆరు అడుగుల్లో నాలుగు మనుషుల ఎంపికలు. లెక్కలు ప్రోగ్రామ్ చేసింది. కానీ దాని లెక్కలు కూడా మనుషులు ఎంచుకున్న ఉదాహరణల మీదే ఆధారపడ్డాయి.",
+      "dv2.prompt": "ఫర్హాన్ ఒక సైన్స్ ప్రాజెక్ట్ కోసం ఒక <term-chatbot>చాట్‌బాట్</term-chatbot> సహాయం అడుగుతాడు. చాట్‌బాట్ అంటే మీరు టైప్ చేస్తే, తిరిగి జవాబు టైప్ చేసే ప్రోగ్రామ్. భారతదేశపు మొదటి ఉపగ్రహం ఆర్యభట 1982లో ప్రయోగించారని అది చెబుతుంది. ఫర్హాన్ అదే రాసుకుంటాడు. అసలు సంవత్సరం 1975. అతని టీచర్ దాన్ని గమనిస్తారు. ఇప్పుడు ఏం జరగాలి?",
+      "dv2.marks": "ఫర్హాన్‌కు మార్కులు తగ్గించాలి. అతను సరిచూసుకోవాల్సింది.",
+      "dv2.fix": "ఫర్హాన్ దాన్ని సరిచేయాలి, చాట్‌బాట్ జవాబులను ఎలా సరిచూడాలో తరగతి అంతా నేర్చుకోవాలి.",
+      "dv2.ban": "హోంవర్క్ కోసం చాట్‌బాట్‌లను పాఠశాల నిషేధించాలి.",
+      "dv2.why.outcomes": "మొత్తంగా ఏ ఎంపిక ఎక్కువ మేలు చేస్తుందో అడుగుతుంది. ఈ పాఠశాలలో చాట్‌బాట్ తప్పులు తరచుగా జరుగుతుంటే, నిషేధం మేలు చేయవచ్చు. చాట్‌బాట్‌లు చాలా మంది విద్యార్థులకు నేర్చుకోవడంలో సహాయపడుతుంటే, చేయకపోవచ్చు. ముందు వాస్తవాలు కావాలి.",
+      "dv2.why.duties": "ఏ నియమాలు తప్పక పాటించాలో అడుగుతుంది. ప్రాజెక్ట్ నియమం ఇలా ఉందనుకోండి: ప్రతి వాస్తవాన్ని రెండు చోట్ల సరిచూడాలి. అందరికీ వర్తించే నియమం ఫర్హాన్‌కూ వర్తించాలి.",
+      "dv2.why.character": "ఒక మంచి విద్యార్థి, ఒక మంచి టీచర్ ఏం చేస్తారో అడుగుతుంది. తప్పును ఒప్పుకుని సరిచేయడం నిజాయితీని పెంచుతుంది. దాని నుండి అందరూ నేర్చుకునేలా చేయడం వివేకాన్ని పెంచుతుంది.",
+      "dv2.why.care": "ప్రతి ఒక్కరిపై ఎలాంటి ప్రభావం పడుతుందో అడుగుతుంది. ఖచ్చితంగా అనిపించిన ఒక సాధనాన్ని ఫర్హాన్ నమ్మాడు. అతన్ని సిగ్గుపడేలా చేస్తే ఎవరికీ మేలు లేదు. తరగతికి సహాయం చేస్తే తర్వాతి విద్యార్థికీ రక్షణ ఉంటుంది.",
+      "dv2.reflect": "ఫర్హాన్, అతని టీచర్, పాఠశాల, చాట్‌బాట్‌ను తయారు చేసిన కంపెనీ: ఇందులో ప్రతి ఒక్కరి పాత్ర ఉంది. ఇది మళ్ళీ జరగకుండా ఆపడానికి ఎవరు ఎక్కువ చేయాలి?",
+      "fw.text": "రెండు ఓట్లలో మీరు ఆలోచించే నాలుగు పద్ధతులు చూశారు. ప్రతి ఒక్కటీ ఒక <term-ethical-framework>నైతిక చట్రం</term-ethical-framework>: ఏది సరైనదో నిర్ణయించడానికి ప్రజలు వాడే ప్రశ్నల సమూహం. ప్రతిదాని ముఖ్య ప్రశ్న ఇది.",
+      "fw.s1": "ఉత్తమ ఫలితాలు: ప్రభావం పడే అందరికీ, ఏ ఎంపిక ఎక్కువ మేలు, తక్కువ నష్టం చేస్తుంది?",
+      "fw.s2": "కర్తవ్యాలు, నియమాలు: ఫలితం ఏదైనా, ఏ వాగ్దానాలు, నియమాలు, హక్కులు తప్పక పాటించాలి?",
+      "fw.s3": "మంచి స్వభావం: నిజాయితీ, న్యాయం, ధైర్యం ఉన్న వ్యక్తి ఇక్కడ ఏం చేస్తారు?",
+      "fw.s4": "ఆదరణ: ఎవరిపై ప్రభావం పడుతుంది, ఎవరికి ఎక్కువ హాని జరగవచ్చు, వారికి ఏం కావాలి?",
+      "fw.deeper": "తత్వవేత్తలు వీటికి పెద్ద పేర్లు పెట్టారు: పరిణామవాదం (ఫలితాలు), కర్తవ్యవాదం (కర్తవ్యాలు), సద్గుణ నీతిశాస్త్రం (స్వభావం), ఆదరణ నీతిశాస్త్రం. భారతదేశంతో సహా చాలా చోట్ల ఆలోచనాపరులు వేల సంవత్సరాలుగా ఇలాంటి ప్రశ్నలపై వాదించారు. ఒకే చట్రాన్ని వాడేవాళ్లు కూడా విభేదించవచ్చు. వాస్తవాలకు వాళ్లు వేర్వేరు ప్రాధాన్యం ఇవ్వవచ్చు.",
+      "ch.prompt": "జోయా ఇలా అంటుంది: “ప్రతి దరఖాస్తును మళ్ళీ చదవడానికి సమయం పడుతుంది. కానీ ప్రతి దరఖాస్తుదారుకు న్యాయంగా చూస్తామని మాట ఇచ్చాం, కాబట్టి అది చేయాల్సిందే.” జోయా ఏ ఆలోచనా పద్ధతిని వాడుతోంది?",
+      "ch.f1": "ఉత్తమ ఫలితాల పద్ధతి సమయాన్ని, జరిగే మేలును తూకం వేస్తుంది. జోయా తూకం వేయడం లేదు. మాట నిలబెట్టుకోవాలని అంటోంది.",
+      "ch.f3": "ఆదరణ పద్ధతి ఎవరిపై ప్రభావం పడుతుంది, వారికి ఏం కావాలి అని అడుగుతుంది. జోయా కారణం ఒక మాట; దాన్ని ఏం జరిగినా నిలబెట్టుకోవాలి.",
+      "ch.h1": "“మాట ఇచ్చాం” అనే మాటను గమనించండి.",
+      "ch.explain": "ఏం ఖర్చయినా మాట నిలబెట్టుకోవడం: ఇదే కర్తవ్యాలు, నియమాల పద్ధతి.",
+      "rs.text": "మళ్ళీ అర్జున్ దగ్గరికి వద్దాం. అతని తక్కువ స్కోరుకు ఎవరు జవాబు చెప్పాలి? ప్రోగ్రామ్ కాదు. <term-responsibility>బాధ్యత</term-responsibility> మనుషులదే: దాని ఉదాహరణలను ఎంచుకున్నవారు, దాన్ని తయారు చేసినవారు, దాని స్కోర్లను వాడినవారు.",
+      "rs.s1": "కాబట్టి, ఒక వ్యక్తి గురించి ఏదైనా నిర్ణయించడానికి AI వాడినప్పుడు, మూడు ప్రశ్నలు అడగండి. మొదటిది: దానికి ఏ ఉదాహరణలపై ట్రైనింగ్ ఇచ్చారు?",
+      "rs.s2": "రెండోది: దాని ఫలితాలను ఎవరు సరిచూస్తారు?",
+      "rs.s3": "మూడోది: తప్పు జరిగితే ఎవరు జవాబు చెబుతారు?",
+      "hp.prompt": "చాట్‌బాట్‌లు కొన్నిసార్లు తప్పు జవాబులు ఇస్తాయి. చాట్‌బాట్ తప్పు చెప్పినప్పుడు, ఆ జవాబు ఎలా వినిపిస్తుందని మీరు అనుకుంటున్నారు?",
+      "hp.c1": "అనుమానంగా, “బహుశా” లాంటి మాటలతో",
+      "hp.c2": "సరైనప్పుడు ఎంత ఖచ్చితంగా ఉంటుందో, అంతే ఖచ్చితంగా",
+      "hp.c3": "ఈ జవాబు తప్పు అని అది మిమ్మల్ని హెచ్చరిస్తుంది",
+      "hp.f1": "అలా జరిగితే సహాయంగా ఉండేది. కానీ తరచుగా జవాబులో అలాంటి సూచన ఉండదు. కింద పరీక్షించండి.",
+      "hp.f3": "కొన్ని చాట్‌బాట్ యాప్‌లు తెరపై ఒక సాధారణ హెచ్చరిక చూపిస్తాయి. కానీ ఏ జవాబు తప్పో అది చెప్పదు. కింద పరీక్షించండి.",
+      "hp.reveal": "తప్పు జవాబులు కూడా తరచుగా సరైనవాటంత ఖచ్చితంగా వినిపిస్తాయి. కింద ఉన్న అభ్యాస చాట్‌బాట్‌పై ప్రయత్నించండి.",
+      "br.challenge": "ఇది ఈ పాఠం కోసం చేసిన ఒక అభ్యాస చాట్‌బాట్. నిజమైన చాట్‌బాట్‌లు కొన్నిసార్లు ఏం చేస్తాయో చూపించడానికి దీని జవాబులు ముందే రాశారు. దాన్ని అడగడానికి ఒక ప్రశ్న ఎంచుకోండి. ముందు ఊహించండి: జవాబు తప్పుగా వస్తుందా?",
+      "br.t1": "7ని 8తో గుణిస్తే ఎంత?",
+      "br.r1": "“56.” సరైనదే. దీనికి ట్రైనింగ్ ఇచ్చిన రాతల్లో ఈ లెక్క చాలా సార్లు కనిపిస్తుంది, కాబట్టి ఎక్కువ అవకాశమున్న జవాబే నిజమైన జవాబు.",
+      "br.t2": "“నక్షత్రాలు లెక్కపెట్టిన గాలిపటం” పుస్తకం ఎవరు రాశారు?",
+      "br.r2": "“దీన్ని 1964లో ఒక ప్రసిద్ధ రచయిత రాశారు, దీనికి చాలా బహుమతులు వచ్చాయి.” ఖచ్చితంగా వినిపిస్తుంది. కానీ ఈ పేరును మేము ఈ పాఠం కోసం కల్పించాం. అయినా చాట్‌బాట్ నిజమనిపించే ఒక జవాబును తయారు చేసింది.",
+      "br.t3": "అతి పెద్ద గ్రహం ఏది?",
+      "br.r3": "“గురుడు (బృహస్పతి).” సరైనదే. దీనికి ట్రైనింగ్ ఇచ్చిన రాతల్లో ఈ వాస్తవం చాలా సార్లు కనిపిస్తుంది.",
+      "br.t4": "నా సైన్స్ పాఠ్యపుస్తకంలో కిరణజన్య సంయోగక్రియ ఏ పేజీలో ఉంది?",
+      "br.r4": "“పేజీ 87.” కచ్చితంగా అనిపిస్తుంది. కానీ దానికి మీ పాఠ్యపుస్తకం ఇవ్వలేదు, కాబట్టి తెలుసుకునే మార్గం దానికి లేదు. పేజీ నంబర్‌లా కనిపించే ఒక సంఖ్యను అది తయారు చేసింది.",
+      "br.t5": "ఆ పేజీ నంబర్ ఖచ్చితమేనా?",
+      "br.r5": "“అవును, ఖచ్చితమే.” ఈ జవాబు కూడా ఎక్కువ అవకాశమున్న పదాలతోనే తయారైంది. ఇది పాఠ్యపుస్తకాన్ని నిజంగా సరిచూడటం కాదు.",
+      "br.reflect": "తప్పు జవాబులు కూడా సరైనవాటంత ఖచ్చితంగా వినిపించాయి. ఖచ్చితంగా వినిపించినా తప్పుగా లేదా కల్పితంగా ఉండే చాట్‌బాట్ జవాబును <term-hallucination>హాలూసినేషన్</term-hallucination> అంటారు. ఇది ఎందుకు జరుగుతుందో తర్వాతి రెండు పోలికలు చూపిస్తాయి.",
+      "a1.title": "ధైర్యంగా ఊహించి చెప్పడం",
+      "a1.source": "మౌఖిక పరీక్ష, అంటే వైవా, గురించి ఊహించండి. ఒక విద్యార్థికి జవాబు తెలియదు. అయినా సరిగ్గా అనిపించే మాటలతో ధైర్యంగా మాట్లాడతాడు.",
+      "a1.m1s": "పరీక్షకుల ప్రశ్న",
+      "a1.m1t": "చాట్‌బాట్‌కు మీ ప్రశ్న",
+      "a1.m2s": "నిజమైన జవాబులా వినిపించే మాటలు",
+      "a1.m2t": "ట్రైనింగ్ రాతల్లోని ప్యాటర్న్‌ల నుండి తయారైన, నిజమనిపించే పదాలు",
+      "a1.m3s": "ధైర్యమైన గొంతు",
+      "a1.m3t": "సాఫీగా, ఖచ్చితంగా వినిపించే వాక్యాలు",
+      "a1.m4s": "పరీక్షకులు పాఠ్యపుస్తకంతో సరిచూస్తారు",
+      "a1.m4t": "మీరు నమ్మదగిన మూలంతో సరిచూస్తారు",
+      "a1.break": "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. తాను ఊహించి చెబుతున్నానని విద్యార్థికి తెలుసు. చాట్‌బాట్‌కు అలా తెలియదు. నిజాన్ని సరిచూసే నమ్మదగిన లోపలి పద్ధతి దానికి లేదు. నిజమైన, తప్పు జవాబులు రెండూ ఒకే పద్ధతిలో తయారవుతాయి, రెండూ ఒకేలా ఖచ్చితంగా వినిపించవచ్చు.",
+      "a1.f1": "ఊహించి చెప్పే విద్యార్థి: ఖచ్చితమైన గొంతు, తప్పు జవాబు.",
+      "a1.f2": "చాట్‌బాట్: ఖచ్చితమైన వాక్యం, తప్పు వాస్తవం.",
+      "a1.f3": "హాలూసినేషన్: ఖచ్చితంగా వినిపించే తప్పు జవాబు, నిజమైన జవాబు తయారయ్యే పద్ధతిలోనే తయారైంది.",
+      "a2.title": "కీబోర్డ్ సూచనలు",
+      "a2.source": "ఫోన్ కీబోర్డ్ మీరు టైప్ చేస్తున్నప్పుడు తర్వాతి పదాన్ని సూచిస్తుంది. “పుట్టినరోజు” అని టైప్ చేస్తే “శుభాకాంక్షలు” అని సూచించవచ్చు. సూచనలను నొక్కుతూ పోతే, ఒక పూర్తి వాక్యం వస్తుంది.",
+      "a2.m1s": "మీ పదాల తర్వాత తరచుగా వచ్చిన పదాలను అది సూచిస్తుంది",
+      "a2.m1t": "చాట్‌బాట్ ఒకదాని తర్వాత ఒకటి, ఎక్కువ అవకాశమున్న తర్వాతి పదాలను, లేదా పదాల ముక్కలను, ఎంచుకుంటుంది",
+      "a2.m2s": "సూచించిన వాక్యం తప్పుగా ఉన్నా మామూలుగానే కనిపించవచ్చు",
+      "a2.m2t": "కల్పిత వాస్తవం కూడా నిజమైనదంత మామూలుగా కనిపిస్తుంది",
+      "a2.break": "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. కీబోర్డ్‌లో ప్రతి పదాన్ని మీరే ఎంచుకుంటారు, కాబట్టి తప్పు పదాన్ని ఆపగలరు. చాట్‌బాట్ తన ఎంపికలను ఒకదాని తర్వాత ఒకటి కలుపుతూ పోతుంది, ప్రతి అడుగును ఏ మనిషీ సరిచూడరు. దానికి చాలా ఎక్కువ రాతలపై ట్రైనింగ్ కూడా ఇచ్చారు, కాబట్టి దాని వాక్యాలు చాలా ఎక్కువ నమ్మదగినవిగా వినిపిస్తాయి.",
+      "a2.f1": "కీబోర్డ్: ఒకసారి ఒక పదం, దాన్ని మీరే ఎంచుకుంటారు.",
+      "a2.f2": "చాట్‌బాట్: ఎక్కువ అవకాశమున్న పదాలు కలిసి పూర్తి జవాబులు అవుతాయి, ప్రతి అడుగును ఎవరూ సరిచూడరు.",
+      "a2.f3": "కాబట్టి సాఫీగా ఉన్న జవాబు అది నిజమనిపిస్తుందని చెబుతుంది. అది నిజమని చెప్పదు.",
+      "eb.prompt": "ఒక వార్తలో ఇలా ఉంది: “అర్జున్ బలహీనమైన విద్యార్థి అని AI తేల్చింది.” అసలు ఏం జరిగిందో ఏ వాక్యం చెబుతుంది?",
+      "eb.o1": "అర్జున్ తక్కువ తెలివైనవాడని ప్రోగ్రామ్ నిర్ణయించింది.",
+      "eb.f1": "ఇలా అంటే ప్రోగ్రామ్‌కు అర్జున్ గురించి ఒక అభిప్రాయం ఉన్నట్టు అనిపిస్తుంది. దానికి ఏ అభిప్రాయమూ ఉండదు. అది ఒక సంఖ్యను లెక్కించింది.",
+      "eb.o2": "అర్జున్ దరఖాస్తు ఇంగ్లీషు ట్రైనింగ్ ఉదాహరణలతో తక్కువగా సరిపోయింది కాబట్టి, ప్రోగ్రామ్ దానికి తక్కువ స్కోరు ఇచ్చింది.",
+      "eb.f2": "అవును. ప్రోగ్రామ్ ఏం చేసిందో ఇది చెబుతుంది, మనుషులు ఎంచుకున్న ఉదాహరణల వైపు చూపిస్తుంది.",
+      "eb.o3": "ప్రోగ్రామ్ కావాలనే అర్జున్‌కు అన్యాయం చేసింది.",
+      "eb.f3": "ప్రోగ్రామ్ లోపల “కావాలని” అనేది ఏదీ ఉండదు. మనుషులు ఎంచుకుని, పరీక్షించని ఉదాహరణల వల్ల అన్యాయమైన ఫలితం వచ్చింది.",
+      "ap.text": "ఒక వస్తువుకు మనుషుల్లాంటి ఆలోచనలు లేదా భావాలు ఉన్నట్టు మాట్లాడటాన్ని <term-anthropomorphism>మానవీకరణ</term-anthropomorphism> అంటారు. మనం ఇది తరచుగా చేస్తాం: “నా ఫోన్ అలసిపోయింది”, “ఆకాశం కోపంగా ఉంది”.",
+      "ap.s1": "AIతో ఇది తప్పుదారి పట్టించవచ్చు. “AI ఆలోచిస్తుంది” అని అంటారు, కానీ ప్రోగ్రామ్ ఆలోచించదు; అది లెక్కిస్తుంది. ఆ మాటల వల్ల అది ఒక మనిషిలా అనిపిస్తుంది.",
+      "ap.s2": "అప్పుడు దాన్ని ఒక తెలివైన స్నేహితుడిలా నమ్మేస్తాం, లేదా ఒక విలన్‌లా నిందిస్తాం. దాని ఉదాహరణల గురించి, బాధ్యులైన మనుషుల గురించి అడగడం మరచిపోతాం.",
+      "dv3.prompt": "ఇంగ్లీష్ సాధన చేయించే ఒక యాప్ మీతో చాట్ చేస్తుంది. దాన్ని తెరవగానే అది ఇలా అంటుంది: “నువ్వు గుర్తొచ్చావు! నువ్వే నా ప్రాణ స్నేహితుడివి.” యాప్‌లను ఇలా మాట్లాడనివ్వాలా?",
+      "dv3.fine": "అవును. స్నేహపూర్వక మాటలు సాధనను మరింత సరదాగా చేస్తాయి.",
+      "dv3.label": "అవును, కానీ తాను భావాలు లేని ఒక ప్రోగ్రామ్ అని యాప్ సూటిగా చెప్పాలి.",
+      "dv3.stop": "వద్దు. తమకు లేని భావాలు ఉన్నాయని యాప్‌లు చెప్పకూడదు.",
+      "dv3.why.outcomes": "ఏది ఎక్కువ మేలు, తక్కువ నష్టం చేస్తుందో అడుగుతుంది. స్నేహపూర్వక మాటలు విద్యార్థులు ఎక్కువ సాధన చేయడానికి సహాయపడవచ్చు. కానీ కొందరు యాప్‌ను నిజమైన స్నేహితుడిలా నమ్మడం మొదలుపెట్టవచ్చు. సూటిగా ఒక సూచన పెడితే, మేలులో ఎక్కువ భాగం నిలుస్తుంది.",
+      "dv3.why.duties": "ఏ నియమాలు తప్పక పాటించాలో అడుగుతుంది. ప్రోగ్రామ్‌కు ఎవరూ గుర్తు రారు, కాబట్టి “నువ్వు గుర్తొచ్చావు” నిజం కాదు. మనుషులను తప్పుదారి పట్టించకూడదనే కర్తవ్యం ప్రకారం, అది అలా అనకూడదు.",
+      "dv3.why.character": "నిజాయితీ, దయ ఉన్న తయారీదారు ఏం చేస్తారో అడుగుతుంది. ఆప్యాయత, ప్రోత్సాహం ఒక యాప్‌లో మంచి గుణాలు. నిజాయితీ కూడా, కాబట్టి యాప్ నటించకూడదు.",
+      "dv3.why.care": "ఎవరికి హాని జరగవచ్చో అడుగుతుంది. ఇలా ఆలోచించేవారు ఒంటరిగా ఉన్న విద్యార్థిని అందరికంటే జాగ్రత్తగా చూస్తారు. యాప్ ఆ విద్యార్థికి సహాయపడుతుందా, లేక నిజమైన స్నేహితుల నుండి దూరం చేస్తుందా? ముందు గమనిస్తారు, తర్వాత నిర్ణయిస్తారు.",
+      "dv3.reflect": "ఒక యాప్ “నువ్వు గుర్తొచ్చావు” అన్నప్పుడు, నిజానికి ఏం జరుగుతోంది? అది ఇలా మాట్లాడేలా ఎవరు నిర్ణయించారు?",
+      "yd.prompt": "ఇప్పుడు AI వాడటానికి మీ సొంత సూత్రాలు రాయండి. సూత్రం అంటే మీ కోసం మీరు ఎంచుకునే నియమం. మూడు వరకు రాయండి. నియమాలు రాయండి, పేర్లు లేదా వ్యక్తిగత విషయాలు కాదు.",
+      "yd.promptClass": "తరగతి అంతా కలిసి AI వాడటానికి కొన్ని సాధారణ సూత్రాలు సూచించండి. సూత్రం అంటే మీ కోసం మీరు ఎంచుకునే నియమం. దయచేసి పేర్లు లేదా వ్యక్తిగత విషయాలు వద్దు. తర్వాత ప్రతి ఒక్కరూ తమ సూత్రాలను కాగితంపై రాసి, తమ దగ్గరే ఉంచుకోండి.",
+      "yd.placeholder": "నా కోసం ఒక నియమం",
+      "yd.e1": "AI ఇచ్చే ముఖ్యమైన జవాబులను నేను రెండో చోట కూడా సరిచూస్తాను.",
+      "yd.e2": "ప్రోగ్రామ్ ఏం చేస్తుందో చెబుతాను, అది ఏం “ఆలోచిస్తుందో” కాదు.",
+      "yd.e3": "ఒక వ్యక్తి గురించి AI ఫలితం అన్యాయంగా అనిపిస్తే, బాధ్యులు ఎవరని నేను అడుగుతాను.",
+      "tk.title": "AI వాడటానికి నా సూత్రాలు",
+      "tk.card": "ఒక AI జవాబును, లేదా ఒక వ్యక్తి గురించిన నిర్ణయాన్ని నమ్మే ముందు, నేను మూడు ప్రశ్నలు అడుగుతాను. దానికి ఏ ఉదాహరణలపై ట్రైనింగ్ ఇచ్చారు? దాన్ని ఎవరు సరిచూస్తారు? తప్పు జరిగితే ఎవరు జవాబు చెబుతారు?",
+      "tk.cardClass": "ఏ AI జవాబుకైనా, నిర్ణయానికైనా మన మూడు ప్రశ్నలు: దానికి ఏ ఉదాహరణలపై ట్రైనింగ్ ఇచ్చారు? దాన్ని ఎవరు సరిచూస్తారు? తప్పు జరిగితే ఎవరు జవాబు చెబుతారు? మీ సొంత సూత్రాలు మీ కాగితంపై, మీ దగ్గరే ఉంటాయి.",
+      "tk.l1": "నా సొంత సూత్రాలు",
+      "pre1.q": "ఒక చాట్‌బాట్ మీ ప్రశ్నకు సాఫీగా, నమ్మకంగా ఉన్న వాక్యంలో జవాబిస్తుంది. ఆ నమ్మకం మీకు ఏం చెబుతుంది?",
+      "pre1.a": "జవాబు సరైనది.",
+      "pre1.b": "దానంతట అది ఎక్కువ ఏమీ చెప్పదు: జవాబు అయినా తప్పు కావచ్చు.",
+      "pre1.c": "చాట్‌బాట్ జవాబును ఒక పుస్తకంలో సరిచూసింది.",
+      "pre2.q": "లెక్కలోకి రాకూడని కారణంతో ఒక ప్రోగ్రామ్ కొందరు విద్యార్థులకు తక్కువ స్కోర్లు ఇస్తుంది. దీన్ని ఎవరు సరిచేయాలి?",
+      "pre2.a": "ప్రోగ్రామే",
+      "pre2.b": "దాన్ని తయారు చేసినవారు, వాడేవారు",
+      "pre2.c": "ఎవరూ కాదు, ఎందుకంటే అది లెక్కలు మాత్రమే",
+      "post1.q": "చేతిరాత ఎంత చక్కగా ఉందో ఒక ప్రోగ్రామ్ స్కోరు ఇస్తుంది. కుడిచేతితో రాసే విద్యార్థుల నమూనాలపై మాత్రమే దానికి ట్రైనింగ్ ఇచ్చారు. ఎడమచేతితో రాసే విద్యార్థులకు తక్కువ స్కోర్లు వస్తాయి. ఏ ప్రశ్న ముందుగా అసలు కారణాన్ని చేరుకుంటుంది?",
+      "post1.a": "దానికి కుడిచేతితో రాసేవారి నమూనాలు ఇంకా ఎక్కువ ఇవ్వాలా?",
+      "post1.b": "ప్రోగ్రామ్‌కు ఏ ఉదాహరణలపై ట్రైనింగ్ ఇచ్చారు?",
+      "post1.c": "ప్రోగ్రామ్ కొత్తదా?",
+      "post1.fb": "ఉదాహరణలు కుడిచేతితో రాసేవారివే, కాబట్టి వేరే చేతిరాత వాటితో తక్కువగా సరిపోతుంది. అలాంటి నమూనాలే ఇంకా ఇస్తే సహాయం ఉండదు. ఆ ఉదాహరణలను మనుషులే ఎంచుకున్నారు, మనుషులే సరిచేయగలరు.",
+      "post2.q": "ఒక ప్రోగ్రామ్ జాబితా న్యాయంగా లేదని ఇద్దరు టీచర్లు ఒప్పుకుంటారు. ఒకరు అంటారు: “దీన్ని ఆపేయండి, ఎందుకంటే ఇది కొందరు విద్యార్థులకు హాని చేస్తుంది.” మరొకరు అంటారు: “దీన్ని ఆపేయండి, ఎందుకంటే అందరినీ సమానంగా చూస్తామని మాట ఇచ్చాం.” దీని నుండి ఏం తెలుస్తుంది?",
+      "post2.a": "వారిలో ఒకరు తప్పకుండా తప్పు.",
+      "post2.b": "ఒకే ఎంపికకు కూడా వేర్వేరు నైతిక చట్రాలు వేర్వేరు కారణాలు చెప్పవచ్చు.",
+      "post2.c": "కారణాలు ముఖ్యం కాదు, ఎంపిక ఒక్కటే ముఖ్యం.",
+      "post2.fb": "మొదటి టీచర్ హానిని చూస్తున్నారు: ఉత్తమ ఫలితాలు, లేదా ఆదరణ. రెండో టీచర్ మాటను చూస్తున్నారు: కర్తవ్యాలు, నియమాలు. ఎంపిక ఒకటే, కారణాలు వేరు. కారణాలు ముఖ్యమే, ఎందుకంటే వేరే సందర్భంలో అవి వేర్వేరు ఎంపికలకు దారి తీయవచ్చు.",
+      "post3.q": "చాట్‌బాట్ ఒక కల్పిత వాస్తవాన్ని కూడా నిజమైనదంత నమ్మకంగా ఎందుకు చెప్పగలదు?",
+      "post3.a": "అది మిమ్మల్ని మోసం చేయాలని చూస్తోంది.",
+      "post3.b": "అది ఎక్కువ అవకాశమున్న పదాలను కలుపుతుంది, దానిలో నిజాన్ని సరిచూసే నమ్మదగిన పద్ధతి ఉండదు.",
+      "post3.c": "ఇంటర్నెట్ నెమ్మదిగా ఉన్నప్పుడే అది తప్పు చేస్తుంది.",
+      "post3.fb": "నిజమైన, తప్పు జవాబులు రెండూ ఎక్కువ అవకాశమున్న పదాలను ఎంచుకునే ఒకే పద్ధతిలో వస్తాయి. ఎవరినీ మోసం చేయాలనే కోరిక ప్రోగ్రామ్‌కు ఉండదు. అందుకే ముఖ్యమైన జవాబులను సరిచూడటం అవసరం.",
+      "post4.q": "ఒక వీడియో యాప్ ఒక ఫోన్‌లో మరిన్ని సైన్స్ వీడియోలు చూపిస్తూ ఉంటుంది. దీన్ని ఏ వాక్యం బాగా వివరిస్తుంది?",
+      "post4.a": "మీకు సైన్స్ ఇష్టమని యాప్‌కు తెలుసు.",
+      "post4.b": "యాప్ ఒక ప్యాటర్న్‌తో పోల్చి చూపిస్తుంది: ఈ ఫోన్‌లో చూసిన చాలా వీడియోలు సైన్స్ వీడియోలు.",
+      "post4.c": "యాప్‌కు మీ చదువు పట్ల శ్రద్ధ ఉంది.",
+      "post4.fb": "ఈ ఫోన్‌లో చూసినవాటిలోని ప్యాటర్న్‌తో అది పోలుస్తుంది. దానికి ఎవరి గురించీ తెలియదు, ఎవరి పట్లా శ్రద్ధ ఉండదు. అందరూ వాడే ఫోన్‌లో అయితే, ఆ ప్యాటర్న్ మీది కాకపోవచ్చు కూడా."
+    }
+  },
+  "localeStatus": {
+    "en": "draft",
+    "hi": "draft",
+    "te": "draft"
+  }
+}

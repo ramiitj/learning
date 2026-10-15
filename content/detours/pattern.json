@@ -1,0 +1,74 @@
+{
+  "id": "pattern",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2",
+          "d.s3"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.yes",
+          "d.no"
+        ],
+        "answer": "d.yes",
+        "feedback": {
+          "d.no": "d.fno"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is a pattern?",
+      "d.text": "A pattern is something that repeats, or things that usually go together. Spotting one helps you guess what comes next.",
+      "d.s1": "2, 4, 6, 8… Each number is 2 more than the last. So the next one is probably 10.",
+      "d.s2": "Dark clouds, then rain. The two often go together. So when the sky turns dark, you take an umbrella.",
+      "d.s3": "A pattern helps you guess. It is not a promise: sometimes dark clouds bring no rain.",
+      "d.q": "All week, the school bell rang at 8:00. What is your best guess for tomorrow?",
+      "d.yes": "About 8:00, because of the pattern",
+      "d.no": "There is no way to guess",
+      "d.fno": "You have a whole week to go on. What did every day have in common?",
+      "d.explain": "The pattern says 8:00, so that is a good guess. It could still be wrong, for example on a holiday."
+    },
+    "hi": {
+      "d.title": "पैटर्न क्या होता है?",
+      "d.text": "पैटर्न ऐसी चीज़ है जो बार-बार होती है, या ऐसी चीज़ें जो अक्सर साथ-साथ होती हैं। पैटर्न पहचानने से आप अंदाज़ा लगा पाते हैं कि आगे क्या होगा।",
+      "d.s1": "2, 4, 6, 8… हर संख्या पिछली से 2 ज़्यादा है। तो अगली शायद 10 होगी।",
+      "d.s2": "काले बादल, फिर बारिश। ये दोनों अक्सर साथ आते हैं। इसलिए आसमान काला होने पर आप छाता ले लेते हैं।",
+      "d.s3": "पैटर्न अंदाज़ा लगाने में मदद करता है। यह कोई वादा नहीं है: कभी-कभी काले बादल आते हैं और बारिश नहीं होती।",
+      "d.q": "पूरे हफ़्ते स्कूल की घंटी 8:00 बजे बजी। कल के लिए आपका सबसे अच्छा अंदाज़ा क्या है?",
+      "d.yes": "लगभग 8:00 बजे, पैटर्न की वजह से",
+      "d.no": "अंदाज़ा लगाने का कोई तरीका नहीं है",
+      "d.fno": "आपके पास पूरे हफ़्ते की जानकारी है। हर दिन में क्या एक जैसा था?",
+      "d.explain": "पैटर्न 8:00 बताता है, तो यह अच्छा अंदाज़ा है। फिर भी यह ग़लत हो सकता है, जैसे छुट्टी के दिन।"
+    },
+    "te": {
+      "d.title": "ప్యాటర్న్ అంటే ఏమిటి?",
+      "d.text": "ప్యాటర్న్ అంటే మళ్లీ మళ్లీ జరిగేది, లేదా సాధారణంగా కలిసి జరిగే విషయాలు. దాన్ని గుర్తిస్తే తర్వాత ఏం జరుగుతుందో ఊహించగలుగుతారు.",
+      "d.s1": "2, 4, 6, 8… ప్రతి సంఖ్య ముందుదానికంటే 2 ఎక్కువ. కాబట్టి తర్వాతది బహుశా 10.",
+      "d.s2": "నల్లని మేఘాలు, తర్వాత వర్షం. ఈ రెండూ తరచుగా కలిసి వస్తాయి. అందుకే ఆకాశం నల్లబడితే మీరు గొడుగు తీసుకెళ్తారు.",
+      "d.s3": "ప్యాటర్న్ ఊహించడానికి సహాయపడుతుంది. అది హామీ కాదు: కొన్నిసార్లు నల్లని మేఘాలు వచ్చినా వర్షం పడదు.",
+      "d.q": "వారమంతా బడి గంట 8:00కు మోగింది. రేపటి గురించి మీ ఉత్తమ ఊహ ఏమిటి?",
+      "d.yes": "సుమారు 8:00కు, ప్యాటర్న్ వల్ల",
+      "d.no": "ఊహించడానికి మార్గం లేదు",
+      "d.fno": "మీ దగ్గర వారం మొత్తం సమాచారం ఉంది. ప్రతి రోజులో ఉమ్మడిగా ఏముంది?",
+      "d.explain": "ప్యాటర్న్ 8:00 అని చెబుతోంది, కాబట్టి అది మంచి ఊహ. అయినా అది తప్పు కావచ్చు, ఉదాహరణకు సెలవు రోజున."
+    }
+  }
+}

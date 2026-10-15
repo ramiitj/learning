@@ -7,7 +7,7 @@ import { hasErrors, validateBlocks, validateLesson } from "./validate";
 const loose = (type: string, stringKeys: (c: Record<string, unknown>) => string[] = () => []): ComponentContract => ({
   type, versions: ["1.0"], act: "explore", configSchema: { type: "object" }, stringKeys,
 });
-const contracts = ["reveal", "predict", "sort", "train-classifier", "analogy", "break-it", "explain-back", "takeaway"].map((t) => loose(t));
+const contracts = ["reveal", "predict", "sort", "train-classifier", "analogy", "break-it", "explain-back", "takeaway", "check"].map((t) => loose(t));
 const clone = <T,>(x: T): T => structuredClone(x);
 
 describe("validateLesson", () => {

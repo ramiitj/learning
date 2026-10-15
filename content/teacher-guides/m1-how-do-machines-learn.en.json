@@ -1,0 +1,85 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "Students can explain that a machine like this learns a pattern from examples that people labelled, not from rules someone typed in.",
+    "Students can explain why careless or mixed-up labels give the machine wrong answers, sometimes with no warning.",
+    "Students can say what the machine does not do: it does not understand food, and it can only answer with the labels it was given."
+  ],
+  "before": [
+    "Open the lesson in classroom mode on the projector. Page Down or a clicker moves one block at a time.",
+    "Try the sort and the Train button once yourself (5 minutes). The platform collects no personal information.",
+    "No projector? Write the 20 foods and the groups Fruit and Vegetable on the board.",
+    "Key words: a label is the group name a person gives an example; a pattern is something that repeats or goes together; training is the machine working out answers from labelled examples."
+  ],
+  "timing": [
+    {
+      "segment": "Hook: the mango and the ball",
+      "minutes": 3,
+      "teacherDoes": "Project the hook and read it aloud. Ask: how did the app choose? Why is it so sure about a ball?",
+      "studentsDo": "Guess aloud. Do not answer yet."
+    },
+    {
+      "segment": "Predict",
+      "minutes": 3,
+      "teacherDoes": "Read the three choices. Count hands for each and press reveal.",
+      "studentsDo": "Vote by show of hands."
+    },
+    {
+      "segment": "Sort 20 foods",
+      "minutes": 8,
+      "teacherDoes": "Read each food; count hands for Fruit or Vegetable. Move fast on easy ones. Pause on tomato, cucumber and carrot: there is no single right answer.",
+      "studentsDo": "Vote on each food. Argue about the tricky ones."
+    },
+    {
+      "segment": "Rasgulla, then train",
+      "minutes": 6,
+      "teacherDoes": "Vote on rasgulla's label. Press 'Train the machine'. The class guesses each new food before you reveal it. Read the explanation box.",
+      "studentsDo": "Vote, then watch their own labels decide the answers."
+    },
+    {
+      "segment": "Explain",
+      "minutes": 7,
+      "teacherDoes": "Uncover the photo-app steps. Run the dog comparison and read its 'where it stops working' part aloud. Skim the handwriting one. Vote on the check.",
+      "studentsDo": "Say where each comparison breaks; vote on the check."
+    },
+    {
+      "segment": "Break it",
+      "minutes": 7,
+      "teacherDoes": "In the lab, label six foods the usual way but Mango 2 as Vegetable; train. Then for each break-it card, hands up: will it break or hold? Click to show.",
+      "studentsDo": "Predict each attempt; discuss the reflection question with a partner."
+    },
+    {
+      "segment": "New case and ending",
+      "minutes": 5,
+      "teacherDoes": "Vote on the crop-leaf question. Ask two pairs to share their own comparison and where it breaks. Show the class card.",
+      "studentsDo": "Vote, share, and copy the card's last line into notebooks."
+    }
+  ],
+  "ifShortOfTime": "Sort only 10 foods (keep tomato, cucumber and carrot) and skip the handwriting comparison. Never skip the break-it lab.",
+  "misconceptions": [
+    {
+      "studentsSay": "Someone programmed it with the rule 'yellow and round means mango'.",
+      "goodResponse": "This kind of app learns from thousands of labelled photos. Nobody wrote a mango rule. Ours learned from our labels alone."
+    },
+    {
+      "studentsSay": "The machine knows what a mango is.",
+      "goodResponse": "It only matches numbers to labels. That is why it called a ball a mango, and why rasgulla had to be a fruit or a vegetable."
+    },
+    {
+      "studentsSay": "If it says 'very sure', it must be right.",
+      "goodResponse": "'Very sure' means its nearest examples agree. When every example was labelled Fruit, it called a potato a Fruit, very sure."
+    },
+    {
+      "studentsSay": "It will notice the wrong labels and fix them.",
+      "goodResponse": "It cannot tell a wrong label from a right one. It copies what it is given. When both mangoes were wrong, no warning appeared."
+    }
+  ],
+  "discussionPrompts": [
+    "Tomato: fruit or vegetable? Who decides?",
+    "A real app learns from thousands of photos labelled by people. Who should check those labels?",
+    "What else do you learn from examples instead of a rulebook? Where does that comparison stop working for a machine?"
+  ],
+  "noDeviceAlternative": "Play the machine on the board. Draw two columns, Fruit and Vegetable, and write each food there by show of hands. Next to each, write its two numbers from the lesson: sweetness and how often cooked, 0 to 10 (mango 9,1; potato 1,10; tomato 3,6; cucumber 2,1; carrot 5,5). For rasgulla (10,10) and amla (1,2), students find the 3 foods with the closest numbers and copy the label most of them have. Then move one mango to Vegetable and repeat.",
+  "ifYouDontKnow": "Say: 'Good question. I'm not sure. Let's test it in the lab, or look it up together.' The core idea is enough: the machine finds patterns in labelled examples and copies labels.",
+  "parentNote": "Today your child trained a simple machine by sorting foods into fruits and vegetables, then saw it copy their labels onto new foods. Ask them: why did the machine call rasgulla a fruit or a vegetable? What happened when the labels were wrong? No personal information was collected; everything ran on the device."
+}
