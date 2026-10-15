@@ -19,11 +19,18 @@ const guardAgentScope: CollectionBeforeChangeHook = ({ data, originalDoc, req })
   const scopes = agentGrant(actor.id, "write", "lessons");
   if (scopes.includes("lessons")) return data;
   const view = scopedView(scopes);
-  if (JSON.stringify(view((originalDoc?.doc ?? {}) as LessonDoc)) !== JSON.stringify(view((data.doc ?? {}) as LessonDoc))) {
+  if (canonical(view((originalDoc?.doc ?? {}) as LessonDoc)) !== canonical(view((data.doc ?? {}) as LessonDoc))) {
     throw new APIError(`${actor.id} may only change ${scopes.join(", ")}`, 403);
   }
   return data;
 };
+
+/** JSON with sorted keys: Postgres jsonb does not keep key order, so plain JSON.stringify would see changes that are not there. */
+function canonical(v: unknown): string {
+  if (Array.isArray(v)) return `[${v.map(canonical).join(",")}]`;
+  if (v && typeof v === "object") return `{${Object.keys(v).sort().map((k) => `${JSON.stringify(k)}:${canonical((v as Record<string, unknown>)[k])}`).join(",")}}`;
+  return JSON.stringify(v) ?? "null";
+}
 
 /** The part of a lesson an agent with these scopes may NOT change. */
 function scopedView(scopes: string[]) {
@@ -61,7 +68,8 @@ const runValidation: CollectionBeforeChangeHook = async ({ data, req }) => {
 const publishGate: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => {
   const publishing = data._status === "published" && (originalDoc?._status !== "published" || JSON.stringify(originalDoc?.doc) !== JSON.stringify(data.doc));
   if (!publishing) return data;
-  if (!recentlyAuthenticated(req)) throw new APIError("Publishing needs the creator to confirm with their passkey first.", 403);
+  // Server-side code the creator runs themselves (the repository import with PUBLISH=1) carries the system context.
+  if (!req.context?.system && !recentlyAuthenticated(req)) throw new APIError("Publishing needs the creator to confirm with their passkey first.", 403);
   if (!(data.validation as { passed?: boolean } | undefined)?.passed) throw new APIError("This lesson has validation errors and cannot be published.", 400);
   return data;
 };

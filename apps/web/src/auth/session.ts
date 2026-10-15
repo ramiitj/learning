@@ -61,3 +61,23 @@ export function relyingParty() {
   const origin = process.env.APP_ORIGIN ?? "http://localhost:3000";
   return { origin, rpID: new URL(origin).hostname, rpName: "Learning Magazine" };
 }
+
+/** A signed, expiring preview link (docs/03: get_preview_link). Anyone holding it sees drafts of that lesson only. */
+export async function signPreview(lessonId: string, hours = 72) {
+  return new SignJWT({ lessonId }).setProtectedHeader({ alg: "HS256" }).setExpirationTime(`${hours}h`).setAudience("lm-preview").sign(key());
+}
+export async function readPreview(token: string | null): Promise<string | null> {
+  if (!token) return null;
+  try {
+    const { payload } = await jwtVerify(token, key(), { audience: "lm-preview" });
+    return String(payload.lessonId);
+  } catch {
+    return null;
+  }
+}
+
+export async function previewUrl(lessonId: string, locale = "en", mode: "personal" | "classroom" = "personal") {
+  const origin = process.env.APP_ORIGIN ?? "http://localhost:3000";
+  const token = await signPreview(lessonId);
+  return `${origin}/api/preview?token=${encodeURIComponent(token)}&locale=${locale}&mode=${mode}`;
+}

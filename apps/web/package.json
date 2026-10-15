@@ -8,13 +8,17 @@
     "build": "next build",
     "start": "next start -p 3000",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "cms:import": "payload run scripts/import-content.ts",
+    "cms:types": "payload generate:types",
+    "cms:importmap": "payload generate:importmap"
   },
   "dependencies": {
     "@lm/engine": "workspace:*",
     "@lm/primitives": "workspace:*",
     "@lm/schema": "workspace:*",
     "@lm/tokens": "workspace:*",
+    "@lm/validation": "workspace:*",
     "@payloadcms/db-postgres": "3.90.2",
     "@payloadcms/next": "3.90.2",
     "@payloadcms/ui": "3.90.2",
@@ -27,11 +31,12 @@
     "payload": "3.90.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "sharp": "^0.35.5",
-    "@lm/validation": "workspace:*"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "@playwright/test": "1.56.1"
+    "@playwright/test": "1.56.1",
+    "@types/pg": "^8.23.1",
+    "pg": "^8.20.0"
   }
 }

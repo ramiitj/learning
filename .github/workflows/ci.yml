@@ -16,6 +16,19 @@ jobs:
   checks:
     name: Lint, types, unit and accessibility tests, content
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lm
+          POSTGRES_PASSWORD: lm
+          POSTGRES_DB: lm_test
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U lm" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      # CMS integration tests (permissions, publishing gate, append-only event log) run against this database.
+      TEST_DATABASE_URI: postgres://lm:lm@localhost:5432/lm_test
+      PAYLOAD_SECRET: ci-only-secret-ci-only-secret-ci-only
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

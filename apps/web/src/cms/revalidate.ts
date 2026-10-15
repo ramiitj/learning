@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 /** Publishing goes live within seconds: drop the cached pages for this lesson in every locale. */
 export function revalidateLesson(lessonId: string) {
   try {
-    revalidateTag("content", "max");
+    revalidateTag("content", { expire: 0 });
     revalidatePath(`/[locale]/lessons/${lessonId}`, "page");
     revalidatePath(`/[locale]/lessons/${lessonId}/classroom`, "page");
     revalidatePath("/[locale]", "page");
@@ -14,7 +14,7 @@ export function revalidateLesson(lessonId: string) {
 
 export function revalidateContent() {
   try {
-    revalidateTag("content", "max");
+    revalidateTag("content", { expire: 0 });
     revalidatePath("/", "layout");
   } catch {
     /* outside Next.js */

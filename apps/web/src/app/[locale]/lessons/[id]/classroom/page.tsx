@@ -1,6 +1,7 @@
 import { LessonPage, lessonMetadata, lessonStaticParams, type LessonParams } from "../lesson-page";
 
-export const dynamicParams = false;
+// Lessons published after a build render on first visit, then stay cached until the next publish.
+export const dynamicParams = true;
 export const generateStaticParams = lessonStaticParams;
 export const generateMetadata = ({ params }: { params: LessonParams }) => lessonMetadata(params);
 

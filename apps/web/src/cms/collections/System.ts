@@ -30,7 +30,14 @@ export const Decisions: CollectionConfig = {
   hooks: {
     ...auditHooks("decisions"),
     beforeChange: [
-      ({ data, originalDoc, req }) => {
+      ({ data, originalDoc, req, operation }) => {
+        // A decision always starts open: nobody, agent or creator, can file one already decided.
+        if (operation === "create") {
+          data.status = "open";
+          data.dissentAcknowledged = false;
+          data.decisionReason = "";
+          return data;
+        }
         // Only the creator decides; deciding needs a reason, and an override needs the dissent acknowledged.
         if (originalDoc && data.status && data.status !== originalDoc.status) {
           if (!isCreator(req)) throw new Error("Only the creator decides.");
