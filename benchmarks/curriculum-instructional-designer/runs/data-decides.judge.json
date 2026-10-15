@@ -1,0 +1,42 @@
+{
+  "agent": "curriculum-instructional-designer",
+  "scores": [
+    {
+      "criterion": "prerequisites",
+      "score": 3,
+      "evidence": "Every conceptual prerequisite is handled. Handwriting variation, fairness, pattern and small-number arithmetic are declared assumed-everyday. Program is a prior lesson. Training, sample, percentage and decimals/rounding are detours, each with a stepwise outline and an explicit return button (for example 'Back to the Number Reader' returns to e3). The core numeracy is kept to x2, x10 and one addition. One vocabulary item is left implicit: b1 and the glossary define confidence as how closely 'the input' matches patterns, but 'input' is never defined and is not in the glossary. 'Share' (in the accuracy definition) and 'settings' (in training) are also left to everyday knowledge, which is a small risk for second-language learners.",
+      "improve": "Replace 'the input' with plain words (for example 'the number it is shown'), or define it and add it to the glossary. Consider 'how many out of all' in place of 'share' in the accuracy definition."
+    },
+    {
+      "criterion": "experience-before-naming",
+      "score": 3,
+      "evidence": "Most ideas are met first and named afterwards. 'Example' comes after the learner handles cards in m1. 'Dataset' comes after Train/Test in m2, 'balanced' after the knob in m3, 'bias' in e2 after all three tests, 'accuracy' in e4 after the percentages are worked, and 'sample' in e6 after the rainy-week prediction. The exception is 'test set': p2 names and defines it ('Numbers kept back for checking like this are called a test set') before the learner has used one. 'Training' in m1 is also given as a told definition rather than met again.",
+      "improve": "Let the learner run the fair test in p2/m2 first, and name 'test set' afterwards (for example 'the numbers you just tested with, kept out of training, are a test set')."
+    },
+    {
+      "criterion": "stepwise-working",
+      "score": 3,
+      "evidence": "Every step of the core working is shown. e3 gives '10 x 10 = 100, so multiply both by 10. 6 x 10 = 60', and the learner does 48 x 2 = 96. e4 counts out 86 + 6 = 92, and m2 shows 48 + 30 = 78. The deeper step e5 has a warm-up (6 / 10 = 0.6) and its own detour, but it takes the key division on trust: '86 / 90 = 0.955... A calculator is fine here.' Its rounding line ('95.5 sits halfway between 95 and 96') also blurs 95.55... with 95.5. The core path never says that 90 - 86 and 10 - 6 give the '4 wrong' in h2, though this is minor.",
+      "improve": "In e5, show why 86 / 90 is about 0.955 (for example a long-division or 'how many 90s fit' step, or a bar model), and state the rounding as 95.55..., which is more than halfway, so it rounds up to 96."
+    },
+    {
+      "criterion": "checks-aligned",
+      "score": 3,
+      "evidence": "Every objective has a post-check item: O1 post1, O2 post2 and post3, O3 post4, O4 post5 and post6, O5 post7. Three transfer items (plant app, face-unlock, hospital voice helper) use distractors taken from real misconceptions: 'broken', 'decided to ignore', blaming the group, 'tell it to try harder'. However, post5 repeats the lesson's own b1 scenario almost word for word ('reads a River School 7 as 4 with 97% confidence'), so it can be answered by recalling the screen rather than by understanding. post4 and post6 also reuse the lesson's numbers and setting. No pre-check item covers O5.",
+      "improve": "Rewrite post5 in a new context, for example a fruit-sorting camera trained on one variety that labels another with high confidence, and add a pre-check item for O5."
+    },
+    {
+      "criterion": "misconceptions",
+      "score": 3,
+      "evidence": "Several misconceptions are surfaced by the learner's own prediction and then corrected by evidence. #2 is set up by the h1/h2 trust vote and the p2 guess, and the 78-not-92 result in m2 overturns it. #5 is predicted in m4 and corrected by comparing 32/50 with 47/50. #7 is met as a live confident wrong answer in b1. #8 and #10 are distractors in p1, corrected in e2 and by m3. #4 in b2 is surfaced by a prediction but corrected only by telling ('Now reveal. No. This program does not change after training'). #1 is covered only through the cook analogy's stated break point.",
+      "improve": "Make b2 corrected by evidence: let the learner fast-forward a month of use and see that River School accuracy stays at 60% until they retrain on new examples."
+    },
+    {
+      "criterion": "cognitive-load",
+      "score": 3,
+      "evidence": "An automated pass found no sentence over 18 words and no banned phrases in any draftText. The tone is warm and plain, and the reading level is suitable. A few steps carry two new ideas. m1 teaches the training-table interaction, names 'example', introduces the school marks and handwriting habits, and recaps training. b1 introduces 'confidence' and also the break point that the program cannot notice its gap. e6 introduces 'sample', reframes the dataset as a sample, and states the analogy's break point. m3 lists six results in running text, which is dense on a small phone.",
+      "improve": "Split m1 so the interaction tutorial and the naming of 'example' are separate from spotting handwriting habits. Move the confidence definition to a short step before the b1 no-warning test. Show the m3 results as a table rather than in sentences."
+    }
+  ],
+  "overall": "Mean 3.0. Both blocking criteria (prerequisites, checks-aligned) are at 3, so this passes the bar. It is a strong, well-built sequence: all six grammar stages are in order, the detours are designed and each returns the learner to their place, the core path shows its working, the misconceptions are deliberately built in, and the ending is a takeaway the learner keeps. To reach 4: the undefined term 'input', 'test set' named before it is experienced, the calculator-on-trust division in e5, post5 testing recall of a lesson screen, b2 corrected by telling, and three steps that each carry two ideas."
+}

@@ -2,5 +2,34 @@
   "agent": "curriculum-instructional-designer",
   "task": "data-decides",
   "violations": [],
-  "advisories": []
+  "advisories": [],
+  "judge": {
+    "violations": [],
+    "mean": 3,
+    "minBlocking": 3,
+    "failing": [],
+    "pass": true,
+    "scores": {
+      "prerequisites": 3,
+      "experience-before-naming": 3,
+      "stepwise-working": 3,
+      "checks-aligned": 3,
+      "misconceptions": 3,
+      "cognitive-load": 3
+    }
+  },
+  "calibration": {
+    "targeted": [
+      "checks-aligned",
+      "experience-before-naming",
+      "prerequisites"
+    ],
+    "detected": [
+      "checks-aligned",
+      "experience-before-naming",
+      "prerequisites"
+    ],
+    "drift": [],
+    "sensitivity": 1
+  }
 }
