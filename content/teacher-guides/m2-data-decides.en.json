@@ -1,0 +1,93 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "By the end, you can explain why a machine trained on examples from one group can make more mistakes for people outside that group.",
+    "You can work out a percentage for each group, and show how one overall number can hide a big gap.",
+    "You can suggest a fair fix: add the missing examples and test each group separately, instead of adding more of the same."
+  ],
+  "before": [
+    "Click through the lesson once in classroom mode (about 10 minutes).",
+    "On the board, draw two ways to write 1 (a plain line; a line with a long sloping flag at the top) and two ways to write 7 (plain; with a line across the middle).",
+    "Draw a tally table on the board with columns: Writer, Machine says, Right or wrong."
+  ],
+  "timing": [
+    {
+      "segment": "Settle in, hook",
+      "minutes": 3,
+      "teacherDoes": "Project the post office story. Ask: the machine is 97% accurate, so why do some letters still go to the wrong town?",
+      "studentsDo": "Two or three students give a guess aloud."
+    },
+    {
+      "segment": "Predict",
+      "minutes": 3,
+      "teacherDoes": "Read the three choices. Count hands for each and write the numbers on the board.",
+      "studentsDo": "Vote by show of hands."
+    },
+    {
+      "segment": "Train on the school's cards",
+      "minutes": 7,
+      "teacherDoes": "Read each card; the class calls out its label; press Train the machine. Before each new writer's result, the class guesses.",
+      "studentsDo": "Call out labels; vote on each of the 4 writers; fill the tally table."
+    },
+    {
+      "segment": "Percent per group",
+      "minutes": 4,
+      "teacherDoes": "Show the check. Work 1 out of 2 = 50 out of 100 on the board. Compare with 3 of 4 = 75% overall.",
+      "studentsDo": "Vote on 50%, 75% or 12%; one student explains."
+    },
+    {
+      "segment": "Fix the data",
+      "minutes": 5,
+      "teacherDoes": "Run the second machine with 8 cards from many writers. Ask: what changed, the machine or the data?",
+      "studentsDo": "Label the cards aloud; compare the new results with the tally table."
+    },
+    {
+      "segment": "Name it and analogies",
+      "minutes": 6,
+      "teacherDoes": "Reveal sample and bias. Step through the cook and rainy-week comparisons, stopping at 'where it breaks'.",
+      "studentsDo": "Pairs say one way the cook is like the machine and one way it is not."
+    },
+    {
+      "segment": "Checks and break it",
+      "minutes": 6,
+      "teacherDoes": "Run the 97%-but-0% check, then the break-it writers and the 'add 1,000 more school cards' check.",
+      "studentsDo": "Vote on each; predict whether each new writer fools the machine."
+    },
+    {
+      "segment": "Who is responsible, wrap-up",
+      "minutes": 5,
+      "teacherDoes": "Run the responsibility vote. Take two views that disagree. Read the takeaway card aloud.",
+      "studentsDo": "Vote; one or two explain their choice; write one sentence in their notebook."
+    }
+  ],
+  "ifShortOfTime": "Skip the rainy-week comparison and the break-it writers. Keep the two machines, the 50% check and the responsibility vote.",
+  "misconceptions": [
+    {
+      "studentsSay": "The machine was trained, so it should work for everybody.",
+      "goodResponse": "It works for writing like its examples. Writing unlike any example gets the label of the nearest examples, which can be wrong."
+    },
+    {
+      "studentsSay": "The people with the flag 1 write badly.",
+      "goodResponse": "Their 1 is a correct, common way to write it. The gap was in the data, not in their writing."
+    },
+    {
+      "studentsSay": "97% accurate means it is fair.",
+      "goodResponse": "97% is for everyone together. Check each group: flag writers could be at 0%."
+    },
+    {
+      "studentsSay": "Add more data and it will be fixed.",
+      "goodResponse": "More of the same school's cards still has no flag 1s. Add the missing kind."
+    },
+    {
+      "studentsSay": "The machine decided to be unfair.",
+      "goodResponse": "It has no intentions. It copies labels from the closest examples. People choose the data."
+    }
+  ],
+  "discussionPrompts": [
+    "Who should be responsible when data leaves people out: the collectors, the company, the users, or everyone?",
+    "Where else in life could one overall number hide a group that is doing badly?"
+  ],
+  "noDeviceAlternative": "Use the board drawings as the cards. Write the 6 school cards (3 plain 1s, 3 plain 7s) as a 'dataset'. For each new writer, ask: which cards does it look most like? Take the label most of those 3 cards share. Students vote by hands, then record right or wrong in the tally table. Repeat with 8 cards that include flag 1s and crossed 7s. Students compute percentages in notebooks and write their responsibility sentence.",
+  "ifYouDontKnow": "Say: 'Good question. I am not sure. Let us write it on the board and look it up together.' The main idea is enough: machines copy patterns from the examples they get, and people choose those examples.",
+  "parentNote": "Today your child trained a simple computer program on handwriting examples from one school. It read other writing styles badly, until they added the missing examples. Ask them: who should fix it when a machine is unfair to some people?"
+}

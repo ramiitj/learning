@@ -1,0 +1,1275 @@
+{
+  "id": "m2-data-decides",
+  "schemaVersion": "1.0",
+  "version": 1,
+  "status": "draft",
+  "meta": {
+    "titleKey": "title",
+    "subtitleKey": "subtitle",
+    "subject": "ai",
+    "course": "ai-for-kids",
+    "module": "m2",
+    "issue": "issue-01",
+    "concepts": [
+      "dataset",
+      "bias"
+    ],
+    "objectives": [
+      {
+        "id": "o1",
+        "textKey": "obj.o1"
+      },
+      {
+        "id": "o2",
+        "textKey": "obj.o2"
+      },
+      {
+        "id": "o3",
+        "textKey": "obj.o3"
+      }
+    ],
+    "prerequisites": [
+      "learning-from-examples"
+    ],
+    "audiences": [
+      "school-13-17"
+    ],
+    "curriculumTags": [],
+    "estimatedMinutes": 40,
+    "teacherGuide": "m2-data-decides",
+    "provenance": "agent pipeline v1 (single-author pass through every role); hi and te are unreviewed drafts; not yet creator-reviewed"
+  },
+  "stages": [
+    {
+      "stage": "hook",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "hook.text",
+            "questionKey": "hook.q"
+          },
+          "glossaryTerms": [
+            "accuracy",
+            "percentage"
+          ],
+          "detours": [
+            "percentage"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "predict",
+      "blocks": [
+        {
+          "id": "b2",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "predict.prompt",
+            "choices": [
+              "predict.c1",
+              "predict.c2",
+              "predict.c3"
+            ],
+            "answer": "predict.c2",
+            "confidence": true,
+            "revealKey": "predict.reveal",
+            "choiceFeedback": {
+              "predict.c1": "predict.f1",
+              "predict.c3": "predict.f3"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "dataset",
+            "training"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "manipulate",
+      "blocks": [
+        {
+          "id": "b3",
+          "type": "train-classifier",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "tc1.prompt",
+            "groups": [
+              "g.one",
+              "g.seven"
+            ],
+            "features": [
+              {
+                "id": "top",
+                "labelKey": "f.top"
+              },
+              {
+                "id": "mid",
+                "labelKey": "f.mid"
+              }
+            ],
+            "items": [
+              {
+                "id": "s1",
+                "labelKey": "sk.s1",
+                "features": {
+                  "top": 0,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s2",
+                "labelKey": "sk.s2",
+                "features": {
+                  "top": 9,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s3",
+                "labelKey": "sk.s3",
+                "features": {
+                  "top": 1,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s4",
+                "labelKey": "sk.s4",
+                "features": {
+                  "top": 8,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s5",
+                "labelKey": "sk.s5",
+                "features": {
+                  "top": 0,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s6",
+                "labelKey": "sk.s6",
+                "features": {
+                  "top": 9,
+                  "mid": 0
+                }
+              }
+            ],
+            "testItems": [
+              {
+                "id": "p",
+                "labelKey": "t.p",
+                "features": {
+                  "top": 1,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "q",
+                "labelKey": "t.q",
+                "features": {
+                  "top": 8,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "r",
+                "labelKey": "t.r",
+                "features": {
+                  "top": 6,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s",
+                "labelKey": "t.s",
+                "features": {
+                  "top": 9,
+                  "mid": 9
+                }
+              }
+            ],
+            "explainKey": "tc1.explain"
+          },
+          "glossaryTerms": [
+            "label",
+            "dataset"
+          ]
+        },
+        {
+          "id": "b4",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "pc.prompt",
+            "options": [
+              "pc.a",
+              "pc.b",
+              "pc.c"
+            ],
+            "answer": "pc.a",
+            "feedback": {
+              "pc.b": "pc.fb",
+              "pc.c": "pc.fc"
+            },
+            "hints": [
+              "pc.h1",
+              "pc.h2"
+            ],
+            "explainKey": "pc.explain",
+            "detour": "percentage"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "percentage",
+            "accuracy"
+          ],
+          "detours": [
+            "percentage"
+          ]
+        },
+        {
+          "id": "b5",
+          "type": "train-classifier",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "tc2.prompt",
+            "groups": [
+              "g.one",
+              "g.seven"
+            ],
+            "features": [
+              {
+                "id": "top",
+                "labelKey": "f.top"
+              },
+              {
+                "id": "mid",
+                "labelKey": "f.mid"
+              }
+            ],
+            "items": [
+              {
+                "id": "c1",
+                "labelKey": "fx.c1",
+                "features": {
+                  "top": 0,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c2",
+                "labelKey": "fx.c2",
+                "features": {
+                  "top": 9,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c3",
+                "labelKey": "fx.c3",
+                "features": {
+                  "top": 6,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c4",
+                "labelKey": "fx.c4",
+                "features": {
+                  "top": 9,
+                  "mid": 8
+                }
+              },
+              {
+                "id": "c5",
+                "labelKey": "fx.c5",
+                "features": {
+                  "top": 1,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c6",
+                "labelKey": "fx.c6",
+                "features": {
+                  "top": 8,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c7",
+                "labelKey": "fx.c7",
+                "features": {
+                  "top": 5,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "c8",
+                "labelKey": "fx.c8",
+                "features": {
+                  "top": 8,
+                  "mid": 9
+                }
+              }
+            ],
+            "testItems": [
+              {
+                "id": "p",
+                "labelKey": "t.p",
+                "features": {
+                  "top": 1,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "q",
+                "labelKey": "t.q",
+                "features": {
+                  "top": 8,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "r",
+                "labelKey": "t.r",
+                "features": {
+                  "top": 6,
+                  "mid": 0
+                }
+              },
+              {
+                "id": "s",
+                "labelKey": "t.s",
+                "features": {
+                  "top": 9,
+                  "mid": 9
+                }
+              }
+            ],
+            "explainKey": "tc2.explain"
+          },
+          "glossaryTerms": [
+            "dataset",
+            "label"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "explain",
+      "blocks": [
+        {
+          "id": "b6",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "ex.text",
+            "steps": [
+              "ex.s1",
+              "ex.s2"
+            ]
+          },
+          "glossaryTerms": [
+            "sample",
+            "bias"
+          ],
+          "detours": [
+            "sample"
+          ]
+        },
+        {
+          "id": "b7",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "concept": "bias",
+            "titleKey": "an1.title",
+            "sourceKey": "an1.source",
+            "mappings": [
+              {
+                "sourceKey": "an1.m1s",
+                "targetKey": "an1.m1t"
+              },
+              {
+                "sourceKey": "an1.m2s",
+                "targetKey": "an1.m2t"
+              },
+              {
+                "sourceKey": "an1.m3s",
+                "targetKey": "an1.m3t"
+              },
+              {
+                "sourceKey": "an1.m4s",
+                "targetKey": "an1.m4t"
+              }
+            ],
+            "breakPointKey": "an1.break",
+            "fading": [
+              "an1.f1",
+              "an1.f2",
+              "an1.f3"
+            ]
+          },
+          "glossaryTerms": [
+            "bias",
+            "dataset"
+          ]
+        },
+        {
+          "id": "b8",
+          "type": "analogy",
+          "componentVersion": "1.0",
+          "config": {
+            "concept": "bias",
+            "titleKey": "an2.title",
+            "sourceKey": "an2.source",
+            "mappings": [
+              {
+                "sourceKey": "an2.m1s",
+                "targetKey": "an2.m1t"
+              },
+              {
+                "sourceKey": "an2.m2s",
+                "targetKey": "an2.m2t"
+              },
+              {
+                "sourceKey": "an2.m3s",
+                "targetKey": "an2.m3t"
+              },
+              {
+                "sourceKey": "an2.m4s",
+                "targetKey": "an2.m4t"
+              }
+            ],
+            "breakPointKey": "an2.break",
+            "fading": [
+              "an2.f1",
+              "an2.f2",
+              "an2.f3"
+            ]
+          },
+          "glossaryTerms": [
+            "sample"
+          ],
+          "detours": [
+            "sample"
+          ]
+        },
+        {
+          "id": "b9",
+          "type": "reveal",
+          "componentVersion": "1.0",
+          "config": {
+            "textKey": "deep.text"
+          },
+          "depth": "deeper"
+        },
+        {
+          "id": "b10",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "mc.prompt",
+            "options": [
+              "mc.o1",
+              "mc.o2",
+              "mc.o3"
+            ],
+            "answer": "mc.o1",
+            "feedback": {
+              "mc.o2": "mc.f2",
+              "mc.o3": "mc.f3"
+            },
+            "explainKey": "mc.explain"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        },
+        {
+          "id": "b11",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "hs.prompt",
+            "options": [
+              "hs.a",
+              "hs.b",
+              "hs.c"
+            ],
+            "answer": "hs.a",
+            "feedback": {
+              "hs.b": "hs.fb",
+              "hs.c": "hs.fc"
+            },
+            "hints": [
+              "hs.h1",
+              "hs.h2"
+            ],
+            "explainKey": "hs.explain",
+            "detour": "percentage"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "accuracy",
+            "sample"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "break-it",
+      "blocks": [
+        {
+          "id": "b12",
+          "type": "break-it",
+          "componentVersion": "1.0",
+          "config": {
+            "challengeKey": "br.challenge",
+            "target": "b5",
+            "attempts": [
+              {
+                "id": "t1",
+                "labelKey": "br.t1",
+                "resultKey": "br.r1",
+                "breaks": false
+              },
+              {
+                "id": "t2",
+                "labelKey": "br.t2",
+                "resultKey": "br.r2",
+                "breaks": true
+              },
+              {
+                "id": "t3",
+                "labelKey": "br.t3",
+                "resultKey": "br.r3",
+                "breaks": true
+              },
+              {
+                "id": "t4",
+                "labelKey": "br.t4",
+                "resultKey": "br.r4",
+                "breaks": false
+              }
+            ],
+            "reflectKey": "br.reflect"
+          }
+        },
+        {
+          "id": "b13",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "md.prompt",
+            "options": [
+              "md.a",
+              "md.b",
+              "md.c"
+            ],
+            "answer": "md.b",
+            "feedback": {
+              "md.a": "md.fa",
+              "md.c": "md.fc"
+            },
+            "explainKey": "md.explain"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "transfer-reflect",
+      "blocks": [
+        {
+          "id": "b14",
+          "type": "check",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "vt.prompt",
+            "options": [
+              "vt.a",
+              "vt.b",
+              "vt.c"
+            ],
+            "answer": "vt.a",
+            "feedback": {
+              "vt.b": "vt.fb",
+              "vt.c": "vt.fc"
+            },
+            "explainKey": "vt.explain"
+          },
+          "classroom": {
+            "mode": "class-vote"
+          },
+          "glossaryTerms": [
+            "dataset"
+          ]
+        },
+        {
+          "id": "b15",
+          "type": "predict",
+          "componentVersion": "1.0",
+          "config": {
+            "promptKey": "rs.prompt",
+            "choices": [
+              "rs.c1",
+              "rs.c2",
+              "rs.c3",
+              "rs.c4",
+              "rs.c5"
+            ],
+            "revealKey": "rs.reveal",
+            "choiceFeedback": {
+              "rs.c1": "rs.f1",
+              "rs.c2": "rs.f2",
+              "rs.c3": "rs.f3",
+              "rs.c4": "rs.f4",
+              "rs.c5": "rs.f5"
+            }
+          },
+          "classroom": {
+            "mode": "class-vote"
+          }
+        },
+        {
+          "id": "b16",
+          "type": "explain-back",
+          "componentVersion": "1.0",
+          "config": {
+            "mode": "own-words",
+            "promptKey": "eb.prompt",
+            "modelAnswerKey": "eb.model"
+          }
+        },
+        {
+          "id": "b17",
+          "type": "takeaway",
+          "componentVersion": "1.0",
+          "config": {
+            "titleKey": "take.title",
+            "cardKey": "take.card",
+            "includes": [
+              "b5",
+              "b15",
+              "b16"
+            ],
+            "labelKeys": [
+              "take.l1",
+              "take.l2",
+              "take.l3"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pre": [
+      {
+        "id": "pre1",
+        "objective": "o1",
+        "promptKey": "pre1.q",
+        "options": [
+          "pre1.a",
+          "pre1.b",
+          "pre1.c"
+        ],
+        "answer": "pre1.a"
+      },
+      {
+        "id": "pre2",
+        "objective": "o2",
+        "promptKey": "pre2.q",
+        "options": [
+          "pre2.a",
+          "pre2.b",
+          "pre2.c"
+        ],
+        "answer": "pre2.b"
+      },
+      {
+        "id": "pre3",
+        "objective": "o3",
+        "promptKey": "pre3.q",
+        "options": [
+          "pre3.a",
+          "pre3.b",
+          "pre3.c"
+        ],
+        "answer": "pre3.a"
+      }
+    ],
+    "post": [
+      {
+        "id": "post1",
+        "objective": "o1",
+        "promptKey": "post1.q",
+        "options": [
+          "post1.a",
+          "post1.b",
+          "post1.c"
+        ],
+        "answer": "post1.b",
+        "feedbackKey": "post1.fb"
+      },
+      {
+        "id": "post2",
+        "objective": "o2",
+        "promptKey": "post2.q",
+        "options": [
+          "post2.a",
+          "post2.b",
+          "post2.c"
+        ],
+        "answer": "post2.b",
+        "feedbackKey": "post2.fb"
+      },
+      {
+        "id": "post3",
+        "objective": "o3",
+        "promptKey": "post3.q",
+        "options": [
+          "post3.a",
+          "post3.b",
+          "post3.c"
+        ],
+        "answer": "post3.a",
+        "feedbackKey": "post3.fb"
+      }
+    ]
+  },
+  "strings": {
+    "en": {
+      "title": "Data decides",
+      "subtitle": "Why a well-tested machine can still fail some people",
+      "obj.o1": "Explain how a dataset that leaves out some kinds of examples makes a machine work worse for some people.",
+      "obj.o2": "Work out accuracy as a percentage for each group, and show how one overall number can hide a gap.",
+      "obj.o3": "Suggest a fair fix: add the missing examples and test each group, instead of adding more of the same.",
+      "hook.text": "Imagine a machine at a post office. It reads the handwritten numbers on letters. Its makers tested it on 100 numbers, and it read 97 correctly. That is its <term-accuracy>accuracy</term-accuracy>: 97 out of 100, or 97 <term-percentage>percent</term-percentage> (97%).",
+      "hook.q": "Yet letters from some writers kept going to the wrong town. The machine was not broken. So what went wrong?",
+      "predict.prompt": "Here is a clue. The machine was trained on a <term-dataset>dataset</term-dataset>: a collection of examples to learn from. Every example came from one school. Everyone there writes 1 and 7 the same way. Now it reads numbers from writers everywhere. What do you expect?",
+      "predict.c1": "It reads everyone's numbers well. It has been trained, after all.",
+      "predict.c2": "It makes more mistakes for writers whose style is unlike the school's.",
+      "predict.c3": "It makes a few mistakes at random, the same for everyone.",
+      "predict.f1": "Training helps with things like the examples. Let's see what happens with things unlike them.",
+      "predict.f3": "A fair guess: every machine makes some mistakes. Let's see whether they fall evenly on everyone.",
+      "predict.reveal": "Let's find out. You will train the machine yourself, on the school's examples.",
+      "g.one": "Number 1",
+      "g.seven": "Number 7",
+      "f.top": "Length of top line (0 to 10)",
+      "f.mid": "Length of middle line (0 to 10)",
+      "t.p": "Writer P: a straight line with a tiny tick at the top (meant 1)",
+      "t.q": "Writer Q: a long top line, then a line down (meant 7)",
+      "t.r": "Writer R: a line down with a long sloping flag at the top (meant 1)",
+      "t.s": "Writer S: a long top line, a line down, and a line across the middle (meant 7)",
+      "tc1.prompt": "These are the school's 6 example cards. Each card says how the number was drawn and what the writer meant. Give each card its <term-label>label</term-label>, the number the writer meant. Then press “Train the machine” and see how it reads 4 new writers.",
+      "sk.s1": "School card 1: a plain straight line (meant 1)",
+      "sk.s2": "School card 2: a long top line, then a line down (meant 7)",
+      "sk.s3": "School card 3: a straight line with a tiny tick at the top (meant 1)",
+      "sk.s4": "School card 4: a long top line, then a line down (meant 7)",
+      "sk.s5": "School card 5: a plain straight line (meant 1)",
+      "sk.s6": "School card 6: a long top line, then a line down (meant 7)",
+      "tc1.explain": "If you labelled each card as its writer meant, look at Writer R. The machine said 7, and all 3 of its closest cards agreed. To the machine, R's long flag is a lot like a 7's top line. No card in its data was a flag-style 1. Writer R's 1 is not wrong. It is a different, correct way to write 1.",
+      "pc.prompt": "Count the results. Writers P and Q use the school's style: 2 of 2 read correctly, which is 100%. Writers R and S use another style: 1 of 2 read correctly. What percentage is 1 of 2?",
+      "pc.a": "50%",
+      "pc.b": "75%",
+      "pc.c": "12%",
+      "pc.fb": "75% is for all 4 writers together: 3 of 4. Count only R and S: 1 right out of 2.",
+      "pc.fc": "12 puts the digits 1 and 2 side by side. Try this instead: how many out of 100 is the same as 1 out of 2?",
+      "pc.h1": "Percent means “out of 100”.",
+      "pc.h2": "Make the 2 into 100: 2 × 50 = 100. Do the same to the 1: 1 × 50 = 50. (“×” means “times”.)",
+      "pc.explain": "1 of 2 is 50 of 100, so 50%. All 4 writers together give 3 of 4, which is 75%. That one number hides the gap: 100% for one style, 50% for the other.",
+      "tc2.prompt": "Now change only the data. Writers from many places sent in cards. This new dataset has 8 cards, 2 for each of the four styles. Label them, train the machine, and test it on the same 4 writers.",
+      "fx.c1": "Card 1: a plain straight line (meant 1)",
+      "fx.c2": "Card 2: a long top line, then a line down (meant 7)",
+      "fx.c3": "Card 3: a line down with a long sloping flag at the top (meant 1)",
+      "fx.c4": "Card 4: a long top line, a line down, and a line across the middle (meant 7)",
+      "fx.c5": "Card 5: a straight line with a tiny tick at the top (meant 1)",
+      "fx.c6": "Card 6: a long top line, then a line down (meant 7)",
+      "fx.c7": "Card 7: a line down with a shorter sloping flag at the top (meant 1)",
+      "fx.c8": "Card 8: a long top line, a line down, and a line across the middle (meant 7)",
+      "tc2.explain": "Did you label each card as its writer meant? Then all 4 writers are now read correctly: 4 of 4, which is 100%. Writer R's 2 closest cards are now flag-style 1s. The machine's method did not change. Only the dataset did.",
+      "ex.text": "What you saw has names. The school's 6 cards were a <term-sample>sample</term-sample>: a small part picked to stand for a bigger group. But this sample left out a whole style of writing.",
+      "ex.s1": "Some datasets leave out some kinds of people or things, or have very few of them. A machine trained on such data tends to work worse for those kinds. This is called <term-bias>bias</term-bias> in the data.",
+      "ex.s2": "Bias does not need anyone to mean harm. It can come from which examples were collected, and which were missed.",
+      "an1.title": "A cook who learned one family's recipes",
+      "an1.source": "A cook learned every dish from one family's recipe book. Ask for a dish from that book, and it comes out well. Ask for a dish from another home, and the cook makes the closest dish they know.",
+      "an1.m1s": "The one family's recipe book",
+      "an1.m1t": "The dataset from one school",
+      "an1.m2s": "Dishes from other homes, never in the book",
+      "an1.m2t": "Writing styles missing from the dataset",
+      "an1.m3s": "Making the closest dish the cook knows",
+      "an1.m3t": "Copying the label of the closest cards",
+      "an1.m4s": "Learning recipes from many homes",
+      "an1.m4t": "Adding the missing styles to the dataset",
+      "an1.break": "Here the comparison stops working. A cook can taste the dish and notice that it is new to them. The machine has no way to notice its own gap. It gives an answer anyway, and its closest cards can all agree, as they did for Writer R.",
+      "an1.f1": "Cook: one family's recipes → the closest dish they know → a wrong dish for other homes. (“→” means “leads to”.)",
+      "an1.f2": "Machine: one school's cards → the label of the closest cards → a wrong number for other styles.",
+      "an1.f3": "Any dataset missing some kinds of examples → more mistakes for those kinds → bias in the data.",
+      "an2.title": "Judging the weather from one rainy week",
+      "an2.source": "You visit a town for one week, and it rains every day. Back home, you tell everyone that it always rains there. Your week was a sample of the whole year, and a lopsided one.",
+      "an2.m1s": "Your one rainy week",
+      "an2.m1t": "The school's 6 cards",
+      "an2.m2s": "The whole year, with dry and cold months too",
+      "an2.m2t": "All the writers whose letters the machine will read",
+      "an2.m3s": "“It always rains there.”",
+      "an2.m3t": "The machine reading every long flag as part of a 7",
+      "an2.m4s": "Visiting in every season",
+      "an2.m4t": "Collecting examples from every kind of writer, and testing each kind",
+      "an2.break": "Here this comparison stops working. You can remember that you stayed only one week. So you can say you are not sure about other months. The machine keeps no note of what its data left out. People have to check who is missing, by testing each group.",
+      "an2.f1": "One rainy week → “It always rains there.”",
+      "an2.f2": "One school's cards → every long flag read as a 7.",
+      "an2.f3": "A lopsided sample → a machine that works worse for the groups it left out.",
+      "deep.text": "How did the first machine pick 7 for Writer R? R has top line 6 and middle line 0. School card 4 has 8 and 0. The top lines differ by 8 − 6 = 2, and the middle lines by 0. So they are 2 apart. The plain 1s are 5 or 6 apart from R. The three 7s are nearer, so their label wins. This method is called “nearest neighbours”. Real handwriting readers use many more numbers, many more examples and other methods. They can still do worse on writing unlike their data.",
+      "mc.prompt": "Why did the first machine read Writer R's 1 as a 7, with all 3 closest cards agreeing?",
+      "mc.o1": "Its 3 closest cards were all 7s. No card in its data looked like a flag-style 1.",
+      "mc.o2": "It judged that the flag style is a wrong way to write 1.",
+      "mc.o3": "It was tired after reading so many numbers.",
+      "mc.f2": "The machine makes no judgement about writers. It compares numbers and copies the label of the closest cards.",
+      "mc.f3": "A machine does not get tired. Give it the same numbers and it gives the same answer every time.",
+      "mc.explain": "All 3 closest cards agreeing only means they had the same label. It does not mean the answer was right.",
+      "hs.prompt": "Back to the post office. Say the makers' 100 test numbers were 97 school-style and 3 flag-style. All 97 school-style ones were read correctly. All 3 flag-style ones were read wrongly. What was the accuracy for flag-style writers?",
+      "hs.a": "0%",
+      "hs.b": "97%",
+      "hs.c": "3%",
+      "hs.fb": "97% is for all 100 numbers together. Look only at the 3 flag-style numbers. How many of them were right?",
+      "hs.fc": "3 is how many flag-style numbers there were. How many of those 3 were read correctly?",
+      "hs.h1": "Count only the flag-style numbers. There are 3.",
+      "hs.h2": "0 right out of 3 means none of them. None out of 100 is 0%.",
+      "hs.explain": "0 of 3 is 0%. The overall 97% looked great because the test had so few flag-style numbers. A fair test checks each group of writers on its own, with enough examples from each.",
+      "br.challenge": "The fixed machine read all 4 writers correctly. Can you still fool it? Try each new writer and see what it says.",
+      "br.t1": "A left-handed student writes a plain 1, in the school's style.",
+      "br.r1": "It reads 1, and all 3 closest cards agree. The machine never sees who wrote a number. It sees only the two line lengths.",
+      "br.t2": "Someone writes a 7 in a hurry, with a short top line (4) and no middle line.",
+      "br.r2": "It reads 1, and all 3 closest cards agree. That is wrong. No card in the data was a 7 with a short top.",
+      "br.t3": "Someone writes a 4: no top line, and a long middle line (8).",
+      "br.r3": "It reads 1, with 2 of its 3 closest cards agreeing. It can only ever answer 1 or 7. It has no way to say “I have never seen this.”",
+      "br.t4": "A new writer's flag-style 1, with a shorter flag (5).",
+      "br.r4": "It reads 1, with 2 of its 3 closest cards agreeing. Those 2 are flag-style 1s. That style is now in the data.",
+      "br.reflect": "What do the writers that fooled it have in common? Could the machine have warned you about them?",
+      "md.prompt": "Someone suggests a fix for the first machine. “Add 1,000 more cards from the same school.” Will that help it read Writer R's flag-style 1?",
+      "md.a": "Yes. More data always makes a machine better.",
+      "md.b": "No. 1,000 more school cards still have no flag-style 1s.",
+      "md.c": "Yes, if the machine is trained again for longer.",
+      "md.fa": "More data helps only if it includes what is missing. Here, the new cards would all look like the old ones.",
+      "md.fc": "For this machine, training again on the same kind of cards gives the same closest cards. Writer R's closest cards would still be 7s.",
+      "md.explain": "The fix is not more data. It is the missing data: flag-style 1s, labelled with what their writers meant.",
+      "vt.prompt": "A new case. A voice app was trained mostly on recordings of adults. It often mishears children. Which change would help most?",
+      "vt.a": "With permission, record many children speaking, label what they said, and add them to the dataset.",
+      "vt.b": "Ask children to speak more like adults.",
+      "vt.c": "Add many more recordings of adults.",
+      "vt.fb": "That asks people to change for the machine. The children speak correctly. The gap is in the data.",
+      "vt.fc": "More of the same kind does not fill the gap. Which kind of voice is missing?",
+      "vt.explain": "Add the missing voices to the dataset. Then test the app on children and adults, and check each group separately.",
+      "rs.prompt": "The post office machine misread some people's letters for months. Who should be responsible for fixing unfair data? Pick the answer closest to your view.",
+      "rs.c1": "The people who collected the examples",
+      "rs.c2": "The company that built and sold the machine",
+      "rs.c3": "The post office that chose to use it",
+      "rs.c4": "The machine itself",
+      "rs.c5": "All the people who made, sold and use it, each for their part",
+      "rs.f1": "They chose which examples to collect. Checking who is missing is part of their job. Do others share the job too?",
+      "rs.f2": "They decided which data and tests were good enough before selling. Should the buyer also check?",
+      "rs.f3": "They chose to use it on everyone's letters. Should they test it on letters from all their customers first?",
+      "rs.f4": "A machine cannot be responsible. It does not choose its data or notice its mistakes. People do both.",
+      "rs.f5": "This view shares the job. Each group can do something: collect fairly, test each group, and act when mistakes are reported.",
+      "rs.reveal": "There is no single right answer here. But notice one thing: the writers who were misread did nothing wrong. Their handwriting was correct.",
+      "eb.prompt": "In your own words: when data is unfair, who should be responsible, and what should they do? What you type stays on this device.",
+      "eb.model": "One possible answer: the company should test the machine on each group of writers before selling it. The people collecting data should check who is missing. The post office should report mistakes, and stop using it if it stays unfair.",
+      "take.title": "My card: data decides",
+      "take.card": "A machine trained on one school's cards read that school's style well and another style badly. I fixed it by fixing the data, not the machine. A machine cannot notice its own gap, so people have to check every group.",
+      "take.l1": "The machine I trained on fairer data",
+      "take.l2": "Who I think should be responsible",
+      "take.l3": "In my own words",
+      "pre1.q": "A machine learned to read handwriting only from examples written at one school. Whose writing will it most likely misread?",
+      "pre1.a": "People whose style is unlike that school's",
+      "pre1.b": "People with very neat handwriting",
+      "pre1.c": "Nobody: a trained machine reads everyone equally well",
+      "pre2.q": "A machine reads 90 of 100 test numbers correctly. What can you be sure of?",
+      "pre2.a": "It is 90% accurate for every group of writers",
+      "pre2.b": "It got 90% right overall; some groups may do much worse",
+      "pre2.c": "It will be right 9 times out of 10 for you",
+      "pre3.q": "A fruit-sorting machine learned only from big red apples. It rejects small green apples. What would fix this best?",
+      "pre3.a": "Add many small green apples, labelled “apple”, to its dataset",
+      "pre3.b": "Add 1,000 more big red apples",
+      "pre3.c": "Ask farmers to grow only big red apples",
+      "post1.q": "A plant app learned from leaf photos taken in bright sunlight. Its answers are often wrong for photos taken in shade. Why?",
+      "post1.a": "The people taking photos in shade are using it wrongly",
+      "post1.b": "Shade photos were missing from its dataset, so it has no close examples for them",
+      "post1.c": "The app prefers sunny photos",
+      "post1.fb": "The app has no likes or dislikes, and the people did nothing wrong. Its dataset left out shade photos.",
+      "post2.q": "A machine was tested on 100 numbers: 90 plain-style and 10 flag-style. It read all 90 plain ones correctly, and 5 of the 10 flag ones. What was its accuracy for flag-style writers?",
+      "post2.a": "95%",
+      "post2.b": "50%",
+      "post2.c": "5%",
+      "post2.fb": "Count only the flag-style numbers: 5 right out of 10. 10 × 10 = 100, and 5 × 10 = 50, so 50%. The 95% is for all 100 together: 90 + 5 = 95 right.",
+      "post3.q": "A company says: “Our machine is 98% accurate, so it is fair to everyone.” What should you ask first?",
+      "post3.a": "“How accurate is it for each group, when each group is tested on its own?”",
+      "post3.b": "“Can you reach 100% by adding more of the same data?”",
+      "post3.c": "“Is the machine trying its best?”",
+      "post3.fb": "An overall number can hide a group with many mistakes. Ask for each group's accuracy, and how many examples of each group were tested."
+    },
+    "hi": {
+      "title": "डेटा तय करता है",
+      "subtitle": "अच्छी तरह जाँची गई मशीन भी कुछ लोगों के लिए क्यों चूक सकती है",
+      "obj.o1": "समझाइए कि जिस डेटासेट में कुछ तरह के उदाहरण छूट जाते हैं, उससे मशीन कुछ लोगों के लिए ख़राब काम क्यों करती है।",
+      "obj.o2": "हर समूह के लिए सटीकता को प्रतिशत में निकालिए, और दिखाइए कि एक कुल संख्या कैसे किसी कमी को छिपा सकती है।",
+      "obj.o3": "एक सही उपाय सुझाइए: छूटे हुए उदाहरण जोड़िए और हर समूह को अलग से जाँचिए, न कि वैसे ही और उदाहरण जोड़िए।",
+      "hook.text": "सोचिए, डाकघर में एक मशीन है। वह चिट्ठियों पर हाथ से लिखे नंबर पढ़ती है। बनाने वालों ने उसे 100 नंबरों पर जाँचा, और उसने 97 सही पढ़े। यही उसकी <term-accuracy>सटीकता</term-accuracy> है: 100 में से 97, यानी 97 <term-percentage>प्रतिशत</term-percentage> (97%)।",
+      "hook.q": "फिर भी कुछ लोगों की चिट्ठियाँ बार-बार ग़लत शहर पहुँच रही थीं। मशीन ख़राब नहीं थी। तो गड़बड़ कहाँ हुई?",
+      "predict.prompt": "एक सुराग लीजिए। मशीन को एक <term-dataset>डेटासेट</term-dataset> पर ट्रेन किया गया था: उदाहरणों का एक संग्रह, जिनसे वह सीखती है। सारे उदाहरण एक ही स्कूल से आए थे। वहाँ सब लोग 1 और 7 एक ही तरह लिखते हैं। अब मशीन हर जगह के लोगों के लिखे नंबर पढ़ती है। आपको क्या लगता है?",
+      "predict.c1": "यह सबके नंबर अच्छी तरह पढ़ेगी। आख़िर इसे ट्रेन किया गया है।",
+      "predict.c2": "जिन लोगों का लिखने का ढंग उस स्कूल से अलग है, उनके नंबरों में यह ज़्यादा ग़लतियाँ करेगी।",
+      "predict.c3": "यह कुछ ग़लतियाँ यूँ ही करेगी, सबके लिए बराबर।",
+      "predict.f1": "ट्रेनिंग उन चीज़ों में मदद करती है जो उदाहरणों जैसी हों। चलिए देखें, जो उनसे अलग हैं उनका क्या होता है।",
+      "predict.f3": "अच्छा अनुमान है: हर मशीन कुछ ग़लतियाँ करती है। चलिए देखें, क्या वे सब पर बराबर पड़ती हैं।",
+      "predict.reveal": "चलिए पता करें। आप ख़ुद स्कूल के उदाहरणों पर मशीन को ट्रेन करेंगे।",
+      "g.one": "नंबर 1",
+      "g.seven": "नंबर 7",
+      "f.top": "ऊपर की लकीर की लंबाई (0 से 10)",
+      "f.mid": "बीच की लकीर की लंबाई (0 से 10)",
+      "t.p": "व्यक्ति P: ऊपर छोटे-से निशान वाली सीधी लकीर (मतलब 1)",
+      "t.q": "व्यक्ति Q: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "t.r": "व्यक्ति R: नीचे की ओर लकीर, ऊपर लंबी तिरछी झंडी के साथ (मतलब 1)",
+      "t.s": "व्यक्ति S: ऊपर लंबी लकीर, नीचे की ओर लकीर, और बीच में आड़ी लकीर (मतलब 7)",
+      "tc1.prompt": "ये स्कूल के 6 उदाहरण कार्ड हैं। हर कार्ड बताता है कि नंबर कैसे बना था और लिखने वाले का मतलब क्या था। हर कार्ड को उसका <term-label>लेबल</term-label> दीजिए, यानी वह नंबर जो लिखने वाले का मतलब था। फिर “मशीन को सिखाएँ” दबाइए और देखिए कि वह 4 नए लोगों के नंबर कैसे पढ़ती है।",
+      "sk.s1": "स्कूल कार्ड 1: एक सादी सीधी लकीर (मतलब 1)",
+      "sk.s2": "स्कूल कार्ड 2: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "sk.s3": "स्कूल कार्ड 3: ऊपर छोटे-से निशान वाली सीधी लकीर (मतलब 1)",
+      "sk.s4": "स्कूल कार्ड 4: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "sk.s5": "स्कूल कार्ड 5: एक सादी सीधी लकीर (मतलब 1)",
+      "sk.s6": "स्कूल कार्ड 6: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "tc1.explain": "अगर आपने हर कार्ड को लिखने वाले के मतलब के हिसाब से लेबल किया, तो व्यक्ति R को देखिए। मशीन ने 7 कहा, और उसके सबसे पास के तीनों कार्ड सहमत थे। मशीन के लिए R की लंबी झंडी, 7 की ऊपरी लकीर जैसी है। उसके डेटा में झंडी वाला 1 एक भी नहीं था। R का 1 ग़लत नहीं है। यह 1 लिखने का एक अलग, सही तरीका है।",
+      "pc.prompt": "नतीजे गिनिए। व्यक्ति P और Q स्कूल वाले ढंग से लिखते हैं: 2 में से 2 सही पढ़े गए, यानी 100%। व्यक्ति R और S दूसरे ढंग से लिखते हैं: 2 में से 1 सही पढ़ा गया। 2 में से 1 कितने प्रतिशत है?",
+      "pc.a": "50%",
+      "pc.b": "75%",
+      "pc.c": "12%",
+      "pc.fb": "75% चारों लोगों को मिलाकर है: 4 में से 3। सिर्फ़ R और S को गिनिए: 2 में से 1 सही।",
+      "pc.fc": "12 में 1 और 2 के अंक पास-पास रख दिए गए हैं। ऐसे सोचिए: 100 में से कितने, 2 में से 1 के बराबर हैं?",
+      "pc.h1": "प्रतिशत का मतलब है “100 में से”।",
+      "pc.h2": "2 को 100 बनाइए: 2 × 50 = 100। 1 के साथ भी यही कीजिए: 1 × 50 = 50। (“×” का मतलब “गुणा”।)",
+      "pc.explain": "2 में से 1 यानी 100 में से 50, इसलिए 50%। चारों लोगों को मिलाकर 4 में से 3 आता है, यानी 75%। वह एक संख्या इस कमी को छिपा लेती है: एक ढंग के लिए 100%, दूसरे के लिए 50%।",
+      "tc2.prompt": "अब सिर्फ़ डेटा बदलिए। कई जगहों के लोगों ने कार्ड भेजे। इस नए डेटासेट में 8 कार्ड हैं, चारों ढंगों के 2-2 कार्ड। इन पर लेबल लगाइए, मशीन को ट्रेन कीजिए, और उन्हीं 4 लोगों पर जाँचिए।",
+      "fx.c1": "कार्ड 1: एक सादी सीधी लकीर (मतलब 1)",
+      "fx.c2": "कार्ड 2: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "fx.c3": "कार्ड 3: नीचे की ओर लकीर, ऊपर लंबी तिरछी झंडी के साथ (मतलब 1)",
+      "fx.c4": "कार्ड 4: ऊपर लंबी लकीर, नीचे की ओर लकीर, और बीच में आड़ी लकीर (मतलब 7)",
+      "fx.c5": "कार्ड 5: ऊपर छोटे-से निशान वाली सीधी लकीर (मतलब 1)",
+      "fx.c6": "कार्ड 6: ऊपर लंबी लकीर, फिर नीचे की ओर लकीर (मतलब 7)",
+      "fx.c7": "कार्ड 7: नीचे की ओर लकीर, ऊपर थोड़ी छोटी तिरछी झंडी के साथ (मतलब 1)",
+      "fx.c8": "कार्ड 8: ऊपर लंबी लकीर, नीचे की ओर लकीर, और बीच में आड़ी लकीर (मतलब 7)",
+      "tc2.explain": "क्या आपने हर कार्ड को लिखने वाले के मतलब के हिसाब से लेबल किया? तो अब चारों लोगों के नंबर सही पढ़े गए: 4 में से 4, यानी 100%। अब R के सबसे पास वाले 2 कार्ड झंडी वाले 1 हैं। मशीन का तरीका नहीं बदला। सिर्फ़ डेटासेट बदला।",
+      "ex.text": "आपने जो देखा, उसके नाम हैं। स्कूल के 6 कार्ड एक <term-sample>नमूना</term-sample> थे: किसी बड़े समूह की जगह चुना गया एक छोटा हिस्सा। पर इस नमूने में लिखने का एक पूरा ढंग छूट गया था।",
+      "ex.s1": "जब किसी डेटासेट में कुछ तरह के लोग या चीज़ें छूट जाती हैं, या बहुत कम होती हैं, तो मशीन अक्सर उनके लिए ख़राब काम करती है। इसे डेटा में <term-bias>बायस</term-bias> कहते हैं।",
+      "ex.s2": "बायस के लिए किसी का बुरा इरादा होना ज़रूरी नहीं। यह इससे भी आ सकता है कि कौन-से उदाहरण इकट्ठे किए गए, और कौन-से छूट गए।",
+      "an1.title": "एक रसोइया जिसने एक ही परिवार के व्यंजन सीखे",
+      "an1.source": "एक रसोइये ने हर पकवान एक ही परिवार की रेसिपी की किताब से सीखा। उस किताब का कोई पकवान माँगिए, तो वह अच्छा बनता है। किसी दूसरे घर का पकवान माँगिए, तो रसोइया अपना जाना-पहचाना सबसे मिलता-जुलता पकवान बना देता है।",
+      "an1.m1s": "एक परिवार की रेसिपी की किताब",
+      "an1.m1t": "एक स्कूल का डेटासेट",
+      "an1.m2s": "दूसरे घरों के पकवान, जो किताब में कभी थे ही नहीं",
+      "an1.m2t": "लिखने के वे ढंग जो डेटासेट में नहीं हैं",
+      "an1.m3s": "रसोइये का अपना सबसे मिलता-जुलता पकवान बना देना",
+      "an1.m3t": "सबसे पास वाले कार्डों का लेबल लगा देना",
+      "an1.m4s": "कई घरों की रेसिपी सीखना",
+      "an1.m4t": "छूटे हुए ढंगों को डेटासेट में जोड़ना",
+      "an1.break": "यहाँ यह तुलना काम करना बंद कर देती है। रसोइया पकवान चखकर समझ सकता है कि यह उसके लिए नया है। मशीन के पास अपनी कमी पहचानने का कोई तरीका नहीं है। वह फिर भी जवाब दे देती है, और उसके सबसे पास के सारे कार्ड सहमत भी हो सकते हैं, जैसे व्यक्ति R के लिए हुए।",
+      "an1.f1": "रसोइया: एक परिवार की रेसिपी → सबसे मिलता-जुलता जाना-पहचाना पकवान → दूसरे घरों के लिए ग़लत पकवान। (“→” का मतलब “नतीजा”।)",
+      "an1.f2": "मशीन: एक स्कूल के कार्ड → सबसे पास वाले कार्डों का लेबल → दूसरे ढंगों के लिए ग़लत नंबर।",
+      "an1.f3": "कोई भी डेटासेट जिसमें कुछ तरह के उदाहरण नहीं हैं → उन्हीं के लिए ज़्यादा ग़लतियाँ → डेटा में बायस।",
+      "an2.title": "एक बरसाती हफ़्ते से मौसम का अंदाज़ा",
+      "an2.source": "आप एक शहर में एक हफ़्ते के लिए जाते हैं, और हर दिन बारिश होती है। घर लौटकर आप सबसे कहते हैं कि वहाँ तो हमेशा बारिश होती है। आपका हफ़्ता पूरे साल का एक नमूना था, और वह भी एकतरफ़ा।",
+      "an2.m1s": "आपका वह एक बरसाती हफ़्ता",
+      "an2.m1t": "स्कूल के 6 कार्ड",
+      "an2.m2s": "पूरा साल, जिसमें सूखे और ठंडे महीने भी हैं",
+      "an2.m2t": "वे सभी लोग जिनकी चिट्ठियाँ मशीन पढ़ेगी",
+      "an2.m3s": "“वहाँ हमेशा बारिश होती है।”",
+      "an2.m3t": "मशीन का हर लंबी झंडी को 7 का हिस्सा मान लेना",
+      "an2.m4s": "हर मौसम में जाकर देखना",
+      "an2.m4t": "हर तरह के लिखने वालों से उदाहरण इकट्ठे करना, और हर तरह को जाँचना",
+      "an2.break": "यहाँ यह तुलना काम करना बंद कर देती है। आपको याद रह सकता है कि आप सिर्फ़ एक हफ़्ता रुके थे। इसलिए आप कह सकते हैं कि बाक़ी महीनों का आपको पक्का नहीं पता। मशीन के पास इसका कोई हिसाब नहीं होता कि उसके डेटा में क्या छूट गया। कौन छूटा है, यह लोगों को ही हर समूह को जाँचकर देखना होता है।",
+      "an2.f1": "एक बरसाती हफ़्ता → “वहाँ हमेशा बारिश होती है।”",
+      "an2.f2": "एक स्कूल के कार्ड → हर लंबी झंडी 7 पढ़ी गई।",
+      "an2.f3": "एकतरफ़ा नमूना → ऐसी मशीन जो छूटे हुए समूहों के लिए ख़राब काम करती है।",
+      "deep.text": "पहली मशीन ने व्यक्ति R के लिए 7 क्यों चुना? R की ऊपरी लकीर 6 और बीच की लकीर 0 है। स्कूल कार्ड 4 के लिए ये 8 और 0 हैं। ऊपरी लकीरों में अंतर 8 − 6 = 2 है, और बीच की लकीरों में 0। इसलिए दोनों में दूरी 2 है। सादे 1 वाले कार्ड R से 5 या 6 दूर हैं। तीनों 7 ज़्यादा पास हैं, इसलिए उनका लेबल जीतता है। इस तरीके को “नियरेस्ट नेबर्स” (सबसे पास के पड़ोसी) कहते हैं। असली हैंडराइटिंग पढ़ने वाली मशीनें कहीं ज़्यादा संख्याएँ, कहीं ज़्यादा उदाहरण और दूसरे तरीके इस्तेमाल करती हैं। फिर भी, अपने डेटा से अलग लिखावट पर वे ख़राब कर सकती हैं।",
+      "mc.prompt": "पहली मशीन ने व्यक्ति R के 1 को 7 क्यों पढ़ा, और वह भी तब जब सबसे पास के तीनों कार्ड सहमत थे?",
+      "mc.o1": "उसके सबसे पास के तीनों कार्ड 7 थे। उसके डेटा में कोई कार्ड झंडी वाले 1 जैसा नहीं था।",
+      "mc.o2": "उसने तय किया कि झंडी वाला ढंग 1 लिखने का ग़लत तरीका है।",
+      "mc.o3": "इतने सारे नंबर पढ़कर वह थक गई थी।",
+      "mc.f2": "मशीन लिखने वालों के बारे में कोई राय नहीं बनाती। वह संख्याओं की तुलना करती है और सबसे पास वाले कार्डों का लेबल लगा देती है।",
+      "mc.f3": "मशीन थकती नहीं। उसे वही संख्याएँ दीजिए, तो वह हर बार वही जवाब देगी।",
+      "mc.explain": "सबसे पास के तीनों कार्डों के सहमत होने का मतलब सिर्फ़ इतना है कि उनका लेबल एक था। इसका मतलब यह नहीं कि जवाब सही था।",
+      "hs.prompt": "फिर से डाकघर चलें। मान लीजिए बनाने वालों के 100 जाँच वाले नंबरों में 97 स्कूल वाले ढंग के थे और 3 झंडी वाले ढंग के। स्कूल वाले ढंग के सभी 97 सही पढ़े गए। झंडी वाले ढंग के तीनों ग़लत पढ़े गए। झंडी वाले ढंग से लिखने वालों के लिए सटीकता कितनी थी?",
+      "hs.a": "0%",
+      "hs.b": "97%",
+      "hs.c": "3%",
+      "hs.fb": "97% सभी 100 नंबरों को मिलाकर है। सिर्फ़ झंडी वाले 3 नंबरों को देखिए। उनमें से कितने सही थे?",
+      "hs.fc": "3 तो झंडी वाले नंबरों की गिनती है। उन 3 में से कितने सही पढ़े गए?",
+      "hs.h1": "सिर्फ़ झंडी वाले नंबर गिनिए। वे 3 हैं।",
+      "hs.h2": "3 में से 0 सही का मतलब है एक भी नहीं। 100 में से एक भी नहीं, यानी 0%।",
+      "hs.explain": "3 में से 0 यानी 0%। कुल 97% इसलिए अच्छा दिखा क्योंकि जाँच में झंडी वाले नंबर बहुत कम थे। सही जाँच हर समूह को अलग से परखती है, हर समूह के काफ़ी उदाहरणों के साथ।",
+      "br.challenge": "ठीक की गई मशीन ने चारों लोगों के नंबर सही पढ़े। क्या आप अब भी उसे चकमा दे सकते हैं? हर नए व्यक्ति को आज़माइए और देखिए वह क्या कहती है।",
+      "br.t1": "बाएँ हाथ से लिखने वाला एक विद्यार्थी स्कूल वाले ढंग से सादा 1 लिखता है।",
+      "br.r1": "यह 1 पढ़ती है, और सबसे पास के तीनों कार्ड सहमत हैं। मशीन कभी नहीं देखती कि नंबर किसने लिखा। वह सिर्फ़ दो लकीरों की लंबाई देखती है।",
+      "br.t2": "कोई जल्दी में 7 लिखता है, छोटी ऊपरी लकीर (4) के साथ और बीच की लकीर के बिना।",
+      "br.r2": "यह 1 पढ़ती है, और सबसे पास के तीनों कार्ड सहमत हैं। यह ग़लत है। डेटा में छोटी ऊपरी लकीर वाला 7 एक भी नहीं था।",
+      "br.t3": "कोई 4 लिखता है: ऊपर कोई लकीर नहीं, और बीच में लंबी लकीर (8)।",
+      "br.r3": "यह 1 पढ़ती है, और सबसे पास के 3 में से 2 कार्ड सहमत हैं। यह हमेशा 1 या 7 ही जवाब दे सकती है। इसके पास यह कहने का कोई तरीका नहीं कि “मैंने ऐसा पहले कभी नहीं देखा।”",
+      "br.t4": "एक नए व्यक्ति का झंडी वाला 1, थोड़ी छोटी झंडी (5) के साथ।",
+      "br.r4": "यह 1 पढ़ती है, और सबसे पास के 3 में से 2 कार्ड सहमत हैं। वे 2 कार्ड झंडी वाले 1 हैं। अब यह ढंग डेटा में है।",
+      "br.reflect": "जिन लोगों ने इसे चकमा दिया, उनमें क्या बात एक जैसी है? क्या मशीन आपको उनके बारे में पहले से चेता सकती थी?",
+      "md.prompt": "कोई पहली मशीन के लिए एक उपाय सुझाता है: “उसी स्कूल के 1,000 और कार्ड जोड़ दो।” क्या इससे वह व्यक्ति R का झंडी वाला 1 पढ़ पाएगी?",
+      "md.a": "हाँ। ज़्यादा डेटा से मशीन हमेशा बेहतर होती है।",
+      "md.b": "नहीं। स्कूल के 1,000 और कार्डों में भी झंडी वाला 1 नहीं होगा।",
+      "md.c": "हाँ, अगर मशीन को फिर से ज़्यादा देर तक ट्रेन किया जाए।",
+      "md.fa": "ज़्यादा डेटा तभी मदद करता है जब उसमें छूटी हुई चीज़ें हों। यहाँ नए कार्ड भी पुराने जैसे ही होंगे।",
+      "md.fc": "इस मशीन के लिए, उसी तरह के कार्डों पर फिर से ट्रेन करने से सबसे पास वाले कार्ड वही रहते हैं। व्यक्ति R के सबसे पास वाले कार्ड तब भी 7 ही होंगे।",
+      "md.explain": "उपाय ज़्यादा डेटा नहीं है। उपाय है छूटा हुआ डेटा: झंडी वाले 1, जिन पर उनके लिखने वालों के मतलब का लेबल लगा हो।",
+      "vt.prompt": "एक नया मामला। एक वॉइस ऐप को ज़्यादातर बड़ों की रिकॉर्डिंग पर ट्रेन किया गया। वह बच्चों की बात अक्सर ग़लत सुनता है। कौन-सा बदलाव सबसे ज़्यादा मदद करेगा?",
+      "vt.a": "अनुमति लेकर, बहुत-से बच्चों को बोलते हुए रिकॉर्ड करना, उन्होंने जो कहा उसका लेबल लगाना, और उन्हें डेटासेट में जोड़ना।",
+      "vt.b": "बच्चों से कहना कि वे बड़ों की तरह बोलें।",
+      "vt.c": "बड़ों की और बहुत-सी रिकॉर्डिंग जोड़ना।",
+      "vt.fb": "इसमें लोगों से मशीन के लिए बदलने को कहा जा रहा है। बच्चे सही बोलते हैं। कमी डेटा में है।",
+      "vt.fc": "उसी तरह की और चीज़ें जोड़ने से कमी नहीं भरती। कौन-सी आवाज़ें छूटी हुई हैं?",
+      "vt.explain": "छूटी हुई आवाज़ें डेटासेट में जोड़िए। फिर ऐप को बच्चों और बड़ों, दोनों पर जाँचिए, और हर समूह को अलग से परखिए।",
+      "rs.prompt": "डाकघर की मशीन महीनों तक कुछ लोगों की चिट्ठियाँ ग़लत पढ़ती रही। अनुचित डेटा को ठीक करने की ज़िम्मेदारी किसकी होनी चाहिए? वह जवाब चुनिए जो आपकी राय के सबसे क़रीब हो।",
+      "rs.c1": "जिन लोगों ने उदाहरण इकट्ठे किए",
+      "rs.c2": "वह कंपनी जिसने मशीन बनाई और बेची",
+      "rs.c3": "वह डाकघर जिसने इसे इस्तेमाल करना चुना",
+      "rs.c4": "ख़ुद मशीन",
+      "rs.c5": "वे सभी लोग जिन्होंने इसे बनाया, बेचा और इस्तेमाल किया, हर कोई अपने हिस्से के लिए",
+      "rs.f1": "उन्होंने चुना कि कौन-से उदाहरण इकट्ठे हों। कौन छूटा है, यह देखना उनके काम का हिस्सा है। क्या दूसरों का भी इसमें हिस्सा है?",
+      "rs.f2": "बेचने से पहले उन्होंने तय किया कि कौन-सा डेटा और कौन-सी जाँच काफ़ी है। क्या ख़रीदने वाले को भी जाँचना चाहिए?",
+      "rs.f3": "उन्होंने इसे सबकी चिट्ठियों पर इस्तेमाल करना चुना। क्या उन्हें पहले अपने सभी ग्राहकों की चिट्ठियों पर इसे जाँचना चाहिए?",
+      "rs.f4": "मशीन ज़िम्मेदार नहीं हो सकती। वह न अपना डेटा चुनती है, न अपनी ग़लतियाँ पहचानती है। ये दोनों काम लोग करते हैं।",
+      "rs.f5": "इस राय में काम सब बाँटते हैं। हर समूह कुछ कर सकता है: सही ढंग से इकट्ठा करना, हर समूह को जाँचना, और ग़लतियों की शिकायत मिलने पर कदम उठाना।",
+      "rs.reveal": "यहाँ कोई एक सही जवाब नहीं है। पर एक बात पर ध्यान दीजिए: जिन लोगों के नंबर ग़लत पढ़े गए, उन्होंने कुछ ग़लत नहीं किया। उनकी लिखावट सही थी।",
+      "eb.prompt": "अपने शब्दों में लिखिए: जब डेटा अनुचित हो, तो ज़िम्मेदारी किसकी होनी चाहिए, और उन्हें क्या करना चाहिए? आप जो लिखेंगे, वह इसी डिवाइस पर रहेगा।",
+      "eb.model": "एक संभव जवाब: कंपनी को मशीन बेचने से पहले उसे लिखने वालों के हर समूह पर जाँचना चाहिए। डेटा इकट्ठा करने वालों को देखना चाहिए कि कौन छूटा है। डाकघर को ग़लतियों की शिकायत करनी चाहिए, और अगर मशीन अनुचित ही रहे तो उसका इस्तेमाल बंद करना चाहिए।",
+      "take.title": "मेरा कार्ड: डेटा तय करता है",
+      "take.card": "एक स्कूल के कार्डों पर ट्रेन की गई मशीन ने उस स्कूल का ढंग अच्छी तरह पढ़ा और दूसरा ढंग ख़राब। मैंने मशीन नहीं, डेटा ठीक करके उसे सुधारा। मशीन अपनी कमी नहीं पहचान सकती, इसलिए लोगों को हर समूह को जाँचना होता है।",
+      "take.l1": "जिस मशीन को मैंने बेहतर डेटा पर ट्रेन किया",
+      "take.l2": "मेरे हिसाब से ज़िम्मेदारी किसकी है",
+      "take.l3": "मेरे अपने शब्दों में",
+      "pre1.q": "एक मशीन ने लिखावट पढ़ना सिर्फ़ एक स्कूल में लिखे उदाहरणों से सीखा। वह सबसे ज़्यादा किसकी लिखावट ग़लत पढ़ेगी?",
+      "pre1.a": "जिनका ढंग उस स्कूल से अलग है",
+      "pre1.b": "जिनकी लिखावट बहुत सुंदर है",
+      "pre1.c": "कोई नहीं: ट्रेन की गई मशीन सबको बराबर अच्छा पढ़ती है",
+      "pre2.q": "एक मशीन 100 जाँच वाले नंबरों में से 90 सही पढ़ती है। आप किस बात पर पक्के हो सकते हैं?",
+      "pre2.a": "यह लिखने वालों के हर समूह के लिए 90% सटीक है",
+      "pre2.b": "कुल मिलाकर इसने 90% सही किया; कुछ समूहों के लिए यह काफ़ी ख़राब हो सकता है",
+      "pre2.c": "यह आपके लिए 10 में से 9 बार सही होगी",
+      "pre3.q": "फल छाँटने वाली एक मशीन ने सिर्फ़ बड़े लाल सेबों से सीखा। वह छोटे हरे सेबों को अलग कर देती है। इसे सबसे अच्छा कैसे ठीक करेंगे?",
+      "pre3.a": "इसके डेटासेट में बहुत-से छोटे हरे सेब जोड़ना, “सेब” लेबल के साथ",
+      "pre3.b": "1,000 और बड़े लाल सेब जोड़ना",
+      "pre3.c": "किसानों से कहना कि वे सिर्फ़ बड़े लाल सेब उगाएँ",
+      "post1.q": "एक पौधों वाले ऐप ने तेज़ धूप में खींची पत्तियों की फ़ोटो से सीखा। छाँव में खींची फ़ोटो पर उसके जवाब अक्सर ग़लत होते हैं। क्यों?",
+      "post1.a": "छाँव में फ़ोटो खींचने वाले इसे ग़लत तरीके से इस्तेमाल कर रहे हैं",
+      "post1.b": "इसके डेटासेट में छाँव वाली फ़ोटो नहीं थीं, इसलिए उनके लिए इसके पास कोई मिलते-जुलते उदाहरण नहीं हैं",
+      "post1.c": "ऐप को धूप वाली फ़ोटो ज़्यादा पसंद हैं",
+      "post1.fb": "ऐप की कोई पसंद-नापसंद नहीं होती, और लोगों ने कुछ ग़लत नहीं किया। उसके डेटासेट में छाँव वाली फ़ोटो छूट गई थीं।",
+      "post2.q": "एक मशीन को 100 नंबरों पर जाँचा गया: 90 सादे ढंग के और 10 झंडी वाले ढंग के। उसने सादे ढंग के सभी 90 सही पढ़े, और झंडी वाले 10 में से 5। झंडी वाले ढंग से लिखने वालों के लिए उसकी सटीकता कितनी थी?",
+      "post2.a": "95%",
+      "post2.b": "50%",
+      "post2.c": "5%",
+      "post2.fb": "सिर्फ़ झंडी वाले नंबर गिनिए: 10 में से 5 सही। 10 × 10 = 100, और 5 × 10 = 50, इसलिए 50%। 95% सभी 100 को मिलाकर है: 90 + 5 = 95 सही।",
+      "post3.q": "एक कंपनी कहती है: “हमारी मशीन 98% सटीक है, इसलिए यह सबके लिए सही है।” आपको सबसे पहले क्या पूछना चाहिए?",
+      "post3.a": "“जब हर समूह को अलग से जाँचा जाए, तो हर समूह के लिए यह कितनी सटीक है?”",
+      "post3.b": "“क्या वैसा ही और डेटा जोड़कर आप 100% तक पहुँच सकते हैं?”",
+      "post3.c": "“क्या मशीन पूरी कोशिश कर रही है?”",
+      "post3.fb": "एक कुल संख्या ऐसे समूह को छिपा सकती है जिसमें बहुत ग़लतियाँ हों। हर समूह की सटीकता पूछिए, और यह भी कि हर समूह के कितने उदाहरण जाँचे गए।"
+    },
+    "te": {
+      "title": "డేటా నిర్ణయిస్తుంది",
+      "subtitle": "బాగా పరీక్షించిన యంత్రం కూడా కొందరి విషయంలో ఎందుకు తప్పవచ్చు",
+      "obj.o1": "కొన్ని రకాల ఉదాహరణలు లేని డేటాసెట్ వల్ల యంత్రం కొందరి విషయంలో ఎందుకు సరిగా పనిచేయదో వివరించండి.",
+      "obj.o2": "ప్రతి సమూహానికి కచ్చితత్వాన్ని శాతంలో లెక్కించండి, ఒకే మొత్తం సంఖ్య ఒక లోటును ఎలా దాచగలదో చూపించండి.",
+      "obj.o3": "న్యాయమైన పరిష్కారం సూచించండి: అవే రకం ఉదాహరణలు ఇంకా కలపడం కాదు, లేని ఉదాహరణలు కలిపి ప్రతి సమూహాన్నీ విడిగా పరీక్షించండి.",
+      "hook.text": "ఒక పోస్టాఫీసులో ఒక యంత్రం ఉందనుకోండి. అది ఉత్తరాల మీద చేతితో రాసిన అంకెలను చదువుతుంది. దాన్ని తయారు చేసినవాళ్లు 100 అంకెలపై పరీక్షించారు, అది 97 సరిగ్గా చదివింది. అదే దాని <term-accuracy>కచ్చితత్వం</term-accuracy>: 100లో 97, అంటే 97 <term-percentage>శాతం</term-percentage> (97%).",
+      "hook.q": "అయినా కొందరు రాసిన ఉత్తరాలు మళ్లీ మళ్లీ తప్పు ఊరికి వెళ్తున్నాయి. యంత్రం పాడవలేదు. మరి తప్పు ఎక్కడ జరిగింది?",
+      "predict.prompt": "ఒక ఆధారం చూడండి. యంత్రానికి ఒక <term-dataset>డేటాసెట్</term-dataset> మీద ట్రైనింగ్ ఇచ్చారు: అది నేర్చుకునే ఉదాహరణల సమూహం. ఉదాహరణలన్నీ ఒకే బడి నుండి వచ్చాయి. అక్కడ అందరూ 1, 7లను ఒకే విధంగా రాస్తారు. ఇప్పుడు యంత్రం అన్ని ప్రాంతాల వాళ్లు రాసిన అంకెలను చదువుతుంది. ఏం జరుగుతుందని మీరు అనుకుంటున్నారు?",
+      "predict.c1": "ఇది అందరి అంకెలనూ బాగా చదువుతుంది. దీనికి ట్రైనింగ్ ఇచ్చారు కదా.",
+      "predict.c2": "రాసే విధానం ఆ బడి వాళ్లకు భిన్నంగా ఉన్నవారి అంకెలలో ఇది ఎక్కువ తప్పులు చేస్తుంది.",
+      "predict.c3": "ఇది అక్కడక్కడా కొన్ని తప్పులు చేస్తుంది, అందరికీ సమానంగా.",
+      "predict.f1": "ఉదాహరణల లాంటి వాటికి ట్రైనింగ్ సహాయపడుతుంది. వాటికి భిన్నంగా ఉన్నవాటికి ఏమవుతుందో చూద్దాం.",
+      "predict.f3": "మంచి ఊహ: ప్రతి యంత్రం కొన్ని తప్పులు చేస్తుంది. అవి అందరిపై సమానంగా పడతాయో లేదో చూద్దాం.",
+      "predict.reveal": "తెలుసుకుందాం. బడి ఉదాహరణలపై యంత్రానికి మీరే ట్రైనింగ్ ఇస్తారు.",
+      "g.one": "అంకె 1",
+      "g.seven": "అంకె 7",
+      "f.top": "పై గీత పొడవు (0 నుండి 10)",
+      "f.mid": "మధ్య గీత పొడవు (0 నుండి 10)",
+      "t.p": "వ్యక్తి P: పైన చిన్న వంపు ఉన్న నిలువు గీత (ఉద్దేశం 1)",
+      "t.q": "వ్యక్తి Q: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "t.r": "వ్యక్తి R: కిందికి గీత, పైన పొడవాటి వాలు జెండాతో (ఉద్దేశం 1)",
+      "t.s": "వ్యక్తి S: పైన పొడవాటి గీత, కిందికి గీత, మధ్యలో అడ్డ గీత (ఉద్దేశం 7)",
+      "tc1.prompt": "ఇవి బడికి చెందిన 6 ఉదాహరణ కార్డులు. ప్రతి కార్డు ఆ అంకెను ఎలా రాశారో, రాసినవారి ఉద్దేశం ఏమిటో చెబుతుంది. ప్రతి కార్డుకు దాని <term-label>లేబుల్</term-label> ఇవ్వండి, అంటే రాసినవారు ఉద్దేశించిన అంకె. తర్వాత “యంత్రానికి నేర్పండి” నొక్కి, అది 4 కొత్త వ్యక్తుల అంకెలను ఎలా చదువుతుందో చూడండి.",
+      "sk.s1": "బడి కార్డు 1: ఒక సాదా నిలువు గీత (ఉద్దేశం 1)",
+      "sk.s2": "బడి కార్డు 2: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "sk.s3": "బడి కార్డు 3: పైన చిన్న వంపు ఉన్న నిలువు గీత (ఉద్దేశం 1)",
+      "sk.s4": "బడి కార్డు 4: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "sk.s5": "బడి కార్డు 5: ఒక సాదా నిలువు గీత (ఉద్దేశం 1)",
+      "sk.s6": "బడి కార్డు 6: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "tc1.explain": "మీరు ప్రతి కార్డుకు రాసినవారి ఉద్దేశం ప్రకారం లేబుల్ ఇస్తే, వ్యక్తి R ను చూడండి. యంత్రం 7 అంది, దానికి అత్యంత దగ్గరి 3 కార్డులూ అదే చెప్పాయి. యంత్రానికి R పొడవాటి జెండా, 7 పై గీతలాగే ఉంది. దాని డేటాలో జెండా ఉన్న 1 ఒక్కటి కూడా లేదు. R రాసిన 1 తప్పు కాదు. అది 1ని రాసే మరో సరైన విధానం.",
+      "pc.prompt": "ఫలితాలు లెక్కపెట్టండి. వ్యక్తులు P, Q బడి విధానంలో రాస్తారు: 2లో 2 సరిగ్గా చదివింది, అంటే 100%. వ్యక్తులు R, S వేరే విధానంలో రాస్తారు: 2లో 1 సరిగ్గా చదివింది. 2లో 1 అంటే ఎంత శాతం?",
+      "pc.a": "50%",
+      "pc.b": "75%",
+      "pc.c": "12%",
+      "pc.fb": "75% నలుగురినీ కలిపితే వచ్చేది: 4లో 3. R, S లను మాత్రమే లెక్కించండి: 2లో 1 సరైనది.",
+      "pc.fc": "12 అంటే 1, 2 అంకెలను పక్కపక్కన పెట్టడం. ఇలా ఆలోచించండి: 2లో 1 అంటే 100లో ఎన్నికి సమానం?",
+      "pc.h1": "శాతం అంటే “100లో”.",
+      "pc.h2": "2ని 100 చేయండి: 2 × 50 = 100. 1కి కూడా అదే చేయండి: 1 × 50 = 50. (“×” అంటే “గుణించు”.)",
+      "pc.explain": "2లో 1 అంటే 100లో 50, కాబట్టి 50%. నలుగురినీ కలిపితే 4లో 3, అంటే 75%. ఆ ఒక్క సంఖ్య ఈ లోటును దాచేస్తుంది: ఒక విధానానికి 100%, మరో విధానానికి 50%.",
+      "tc2.prompt": "ఇప్పుడు డేటాను మాత్రమే మార్చండి. చాలా ప్రాంతాల వాళ్లు కార్డులు పంపారు. ఈ కొత్త డేటాసెట్‌లో 8 కార్డులు ఉన్నాయి, నాలుగు విధానాలకు 2 చొప్పున. వాటికి లేబుల్ ఇచ్చి, యంత్రానికి ట్రైనింగ్ ఇచ్చి, అవే 4 వ్యక్తులపై పరీక్షించండి.",
+      "fx.c1": "కార్డు 1: ఒక సాదా నిలువు గీత (ఉద్దేశం 1)",
+      "fx.c2": "కార్డు 2: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "fx.c3": "కార్డు 3: కిందికి గీత, పైన పొడవాటి వాలు జెండాతో (ఉద్దేశం 1)",
+      "fx.c4": "కార్డు 4: పైన పొడవాటి గీత, కిందికి గీత, మధ్యలో అడ్డ గీత (ఉద్దేశం 7)",
+      "fx.c5": "కార్డు 5: పైన చిన్న వంపు ఉన్న నిలువు గీత (ఉద్దేశం 1)",
+      "fx.c6": "కార్డు 6: పైన పొడవాటి గీత, తర్వాత కిందికి గీత (ఉద్దేశం 7)",
+      "fx.c7": "కార్డు 7: కిందికి గీత, పైన కొంచెం చిన్న వాలు జెండాతో (ఉద్దేశం 1)",
+      "fx.c8": "కార్డు 8: పైన పొడవాటి గీత, కిందికి గీత, మధ్యలో అడ్డ గీత (ఉద్దేశం 7)",
+      "tc2.explain": "మీరు ప్రతి కార్డుకు రాసినవారి ఉద్దేశం ప్రకారం లేబుల్ ఇచ్చారా? అయితే ఇప్పుడు నలుగురి అంకెలూ సరిగ్గా చదివింది: 4లో 4, అంటే 100%. ఇప్పుడు R కి అత్యంత దగ్గరి 2 కార్డులు జెండా ఉన్న 1లు. యంత్రం పద్ధతి మారలేదు. డేటాసెట్ మాత్రమే మారింది.",
+      "ex.text": "మీరు చూసినదానికి పేర్లు ఉన్నాయి. బడి 6 కార్డులు ఒక <term-sample>శాంపిల్</term-sample>: ఒక పెద్ద సమూహానికి ప్రతినిధిగా ఎంచుకున్న చిన్న భాగం. కానీ ఈ శాంపిల్‌లో రాసే ఒక విధానం పూర్తిగా లేదు.",
+      "ex.s1": "ఒక డేటాసెట్‌లో కొన్ని రకాల మనుషులు లేదా వస్తువులు లేకపోతే, లేదా చాలా తక్కువగా ఉంటే, యంత్రం సాధారణంగా వారి విషయంలో సరిగా పనిచేయదు. దీన్ని డేటాలో <term-bias>బయాస్</term-bias> అంటారు.",
+      "ex.s2": "బయాస్ రావడానికి ఎవరికీ చెడు ఉద్దేశం ఉండనక్కర్లేదు. ఏ ఉదాహరణలు సేకరించారు, ఏవి వదిలేశారు అనే దాని నుండి కూడా అది రావచ్చు.",
+      "an1.title": "ఒకే కుటుంబం వంటకాలు నేర్చుకున్న వంటమనిషి",
+      "an1.source": "ఒక వంటమనిషి ప్రతి వంటకాన్నీ ఒకే కుటుంబం వంటల పుస్తకం నుండి నేర్చుకున్నారు. ఆ పుస్తకంలోని వంటకం అడిగితే, బాగా వస్తుంది. వేరే ఇంటి వంటకం అడిగితే, తమకు తెలిసిన వాటిలో దానికి దగ్గరగా ఉండే వంటకం చేస్తారు.",
+      "an1.m1s": "ఒక కుటుంబం వంటల పుస్తకం",
+      "an1.m1t": "ఒకే బడి నుండి వచ్చిన డేటాసెట్",
+      "an1.m2s": "పుస్తకంలో ఎప్పుడూ లేని ఇతర ఇళ్ల వంటకాలు",
+      "an1.m2t": "డేటాసెట్‌లో లేని రాత విధానాలు",
+      "an1.m3s": "వంటమనిషికి తెలిసిన వాటిలో దగ్గరి వంటకం చేయడం",
+      "an1.m3t": "అత్యంత దగ్గరి కార్డుల లేబుల్‌నే పెట్టడం",
+      "an1.m4s": "చాలా ఇళ్ల వంటకాలు నేర్చుకోవడం",
+      "an1.m4t": "లేని విధానాలను డేటాసెట్‌లో కలపడం",
+      "an1.break": "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. వంటమనిషి రుచి చూసి, ఇది తనకు కొత్త అని గమనించగలరు. యంత్రానికి తన లోటును గమనించే మార్గమే లేదు. అయినా అది జవాబు ఇస్తుంది, దాని దగ్గరి కార్డులన్నీ ఏకీభవించవచ్చు కూడా, వ్యక్తి R విషయంలో జరిగినట్టు.",
+      "an1.f1": "వంటమనిషి: ఒక కుటుంబం వంటకాలు → తెలిసిన దగ్గరి వంటకం → ఇతర ఇళ్లకు తప్పు వంటకం. (“→” అంటే “దారి తీస్తుంది”.)",
+      "an1.f2": "యంత్రం: ఒకే బడి కార్డులు → అత్యంత దగ్గరి కార్డుల లేబుల్ → ఇతర విధానాలకు తప్పు అంకె.",
+      "an1.f3": "కొన్ని రకాల ఉదాహరణలు లేని ఏ డేటాసెట్ అయినా → ఆ రకాలకే ఎక్కువ తప్పులు → డేటాలో బయాస్.",
+      "an2.title": "ఒక వర్షపు వారం చూసి వాతావరణాన్ని అంచనా వేయడం",
+      "an2.source": "మీరు ఒక ఊరికి ఒక వారం వెళ్తారు, ప్రతి రోజూ వర్షం పడుతుంది. ఇంటికి వచ్చి, అక్కడ ఎప్పుడూ వర్షమే అని అందరికీ చెబుతారు. మీ వారం ఏడాది మొత్తానికి ఒక శాంపిల్, అది కూడా ఒక వైపే మొగ్గిన శాంపిల్.",
+      "an2.m1s": "మీరు చూసిన ఒక్క వర్షపు వారం",
+      "an2.m1t": "బడి 6 కార్డులు",
+      "an2.m2s": "పొడి నెలలు, చలి నెలలతో కలిపి ఏడాది మొత్తం",
+      "an2.m2t": "యంత్రం చదవబోయే ఉత్తరాలు రాసే వాళ్లందరూ",
+      "an2.m3s": "“అక్కడ ఎప్పుడూ వర్షమే.”",
+      "an2.m3t": "ప్రతి పొడవాటి జెండానూ యంత్రం 7లో భాగంగా చదవడం",
+      "an2.m4s": "ప్రతి కాలంలోనూ వెళ్లి చూడటం",
+      "an2.m4t": "ప్రతి రకం రాసేవారి నుండి ఉదాహరణలు సేకరించడం, ప్రతి రకాన్నీ పరీక్షించడం",
+      "an2.break": "ఇక్కడ ఈ పోలిక పనిచేయడం ఆగిపోతుంది. మీరు ఒక్క వారమే ఉన్నారని మీకు గుర్తుంటుంది. అందుకే మిగతా నెలల గురించి ఖచ్చితంగా తెలియదని చెప్పగలరు. తన డేటాలో ఏం లేదో యంత్రం దగ్గర ఎలాంటి లెక్కా ఉండదు. ఎవరు మిగిలిపోయారో మనుషులే ప్రతి సమూహాన్నీ పరీక్షించి చూడాలి.",
+      "an2.f1": "ఒక వర్షపు వారం → “అక్కడ ఎప్పుడూ వర్షమే.”",
+      "an2.f2": "ఒకే బడి కార్డులు → ప్రతి పొడవాటి జెండా 7గా చదవబడింది.",
+      "an2.f3": "ఒక వైపే మొగ్గిన శాంపిల్ → వదిలేసిన సమూహాల విషయంలో సరిగా పనిచేయని యంత్రం.",
+      "deep.text": "మొదటి యంత్రం వ్యక్తి R కి 7 ఎందుకు ఎంచుకుంది? R పై గీత 6, మధ్య గీత 0. బడి కార్డు 4కి ఇవి 8, 0. పై గీతల మధ్య తేడా 8 − 6 = 2, మధ్య గీతల మధ్య 0. కాబట్టి వాటి మధ్య దూరం 2. సాదా 1 కార్డులు R నుండి 5 లేదా 6 దూరంలో ఉన్నాయి. మూడు 7లు ఇంకా దగ్గరగా ఉన్నాయి, అందుకే వాటి లేబుల్ గెలుస్తుంది. ఈ పద్ధతిని “నియరెస్ట్ నైబర్స్” (దగ్గరి పొరుగులు) అంటారు. నిజమైన చేతిరాత చదివే యంత్రాలు ఇంకా ఎన్నో సంఖ్యలు, ఎన్నో ఉదాహరణలు, వేరే పద్ధతులు వాడతాయి. అయినా తమ డేటాకు భిన్నమైన రాతపై అవి తప్పులు చేయవచ్చు.",
+      "mc.prompt": "మొదటి యంత్రం వ్యక్తి R రాసిన 1ని 7గా ఎందుకు చదివింది, అదీ దగ్గరి 3 కార్డులూ ఏకీభవిస్తూ?",
+      "mc.o1": "దానికి దగ్గరి 3 కార్డులూ 7లే. దాని డేటాలో ఏ కార్డూ జెండా ఉన్న 1 లాగా లేదు.",
+      "mc.o2": "జెండా విధానం 1ని రాసే తప్పు పద్ధతి అని అది తీర్పు ఇచ్చింది.",
+      "mc.o3": "అన్ని అంకెలు చదివి అది అలసిపోయింది.",
+      "mc.f2": "యంత్రం రాసేవారి గురించి ఏ అభిప్రాయమూ ఏర్పరచుకోదు. అది సంఖ్యలను పోల్చి, దగ్గరి కార్డుల లేబుల్‌నే పెడుతుంది.",
+      "mc.f3": "యంత్రం అలసిపోదు. అవే సంఖ్యలు ఇస్తే, ప్రతిసారీ అదే జవాబు ఇస్తుంది.",
+      "mc.explain": "దగ్గరి 3 కార్డులూ ఏకీభవించడం అంటే వాటి లేబుల్ ఒకటే అని అర్థం. జవాబు సరైనదని అర్థం కాదు.",
+      "hs.prompt": "మళ్లీ పోస్టాఫీసుకు వద్దాం. తయారీదారుల 100 పరీక్ష అంకెలలో 97 బడి విధానంలో, 3 జెండా విధానంలో ఉన్నాయనుకోండి. బడి విధానంలోని 97 అన్నీ సరిగ్గా చదివింది. జెండా విధానంలోని 3 అన్నీ తప్పుగా చదివింది. జెండా విధానంలో రాసేవారికి కచ్చితత్వం ఎంత?",
+      "hs.a": "0%",
+      "hs.b": "97%",
+      "hs.c": "3%",
+      "hs.fb": "97% అంటే 100 అంకెలనూ కలిపి. జెండా విధానంలోని 3 అంకెలను మాత్రమే చూడండి. వాటిలో ఎన్ని సరైనవి?",
+      "hs.fc": "3 అంటే జెండా విధానంలోని అంకెల సంఖ్య. ఆ 3లో ఎన్ని సరిగ్గా చదివింది?",
+      "hs.h1": "జెండా విధానంలోని అంకెలను మాత్రమే లెక్కించండి. అవి 3.",
+      "hs.h2": "3లో 0 సరైనవి అంటే ఒక్కటి కూడా కాదు. 100లో ఒక్కటీ కాదు అంటే 0%.",
+      "hs.explain": "3లో 0 అంటే 0%. పరీక్షలో జెండా విధానం అంకెలు చాలా తక్కువగా ఉన్నందుకే మొత్తం 97% బాగా కనిపించింది. న్యాయమైన పరీక్ష ప్రతి సమూహాన్నీ విడిగా, ప్రతి సమూహం నుండి తగినన్ని ఉదాహరణలతో పరీక్షిస్తుంది.",
+      "br.challenge": "సరిచేసిన యంత్రం నలుగురి అంకెలనూ సరిగ్గా చదివింది. ఇప్పటికీ మీరు దాన్ని మోసం చేయగలరా? ప్రతి కొత్త వ్యక్తినీ ప్రయత్నించి, అది ఏమంటుందో చూడండి.",
+      "br.t1": "ఎడమ చేతితో రాసే ఒక విద్యార్థి బడి విధానంలో సాదా 1 రాస్తారు.",
+      "br.r1": "ఇది 1 అని చదువుతుంది, దగ్గరి 3 కార్డులూ ఏకీభవిస్తాయి. అంకెను ఎవరు రాశారో యంత్రం ఎప్పుడూ చూడదు. రెండు గీతల పొడవులను మాత్రమే చూస్తుంది.",
+      "br.t2": "ఎవరో తొందరగా 7 రాస్తారు, చిన్న పై గీత (4)తో, మధ్య గీత లేకుండా.",
+      "br.r2": "ఇది 1 అని చదువుతుంది, దగ్గరి 3 కార్డులూ ఏకీభవిస్తాయి. అది తప్పు. డేటాలో చిన్న పై గీత ఉన్న 7 ఒక్కటి కూడా లేదు.",
+      "br.t3": "ఎవరో 4 రాస్తారు: పై గీత లేదు, మధ్యలో పొడవాటి గీత (8).",
+      "br.r3": "ఇది 1 అని చదువుతుంది, దగ్గరి 3 కార్డులలో 2 ఏకీభవిస్తాయి. ఇది ఎప్పుడూ 1 లేదా 7 అనే జవాబు ఇవ్వగలదు. “ఇలాంటిది నేను ఎప్పుడూ చూడలేదు” అని చెప్పే మార్గం దీనికి లేదు.",
+      "br.t4": "ఒక కొత్త వ్యక్తి రాసిన జెండా ఉన్న 1, కొంచెం చిన్న జెండా (5)తో.",
+      "br.r4": "ఇది 1 అని చదువుతుంది, దగ్గరి 3 కార్డులలో 2 ఏకీభవిస్తాయి. ఆ 2 జెండా ఉన్న 1లు. ఇప్పుడు ఆ విధానం డేటాలో ఉంది.",
+      "br.reflect": "దాన్ని మోసం చేసినవారిలో ఉమ్మడిగా ఉన్నది ఏమిటి? యంత్రం వారి గురించి మిమ్మల్ని ముందే హెచ్చరించగలదా?",
+      "md.prompt": "మొదటి యంత్రానికి ఎవరో ఒక పరిష్కారం సూచిస్తారు: “అదే బడి నుండి ఇంకో 1,000 కార్డులు కలపండి.” దానివల్ల అది వ్యక్తి R జెండా ఉన్న 1ని చదవగలదా?",
+      "md.a": "అవును. ఎక్కువ డేటాతో యంత్రం ఎప్పుడూ మెరుగవుతుంది.",
+      "md.b": "లేదు. బడి నుండి వచ్చే ఇంకో 1,000 కార్డులలో కూడా జెండా ఉన్న 1లు ఉండవు.",
+      "md.c": "అవును, యంత్రానికి మళ్లీ ఎక్కువసేపు ట్రైనింగ్ ఇస్తే.",
+      "md.fa": "లేనివి అందులో ఉంటేనే ఎక్కువ డేటా సహాయపడుతుంది. ఇక్కడ కొత్త కార్డులన్నీ పాత వాటిలాగే ఉంటాయి.",
+      "md.fc": "ఈ యంత్రానికి, అదే రకం కార్డులపై మళ్లీ ట్రైనింగ్ ఇచ్చినా దగ్గరి కార్డులు అవే ఉంటాయి. వ్యక్తి R కి దగ్గరి కార్డులు అప్పుడు కూడా 7లే.",
+      "md.explain": "పరిష్కారం ఎక్కువ డేటా కాదు. లేని డేటానే: జెండా ఉన్న 1లు, రాసినవారి ఉద్దేశం ప్రకారం లేబుల్‌తో.",
+      "vt.prompt": "ఒక కొత్త సందర్భం. ఒక వాయిస్ యాప్‌కి ఎక్కువగా పెద్దవాళ్ల రికార్డింగ్‌లపై ట్రైనింగ్ ఇచ్చారు. అది పిల్లల మాటలను తరచుగా తప్పుగా వింటుంది. ఏ మార్పు ఎక్కువగా సహాయపడుతుంది?",
+      "vt.a": "అనుమతి తీసుకుని, చాలా మంది పిల్లలు మాట్లాడేది రికార్డు చేసి, వాళ్లు ఏమన్నారో లేబుల్ ఇచ్చి, డేటాసెట్‌లో కలపడం.",
+      "vt.b": "పిల్లలను పెద్దవాళ్లలాగా మాట్లాడమని చెప్పడం.",
+      "vt.c": "పెద్దవాళ్ల రికార్డింగ్‌లు ఇంకా చాలా కలపడం.",
+      "vt.fb": "ఇది యంత్రం కోసం మనుషులను మారమని అడగడం. పిల్లలు సరిగ్గానే మాట్లాడతారు. లోటు డేటాలో ఉంది.",
+      "vt.fc": "అదే రకం ఇంకా కలిపితే లోటు పూడదు. ఏ రకం గొంతులు లేవు?",
+      "vt.explain": "లేని గొంతులను డేటాసెట్‌లో కలపండి. తర్వాత యాప్‌ను పిల్లలు, పెద్దలు ఇద్దరిపైనా పరీక్షించి, ప్రతి సమూహాన్నీ విడిగా చూడండి.",
+      "rs.prompt": "పోస్టాఫీసు యంత్రం నెలల తరబడి కొందరి ఉత్తరాలను తప్పుగా చదివింది. అన్యాయమైన డేటాను సరిచేసే బాధ్యత ఎవరిది కావాలి? మీ అభిప్రాయానికి దగ్గరగా ఉన్న జవాబు ఎంచుకోండి.",
+      "rs.c1": "ఉదాహరణలు సేకరించినవాళ్లు",
+      "rs.c2": "యంత్రాన్ని తయారు చేసి అమ్మిన కంపెనీ",
+      "rs.c3": "దాన్ని వాడాలని ఎంచుకున్న పోస్టాఫీసు",
+      "rs.c4": "యంత్రమే",
+      "rs.c5": "దాన్ని తయారు చేసినవాళ్లు, అమ్మినవాళ్లు, వాడేవాళ్లు అందరూ, ఎవరి భాగానికి వారు",
+      "rs.f1": "ఏ ఉదాహరణలు సేకరించాలో వాళ్లే ఎంచుకున్నారు. ఎవరు లేరో చూడటం వాళ్ల పనిలో భాగం. ఇతరులకూ ఇందులో భాగం ఉందా?",
+      "rs.f2": "అమ్మే ముందు ఏ డేటా, ఏ పరీక్షలు సరిపోతాయో వాళ్లే నిర్ణయించారు. కొనేవాళ్లు కూడా పరీక్షించాలా?",
+      "rs.f3": "అందరి ఉత్తరాలపై దాన్ని వాడాలని వాళ్లు ఎంచుకున్నారు. ముందుగా తమ వినియోగదారులందరి ఉత్తరాలపై పరీక్షించాలా?",
+      "rs.f4": "యంత్రం బాధ్యత వహించలేదు. అది తన డేటాను ఎంచుకోదు, తన తప్పులను గమనించదు. ఈ రెండూ మనుషులే చేస్తారు.",
+      "rs.f5": "ఈ అభిప్రాయంలో పని అందరూ పంచుకుంటారు. ప్రతి సమూహం ఏదో ఒకటి చేయగలదు: న్యాయంగా సేకరించడం, ప్రతి సమూహాన్నీ పరీక్షించడం, తప్పుల గురించి ఫిర్యాదు వస్తే చర్య తీసుకోవడం.",
+      "rs.reveal": "ఇక్కడ ఒకే ఒక సరైన జవాబు లేదు. కానీ ఒక విషయం గమనించండి: ఎవరి అంకెలు తప్పుగా చదవబడ్డాయో, వాళ్లు ఏ తప్పూ చేయలేదు. వాళ్ల రాత సరైనదే.",
+      "eb.prompt": "మీ సొంత మాటల్లో రాయండి: డేటా అన్యాయంగా ఉన్నప్పుడు బాధ్యత ఎవరిది కావాలి, వాళ్లు ఏం చేయాలి? మీరు టైప్ చేసేది ఈ పరికరంలోనే ఉంటుంది.",
+      "eb.model": "ఒక సాధ్యమైన జవాబు: కంపెనీ యంత్రాన్ని అమ్మే ముందు రాసేవారి ప్రతి సమూహంపై పరీక్షించాలి. డేటా సేకరించేవాళ్లు ఎవరు లేరో చూడాలి. పోస్టాఫీసు తప్పుల గురించి ఫిర్యాదు చేయాలి, అది అన్యాయంగానే ఉంటే వాడటం ఆపేయాలి.",
+      "take.title": "నా కార్డు: డేటా నిర్ణయిస్తుంది",
+      "take.card": "ఒకే బడి కార్డులపై ట్రైనింగ్ పొందిన యంత్రం ఆ బడి విధానాన్ని బాగా, వేరే విధానాన్ని తప్పుగా చదివింది. నేను యంత్రాన్ని కాదు, డేటాను సరిచేసి దాన్ని బాగుచేశాను. యంత్రం తన లోటును గమనించలేదు, అందుకే మనుషులు ప్రతి సమూహాన్నీ పరీక్షించాలి.",
+      "take.l1": "మెరుగైన డేటాపై నేను ట్రైనింగ్ ఇచ్చిన యంత్రం",
+      "take.l2": "నా అభిప్రాయంలో బాధ్యత ఎవరిది",
+      "take.l3": "నా సొంత మాటల్లో",
+      "pre1.q": "ఒక యంత్రం ఒకే బడిలో రాసిన ఉదాహరణల నుండి మాత్రమే చేతిరాత చదవడం నేర్చుకుంది. అది ఎక్కువగా ఎవరి రాతను తప్పుగా చదువుతుంది?",
+      "pre1.a": "ఆ బడి విధానానికి భిన్నంగా రాసేవాళ్లు",
+      "pre1.b": "చాలా అందంగా రాసేవాళ్లు",
+      "pre1.c": "ఎవరూ కాదు: ట్రైనింగ్ పొందిన యంత్రం అందరినీ సమానంగా బాగా చదువుతుంది",
+      "pre2.q": "ఒక యంత్రం 100 పరీక్ష అంకెలలో 90 సరిగ్గా చదువుతుంది. మీరు దేని గురించి ఖచ్చితంగా చెప్పగలరు?",
+      "pre2.a": "రాసేవారి ప్రతి సమూహానికీ ఇది 90% కచ్చితం",
+      "pre2.b": "మొత్తంగా 90% సరైనవి; కొన్ని సమూహాలకు చాలా తక్కువ ఉండవచ్చు",
+      "pre2.c": "మీ విషయంలో ఇది 10లో 9 సార్లు సరిగ్గా ఉంటుంది",
+      "pre3.q": "పండ్లను వేరు చేసే ఒక యంత్రం పెద్ద ఎర్ర యాపిల్స్ నుండి మాత్రమే నేర్చుకుంది. అది చిన్న పచ్చ యాపిల్స్‌ను తిరస్కరిస్తుంది. దీన్ని సరిచేయడానికి ఉత్తమ మార్గం ఏది?",
+      "pre3.a": "దాని డేటాసెట్‌లో “యాపిల్” లేబుల్‌తో చాలా చిన్న పచ్చ యాపిల్స్ కలపడం",
+      "pre3.b": "ఇంకో 1,000 పెద్ద ఎర్ర యాపిల్స్ కలపడం",
+      "pre3.c": "పెద్ద ఎర్ర యాపిల్స్ మాత్రమే పండించమని రైతులను అడగడం",
+      "post1.q": "ఒక మొక్కల యాప్ ఎండలో తీసిన ఆకుల ఫోటోల నుండి నేర్చుకుంది. నీడలో తీసిన ఫోటోలకు దాని జవాబులు తరచుగా తప్పు. ఎందుకు?",
+      "post1.a": "నీడలో ఫోటోలు తీసేవాళ్లు దాన్ని తప్పుగా వాడుతున్నారు",
+      "post1.b": "దాని డేటాసెట్‌లో నీడ ఫోటోలు లేవు, అందుకే వాటికి దగ్గరి ఉదాహరణలు దాని దగ్గర లేవు",
+      "post1.c": "యాప్‌కి ఎండ ఫోటోలే ఇష్టం",
+      "post1.fb": "యాప్‌కి ఇష్టాయిష్టాలు ఉండవు, మనుషులు ఏ తప్పూ చేయలేదు. దాని డేటాసెట్‌లో నీడ ఫోటోలు లేవు.",
+      "post2.q": "ఒక యంత్రాన్ని 100 అంకెలపై పరీక్షించారు: 90 సాదా విధానం, 10 జెండా విధానం. సాదా విధానంలోని 90 అన్నీ సరిగ్గా చదివింది, జెండా విధానంలోని 10లో 5. జెండా విధానంలో రాసేవారికి దాని కచ్చితత్వం ఎంత?",
+      "post2.a": "95%",
+      "post2.b": "50%",
+      "post2.c": "5%",
+      "post2.fb": "జెండా విధానం అంకెలను మాత్రమే లెక్కించండి: 10లో 5 సరైనవి. 10 × 10 = 100, 5 × 10 = 50, కాబట్టి 50%. 95% అంటే 100 అంకెలనూ కలిపి: 90 + 5 = 95 సరైనవి.",
+      "post3.q": "ఒక కంపెనీ అంటుంది: “మా యంత్రం 98% కచ్చితం, కాబట్టి అది అందరికీ న్యాయంగా ఉంటుంది.” మీరు ముందుగా ఏం అడగాలి?",
+      "post3.a": "“ప్రతి సమూహాన్నీ విడిగా పరీక్షిస్తే, ఒక్కో సమూహానికి ఇది ఎంత కచ్చితం?”",
+      "post3.b": "“అదే రకం డేటా ఇంకా కలిపి 100%కి చేరగలరా?”",
+      "post3.c": "“యంత్రం తన శాయశక్తులా ప్రయత్నిస్తోందా?”",
+      "post3.fb": "ఒక మొత్తం సంఖ్య ఎక్కువ తప్పులున్న సమూహాన్ని దాచగలదు. ప్రతి సమూహం కచ్చితత్వం అడగండి, ప్రతి సమూహం నుండి ఎన్ని ఉదాహరణలు పరీక్షించారో కూడా అడగండి."
+    }
+  },
+  "localeStatus": {
+    "en": "draft",
+    "hi": "draft",
+    "te": "draft"
+  }
+}

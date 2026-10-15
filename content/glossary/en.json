@@ -98,5 +98,45 @@
   "model": {
     "term": "model",
     "definition": "the counts or number settings a computer uses to make its guesses, worked out from examples"
+  },
+  "example": {
+    "term": "example",
+    "definition": "one thing a machine learns from, such as one photo or one food, usually with its label"
+  },
+  "pattern": {
+    "term": "pattern",
+    "definition": "something that repeats, or things that usually go together, which help you guess about new cases"
+  },
+  "rule": {
+    "term": "rule",
+    "definition": "an exact instruction for what to do in a situation, such as “if it is round and yellow, call it a mango”"
+  },
+  "learning-from-examples": {
+    "term": "learning from examples",
+    "definition": "finding a pattern in many labelled examples and using it to label new things, instead of following rules someone wrote"
+  },
+  "fairness": {
+    "term": "fairness",
+    "definition": "treating people so that no one gets a worse result for a reason that should not count, such as the language they write in"
+  },
+  "responsibility": {
+    "term": "responsibility",
+    "definition": "being the one who must answer for a choice and put it right if it goes wrong; for AI systems, this stays with people, not the program"
+  },
+  "hallucination": {
+    "term": "hallucination",
+    "definition": "when an AI system, such as a chatbot, gives an answer that sounds sure but is false or made up"
+  },
+  "anthropomorphism": {
+    "term": "anthropomorphism",
+    "definition": "talking about something that is not human as if it had human thoughts or feelings, such as saying “the AI thinks”"
+  },
+  "ethical-framework": {
+    "term": "ethical framework",
+    "definition": "a set of questions people use to decide what is right, such as “Which choice does the most good?” or “Which promises must be kept?”"
+  },
+  "chatbot": {
+    "term": "chatbot",
+    "definition": "a program you type or talk to, which replies with sentences built from patterns in the very large amount of text it was trained on"
   }
 }

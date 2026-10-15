@@ -1,0 +1,70 @@
+{
+  "id": "sample",
+  "titleKey": "d.title",
+  "blocks": [
+    {
+      "id": "d1",
+      "type": "reveal",
+      "componentVersion": "1.0",
+      "config": {
+        "textKey": "d.text",
+        "steps": [
+          "d.s1",
+          "d.s2"
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "type": "check",
+      "componentVersion": "1.0",
+      "config": {
+        "promptKey": "d.q",
+        "options": [
+          "d.a",
+          "d.b"
+        ],
+        "answer": "d.b",
+        "feedback": {
+          "d.a": "d.fa"
+        },
+        "explainKey": "d.explain"
+      }
+    }
+  ],
+  "strings": {
+    "en": {
+      "d.title": "What is a sample?",
+      "d.text": "A sample is a small part you pick from a bigger group, to learn about the whole group.",
+      "d.s1": "A cook tastes one spoon of soup to judge the whole pot. That spoon is a sample.",
+      "d.s2": "A sample works only if it is like the whole group. Stir the pot first. A spoon from the top alone can miss what sank to the bottom.",
+      "d.q": "A school wants to know which game its students like best. Which sample is fairer?",
+      "d.a": "Ask 30 students who are all in the chess club",
+      "d.b": "Ask 30 students, a few from every class",
+      "d.fa": "The chess club will mostly say chess. They are one kind of student, not the whole school. Who is missing?",
+      "d.explain": "A few from every class makes the sample more like the whole school."
+    },
+    "hi": {
+      "d.title": "नमूना क्या होता है?",
+      "d.text": "नमूना किसी बड़े समूह से चुना गया छोटा हिस्सा है, जिससे पूरे समूह के बारे में पता चलता है।",
+      "d.s1": "रसोइया पूरी दाल परखने के लिए एक चम्मच चखता है। वह चम्मच एक नमूना है।",
+      "d.s2": "नमूना तभी काम करता है जब वह पूरे समूह जैसा हो। पहले बर्तन को चलाइए। सिर्फ़ ऊपर से लिया चम्मच नीचे बैठी चीज़ें छोड़ सकता है।",
+      "d.q": "एक स्कूल जानना चाहता है कि उसके विद्यार्थियों को कौन-सा खेल सबसे ज़्यादा पसंद है। कौन-सा नमूना ज़्यादा सही है?",
+      "d.a": "30 ऐसे विद्यार्थियों से पूछना जो सब शतरंज क्लब में हैं",
+      "d.b": "30 विद्यार्थियों से पूछना, हर कक्षा से कुछ-कुछ",
+      "d.fa": "शतरंज क्लब वाले ज़्यादातर शतरंज ही कहेंगे। वे एक तरह के विद्यार्थी हैं, पूरा स्कूल नहीं। कौन छूट गया?",
+      "d.explain": "हर कक्षा से कुछ-कुछ विद्यार्थी लेने से नमूना पूरे स्कूल जैसा बनता है।"
+    },
+    "te": {
+      "d.title": "శాంపిల్ అంటే ఏమిటి?",
+      "d.text": "శాంపిల్ అంటే ఒక పెద్ద సమూహం నుండి ఎంచుకునే చిన్న భాగం; దాని ద్వారా సమూహం మొత్తం గురించి తెలుసుకుంటాం.",
+      "d.s1": "వంట చేసేవాళ్లు గిన్నె మొత్తం పప్పు ఎలా ఉందో తెలుసుకోవడానికి ఒక చెంచా రుచి చూస్తారు. ఆ చెంచాయే శాంపిల్.",
+      "d.s2": "శాంపిల్ సమూహం మొత్తంలాగే ఉంటేనే పనిచేస్తుంది. ముందు గిన్నెను కలపండి. పైనుంచి మాత్రమే తీసిన చెంచా అడుగున ఉన్నవాటిని వదిలేయవచ్చు.",
+      "d.q": "ఒక బడి తమ విద్యార్థులకు ఏ ఆట ఎక్కువ ఇష్టమో తెలుసుకోవాలనుకుంటోంది. ఏ శాంపిల్ ఎక్కువ న్యాయంగా ఉంటుంది?",
+      "d.a": "అందరూ చదరంగం క్లబ్‌లో ఉన్న 30 మంది విద్యార్థులను అడగడం",
+      "d.b": "ప్రతి తరగతి నుండి కొంతమంది చొప్పున 30 మంది విద్యార్థులను అడగడం",
+      "d.fa": "చదరంగం క్లబ్ వాళ్లు ఎక్కువగా చదరంగమే అంటారు. వాళ్లు ఒక రకం విద్యార్థులు మాత్రమే, బడి మొత్తం కాదు. ఎవరు మిగిలిపోయారు?",
+      "d.explain": "ప్రతి తరగతి నుండి కొంతమందిని తీసుకుంటే శాంపిల్ బడి మొత్తంలాగా ఉంటుంది."
+    }
+  }
+}
