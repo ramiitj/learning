@@ -19,7 +19,7 @@ const ctx = { system: true, reason: `import from repository${publish ? " (publis
 
 const payload = await getPayload({ config });
 
-async function upsert(collection: "lessons" | "detours" | "glossary" | "analogies" | "concepts" | "audiences" | "agents" | "users", where: Record<string, unknown>, data: Record<string, unknown>, drafts = true) {
+async function upsert(collection: "lessons" | "teacher-guides" | "detours" | "glossary" | "analogies" | "concepts" | "audiences" | "agents" | "users", where: Record<string, unknown>, data: Record<string, unknown>, drafts = true) {
   const found = await payload.find({ collection, where: where as never, limit: 1, depth: 0, overrideAccess: true, draft: drafts });
   const body = { ...data, ...(drafts ? { _status: status } : {}) } as never;
   if (found.docs[0]) return payload.update({ collection, id: found.docs[0].id, data: body, overrideAccess: true, context: ctx, draft: drafts && !publish });
@@ -59,6 +59,15 @@ for (const f of readdirSync(path.join(ROOT, "content/lessons")).filter((f) => f.
       subjects: [doc.meta.subject],
     });
   }
+}
+
+const guides = path.join(ROOT, "content/teacher-guides");
+for (const f of existsSync(guides) ? readdirSync(guides).filter((f) => f.endsWith(".json")) : []) {
+  const [, lessonId, locale] = f.match(/^(.+)\.([a-z]{2})\.json$/) ?? [];
+  if (!lessonId || !locale) continue;
+  const { agent: _agent, ...guide } = read(`content/teacher-guides/${f}`);
+  await upsert("teacher-guides", { and: [{ lessonId: { equals: lessonId } }, { locale: { equals: locale } }] }, { lessonId, locale, guide });
+  console.log(`teacher guide: ${lessonId} (${locale})`);
 }
 
 // The concept graph from docs/13: each concept depends on the one before it.

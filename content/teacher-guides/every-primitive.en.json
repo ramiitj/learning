@@ -1,0 +1,87 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "A junk filter gives points for clues, adds them into a score, and sends a message to junk if the score reaches a line called the threshold.",
+    "A filter only counts clues. It does not understand the message, so it can be fooled, and a real message can land in junk."
+  ],
+  "before": [
+    "Open the lesson in classroom mode on the projector. Page Down or a clicker moves one step.",
+    "On the board, draw columns Junk and Inbox, and write the rule: 1 point per \"!\", 2 per money word (won, prize, free, pay, fee), 3 per urgent word (urgent, now, only today)."
+  ],
+  "timing": [
+    {
+      "segment": "Settle and hook",
+      "minutes": 4,
+      "teacherDoes": "Project the first screen. Read the prize message aloud. Ask: no person read it, so how did a program (steps a computer follows) decide?",
+      "studentsDo": "Call out ideas."
+    },
+    {
+      "segment": "Predict by vote",
+      "minutes": 4,
+      "teacherDoes": "Read the three choices. Count hands for each, write totals on the board, then reveal.",
+      "studentsDo": "Raise a hand once."
+    },
+    {
+      "segment": "Be the filter",
+      "minutes": 6,
+      "teacherDoes": "Read the eight messages. Class votes Junk or Real by hands. Ask what clues they used and list them.",
+      "studentsDo": "Vote and name clues."
+    },
+    {
+      "segment": "Score by hand",
+      "minutes": 6,
+      "teacherDoes": "Work the prize message on the board: 3 + 4 + 3 = 10, which reaches 10, so junk. Pairs score the locked-account message (3). Project the machine result: two scams reach the inbox.",
+      "studentsDo": "Add points on paper in pairs and call out the decision."
+    },
+    {
+      "segment": "Excited friend",
+      "minutes": 4,
+      "teacherDoes": "Show \"We are in the final\" and the version with ten \"!\". Vote on which goes to junk, then reveal.",
+      "studentsDo": "Vote, then count the marks."
+    },
+    {
+      "segment": "Exam analogy and steps",
+      "minutes": 5,
+      "teacherDoes": "Compare to an exam: marks, total, pass mark. Say where it breaks: an examiner understands answers, the filter does not. Write the five steps jumbled on the board; class calls the order.",
+      "studentsDo": "Match exam ideas to filter ideas and order the steps."
+    },
+    {
+      "segment": "Fool the filter",
+      "minutes": 6,
+      "teacherDoes": "Vote on each of the four tricks. Students write one made-up message (no real names or numbers). Score a few on the board.",
+      "studentsDo": "Write a message, swap with a neighbour, score it."
+    },
+    {
+      "segment": "Wrap-up",
+      "minutes": 3,
+      "teacherDoes": "Ask for something else where points add up to a line, and where that comparison breaks. Read the takeaway.",
+      "studentsDo": "Share with a neighbour, then a few to the class."
+    }
+  ],
+  "ifShortOfTime": "Skip the exam analogy and neighbour swapping; saves about 8 minutes.",
+  "misconceptions": [
+    {
+      "studentsSay": "It reads and understands the message like a person.",
+      "goodResponse": "It only counts clues. It has no idea what the message means, which is why a happy friend can land in junk."
+    },
+    {
+      "studentsSay": "Someone typed a list of bad words.",
+      "goodResponse": "Early filters did that, and a changed letter fooled them. Real filters usually learn their points from millions of messages marked junk or real."
+    },
+    {
+      "studentsSay": "It made a mistake, so it is broken.",
+      "goodResponse": "Every pattern-based filter makes some mistakes. The question is which ones and how many."
+    },
+    {
+      "studentsSay": "The right line would make it perfect.",
+      "goodResponse": "A low line blocks more real messages. A high line lets more junk in. No line gives zero mistakes."
+    }
+  ],
+  "discussionPrompts": [
+    "Would you rather block more junk and lose some real messages, or see more junk? Why?",
+    "What do the tricks that worked have in common?"
+  ],
+  "noDeviceAlternative": "Write the eight messages and the rule on the board, or read them aloud. Students vote by hands, score messages on paper in pairs, count the ten marks on the board, and write a fooling message for a neighbour to score. Everyone adds, votes or writes in every block.",
+  "ifYouDontKnow": "It is fine not to know. Say: \"Good question. I do not know. Let us find out together.\" Then return to what this filter does: it counts clues against a line.",
+  "parentNote": "Today your child built a tiny junk filter: it gives points for clues, adds them up, and blocks a message if the total reaches a line. Ask: \"How would you fool it? Why can a happy message from a friend end up in junk?\" Lessons on this platform are made with AI assistance and reviewed by the creator."
+}

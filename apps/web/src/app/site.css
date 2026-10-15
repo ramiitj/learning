@@ -121,3 +121,17 @@ body:has(.lesson-page[data-mode="classroom"]) { background: #fff; }
 .join__item { font-size: 1.5rem; font-weight: 700; margin: 0; }
 .join__status { font-size: 1.25rem; margin-block: var(--space-6); }
 .join__privacy { color: var(--color-ink-muted); font-size: var(--text-small); }
+
+/* Teacher guide and parent page (docs/12): plain, printable reading pages. */
+.guide { max-inline-size: var(--measure); margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-8); }
+.guide__kicker { font-size: var(--text-small); color: var(--color-ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 0; }
+.guide__lede { font-size: var(--text-lead, 1.2rem); }
+.guide__links, .guide__privacy { font-size: var(--text-small); color: var(--color-ink-muted); }
+.guide__notice { border-inline-start: 4px solid var(--color-border-strong); padding: var(--space-2) var(--space-3); background: var(--color-surface-sunk, transparent); }
+.guide h2 { margin-block-start: var(--space-6); }
+.guide__table-wrap { overflow-x: auto; }
+.guide__table { border-collapse: collapse; inline-size: 100%; }
+.guide__table th, .guide__table td { text-align: start; vertical-align: top; padding: var(--space-2); border-block-end: 1px solid var(--color-border); }
+.guide__pairs dt { font-weight: 600; margin-block-start: var(--space-3); }
+.guide__pairs dd { margin-inline-start: 0; }
+@media print { .guide__links, .guide__notice { display: none; } }

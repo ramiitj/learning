@@ -25,7 +25,9 @@
     "teaching": "Teaching this to a class?",
     "openClassroom": "Open classroom mode",
     "leaveClassroom": "Leave classroom mode",
-    "moreStories": "Back to the cover"
+    "moreStories": "Back to the cover",
+    "teacherGuide": "Teacher guide",
+    "forParents": "For parents"
   },
   "preview": {
     "title": "Component preview",
@@ -72,5 +74,37 @@
     "closed": "Voting on this question has closed.",
     "ended": "The class session has ended. Thank you!",
     "privacy": "Anonymous: no name, no account. Your vote is only counted."
+  },
+  "guide": {
+    "title": "Teacher guide: {lesson}",
+    "kicker": "Teacher guide",
+    "openClassroom": "Open classroom mode",
+    "openPersonal": "See it as a learner",
+    "parentPage": "Page for parents",
+    "fallback": "This guide is not translated yet, so it is shown in English.",
+    "objectives": "What students will be able to do",
+    "before": "Before the class",
+    "timing": "A {minutes}-minute plan",
+    "segment": "Part",
+    "minutes": "Minutes",
+    "teacherDoes": "You",
+    "studentsDo": "Students",
+    "short": "Short of time?",
+    "misconceptions": "What students may say, and a good response",
+    "discussion": "Questions for discussion",
+    "noDevice": "No projector or no devices?",
+    "dontKnow": "If a student asks something you cannot answer"
+  },
+  "parents": {
+    "title": "For parents: {lesson}",
+    "kicker": "For parents and carers",
+    "explored": "What your child explored",
+    "minutes": "It takes about {minutes} minutes.",
+    "atHome": "A conversation to have at home",
+    "fallback": "This part is not translated yet, so it is shown in English.",
+    "tryIt": "Try it yourself",
+    "tryItText": "The lesson is free and needs no account.",
+    "open": "Open the lesson",
+    "privacy": "This page collects nothing about you or your child."
   }
 }

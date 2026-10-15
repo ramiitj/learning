@@ -172,3 +172,37 @@ export async function getPreviewSet(name: string): Promise<Lesson | null> {
     localeStatus: Object.fromEntries(Object.keys(d.strings).map((l) => [l, "draft"])) as Lesson["localeStatus"],
   };
 }
+
+// ---------- teacher guides and parent pages (docs/12) ----------
+
+export interface TeacherGuide {
+  objectivesPlain: string[];
+  before: string[];
+  timing: { segment: string; minutes: number; teacherDoes: string; studentsDo: string }[];
+  ifShortOfTime: string;
+  misconceptions: { studentsSay: string; goodResponse: string }[];
+  discussionPrompts: string[];
+  noDeviceAlternative: string;
+  ifYouDontKnow: string;
+  parentNote: string;
+}
+
+/** The guide in the reader's language, or the English one with `fallback` set when it is not translated yet. */
+export async function getTeacherGuide(id: string, locale: string): Promise<{ guide: TeacherGuide; locale: string; fallback: boolean } | null> {
+  if (!/^[a-z0-9-]+$/.test(id)) return null;
+  const draft = (await previewedLesson()) === id;
+  const load = async (l: string): Promise<TeacherGuide | null> => {
+    if (fromCms()) {
+      const p = await cms();
+      const { docs } = await p.find({ collection: "teacher-guides", where: { and: [{ lessonId: { equals: id } }, { locale: { equals: l } }, ...(draft ? [] : [{ _status: { equals: "published" } }])] }, limit: 1, depth: 0, draft, overrideAccess: draft });
+      if (docs[0]) return docs[0].guide as unknown as TeacherGuide;
+      if (!draft) return null;
+    }
+    const file = path.join(contentRoot(), "teacher-guides", `${id}.${l}.json`);
+    return existsSync(file) ? readJson<TeacherGuide>(file) : null;
+  };
+  const own = await load(locale);
+  if (own) return { guide: own, locale, fallback: false };
+  const en = locale === "en" ? null : await load("en");
+  return en ? { guide: en, locale: "en", fallback: true } : null;
+}

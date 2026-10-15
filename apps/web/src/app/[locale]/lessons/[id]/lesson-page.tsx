@@ -50,7 +50,7 @@ export async function LessonPage({ params, mode }: { params: LessonParams; mode:
       {mode === "personal" ? (
         <aside className="lesson-page__after">
           <p>
-            {t("teaching")} <Link href={`/lessons/${id}/classroom`}>{t("openClassroom")}</Link>
+            {t("teaching")} <Link href={`/lessons/${id}/classroom`}>{t("openClassroom")}</Link> · <Link href={`/lessons/${id}/teach`}>{t("teacherGuide")}</Link> · <Link href={`/lessons/${id}/parents`}>{t("forParents")}</Link>
           </p>
           <p>
             <Link href="/">{t("moreStories")}</Link>
