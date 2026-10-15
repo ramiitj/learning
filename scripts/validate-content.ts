@@ -1,13 +1,15 @@
 /**
- * Validates every lesson and detour in /content against the lesson schema and
- * the registered component contracts. Runs in CI; the web build also refuses
- * to render a lesson that fails. Pedagogy checks (docs/04) arrive with the
- * validation service in Phase 3.
+ * Validates every lesson in /content with the full validation service (schema,
+ * component contracts and every pedagogy check in docs/04), and every detour
+ * against the schema and contracts. Runs in CI; the web build also refuses to
+ * render a lesson that fails.
  */
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { contracts } from "@lm/primitives/contracts";
-import { hasErrors, validateBlocks, validateLesson, type Issue } from "@lm/schema/validate";
+import { hasErrors, validateBlocks, type Issue } from "@lm/schema/validate";
+import { validate } from "@lm/validation";
+import { repoContext } from "@lm/validation/repo";
 
 const root = path.resolve(import.meta.dirname, "../content");
 const read = (p: string) => JSON.parse(readFileSync(p, "utf8"));
@@ -21,8 +23,12 @@ function report(name: string, issues: Issue[]) {
   for (const i of issues) console.log(`    [${i.severity}] ${i.check} ${i.path}: ${i.message}`);
 }
 
+const ctx = repoContext(path.resolve(root, ".."));
 for (const f of readdirSync(path.join(root, "lessons")).filter((f) => f.endsWith(".json"))) {
-  report(`lessons/${f}`, validateLesson(read(path.join(root, "lessons", f)), { contracts, glossaryTerms }));
+  const r = validate(read(path.join(root, "lessons", f)), ctx);
+  failed ||= !r.passed;
+  console.log(`${r.passed ? "✓" : "✗"} lessons/${f} — ${r.errors} errors, ${r.warnings} warnings; publishable locales: ${r.publishableLocales.join(", ") || "none"}`);
+  for (const i of r.findings) console.log(`    [${i.severity}] ${i.check} ${i.path}: ${i.message}`);
 }
 for (const f of readdirSync(path.join(root, "detours")).filter((f) => f.endsWith(".json"))) {
   const d = read(path.join(root, "detours", f));

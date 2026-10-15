@@ -26,12 +26,12 @@ messages = [("m1", "🎁", "sort.g1"), ("m2", "📘", "sort.g2"), ("m3", "🔒",
 
 stages = [
     {"stage": "hook", "blocks": [
-        block("b1", "reveal", {"textKey": "hook.text", "questionKey": "hook.q"}, glossaryTerms=["junk", "program"]),
+        block("b1", "reveal", {"textKey": "hook.text", "questionKey": "hook.q"}, glossaryTerms=["junk", "program", "filter"]),
     ]},
     {"stage": "predict", "blocks": [
         block("b2", "predict", {"promptKey": "predict.prompt", "choices": ["predict.c1", "predict.c2", "predict.c3"], "answer": "predict.c2", "confidence": True, "revealKey": "predict.reveal",
                                 "choiceFeedback": {"predict.c1": "predict.f1", "predict.c3": "predict.f3"}},
-              classroom={"mode": "class-vote"}),
+              classroom={"mode": "class-vote"}, glossaryTerms=["clue"]),
     ]},
     {"stage": "manipulate", "blocks": [
         block("b3", "sort", {"instructionKey": "sort.instruction", "groups": ["sort.g1", "sort.g2"],

@@ -46,7 +46,8 @@
           },
           "glossaryTerms": [
             "junk",
-            "program"
+            "program",
+            "filter"
           ]
         }
       ]
@@ -75,7 +76,10 @@
           },
           "classroom": {
             "mode": "class-vote"
-          }
+          },
+          "glossaryTerms": [
+            "clue"
+          ]
         }
       ]
     },
