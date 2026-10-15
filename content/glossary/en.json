@@ -30,5 +30,73 @@
   "inbox": {
     "term": "inbox",
     "definition": "the place where the messages you want arrive"
+  },
+  "pixel": {
+    "term": "pixel",
+    "definition": "one tiny square of a picture on a screen or in a photo; the computer keeps it as one number, or three numbers for colour"
+  },
+  "grid": {
+    "term": "grid",
+    "definition": "squares laid out in rows (across) and columns (up and down), like a page of squared maths paper"
+  },
+  "number-representation": {
+    "term": "number representation",
+    "definition": "writing something, like a picture, a sound or a word, as numbers so that a computer can keep it and work with it"
+  },
+  "brightness": {
+    "term": "brightness",
+    "definition": "how much light something gives out; in a grey photo, each pixel's number usually says how bright it is, from 0 (black) to 255 (white)"
+  },
+  "average": {
+    "term": "average",
+    "definition": "add up some numbers, then divide by how many numbers there are; for 3, 6 and 9: 3 + 6 + 9 = 18, and 18 ÷ 3 = 6"
+  },
+  "dataset": {
+    "term": "dataset",
+    "definition": "a collection of examples, each with its label, that a machine is trained on"
+  },
+  "label": {
+    "term": "label",
+    "definition": "the answer a person attaches to an example, such as “1” or “7”, so a machine can be trained on it"
+  },
+  "sample": {
+    "term": "sample",
+    "definition": "a small part picked from a bigger group, used to learn about the whole group; it only works if it is like the whole group"
+  },
+  "bias": {
+    "term": "bias",
+    "definition": "in data, when some kinds of people or things are missing or rare, so a machine trained on it tends to work worse for them"
+  },
+  "accuracy": {
+    "term": "accuracy",
+    "definition": "how many answers are right out of all the answers, often given as a percentage: 3 right out of 4 is 75%"
+  },
+  "percentage": {
+    "term": "percentage",
+    "definition": "a number out of 100, written with %: 50% means 50 out of every 100"
+  },
+  "token": {
+    "term": "token",
+    "definition": "one piece of text that a computer reads at a time: a word, part of a word, or a mark such as a full stop"
+  },
+  "vocabulary": {
+    "term": "vocabulary",
+    "definition": "the list of all the different tokens a model can use; each token is listed once"
+  },
+  "probability": {
+    "term": "probability",
+    "definition": "how often something happens, out of all the times it could; 3 times out of 4 is a probability of 3 ÷ 4 = 0.75"
+  },
+  "prediction": {
+    "term": "prediction",
+    "definition": "a guess about what comes next, worked out from what happened most often in earlier examples"
+  },
+  "error": {
+    "term": "error",
+    "definition": "a number for how wrong a model's guesses are; training tries to make it smaller (also called the loss)"
+  },
+  "model": {
+    "term": "model",
+    "definition": "the counts or number settings a computer uses to make its guesses, worked out from examples"
   }
 }

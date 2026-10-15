@@ -1,0 +1,95 @@
+{
+  "agent": "educator-enablement",
+  "objectivesPlain": [
+    "A computer never gets a picture. It gets numbers: one for each tiny square (pixel), or three for a colour pixel.",
+    "When we blur a picture, each square becomes the average of itself and its 8 neighbours, so new in-between numbers appear.",
+    "A picture that looks the same to us, moved by one square, is a very different set of numbers to a computer. That is why recognising pictures is hard for machines."
+  ],
+  "before": [
+    "Open the lesson in classroom mode on the projector.",
+    "Draw an empty 8-by-8 grid on the board.",
+    "Pixel: one tiny square of a picture. Average: add the numbers, then divide by how many there are."
+  ],
+  "timing": [
+    {
+      "segment": "Settle and hook",
+      "minutes": 3,
+      "teacherDoes": "Show the hook. Ask: “When a computer ‘sees’ a photo, what does it get?” Take a few answers.",
+      "studentsDo": "Think and answer aloud."
+    },
+    {
+      "segment": "Predict",
+      "minutes": 3,
+      "teacherDoes": "Read the choices, count hands, enter rough counts, reveal: only numbers.",
+      "studentsDo": "Vote by show of hands."
+    },
+    {
+      "segment": "Draw a digit",
+      "minutes": 6,
+      "teacherDoes": "A student names a digit; draw it (or tap an example). Tap “Numbers”. Run the check as a hand vote.",
+      "studentsDo": "Say which squares to fill; vote on what a pixel’s number means."
+    },
+    {
+      "segment": "Blur",
+      "minutes": 6,
+      "teacherDoes": "Hand vote, tap “Blur”, then “Numbers”. On the board: 9 + 9 + 9 = 27, 27 ÷ 9 = 3.",
+      "studentsDo": "Find another square that changed from 0."
+    },
+    {
+      "segment": "Shift",
+      "minutes": 5,
+      "teacherDoes": "Tap “Start with a 7”. Count hands for “mostly the same” or “very different” numbers and show the result. Tap “Right”; read the count: 14 of 64.",
+      "studentsDo": "Compare the count with their guess."
+    },
+    {
+      "segment": "Two comparisons and real photos",
+      "minutes": 5,
+      "teacherDoes": "Show the mosaic and paint-by-numbers screens; read each break point aloud. Reveal the real-photo steps; vote on the 250 check.",
+      "studentsDo": "Say where each comparison stops working; vote."
+    },
+    {
+      "segment": "Break the matcher",
+      "minutes": 5,
+      "teacherDoes": "Take suggestions, reveal each result. End on the surprise: the moved 7 differs in 14 squares, the 1 in only 13.",
+      "studentsDo": "Suggest which change fools the matcher."
+    },
+    {
+      "segment": "Transfer and reflect",
+      "minutes": 3,
+      "teacherDoes": "Vote on Riya’s app. Pairs discuss the fake-photo question; show the class card.",
+      "studentsDo": "Tell a partner one thing to check before sharing a photo."
+    },
+    {
+      "segment": "Wrap-up",
+      "minutes": 2,
+      "teacherDoes": "Ask two students for the takeaway in their own words.",
+      "studentsDo": "Say it aloud."
+    }
+  ],
+  "ifShortOfTime": "Skip the paint-by-numbers screen and the real-photo steps; keep the shift and the matcher, because they carry the main idea.",
+  "misconceptions": [
+    {
+      "studentsSay": "The computer sees the photo like we do; the camera is its eye.",
+      "goodResponse": "A camera turns light into numbers. After that, the computer has only numbers. Show the Numbers view."
+    },
+    {
+      "studentsSay": "If it is the same 7, the numbers must be the same.",
+      "goodResponse": "Numbers belong to squares. Move the 7 and different squares are filled, so many numbers change."
+    },
+    {
+      "studentsSay": "A bigger number always means darker.",
+      "goodResponse": "That was our lesson’s rule, chosen by people. Most real photos use the opposite: 0 is black and 255 is white."
+    },
+    {
+      "studentsSay": "The app forgot what a 7 looks like.",
+      "goodResponse": "The app never knew a 7 the way we do. It finds patterns in numbers from the examples it was trained on. A 7 near the edge gives different numbers from those examples."
+    }
+  ],
+  "discussionPrompts": [
+    "Is a photo on your phone ‘real’ if it is only numbers? What makes a photo trustworthy?",
+    "Photo filters change numbers to make faces look different. Is that always fine? When might it not be?"
+  ],
+  "noDeviceAlternative": "Use the board grid: write 9 in the squares of a 7 and 0 elsewhere; students copy it on squared paper. For blur, each row works out one square (add its 3-by-3 block, divide by 9). For shift, students redraw the 7 one column right and count changed squares. Votes by show of hands; read the analogies and matcher results aloud.",
+  "ifYouDontKnow": "Say: “Good question. I am not sure. Let us write it down and find out together.” It is fine not to know.",
+  "parentNote": "Today your child learned that a computer stores every picture as numbers, one for each tiny square. Ask them to show you how moving a drawing by one square changes many numbers, and talk together about checking where a surprising photo came from before sharing it."
+}
