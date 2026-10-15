@@ -57,9 +57,26 @@ The full roster is the mature state. v1 starts with ten, merging roles, and spli
 
 Configured in `platform/config/models.json`. Design and instructional decisions use the most capable tier; drafting, enrichment and review use the balanced tier; routine checks and classification use the fast tier. Model versions are pinned. Upgrades happen only after the benchmark suite passes.
 
+## Rubrics and enforcement
+
+Every agent is bound by a rubric in `platform/rubrics/<agent>.json`, written from the constitution and the specs, with references in `platform/references/`. The runner (`packages/agents`) assembles each agent's system prompt from the constitution, its profile, its rubric and its references, in a fixed order so it can be cached.
+
+- **Reviewers** (Accuracy & Safety Reviewer, Novice Learner Panel) must run and report every check in their rubric. Every flag needs a location, a quote, a reason and a fix, and its severity must follow the check. Their output contract is derived from the rubric, so they cannot skip a check or invent a category.
+- **Makers** (Curriculum & Instructional Designer, Learning Experience Designer, Analogy Specialist, Localisation Specialist, Educator Enablement) are scored on criteria with anchored levels 0–4. Their artifacts must match the rubric's schema and pass automatic checks before anyone judges them: lesson grammar order, terms defined before use, objectives covered by checks, placeholders and numbers kept in translation, a guide that fits a page and a period.
+- **The Editor-in-Chief** is scored on whether it applies the priority order and escalates exactly what must go to the creator.
+
+Output that breaks the rubric is rejected. The agent is told exactly what broke and redoes it once. Output that still fails is blocked from the pipeline. An independent judge (a different model call, never the maker) scores the criteria that cannot be counted, and a maker passes only at the rubric's pass bar.
+
 ## Benchmarks and drift control
 
-A benchmark suite of reference lessons (starting with `examples/`) with known-good qualities is run whenever a prompt, profile, the constitution or a model version changes. It scores each pipeline output against the validation checks plus rubric-based reviews, and blocks the change if quality drops. Results are shown in the Creator Console.
+Each agent has a benchmark in `benchmarks/<agent>/`:
+- reviewers: a lesson with planted defects (recall, blocking recall) and a clean lesson (false alarms); flags that match no planted defect are judged by a person (`adjudication.json`);
+- makers: fixed tasks, with every recorded artifact checked automatically and scored by the judge;
+- the Editor-in-Chief: conflict cases with known correct decisions.
+
+The judge is calibrated too. Defects are planted in each recorded artifact, one per targeted criterion, and the judge must score each targeted criterion 2 or below. A judge that cannot see planted defects cannot be trusted to score real ones.
+
+Recorded runs live in `runs/`, and CI (`pnpm test`) fails if any recorded run no longer satisfies its rubric or falls below its pass bar. The benchmarks are re-run whenever a prompt, profile, rubric, the constitution or a model version changes, and the change is blocked if quality drops. Results will be shown in the Creator Console. The rubrics and references are drafted by the build team and need calibration by human experts (see `benchmarks/README.md`).
 
 ## Cost control
 

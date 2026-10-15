@@ -78,7 +78,8 @@ const curriculum: Record<string, Check> = {
   "terms-defined-before-use": (a) => {
     const out: Finding[] = [];
     const glossary = new Set(arr(a.glossary).map((g) => str(g.term).toLowerCase()));
-    const prereq = new Set(arr(a.prerequisites).map((p) => str(p.concept).toLowerCase()));
+    // A prerequisite may be written "term: what it means"; the term is what steps refer to.
+    const prereq = new Set(arr(a.prerequisites).map((p) => str(p.concept).split(":")[0]!.trim().toLowerCase()));
     const known = new Set<string>();
     for (const b of arr(a.sequence)) {
       for (const t of arr<string>(b.termsIntroduced)) {

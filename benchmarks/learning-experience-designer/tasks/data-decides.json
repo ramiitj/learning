@@ -1,0 +1,543 @@
+{
+  "task": "Design the experience for this instructional draft: hook, a component for every block with its configuration, classroom variants, wrong-answer moments, the ending, and final English text. 'train-classifier' is not built yet; use the universal primitives only and note where a domain simulation would serve better.",
+  "instructionalDraft": {
+    "agent": "curriculum-instructional-designer",
+    "title": "Data decides: the Number Reader that works for some people",
+    "objectives": [
+      {
+        "id": "O1",
+        "text": "Explain how a program that learns from examples can work well for one group and badly for another, when its examples leave that group out or keep it small."
+      },
+      {
+        "id": "O2",
+        "text": "Turn 'right out of 10' or 'right out of 50' into a percentage, step by step, and explain why one overall accuracy number can hide poor results for a small group."
+      },
+      {
+        "id": "O3",
+        "text": "Choose a fix for unfair data (add examples of the missing group until the groups are balanced) and explain why more data of the same mix does not fix it."
+      },
+      {
+        "id": "O4",
+        "text": "Explain why the program cannot notice its own gap, why a high confidence number is not proof of a right answer, and say who can find the gap."
+      },
+      {
+        "id": "O5",
+        "text": "Apply the question 'who is in the data, and how well does it work for each group?' to a new system, and give a reasoned view of which people are responsible when data is unfair."
+      }
+    ],
+    "prerequisites": [
+      {
+        "concept": "Handwriting looks different from person to person (some people put a line across their 7s, some do not)",
+        "handledBy": "assumed-everyday",
+        "detourOutline": ""
+      },
+      {
+        "concept": "Counting, adding and multiplying small whole numbers by 2 and by 10 (for example 30 x 2 = 60, 86 + 6 = 92)",
+        "handledBy": "assumed-everyday",
+        "detourOutline": ""
+      },
+      {
+        "concept": "Fair and unfair: everyone being treated equally well, as in a school game",
+        "handledBy": "assumed-everyday",
+        "detourOutline": ""
+      },
+      {
+        "concept": "A pattern: something that repeats in a way you can spot",
+        "handledBy": "assumed-everyday",
+        "detourOutline": ""
+      },
+      {
+        "concept": "Program: a list of exact steps a computer follows",
+        "handledBy": "prior-lesson",
+        "detourOutline": ""
+      },
+      {
+        "concept": "Training: a program works out its own settings from many examples instead of a person setting them by hand",
+        "handledBy": "detour",
+        "detourOutline": "Offered at first use in step m1, for learners who skipped 'How does a junk filter decide?'. 1) Sort six message cards into 'junk' and 'inbox' by hand. 2) Spot one clue that the junk cards share. 3) Watch a program look at 200 sorted cards and work out the same clue on its own. 4) Name it: this is training. 5) One-line takeaway, then the 'Back to the training table' button returns the learner to step m1, card in hand."
+      },
+      {
+        "concept": "What a sample is",
+        "handledBy": "detour",
+        "detourOutline": "Offered at first use in step e6 (and from the glossary). 1) A pot of soup: taste one spoonful from a well-stirred pot. Does it tell you about the whole pot? 2) Now take a spoonful only from the top, where the oil floats. Does it tell you the same? 3) Name it: the spoonful is a sample, a small part used to judge the whole. 4) A sample is useful only when it is like the whole. 5) 'Back to the rainy week' returns the learner to step e6."
+      },
+      {
+        "concept": "What a percentage means",
+        "handledBy": "detour",
+        "detourOutline": "Offered at first use in step e3. 1) A grid of 100 squares; colour 60 of them. 'Per cent' means 'out of 100', so this is 60%. 2) A grid of 10 strips; colour 6. Split each strip into 10 squares: 6 strips become 60 squares out of 100. So 6 out of 10 is 60%. 3) A grid of 50 squares; colour 30. Copy the grid once more to make 100: the 30 becomes 60. So 30 out of 50 is 60%. 4) Rule seen three times: make the bottom 100, and do the same to the top. 5) Try one: 7 out of 10 (answer 70%). 6) 'Back to the Number Reader' returns the learner to step e3."
+      },
+      {
+        "concept": "Dividing to get a decimal, and rounding (deeper layer only)",
+        "handledBy": "detour",
+        "detourOutline": "Offered inside deeper step e5. 1) A chocolate bar of 10 pieces: 6 pieces is 6 tenths, written 0.6. 2) 6 / 10 on a calculator shows 0.6; times 100 gives 60, the same 60% as before. 3) Rounding: 95.5 sits between 95 and 96 on a number line; it is halfway or more, so it rounds up to 96. 4) 'Back to the deeper step' returns the learner to step e5."
+      }
+    ],
+    "sequence": [
+      {
+        "id": "h1",
+        "stage": "hook",
+        "learnerAct": "decide",
+        "purpose": "Open with a trust decision about a program that looks very accurate, before any explanation.",
+        "draftText": "Meet the Number Reader. It is a program that reads handwritten numbers on mark sheets. A program is a list of exact steps a computer follows. Its makers tested it on 100 handwritten numbers. It read 92 of them correctly. Would you let it read the marks on your answer sheet? Choose one: 'Yes, I trust it', 'Not sure yet' or 'No'. Any choice is fine. Keep your answer in mind.",
+        "termsIntroduced": [
+          "program"
+        ],
+        "termsUsed": [
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "h2",
+        "stage": "hook",
+        "learnerAct": "explore",
+        "purpose": "The surprise: the same test, split by who wrote the numbers, shows the problem the total hid.",
+        "draftText": "Tap 'Split by school' to sort the 100 test numbers by who wrote them. 90 came from writers at Hill School. 10 came from writers at River School. Now look at the right answers. Hill School: 86 right out of 90. River School: 6 right out of 10. Each group had 4 numbers read wrongly. But 4 wrong out of 10 is very different from 4 wrong out of 90. Your sheet comes from River School. Do you still trust the Number Reader? Choose again.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "2"
+      },
+      {
+        "id": "p1",
+        "stage": "predict",
+        "learnerAct": "predict",
+        "purpose": "Learner commits to a cause. Distractors surface 'the program dislikes a group', 'it is broken' and a stereotype about the group's handwriting.",
+        "draftText": "Why does the Number Reader get River School numbers wrong so often? Pick the guess you believe most. A: River School writers have messy handwriting. B: The Number Reader does not like River School. C: It was given very few River School numbers to learn from. D: The Number Reader is broken. Lock in your guess. You will test it in a moment.",
+        "termsIntroduced": [],
+        "termsUsed": [],
+        "depth": "core",
+        "misconceptionAddressed": "8"
+      },
+      {
+        "id": "p2",
+        "stage": "predict",
+        "learnerAct": "predict",
+        "purpose": "Learner predicts the result on a balanced test, setting up the evidence that the 92 was not the whole story.",
+        "draftText": "Here is a fairer test. It has 50 numbers from Hill School and 50 from River School. None of these numbers were used when the Number Reader was made. Numbers kept back for checking like this are called a test set. Out of these 100, how many will it read correctly? Slide to your guess. Will it be more than 92, about 92, or fewer than 92?",
+        "termsIntroduced": [
+          "test set"
+        ],
+        "termsUsed": [
+          "test set"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "2"
+      },
+      {
+        "id": "m1",
+        "stage": "manipulate",
+        "learnerAct": "explore",
+        "purpose": "Teach the training-table interaction the first time it appears, and let the learner meet an example before it is named.",
+        "draftText": "This is the training table. Each card shows one handwritten number and its right answer. A card like this is called an example. Try it: drag one card into the training pile. Now tap a card to see who wrote it. Hill School cards have a hill mark. River School cards have a wave mark. Look closely at the River School cards. Many of their writers put a small line across their 7s. Many put a little hook on top of their 1s. Training means the program works out its own settings from many examples. Tap the word 'training' for a short reminder.",
+        "termsIntroduced": [
+          "example"
+        ],
+        "termsUsed": [
+          "example",
+          "training",
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "m2",
+        "stage": "manipulate",
+        "learnerAct": "build",
+        "purpose": "Signature interaction, part 1: train on the skewed pile, test on the balanced test set, check the prediction from p2.",
+        "draftText": "The makers trained the Number Reader on this pile: 90 Hill School examples and 10 River School examples. Press 'Train' to train it the same way. Now press 'Test' to use the fair test set. Watch the results appear. Hill School: 48 right out of 50. River School: 30 right out of 50. Add them: 48 + 30 = 78. So it got 78 right out of 100, not 92. Look back at your guess. Was it close? The first test had mostly Hill School numbers, so it hid the problem. A collection of examples used for training is called a dataset.",
+        "termsIntroduced": [
+          "dataset"
+        ],
+        "termsUsed": [
+          "example",
+          "training",
+          "test set",
+          "dataset"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "2"
+      },
+      {
+        "id": "m3",
+        "stage": "manipulate",
+        "learnerAct": "explore",
+        "purpose": "Signature interaction, part 2: change one variable (the mix of the dataset) and see River School results rise. This is the fix to the data.",
+        "draftText": "Now you change the dataset. The pile stays at 100 examples. Turn the knob to swap Hill School cards for River School cards. Before each turn, guess: will River School results go up or down? Try 10, then 30, then 50 River School examples. Press 'Train', then 'Test', each time. With 10: River School 30 of 50 right, Hill School 48 of 50. With 30: River School 41 of 50, Hill School 48 of 50. With 50: River School 47 of 50, Hill School 47 of 50. Hill School hardly changed. River School went up a lot. A dataset with similar numbers from each group is called balanced.",
+        "termsIntroduced": [
+          "balanced"
+        ],
+        "termsUsed": [
+          "dataset",
+          "example",
+          "training",
+          "balanced"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "m4",
+        "stage": "manipulate",
+        "learnerAct": "predict",
+        "purpose": "Change a different single variable (size, not mix) to surface and correct 'more data always fixes it'.",
+        "draftText": "Here is another idea. Keep the old mix: 9 Hill School cards for every 1 River School card. But make the pile twice as big: 180 Hill School and 20 River School. Predict first: will River School results get much better, a little better, or stay the same? Now press 'Train' and 'Test'. River School: 32 of 50 right. Hill School: 49 of 50 right. Compare with the balanced pile of 100, which gave River School 47 of 50. Which helped River School more: a bigger pile, or a better mix? Choose one.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "dataset",
+          "balanced"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "5"
+      },
+      {
+        "id": "e1",
+        "stage": "explain",
+        "learnerAct": "decide",
+        "purpose": "First analogy (cook), as a matching act that maps relationships onto what the learner has done, with its break point stated.",
+        "draftText": "Think of a cook who learned 90 recipes from one family. The cook learned only 10 recipes from the family next door. One day the neighbours ask for their favourite dish. It comes out wrong. Match each part of the cook story to the Number Reader. Recipes match examples. The cook's recipe collection matches the dataset. The family next door matches the River School writers. A dish that tastes wrong matches a number read wrongly. Where this story breaks: a real cook can taste the dish and notice it is wrong. The Number Reader has nothing like taste. You will test this soon.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "example",
+          "dataset"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "1"
+      },
+      {
+        "id": "e2",
+        "stage": "explain",
+        "learnerAct": "explain",
+        "purpose": "Name the idea the learner has now experienced (bias in data) and close the p1 prediction, including the handwriting stereotype.",
+        "draftText": "Look back at your first guess. C was closest. River School handwriting was not messy. It was different from most of the examples. Here is what your tests showed. When a group has few examples in the dataset, the program makes more mistakes for that group. This is called bias in data. The program did not choose to be unfair. It has no likes or dislikes. It follows the patterns in the examples it was given. Explain it back: in one sentence, why did River School numbers go wrong?",
+        "termsIntroduced": [
+          "bias",
+          "pattern"
+        ],
+        "termsUsed": [
+          "example",
+          "dataset",
+          "program",
+          "bias",
+          "pattern"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "8"
+      },
+      {
+        "id": "e3",
+        "stage": "explain",
+        "learnerAct": "build",
+        "purpose": "Make results comparable by turning them into percentages, with every step shown and one step done by the learner.",
+        "draftText": "How can we compare '6 out of 10' with '30 out of 50'? We turn both into 'out of 100'. 'Per cent' means 'out of 100'. A number written this way is a percentage. Work through it with us. River School, first test: 6 right out of 10. 10 x 10 = 100, so multiply both by 10. 6 x 10 = 60. That is 60 out of 100, written 60%. River School, fair test: 30 right out of 50. 50 x 2 = 100, so multiply both by 2. 30 x 2 = 60. That is 60 out of 100 again, or 60%. Your turn: Hill School got 48 right out of 50. Multiply both by 2. What percentage is that? (48 x 2 = 96, so 96%.) Tap 'What is a percentage?' for a short detour with pictures.",
+        "termsIntroduced": [
+          "percentage"
+        ],
+        "termsUsed": [
+          "percentage"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "e4",
+        "stage": "explain",
+        "learnerAct": "explain",
+        "purpose": "Name accuracy and show, with the counts, why one overall number hid River School's results.",
+        "draftText": "The share of answers a program gets right is called its accuracy. We often write it as a percentage. River School accuracy: 60%. Hill School accuracy: 96%. Now remember the first test: 92 right out of 100, or 92% accuracy. Why did it look so good? Count it out. 90 of the 100 test numbers came from Hill School. 86 of those were right. Only 10 came from River School. 6 of those were right. 86 + 6 = 92. Hill School numbers filled most of the test. So River School's results barely moved the total. Explain it back: why can one accuracy number hide a problem?",
+        "termsIntroduced": [
+          "accuracy"
+        ],
+        "termsUsed": [
+          "accuracy",
+          "percentage",
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "2"
+      },
+      {
+        "id": "e5",
+        "stage": "explain",
+        "learnerAct": "build",
+        "purpose": "Deeper layer: find a percentage when the total cannot be scaled to 100 by a whole number, with scaffolding.",
+        "draftText": "Deeper: what about 86 out of 90? No whole number turns 90 into 100. So we divide instead. Warm up with one you know: 6 / 10 = 0.6. Then 0.6 x 100 = 60. That is the 60% we found before. Now Hill School. Step 1: accuracy = number right / number tested = 86 / 90. Step 2: 86 / 90 = 0.955... A calculator is fine here. Step 3: multiply by 100 to get 'out of 100'. 0.955... x 100 = 95.5... Step 4: round to a whole number. 95.5 sits halfway between 95 and 96. Halfway or more rounds up, so it becomes 96. So Hill School accuracy is about 96%. It matches the 96% from the fair test. Tap 'Decimals and rounding' for a short detour.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "accuracy",
+          "percentage"
+        ],
+        "depth": "deeper",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "e6",
+        "stage": "explain",
+        "learnerAct": "predict",
+        "purpose": "Second analogy (one rainy week), introducing 'sample' through a prediction, with its break point stated.",
+        "draftText": "Here is a second way to see it. You visit a town for one week. It rains every single day. Would you say this town is always rainy? Choose: 'Yes', 'Maybe' or 'No, one week is not enough'. Your one week is a sample. A sample is a small part you look at to judge the whole. A good sample looks like the whole. One rainy week does not look like a whole year. A dataset is a sample too. It stands for all the handwriting the Number Reader will ever meet. Where this story breaks: nobody chooses which week it rains. People do choose what goes into a dataset. So people can fix it. Tap 'What is a sample?' for a short detour.",
+        "termsIntroduced": [
+          "sample"
+        ],
+        "termsUsed": [
+          "sample",
+          "dataset"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      },
+      {
+        "id": "b1",
+        "stage": "break-it",
+        "learnerAct": "explore",
+        "purpose": "Break point: the program gives a confident wrong answer and has no way to notice its own gap. Surfaces 'if it sounds confident, it is correct'.",
+        "draftText": "Let us find where the Number Reader fails without warning. Train it on Hill School examples only. Then show it this River School 7, with a line across its middle. It answers '4'. It also shows 'confidence: 97%'. Confidence is a number showing how closely the input matches patterns from its training examples. It does not check whether the answer is true. Before you try more, predict: will it ever warn you that River School writing is new to it? Now try three more River School numbers. Watch for a warning. There is none. The program has no list of who was missing from its dataset. Nothing inside it checks for that gap. This is where the cook story breaks.",
+        "termsIntroduced": [
+          "confidence"
+        ],
+        "termsUsed": [
+          "confidence",
+          "example",
+          "training",
+          "pattern",
+          "dataset",
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "7"
+      },
+      {
+        "id": "b2",
+        "stage": "break-it",
+        "learnerAct": "predict",
+        "purpose": "Surface and correct 'it learns continuously from use', and decide who can find the gap.",
+        "draftText": "The Number Reader is now used at both schools for a month. It misreads many River School sheets. Predict: by the end of the month, will it get better on its own? Choose 'Yes' or 'No'. Now reveal. No. This program does not change after training. Reading more sheets does not update it. Its settings stay the same until people collect new examples, check their right answers, and train it again. Some other systems are updated now and then, so always ask which kind it is. Who can spot the gap? Pick all that fit. The program itself. People who test it on each group. River School students who notice wrong marks.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "program",
+          "training",
+          "example"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "4"
+      },
+      {
+        "id": "t1",
+        "stage": "transfer-reflect",
+        "learnerAct": "decide",
+        "purpose": "Transfer to a new system: plan how to check a voice helper's dataset and results for each group.",
+        "draftText": "A new case. A voice helper answers spoken questions. Its dataset has 9,000 voice clips from adults aged 20 to 40. It has only 300 clips from children and 200 from grandparents. Who might it serve worst? Now build your checking plan. Drag in the cards you would use. Card 1: test it with voices from every age group. Card 2: report accuracy for each group separately. Card 3: add more clips from children and older people. Card 4: add more clips from adults aged 20 to 40. Card 5: trust the overall accuracy. Then compare your plan with ours.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "dataset",
+          "accuracy"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "5"
+      },
+      {
+        "id": "t2",
+        "stage": "transfer-reflect",
+        "learnerAct": "explain",
+        "purpose": "Ethical reflection: who should be responsible when data is unfair? Open discussion, with one firm point: the program cannot hold responsibility.",
+        "draftText": "Now the hardest question. A River School student got a wrong mark because of the Number Reader. Who should be responsible? Drag each one to 'a lot', 'some' or 'none'. The people who collected the examples. The people who built the program. The school that chose to use it. The program itself. People can disagree about most of these. One is firm: a program has no wishes or plans. It cannot take responsibility, but people can. Write one sentence on why you placed them as you did.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "example",
+          "program"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": "8"
+      },
+      {
+        "id": "t3",
+        "stage": "transfer-reflect",
+        "learnerAct": "build",
+        "purpose": "A takeaway the learner keeps: three questions to ask of any program trained on data.",
+        "draftText": "Make your takeaway card. Finish each line in your own words, or keep ours. Line 1: Before I trust a program's answer, I ask who was in its dataset. Line 2: I ask what its accuracy is for each group, not only overall. Line 3: If the data is unfair, people can fix it by adding the missing examples. Save your card. It stays on this device. These three questions will come back in later lessons.",
+        "termsIntroduced": [],
+        "termsUsed": [
+          "program",
+          "dataset",
+          "accuracy",
+          "example"
+        ],
+        "depth": "core",
+        "misconceptionAddressed": ""
+      }
+    ],
+    "glossary": [
+      {
+        "term": "program",
+        "definition": "a list of exact steps that a computer follows"
+      },
+      {
+        "term": "training",
+        "definition": "the way a program works out its own settings from many examples, instead of a person setting them by hand"
+      },
+      {
+        "term": "example",
+        "definition": "one item with its right answer, such as a handwritten number and the number it really is, used for training"
+      },
+      {
+        "term": "dataset",
+        "definition": "a collection of examples used to train a program"
+      },
+      {
+        "term": "test set",
+        "definition": "examples kept out of training and used only to check how well a program works"
+      },
+      {
+        "term": "balanced",
+        "definition": "a dataset is balanced when each group has a similar number of examples"
+      },
+      {
+        "term": "pattern",
+        "definition": "something that repeats in a way you can spot, like many 7s having a line across the middle"
+      },
+      {
+        "term": "bias",
+        "definition": "in data: when some groups are missing or too small in the examples, so the program makes more mistakes for them"
+      },
+      {
+        "term": "percentage",
+        "definition": "a number 'out of 100'; 60% means 60 out of every 100"
+      },
+      {
+        "term": "accuracy",
+        "definition": "the share of answers a program gets right, often written as a percentage"
+      },
+      {
+        "term": "sample",
+        "definition": "a small part you look at to judge the whole; it is useful only if it is like the whole"
+      },
+      {
+        "term": "confidence",
+        "definition": "a number a program shows for how closely the input matches patterns from its training; it is not a check that the answer is true"
+      }
+    ],
+    "checks": {
+      "pre": [
+        {
+          "id": "pre1",
+          "objective": "O1",
+          "question": "A program learned to read handwriting from 1,000 examples. All of them were written by adults. It is now used to read children's homework. What do you expect to happen?",
+          "answer": "It will probably make more mistakes on children's writing, because children's writing was missing from its examples."
+        },
+        {
+          "id": "pre2",
+          "objective": "O2",
+          "question": "A student got 7 out of 10 questions right. How many is that out of 100?",
+          "answer": "70 out of 100 (multiply both by 10), which is 70%."
+        },
+        {
+          "id": "pre3",
+          "objective": "O3",
+          "question": "A program makes many mistakes for one group of people. Will adding more examples always fix it? Why or why not?",
+          "answer": "No. It helps only if the new examples include enough of that group."
+        },
+        {
+          "id": "pre4",
+          "objective": "O4",
+          "question": "A program says it is 97% confident about an answer. Does that mean the answer is right?",
+          "answer": "No. Confidence shows how closely the input matches its training patterns; it is not a check that the answer is true."
+        }
+      ],
+      "post": [
+        {
+          "id": "post1",
+          "objective": "O1",
+          "question": "A phone app spots plant disease from photos of leaves. Its dataset has 950 photos from dry regions and 50 from wet regions. Farmers in wet regions say it is often wrong. What is the most likely reason? A: The app is broken. B: The app decided to ignore wet-region farmers. C: Wet-region leaves had very few examples in its dataset. D: Wet-region farmers take bad photos.",
+          "answer": "C. Few wet-region examples means more mistakes for that group. A treats normal errors as a broken system, B gives the app intentions, and D blames the group instead of the data.",
+          "transfer": true
+        },
+        {
+          "id": "post2",
+          "objective": "O2",
+          "question": "A reader was tested. Group A: 45 right out of 50. Group B: 7 right out of 10. Write each as a percentage, showing your steps. Which group does it serve worse?",
+          "answer": "Group A: 50 x 2 = 100, so 45 x 2 = 90, which is 90%. Group B: 10 x 10 = 100, so 7 x 10 = 70, which is 70%. It serves Group B worse.",
+          "transfer": false
+        },
+        {
+          "id": "post3",
+          "objective": "O2",
+          "question": "A company says: 'Our face-unlock is 95% accurate.' Most of its test set came from one group of people. What question should you ask, and why?",
+          "answer": "Ask what its accuracy is for each group separately. If most test examples came from one group, that group's results fill the total and can hide poor results for a small group.",
+          "transfer": true
+        },
+        {
+          "id": "post4",
+          "objective": "O3",
+          "question": "A dataset has 180 Hill School examples and 20 River School examples. Which change will most help River School? A: Add 200 more examples in the same 9-to-1 mix. B: Raise the confidence the program needs before it answers. C: Add River School examples until both groups have similar numbers. D: Tell the program to try harder on River School.",
+          "answer": "C. A balanced dataset gives the program River School patterns to work from. A keeps the same gap (more of the same mix helped only a little), B does not add any River School examples, and D gives the program intentions it does not have.",
+          "transfer": false
+        },
+        {
+          "id": "post5",
+          "objective": "O4",
+          "question": "Trained only on Hill School writing, the Number Reader reads a River School 7 as '4' with 97% confidence. Will it warn anyone? Who could find this kind of mistake?",
+          "answer": "It will not warn anyone: high confidence is not proof of a right answer, and nothing inside it checks who was missing from its data. People who test it on each group separately, or users who notice wrong results, can find the gap.",
+          "transfer": false
+        },
+        {
+          "id": "post6",
+          "objective": "O4",
+          "question": "A program like the Number Reader misreads a group's writing for a whole term. Will it get better on its own by the end of term? Explain.",
+          "answer": "No, not if it works like the Number Reader. Its settings stay the same after training. It improves only when people collect new examples from that group, check the answers and train it again.",
+          "transfer": false
+        },
+        {
+          "id": "post7",
+          "objective": "O5",
+          "question": "A hospital uses a voice helper to book appointments. It was trained mostly on young adults' voices, and it often misunderstands older patients. Who should be responsible for fixing this, and what should they do first? Give a reason.",
+          "answer": "Open answer. Strong answers name people, not the program: those who collected the data, those who built it, and the hospital that chose it. A good first step is to test accuracy for older patients separately, then add their voice clips and train again. The program cannot be responsible because it has no wishes or plans.",
+          "transfer": true
+        }
+      ]
+    },
+    "notesForCreator": [
+      "Timing (self-paced, about 30 minutes): hook 3 min, predict 3, manipulate 9, explain 8 (plus about 3 for the deeper step e5), break-it 4, transfer-reflect 6. Detours add 2 to 3 minutes each and are optional.",
+      "40-minute class plan: pre-check 4 min; h1 and p1 as whole-class votes on the shared screen; the teacher drives the knob in m3 and m4 while pairs call out predictions; e2 and e4 'explain it back' as pair talk; t2 as a 6-minute class discussion with anonymous counts only; post-check 5 min. No individual answers are shown on the shared screen.",
+      "The signature interaction needs train-classifier, which is a Phase 5 component. Until it exists, m2 to m4 and b1 can run on 'knob' plus 'compare' with pre-computed results, with 'sort' for m1 and 'break-it' for b1. Please decide which route v1 takes.",
+      "All results (92 of 100; 48 and 30 of 50; 41, 47, 32 of 50; confidence 97%) are illustrative values chosen to be internally consistent (86 + 6 = 92; 48 + 30 = 78; Hill 86/90 and 48/50 both round to 96%). If train-classifier produces real numbers, the text must be generated from them, or the screens must say the results are simulated. Accuracy review should confirm this framing.",
+      "Hill School and River School are invented on purpose. The difference between groups is a handwriting habit (a line across 7s, a hook on 1s), not a real community, region, gender or language. Option A in p1 ('messy handwriting') is a deliberate distractor so e2 can correct the idea that the under-represented group is at fault. Please check this framing in bias review.",
+      "Misconceptions designed in: 2 (h2, p2, m2, e4: the 92% surprise), 8 (p1, e2, t2: 'does not like River School', responsibility), 5 (m4: bigger pile, same mix), 7 (b1: confident wrong answer), 4 (b2: does not improve from use), 1 (e1 break point: no taste, no understanding), 10 (p1 option D, corrected by m2-m3 showing errors come from the data). Misconception 9 (thresholds) is left for the junk-filter lesson.",
+      "Cook analogy and rainy-week analogy are drafts for the Analogy Specialist. Each states its break point (the cook can taste; nobody chooses the weather, but people choose datasets). The cook's break point is shown live in b1, which carries the module's required break point: the machine has no way of noticing its own gap.",
+      "Numeracy: the core path uses only multiplying by 2 and by 10, and one addition. Division, decimals and rounding are confined to deeper step e5 with a warm-up example and their own detour. Percentage and sample detours return the learner to the step they left.",
+      "Concept-graph proposal (needs your approval): add 'sample' and 'percentage' as detour nodes feeding 'dataset' and 'accuracy'; add 'test set' and 'accuracy' between 'dataset' and 'bias'; and add an early, plain-words 'fairness (intro)' node after 'bias'. The graph currently places fairness much later, after generalisation.",
+      "The takeaway card in t3 is stored only on the device (no account, no personal data), consistent with Article 10. The t2 responsibility placements and free-text sentences should not be stored beyond the session.",
+      "Hand-off: Analogy Specialist (both analogies), then the Learning Experience & Interaction Designer (training table, knob, split reveal), then the review panel. Hindi and Telugu versions need native-speaker translation, including the glossary and the 'per cent means out of 100' wording."
+    ]
+  },
+  "audience": {
+    "id": "school-13-17",
+    "label": "School learners, classes 8-12",
+    "status": "active",
+    "readingLevel": "grade 6-8 for core text",
+    "maxSentenceWords": 18,
+    "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+    "tone": "warm, curious, direct, never condescending",
+    "theme": "school",
+    "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+    "defaultDepth": "core",
+    "analogyVariants": "school",
+    "checks": [
+      "act-density",
+      "grammar",
+      "undefined-terms",
+      "banned-phrases",
+      "analogy-completeness",
+      "anthropomorphism",
+      "reading-level",
+      "first-use-help",
+      "media-rules",
+      "locale-completeness",
+      "checks-present",
+      "ending"
+    ]
+  }
+}

@@ -168,7 +168,8 @@
           ],
           "properties": {
             "concept": {
-              "type": "string"
+              "type": "string",
+              "description": "The term exactly as steps list it in termsUsed, e.g. 'percentage'."
             },
             "handledBy": {
               "type": "string",

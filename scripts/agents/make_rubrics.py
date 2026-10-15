@@ -80,7 +80,7 @@ rubrics["curriculum-instructional-designer"] = {
     "agent": S(enum=["curriculum-instructional-designer"]),
     "title": S(),
     "objectives": A(O({"id": S(), "text": S(description="What the learner can do or explain afterwards.")}), minItems=1),
-    "prerequisites": A(O({"concept": S(), "handledBy": S(enum=["assumed-everyday", "prior-lesson", "detour"]), "detourOutline": S(description="For detours: the steps of the detour; '' otherwise.")})),
+    "prerequisites": A(O({"concept": S(description="The term exactly as steps list it in termsUsed, e.g. 'percentage'."), "handledBy": S(enum=["assumed-everyday", "prior-lesson", "detour"]), "detourOutline": S(description="For detours: the steps of the detour; '' otherwise.")})),
     "sequence": A(O({
         "id": S(), "stage": S(enum=STAGES), "learnerAct": S(enum=["decide", "predict", "build", "explore", "explain", "none"]),
         "purpose": S(), "draftText": S(description="The learner-facing text, in full, in English."),
