@@ -60,6 +60,13 @@ describe.skipIf(!DB)("CMS rules", () => {
     expect(ok._status).toBe("published");
   });
 
+  it("never lets an agent unpublish, though it may save drafts beside the published lesson", async () => {
+    await expect(payload.update({ collection: "lessons", id: lessonId, data: { _status: "draft" }, user: agent("learning-experience-designer"), overrideAccess: false })).rejects.toThrow(/Only the creator/);
+    await payload.update({ collection: "lessons", id: lessonId, data: { doc: lessonDoc(), _status: "draft" }, user: agent("learning-experience-designer"), overrideAccess: false, draft: true });
+    const { docs } = await payload.find({ collection: "lessons", overrideAccess: false, user: null as never });
+    expect(docs.map((d) => d.lessonId)).toContain("every-primitive");
+  });
+
   it("refuses to publish a lesson that fails validation", async () => {
     const broken = lessonDoc();
     broken.stages = broken.stages.filter((s: { stage: string }) => s.stage !== "break-it");

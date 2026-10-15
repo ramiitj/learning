@@ -1,5 +1,5 @@
-import { APIError, type CollectionBeforeChangeHook, type CollectionConfig } from "payload";
-import { actorOf, agentGrant, publishedOrStaff, recentlyAuthenticated, staffWrite, creatorOnly } from "../access";
+import { APIError, type CollectionBeforeChangeHook, type CollectionBeforeOperationHook, type CollectionConfig } from "payload";
+import { actorOf, agentGrant, isCreator, publishedOrStaff, recentlyAuthenticated, staffWrite, creatorOnly } from "../access";
 import { auditHooks } from "../events";
 import { validateWithCms } from "../validation";
 import { revalidateLesson } from "../revalidate";
@@ -89,6 +89,18 @@ const publishGate: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => 
   return data;
 };
 
+/**
+ * Unpublishing (a non-draft save that sets the status back to draft) takes a
+ * lesson away from learners, so only the creator, or server code the creator
+ * runs, may do it. Agents' saves are drafts beside the published version.
+ */
+const unpublishGate: CollectionBeforeOperationHook = ({ args, operation, req }) => {
+  if (operation !== "update" && operation !== "updateByID") return args;
+  const status = (args.data as { _status?: string } | undefined)?._status;
+  if (status === "draft" && !args.draft && !req.context?.system && !isCreator(req)) throw new APIError("Only the creator can unpublish a lesson.", 403);
+  return args;
+};
+
 export const Lessons: CollectionConfig = {
   slug: "lessons",
   admin: { useAsTitle: "title", defaultColumns: ["title", "lessonId", "_status", "updatedAt"], group: "Content" },
@@ -100,6 +112,7 @@ export const Lessons: CollectionConfig = {
     delete: creatorOnly,
   },
   hooks: {
+    beforeOperation: [unpublishGate],
     beforeChange: [guardAgentScope, onlyHumansReview, runValidation, publishGate],
     afterChange: [...auditHooks("lessons").afterChange, async ({ doc }) => (revalidateLesson((doc as { lessonId: string }).lessonId), doc)],
     afterDelete: auditHooks("lessons").afterDelete,
