@@ -14,7 +14,7 @@ export async function signInWithPasskey() {
   await post("login", { response });
 }
 
-export async function registerPasskey(extra: { name?: string; setupToken?: string; label?: string }) {
+export async function registerPasskey(extra: { name?: string; setupToken?: string; label?: string; invite?: string }) {
   const options = await post("register-options", extra);
   const response = await startRegistration({ optionsJSON: options as never });
   await post("register", { ...extra, response });

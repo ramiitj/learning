@@ -154,7 +154,10 @@ async function main() {
       mkdirSync(path.dirname(out), { recursive: true });
       writeFileSync(out, JSON.stringify(res.output, null, 2));
       console.log(`usage: ${JSON.stringify(res.usage)}; attempts ${res.attempts}`);
-      check(agent, c.replace(".json", ""), out);
+      const { violations, score } = check(agent, c.replace(".json", ""), out);
+      const bar = (kit.rubric as ReviewerRubric).passBar;
+      const seeded = !!score?.seeds;
+      if (violations.length || (score && (score.precision < bar.precision || (seeded && (score.blockingRecall < bar.blockingRecall || score.recall < bar.overallRecall))))) process.exitCode = 1;
     }
   } else throw new Error(`unknown command ${cmd}`);
 }

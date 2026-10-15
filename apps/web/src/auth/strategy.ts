@@ -18,7 +18,8 @@ export const passkeyStrategy: AuthStrategy = {
     if (!session) return { user: null };
     try {
       const user = await payload.findByID({ collection: "users", id: session.userId, depth: 0, overrideAccess: true });
-      if (!user || user.role !== "creator") return { user: null };
+      // The creator and the native-speaker reviewers they invited sign in; agents never do.
+      if (!user || (user.role !== "creator" && user.role !== "reviewer")) return { user: null };
       return { user: { ...user, collection: "users", _strategy: "passkey-session", authTime: session.authTime } };
     } catch {
       return { user: null };

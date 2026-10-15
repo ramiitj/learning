@@ -105,12 +105,27 @@ export const PipelineRuns: CollectionConfig = {
 
 export const Agents: CollectionConfig = {
   slug: "agents",
-  admin: { useAsTitle: "agentId", defaultColumns: ["agentId", "enabled", "tier", "benchmark"], group: "Platform", description: "The agent registry: profiles and permissions live in platform/; switching an agent off takes effect immediately." },
+  admin: { useAsTitle: "agentId", defaultColumns: ["agentId", "enabled", "tier", "benchmarkStale", "costUsd"], group: "Platform", description: "The agent registry. Switching an agent off takes effect at once. Editing a profile changes how the agent works from its next step; it needs a passkey confirmation and marks the agent's benchmarks stale until they are re-run." },
+  versions: { maxPerDoc: 100 },
   access: { read: staffRead("agents"), create: creatorOnly, update: creatorOnly, delete: () => false },
-  hooks: auditHooks("agents"),
+  hooks: {
+    ...auditHooks("agents"),
+    beforeChange: [
+      ({ data, originalDoc, req }) => {
+        if (originalDoc && data.profile !== undefined && data.profile !== originalDoc.profile) {
+          if (!req.context?.system && !recentlyAuthenticated(req)) throw new Error("Changing an agent's profile changes its behaviour: confirm with your passkey first.");
+          if (!req.context?.system) data.benchmarkStale = true;
+        }
+        return data;
+      },
+    ],
+  },
   fields: [
     { name: "agentId", type: "text", required: true, unique: true },
     { name: "enabled", type: "checkbox", defaultValue: true },
+    { name: "profile", type: "textarea", admin: { rows: 30, description: "The agent's skill profile. Imported from platform/agents/; edits here take effect for the pipeline." } },
+    { name: "permissions", type: "json", admin: { readOnly: true, description: "What the agent may do (platform/config/permissions.json). Changing it is a decision for the creator." } },
+    { name: "benchmarkStale", type: "checkbox", defaultValue: false, admin: { readOnly: true, description: "The profile changed since the benchmarks last ran." } },
     { name: "tier", type: "text", admin: { readOnly: true } },
     { name: "benchmark", type: "json", admin: { readOnly: true, description: "Latest scorecard from benchmarks/." } },
     { name: "costUsd", type: "number", defaultValue: 0, admin: { readOnly: true } },

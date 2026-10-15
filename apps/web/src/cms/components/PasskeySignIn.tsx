@@ -4,6 +4,7 @@ import { registerPasskey, signInWithPasskey } from "./passkey-client";
 
 /** The console's only way in: a passkey. First-time setup needs the one-time setup token from the server's environment. */
 export function PasskeySignIn() {
+  const invite = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("invite") : null;
   const [mode, setMode] = useState<"signin" | "setup">("signin");
   const [name, setName] = useState("");
   const [token, setToken] = useState("");
@@ -27,7 +28,14 @@ export function PasskeySignIn() {
 
   return (
     <div style={{ display: "grid", gap: "1rem", maxWidth: 420 }}>
-      {mode === "signin" ? (
+      {invite ? (
+        <>
+          <p>You have been invited to review translations. Create a passkey on this device to accept.</p>
+          <button type="button" className="btn btn--style-primary" disabled={busy} onClick={() => run(() => registerPasskey({ invite, label: "Reviewer passkey" } as never))}>
+            Accept and create my passkey
+          </button>
+        </>
+      ) : mode === "signin" ? (
         <>
           <button type="button" className="btn btn--style-primary" disabled={busy} onClick={() => run(signInWithPasskey)}>
             Sign in with your passkey

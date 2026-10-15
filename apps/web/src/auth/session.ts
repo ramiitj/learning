@@ -81,3 +81,17 @@ export async function previewUrl(lessonId: string, locale = "en", mode: "persona
   const token = await signPreview(lessonId);
   return `${origin}/api/preview?token=${encodeURIComponent(token)}&locale=${locale}&mode=${mode}`;
 }
+
+/** An invitation for a native-speaker reviewer to create their passkey (valid 7 days). */
+export async function signInvite(userId: string | number) {
+  return new SignJWT({}).setProtectedHeader({ alg: "HS256" }).setSubject(String(userId)).setExpirationTime("7d").setAudience("lm-invite").sign(key());
+}
+export async function readInvite(token: unknown): Promise<string | null> {
+  if (typeof token !== "string") return null;
+  try {
+    const { payload } = await jwtVerify(token, key(), { audience: "lm-invite" });
+    return String(payload.sub);
+  } catch {
+    return null;
+  }
+}

@@ -50,6 +50,21 @@ function scopedView(scopes: string[]) {
   };
 }
 
+/**
+ * Only a human reviewer marks a locale as reviewed (docs/07): agents, the
+ * import, and the connector cannot. The translation review view sets it,
+ * per locale, once every string has a current approval.
+ */
+const onlyHumansReview: CollectionBeforeChangeHook = ({ data, originalDoc, req }) => {
+  const before = ((originalDoc?.doc ?? {}) as { localeStatus?: Record<string, string> }).localeStatus ?? {};
+  const after = ((data.doc ?? {}) as { localeStatus?: Record<string, string> }).localeStatus ?? {};
+  const newlyReviewed = Object.entries(after).filter(([l, s]) => s === "reviewed" && before[l] !== "reviewed").map(([l]) => l);
+  if (newlyReviewed.length && !req.context?.translationReview && actorOf(req).kind !== "creator") {
+    throw new APIError(`Only a native-speaker reviewer can mark ${newlyReviewed.join(", ")} as reviewed.`, 403);
+  }
+  return data;
+};
+
 /** Every save is validated; the report is stored with the draft and returned to whoever saved. */
 const runValidation: CollectionBeforeChangeHook = async ({ data, req }) => {
   const report = await validateWithCms(req.payload, data.doc);
@@ -85,7 +100,7 @@ export const Lessons: CollectionConfig = {
     delete: creatorOnly,
   },
   hooks: {
-    beforeChange: [guardAgentScope, runValidation, publishGate],
+    beforeChange: [guardAgentScope, onlyHumansReview, runValidation, publishGate],
     afterChange: [...auditHooks("lessons").afterChange, async ({ doc }) => (revalidateLesson((doc as { lessonId: string }).lessonId), doc)],
     afterDelete: auditHooks("lessons").afterDelete,
   },
@@ -94,5 +109,6 @@ export const Lessons: CollectionConfig = {
     { name: "title", type: "text", admin: { readOnly: true } },
     { name: "doc", type: "json", required: true, admin: { description: "The lesson document (schemas/lesson.schema.json). Content is data: no code." } },
     { name: "validation", type: "json", admin: { readOnly: true, description: "Validation report from the last save." } },
+    { name: "reviews", type: "json", admin: { readOnly: true, description: "Native-speaker approvals, per locale and string: who approved which exact text, and when." } },
   ],
 };

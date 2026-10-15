@@ -82,7 +82,8 @@ for (const f of readdirSync(path.join(ROOT, "platform/agents")).filter((f) => f.
   const tier = label.startsWith("most") ? "most-capable" : label.startsWith("fast") ? "fast" : "balanced";
   const results = path.join(ROOT, "benchmarks", agentId, "results");
   const benchmark = existsSync(results) ? Object.fromEntries(readdirSync(results).map((r) => [r.replace(".scorecard.json", ""), read(`benchmarks/${agentId}/results/${r}`)])) : null;
-  await upsert("agents", { agentId: { equals: agentId } }, { agentId, tier: `${tier} (${models[tier]?.model})`, benchmark }, false);
+  const permissions = (read("platform/config/permissions.json").agents as Record<string, unknown>)[agentId] ?? null;
+  await upsert("agents", { agentId: { equals: agentId } }, { agentId, tier: `${tier} (${models[tier]?.model})`, benchmark, profile, permissions, benchmarkStale: false }, false);
   await upsert("users", { and: [{ role: { equals: "agent" } }, { agentId: { equals: agentId } }] }, { name: agentId, role: "agent", agentId }, false);
 }
 console.log("agents: registry and agent users");

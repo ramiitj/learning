@@ -18,7 +18,7 @@ export const Users: CollectionConfig = {
     create: creatorOnly,
     update: creatorOnly,
     delete: creatorOnly,
-    admin: ({ req }) => isCreator(req),
+    admin: ({ req }) => isCreator(req) || (req.user as { role?: string } | null)?.role === "reviewer",
   },
   hooks: auditHooks("users"),
   fields: [

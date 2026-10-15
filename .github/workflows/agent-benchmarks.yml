@@ -1,0 +1,47 @@
+name: Agent benchmarks
+
+# docs/09: benchmarks run whenever a prompt, profile, rubric, reference, the
+# constitution or a model version changes, and the change is blocked if any
+# agent falls below its rubric's pass bar. Needs the ANTHROPIC_API_KEY secret;
+# without it, CI's recorded-run checks (pnpm test) still apply.
+on:
+  pull_request:
+    paths:
+      - "platform/**"
+      - "packages/agents/**"
+      - "benchmarks/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reviewers:
+    name: Re-run reviewer benchmarks
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    strategy:
+      fail-fast: false
+      matrix:
+        agent: [accuracy-safety-reviewer, novice-learner-panel]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run and score every case
+        if: env.ANTHROPIC_API_KEY != ''
+        working-directory: packages/agents
+        run: npx tsx src/cli.ts bench ${{ matrix.agent }}
+      - name: No API key
+        if: env.ANTHROPIC_API_KEY == ''
+        run: echo "::warning::ANTHROPIC_API_KEY is not set; live benchmarks were skipped. Recorded runs are still checked by pnpm test."
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scorecards-${{ matrix.agent }}
+          path: benchmarks/${{ matrix.agent }}/results

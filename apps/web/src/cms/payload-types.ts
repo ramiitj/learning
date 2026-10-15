@@ -190,6 +190,18 @@ export interface Lesson {
     | number
     | boolean
     | null;
+  /**
+   * Native-speaker approvals, per locale and string: who approved which exact text, and when.
+   */
+  reviews?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -616,7 +628,7 @@ export interface Feedback {
   createdAt: string;
 }
 /**
- * The agent registry: profiles and permissions live in platform/; switching an agent off takes effect immediately.
+ * The agent registry. Switching an agent off takes effect at once. Editing a profile changes how the agent works from its next step; it needs a passkey confirmation and marks the agent's benchmarks stale until they are re-run.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "agents".
@@ -625,6 +637,26 @@ export interface Agent {
   id: number;
   agentId: string;
   enabled?: boolean | null;
+  /**
+   * The agent's skill profile. Imported from platform/agents/; edits here take effect for the pipeline.
+   */
+  profile?: string | null;
+  /**
+   * What the agent may do (platform/config/permissions.json). Changing it is a decision for the creator.
+   */
+  permissions?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * The profile changed since the benchmarks last ran.
+   */
+  benchmarkStale?: boolean | null;
   tier?: string | null;
   /**
    * Latest scorecard from benchmarks/.
@@ -900,6 +932,7 @@ export interface LessonsSelect<T extends boolean = true> {
   title?: T;
   doc?: T;
   validation?: T;
+  reviews?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1103,6 +1136,9 @@ export interface FeedbackSelect<T extends boolean = true> {
 export interface AgentsSelect<T extends boolean = true> {
   agentId?: T;
   enabled?: T;
+  profile?: T;
+  permissions?: T;
+  benchmarkStale?: T;
   tier?: T;
   benchmark?: T;
   costUsd?: T;

@@ -28,6 +28,13 @@ export default buildConfig({
       beforeLogin: ["/cms/components/PasskeySignIn#PasskeySignIn"],
       beforeDashboard: ["/cms/components/Overview#Overview"],
       actions: ["/cms/components/ReauthButton#ReauthButton"],
+      afterNavLinks: ["/cms/components/NavLinks#NavLinks"],
+      graphics: { Logo: "/cms/components/Brand#Logo", Icon: "/cms/components/Brand#Icon" },
+      views: {
+        command: { Component: "/cms/views/CommandView#CommandView", path: "/command" },
+        translations: { Component: "/cms/views/TranslationsView#TranslationsView", path: "/translations" },
+        components: { Component: "/cms/views/ComponentsView#ComponentsView", path: "/components" },
+      },
     },
     importMap: { baseDir: path.resolve(dirname, "..") },
   },

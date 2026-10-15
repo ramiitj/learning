@@ -10,12 +10,13 @@ import permissions from "../../../../platform/config/permissions.json" with { ty
 type AgentGrant = { read: string[]; write: string[]; actions: string[] };
 const grants = permissions.agents as Record<string, AgentGrant>;
 
-export type Actor = { kind: "creator"; id: string | number } | { kind: "agent"; id: string } | { kind: "system" } | { kind: "public" };
+export type Actor = { kind: "creator"; id: string | number } | { kind: "agent"; id: string } | { kind: "reviewer"; id: string | number; locales: string[] } | { kind: "system" } | { kind: "public" };
 
 export function actorOf(req: PayloadRequest): Actor {
-  const u = req.user as { id: string | number; role?: string; agentId?: string } | null | undefined;
+  const u = req.user as { id: string | number; role?: string; agentId?: string; reviewerLocales?: unknown } | null | undefined;
   if (!u) return req.context?.system ? { kind: "system" } : { kind: "public" };
   if (u.role === "creator") return { kind: "creator", id: u.id };
+  if (u.role === "reviewer") return { kind: "reviewer", id: u.id, locales: Array.isArray(u.reviewerLocales) ? (u.reviewerLocales as string[]) : [] };
   if (u.role === "agent" && u.agentId) return { kind: "agent", id: u.agentId };
   return { kind: "public" };
 }
