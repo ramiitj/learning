@@ -30,7 +30,7 @@ jobs:
       TEST_DATABASE_URI: postgres://lm:lm@localhost:5432/lm_test
       PAYLOAD_SECRET: ci-only-secret-ci-only-secret-ci-only
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -62,7 +62,7 @@ jobs:
       PAYLOAD_SECRET: ci-only-secret-ci-only-secret-ci-only
       APP_ORIGIN: http://localhost:3000
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -87,7 +87,7 @@ jobs:
     name: Dependency audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -102,7 +102,7 @@ jobs:
       run:
         working-directory: infra/terraform
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v3
       - run: terraform fmt -check
       - run: terraform init -backend=false -input=false
