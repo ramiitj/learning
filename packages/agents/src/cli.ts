@@ -3,6 +3,7 @@
  *   tsx src/cli.ts prompt <agent> [--judge] [--out file]   assemble the exact system prompt
  *   tsx src/cli.ts check <agent> <case> <output.json> [--label rubric|baseline]   enforce the rubric and score against the benchmark
  *   tsx src/cli.ts make-check <agent> <task>                check a maker's recorded artifact, judge scores and judge calibration
+ *   tsx src/cli.ts artifact <agent> <file.json>             enforce a maker's rubric (schema and deterministic checks) on any artifact
  *   tsx src/cli.ts bench <agent>                            run every benchmark case through the API (needs credentials)
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -144,6 +145,17 @@ async function main() {
     if (!task) throw new Error("usage: make-check <agent> <task>");
     const card = makeCheck(agent, task);
     process.exitCode = (card.violations as unknown[]).length ? 1 : 0;
+  } else if (cmd === "artifact") {
+    const [file] = rest;
+    if (!file) throw new Error("usage: artifact <agent> <file.json>");
+    const rubric = loadAgent(agent).rubric as MakerRubric;
+    const output = JSON.parse(readFileSync(file, "utf8"));
+    const violations = enforceArtifact(output, rubric);
+    const advisory = runArtifactChecks(agent, output).filter((f) => f.severity !== "blocking");
+    console.log(violations.length ? `${agent}: ${violations.length} rubric violations` : `${agent}: rubric followed`);
+    for (const v of violations) console.log(`  ✗ ${v.rule}: ${v.detail}`);
+    for (const f of advisory) console.log(`  · ${f.check} (advisory) ${f.where}: ${f.detail}`);
+    process.exitCode = violations.length ? 1 : 0;
   } else if (cmd === "bench") {
     const kit = loadAgent(agent);
     const cases = readdirSync(path.join(bench(agent), "cases")).filter((f) => f.endsWith(".json"));
