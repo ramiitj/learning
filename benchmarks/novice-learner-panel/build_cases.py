@@ -1,6 +1,10 @@
 """Novice Learner Panel benchmark: the Phase 1 test lesson with planted
 comprehension traps, plus a clean control. Each trap is something a real
 beginner trips on; `personas` names who should hit it.
+Cases are frozen snapshots: recorded runs in runs/ were measured against
+them, so fixing the live lesson does not change the benchmark. Rebuild only
+to make a new benchmark version, and re-run the agents on it.
+
 Run: python3 benchmarks/novice-learner-panel/build_cases.py"""
 import copy, json, pathlib
 

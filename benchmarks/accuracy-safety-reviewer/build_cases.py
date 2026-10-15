@@ -4,6 +4,10 @@
   cases/seeded.json    the same lesson with planted problems
   expected/seeded.json what a reviewer must find: location, check, severity
 
+Cases are frozen snapshots: recorded runs in runs/ were measured against
+them, so fixing the live lesson does not change the benchmark. Rebuild only
+to make a new benchmark version, and re-run the agents on it.
+
 Run: python3 benchmarks/accuracy-safety-reviewer/build_cases.py
 Seeds are kept small and realistic: each is the kind of slip a drafting agent
 or a hurried author actually makes, not a cartoon."""

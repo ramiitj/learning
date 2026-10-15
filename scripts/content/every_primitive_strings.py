@@ -47,7 +47,7 @@ add("sort.m4", "Grandma says dinner is at 8",
     "అమ్మమ్మ రాత్రి భోజనం 8కి అంటోంది")
 add("sort.m5", "FREE phone!!! Only today!!!", "मुफ़्त फ़ोन!!! सिर्फ़ आज!!!", "ఉచిత ఫోన్!!! ఈరోజు మాత్రమే!!!")
 add("sort.m6", "Football practice moved to Friday",
-    "क्रिकेट अभ्यास शुक्रवार को हो गया है",
+    "क्रिकेट अभ्यास अब शुक्रवार को होगा",
     "క్రికెట్ ప్రాక్టీస్ శుక్రవారానికి మారింది")
 add("sort.m7", "Congratulations, you are selected. Pay a small fee to claim",
     "बधाई हो, आप चुने गए हैं। दावा करने के लिए ₹99 दें",
@@ -69,9 +69,9 @@ add("knob.output", "Junk score", "जंक स्कोर", "జంక్ స�
 add("knob.sentence", "This message has {excl, plural, one {# “!” mark} other {# “!” marks}}, {money, plural, one {# money word} other {# money words}} and {urgent, plural, one {# urgent word} other {# urgent words}}. Its junk score is {output}, so it goes to {decision}.",
     "इस संदेश में {excl} “!” चिह्न, {money} पैसे वाले शब्द और {urgent} जल्दबाज़ी वाले शब्द हैं। इसका जंक स्कोर {output} है, इसलिए यह {decision} में जाता है।",
     "ఈ సందేశంలో {excl} “!” గుర్తులు, {money} డబ్బు పదాలు, {urgent} అత్యవసర పదాలు ఉన్నాయి. దీని జంక్ స్కోరు {output}, కాబట్టి ఇది {decision}కి వెళ్తుంది.")
-add("knob.success", "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
-    "स्कोर 10: ठीक सीमा पर। एक सुराग और, तो यह जंक में जाएगा; एक कम, तो इनबॉक्स में पहुँचेगा।",
-    "స్కోరు 10: సరిగ్గా హద్దు మీద. ఇంకో ఆధారం ఉంటే జంక్‌కి వెళ్తుంది; ఒకటి తక్కువైతే ఇన్‌బాక్స్‌కి చేరుతుంది.")
+add("knob.success", "Score 10: exactly on the threshold, and 10 is enough to go to junk. One point fewer and it reaches the inbox.",
+    "स्कोर 10: ठीक सीमा पर, और जंक में जाने के लिए 10 काफ़ी है। एक अंक भी कम हो, तो यह इनबॉक्स में पहुँचेगा।",
+    "స్కోరు 10: సరిగ్గా హద్దు మీద, జంక్‌కి వెళ్లడానికి 10 సరిపోతుంది. ఒక్క పాయింట్ తక్కువైనా ఇన్‌బాక్స్‌కి చేరుతుంది.")
 
 # by hand then automate
 add("bh.intro", "The filter’s rule is short. Each message below already has its clues counted and its points added up, using the points from the filter above. Try the rule by hand first, the way the program does it.",
@@ -91,9 +91,9 @@ for i, (en, hi, te) in enumerate([
     ("The science-notes message", "विज्ञान के नोट्स वाला संदेश", "సైన్స్ నోట్స్ సందేశం"),
 ], start=1):
     add(f"bh.i{i}", en, hi, te)
-add("bh.auto", "The machine did the same step, the same way, every time. It never got tired, and it never used common sense either: two scams, the locked-account message and the pay-a-fee message, slipped into the inbox.",
-    "मशीन ने हर बार वही कदम, उसी तरह दोहराया। वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया: दो धोखे, खाता बंद वाला संदेश और ₹99 वाला संदेश, इनबॉक्स में पहुँच गए।",
-    "యంత్రం ప్రతిసారీ అదే అడుగును, అదే విధంగా చేసింది. అది ఎప్పుడూ అలసిపోలేదు, ఇంగిత జ్ఞానాన్నీ ఉపయోగించలేదు: రెండు మోసాలు, ఖాతా లాక్ సందేశం, ₹99 సందేశం, ఇన్‌బాక్స్‌లోకి జారిపోయాయి.")
+add("bh.auto", "The machine did the same step, the same way, every time. It cannot get tired, and it has no common sense to fall back on: it only follows the steps. So two scams, the locked-account message and the pay-a-fee message, slipped into the inbox.",
+    "मशीन ने हर बार वही कदम, उसी तरह दोहराया। वह थक नहीं सकती, और उसके पास अपनी कोई समझ नहीं है: वह बस कदमों का पालन करती है। इसलिए दो धोखे, खाता बंद वाला संदेश और ₹99 वाला संदेश, इनबॉक्स में पहुँच गए।",
+    "యంత్రం ప్రతిసారీ అదే అడుగును, అదే విధంగా చేసింది. దానికి అలసట ఉండదు, ఇంగిత జ్ఞానమూ ఉండదు: అది అడుగులను మాత్రమే పాటిస్తుంది. అందుకే రెండు మోసాలు, ఖాతా లాక్ సందేశం, ₹99 సందేశం, ఇన్‌బాక్స్‌లోకి జారిపోయాయి.")
 
 # compare
 add("cmp.prompt", "Two versions of the same real message from a friend.",
@@ -134,9 +134,9 @@ add("an.f3", "1 × “!” marks + 2 × money words + 3 × urgent words ≥ 10 �
     "1 × “!” గుర్తులు + 2 × డబ్బు పదాలు + 3 × అత్యవసర పదాలు ≥ 10 → జంక్. (“×” అంటే “గుణించు”.)")
 
 # deeper / deepest
-add("deep.text", "Real filters use hundreds of clues, not three. Nobody sets their points by hand: the filter works them out from millions of messages that people marked as junk. That is called <term-training>training</term-training>.",
-    "असली फ़िल्टर तीन नहीं, सैकड़ों सुराग इस्तेमाल करते हैं। उनके अंक कोई हाथ से तय नहीं करता: फ़िल्टर उन्हें उन लाखों संदेशों से निकालता है जिन्हें लोगों ने जंक बताया। इसे <term-training>ट्रेनिंग</term-training> कहते हैं।",
-    "నిజమైన ఫిల్టర్లు మూడు కాదు, వందలాది ఆధారాలను ఉపయోగిస్తాయి. వాటి పాయింట్లను ఎవరూ చేత్తో పెట్టరు: ప్రజలు జంక్ అని గుర్తించిన లక్షలాది సందేశాల నుండి ఫిల్టర్ వాటిని లెక్కిస్తుంది. దాన్ని <term-training>ట్రైనింగ్</term-training> అంటారు.")
+add("deep.text", "Real filters often use hundreds of clues, not three. Their points are usually not set by hand: the filter works them out from millions of messages that people marked as junk or as real. That is called <term-training>training</term-training>.",
+    "असली फ़िल्टर अक्सर तीन नहीं, सैकड़ों सुराग इस्तेमाल करते हैं। आम तौर पर उनके अंक कोई हाथ से तय नहीं करता: फ़िल्टर उन्हें उन लाखों-करोड़ों संदेशों से निकालता है जिन्हें लोगों ने जंक या असली बताया। इसे <term-training>ट्रेनिंग</term-training> कहते हैं।",
+    "నిజమైన ఫిల్టర్లు తరచుగా మూడు కాదు, వందలాది ఆధారాలను ఉపయోగిస్తాయి. సాధారణంగా వాటి పాయింట్లను ఎవరూ చేత్తో పెట్టరు: ప్రజలు జంక్ లేదా నిజమైనవి అని గుర్తించిన లక్షలాది, కోట్లాది సందేశాల నుండి ఫిల్టర్ వాటిని లెక్కిస్తుంది. దాన్ని <term-training>ట్రైనింగ్</term-training> అంటారు.")
 add("deepest.text", "Choosing the threshold is a trade-off. A low threshold catches more junk but also blocks more real messages. A high threshold lets real messages through but lets more junk in too. There is no setting that makes zero mistakes.",
     "सीमा चुनना एक सौदा है। नीची सीमा ज़्यादा जंक पकड़ती है, पर ज़्यादा असली संदेश भी रोक देती है। ऊँची सीमा असली संदेशों को आने देती है, पर ज़्यादा जंक भी आ जाता है। ऐसी कोई सेटिंग नहीं जिसमें कोई गलती न हो।",
     "హద్దును ఎంచుకోవడం ఒక బేరం. తక్కువ హద్దు ఎక్కువ జంక్‌ను పట్టుకుంటుంది, కానీ ఎక్కువ నిజమైన సందేశాలనూ ఆపేస్తుంది. ఎక్కువ హద్దు నిజమైన సందేశాలను రానిస్తుంది, కానీ ఎక్కువ జంక్‌నూ లోపలికి రానిస్తుంది. ఒక్క తప్పు కూడా చేయని అమరిక లేదు.")
@@ -152,7 +152,7 @@ add("as.success", "That is the whole filter: clues, a score, a line.", "यह�
 add("as.check", "Each step needs the one before it. You can’t add up clues you haven’t counted.", "हर कदम को अपने से पहले वाले कदम की ज़रूरत है। जो सुराग गिने ही नहीं, उन्हें जोड़ा नहीं जा सकता।", "ప్రతి అడుగుకు దాని ముందు అడుగు అవసరం. లెక్కించని ఆధారాలను కలపలేరు.")
 
 # check
-add("ch.prompt", "A message says “Meeting moved to 3 pm.” It has no clues at all. The threshold is 10. Where does it go?", "एक संदेश में लिखा है “मीटिंग 3 बजे हो गई है।” इसमें कोई सुराग नहीं है। सीमा 10 है। यह कहाँ जाएगा?", "ఒక సందేశంలో “మీటింగ్ మధ్యాహ్నం 3కి మారింది.” అని ఉంది. అందులో ఒక్క ఆధారం కూడా లేదు. హద్దు 10. అది ఎక్కడికి వెళ్తుంది?")
+add("ch.prompt", "A message says “Meeting moved to 3 pm.” It has no clues at all. The threshold is 10. Where does it go?", "एक संदेश में लिखा है “मीटिंग अब 3 बजे होगी।” इसमें कोई सुराग नहीं है। सीमा 10 है। यह कहाँ जाएगा?", "ఒక సందేశంలో “మీటింగ్ మధ్యాహ్నం 3కి మారింది.” అని ఉంది. అందులో ఒక్క ఆధారం కూడా లేదు. హద్దు 10. అది ఎక్కడికి వెళ్తుంది?")
 add("ch.o1", "Junk", "जंक", "జంక్")
 add("ch.o2", "Inbox", "इनबॉक्स", "ఇన్‌బాక్స్")
 add("ch.o3", "It depends on who sent it", "यह इस पर निर्भर है कि किसने भेजा", "ఎవరు పంపారనే దానిపై ఆధారపడి ఉంటుంది")
@@ -177,9 +177,9 @@ add("br.r4", "Same clues, same score, same result, both times.", "वही स�
 add("br.reflect", "What do the tricks that worked have in common?", "जो तरकीबें काम कर गईं, उनमें क्या बात एक जैसी है?", "పనిచేసిన ఉపాయాలలో ఉమ్మడిగా ఉన్నది ఏమిటి?")
 
 # your data
-add("yd.prompt", "Write up to five messages that you think would fool this filter. For each one, count its clues and work out its score with the points above: would it reach 10?",
-    "पाँच तक ऐसे संदेश लिखिए जो आपको लगता है इस फ़िल्टर को चकमा दे देंगे। हर एक के सुराग गिनिए और ऊपर के अंकों से उसका स्कोर निकालिए: क्या वह 10 तक पहुँचेगा?",
-    "ఈ ఫిల్టర్‌ను మోసం చేస్తాయని మీరు అనుకునే సందేశాలు ఐదు వరకు రాయండి. ప్రతిదానిలో ఆధారాలను లెక్కించి, పై పాయింట్లతో దాని స్కోరు లెక్కించండి: అది 10ని చేరుతుందా?")
+add("yd.prompt", "Make up to five messages that you think would fool this filter. Use made-up words only: no real names or phone numbers. For each one, work out its score: 1 point for each “!”, 2 for each money word, 3 for each urgent word. Would it reach 10?",
+    "पाँच तक ऐसे संदेश गढ़िए जो आपको लगता है इस फ़िल्टर को चकमा दे देंगे। सिर्फ़ बनावटी बातें लिखिए: कोई असली नाम या फ़ोन नंबर नहीं। हर एक का स्कोर निकालिए: हर “!” का 1 अंक, हर पैसे वाले शब्द के 2, हर जल्दबाज़ी वाले शब्द के 3। क्या वह 10 तक पहुँचेगा?",
+    "ఈ ఫిల్టర్‌ను మోసం చేస్తాయని మీరు అనుకునే సందేశాలు ఐదు వరకు కల్పించి రాయండి. కల్పిత మాటలే వాడండి: నిజమైన పేర్లు, ఫోన్ నంబర్లు వద్దు. ప్రతిదాని స్కోరు లెక్కించండి: ప్రతి “!”కి 1 పాయింట్, ప్రతి డబ్బు పదానికి 2, ప్రతి అత్యవసర పదానికి 3. అది 10ని చేరుతుందా?")
 add("yd.placeholder", "Type a message", "एक संदेश लिखिए", "ఒక సందేశం టైప్ చేయండి")
 add("yd.e1", "Hello friend, a small gift is waiting for you, reply with your address",
     "नमस्ते दोस्त, आपके लिए एक छोटा-सा तोहफ़ा इंतज़ार कर रहा है, अपना पता भेजिए",

@@ -22,7 +22,7 @@ filter_model = {
 }
 
 messages = [("m1", "🎁", "sort.g1"), ("m2", "📘", "sort.g2"), ("m3", "🔒", "sort.g1"), ("m4", "🍲", "sort.g2"),
-            ("m5", "📱", "sort.g1"), ("m6", "🏏", "sort.g2"), ("m7", "💸", "sort.g1"), ("m8", "🔬", "sort.g2")]
+            ("m5", "📱", "sort.g1"), ("m6", "📅", "sort.g2"), ("m7", "💸", "sort.g1"), ("m8", "🔬", "sort.g2")]
 
 stages = [
     {"stage": "hook", "blocks": [

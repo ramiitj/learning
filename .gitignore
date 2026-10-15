@@ -12,3 +12,4 @@ test-results/
 *.tfstate*
 .vercel
 next-env.d.ts
+__pycache__/
