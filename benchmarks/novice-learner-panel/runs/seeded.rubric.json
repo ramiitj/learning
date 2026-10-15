@@ -1,0 +1,386 @@
+{
+  "agent": "novice-learner-panel",
+  "checks": [
+    {
+      "check": "unknown-term",
+      "status": "flagged",
+      "note": "Played all four personas in their locale. Asha hits 'algorithms', 'features', 'ground truth', 'linear classifier ... feature vector' and 'posterior probability ... prior' in en; Rohit hits 'probabilistic heuristic' in hi; the Telugu student hits 'weighted sum threshold function' in te. The glossary has no entry for 'junk' or 'inbox' in hi/te, but the hook example and the sort screen carry the meaning, so I did not flag them."
+    },
+    {
+      "check": "assumed-knowledge",
+      "status": "flagged",
+      "note": "The en hook tells Asha she already knows this from computer science class. The hi and te hooks open with a concrete message and assume nothing."
+    },
+    {
+      "check": "unexplained-jump",
+      "status": "flagged",
+      "note": "The knob.success line says one more clue is needed to reach junk, but a score of 10 already goes to junk (knob.sentence, cmp.explain, br.r2, ch.explain, glossary 'at or above'). It is wrong in all three locales. The en bh.rule states a different, probability-based rule that never mentions scores or 10."
+    },
+    {
+      "check": "confusing-instruction",
+      "status": "flagged",
+      "note": "en as.instruction is only 'Do it.'. yd.prompt tells the learner to use 'the points above' on a screen in a later stage, where no points are shown. Other instructions (sort, knob goal, compare predict, break-it, explain-back) are clear in all locales."
+    },
+    {
+      "check": "number-trouble",
+      "status": "flagged",
+      "note": "Rohit meets a 0.4 ratio with no working (hi knob.success) and sums like (3 + 4 + 3) where the 4 comes from an unshown 2 x 2 (hi bh.i1, bh.i7). Asha, Meera and the Telugu student can follow the numbers. The en and te knob.success lines do not use ratios."
+    },
+    {
+      "check": "reading-load",
+      "status": "flagged",
+      "note": "The en analogy source is one sentence of about 66 words, and the en hook sentence is about 33 words. The hi bh.auto second sentence is about 28 words. The hi and te analogy sources are short and fine."
+    },
+    {
+      "check": "boredom",
+      "status": "flagged",
+      "note": "Meera meets the same point four times in en cmp.explain. The rest of the lesson moves briskly for her; the hi and te versions of cmp.explain are tighter."
+    },
+    {
+      "check": "lost-place",
+      "status": "flagged",
+      "note": "en ch.prompt sends the learner to 'the rule from Part 2', but the lesson has no numbered parts, and the rule it would find (bh.rule) is the unrelated probability rule. The hi and te ch.prompt give the threshold directly and do not have this problem."
+    }
+  ],
+  "flags": [
+    {
+      "id": "np-01",
+      "check": "assumed-knowledge",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "hook.text",
+      "blockId": "b1",
+      "quote": "As you already know from your computer science class, a family phone gets about 40 messages a day, and a spam filter moves the junk using the algorithms you studied.",
+      "problem": "The very first screen says the learner already knows this from a computer science class.",
+      "why": "assumed-knowledge (Article 6). I am in class 8 and have never studied this. The first thing I read tells me I should already know it, so I feel behind before I begin.",
+      "fix": "Open with a concrete message and a question, as the hi and te hooks do. Do not refer to a class.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-02",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "hook.text",
+      "blockId": "b1",
+      "quote": "a spam filter moves the junk using the algorithms you studied",
+      "problem": "'algorithms' is unexplained, and 'spam filter' appears here while the rest of the lesson says 'junk filter'.",
+      "why": "unknown-term. I don't know what 'algorithms' means yet, and I don't know whether 'spam filter' and 'junk filter' are the same thing.",
+      "fix": "Drop 'algorithms'. Use one name for the thing throughout.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-03",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "hook.text",
+      "blockId": "b1",
+      "quote": "a family phone gets about 40 messages a day, and a spam filter moves the junk using the algorithms you studied",
+      "problem": "One sentence of about 33 words carries two ideas, and the '40 messages' figure is never used again.",
+      "why": "reading-load. This is above the roughly 18-word limit for core text, and it is the first thing I read.",
+      "fix": "Split it into two short sentences and drop the unused number.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-04",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "sort.reveal",
+      "blockId": "b3",
+      "quote": "those are the model’s features, and the labels you gave are the ground truth.",
+      "problem": "Three unexplained words ('model', 'features', 'ground truth') appear right after the learner has been calling these things 'clues'.",
+      "why": "unknown-term. I don't know 'model', 'features' or 'ground truth', and the lesson swapped 'clues' for 'features' without telling me they mean the same thing. I feel I missed a lesson.",
+      "fix": "Keep the word 'clues' here as the hi and te versions do. Introduce 'features' and 'ground truth' later as glossary terms, if at all.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-05",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.prompt",
+      "blockId": "b4",
+      "quote": "Here is a tiny filter, a linear classifier over a three-dimensional feature vector.",
+      "problem": "Four technical terms ('linear', 'classifier', 'three-dimensional', 'feature vector') are stacked into the sentence that introduces the main activity.",
+      "why": "unknown-term. I know none of these words and I'm about to be asked to use the thing they describe. This is where I would stop reading.",
+      "fix": "Use plain words, as the hi and te versions do: a tiny filter that counts three kinds of clue and adds up points.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-06",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "predict.reveal",
+      "blockId": "b2",
+      "quote": "probabilistic heuristic",
+      "problem": "Untranslated English jargon in Latin script appears in the first explanation of how the filter works.",
+      "why": "unknown-term. I don't know these English words, and nothing explains them in Hindi. They also are not the idea the lesson teaches, which is clues, then a score, then a line.",
+      "fix": "Remove the phrase. Say plainly that it adds up clues to make a score.",
+      "persona": "rohit"
+    },
+    {
+      "id": "np-07",
+      "check": "number-trouble",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "स्कोर 10: अधिकतम का 0.4 अनुपात, यानी सीमा पर।",
+      "problem": "A decimal ratio of the maximum is given with no working. 10 out of 25 is never shown, and the maximum of 25 is only in the slider's output range.",
+      "why": "number-trouble. I am uncomfortable with decimals and ratios. I don't know where 0.4 comes from, and it adds nothing to understanding 'on the line'.",
+      "fix": "Cut the ratio. Say that the score is exactly 10, which is the line.",
+      "persona": "rohit"
+    },
+    {
+      "id": "np-08",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "Score 10: exactly on the threshold. One more clue and it goes to junk; one fewer and it reaches the inbox.",
+      "problem": "It says one more clue is needed to reach junk. But the sentence I just built at score 10 said 'so it goes to junk'.",
+      "why": "unexplained-jump. The two lines disagree: at 10 it is already junk, so it is one fewer clue that gives the inbox. Later screens (cmp, br.r2) confirm that 10 means junk, so I don't know which line to trust.",
+      "fix": "State that 10 reaches the line and goes to junk, and that a score of 9 or less goes to the inbox.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-09",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "एक सुराग और, तो यह जंक में जाएगा।",
+      "problem": "It says one more clue is needed to go to junk, but the sentence at score 10 already said it goes to junk.",
+      "why": "unexplained-jump. The two lines disagree, and I can't tell where the line really is. A confusing rule is a bigger wall for me than a hard word.",
+      "fix": "Say that 10 already reaches the line and goes to junk.",
+      "persona": "rohit"
+    },
+    {
+      "id": "np-10",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "te",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "ఇంకో ఆధారం ఉంటే జంక్‌కి వెళ్తుంది; ఒకటి తక్కువైతే ఇన్‌బాక్స్‌కి చేరుతుంది.",
+      "problem": "It says one more clue is needed for junk, yet the sentence at score 10 already says it goes to junk.",
+      "why": "unexplained-jump. The two lines disagree, and I can't tell whether 10 is junk or inbox.",
+      "fix": "Say that 10 reaches the line and goes to junk, and that one fewer goes to the inbox.",
+      "persona": "telugu-student"
+    },
+    {
+      "id": "np-11",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "One more clue and it goes to junk; one fewer and it reaches the inbox.",
+      "problem": "The line contradicts the sentence shown at score 10 and the later 'at least' wording in the post-check.",
+      "why": "unexplained-jump. I check boundaries first, and the boundary is stated two ways. The later feedback (post1.fb: '12 is at least 10') makes it clear that 10 is junk.",
+      "fix": "Make the boundary wording the same everywhere: at or above 10 is junk.",
+      "persona": "meera"
+    },
+    {
+      "id": "np-12",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "bh.rule",
+      "blockId": "b5",
+      "quote": "If the posterior probability of junk exceeds the prior, it goes to junk. Otherwise it goes to the inbox.",
+      "problem": "The rule I am supposed to apply by hand uses 'posterior probability' and 'prior', which I have never met.",
+      "why": "unknown-term. I know none of these words, and the intro asked me to try the rule by hand. I have nothing I can use.",
+      "fix": "State the rule in the lesson's own terms: score of 10 or more goes to junk, otherwise to the inbox.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-13",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "bh.rule",
+      "blockId": "b5",
+      "quote": "If the posterior probability of junk exceeds the prior, it goes to junk.",
+      "problem": "The rule is about probabilities, but the items carry point scores (10, 0, 3, ...) and the threshold is 10. Nothing connects the two.",
+      "why": "unexplained-jump. I'm quick, but my probability is shaky and 'posterior' and 'prior' were never introduced. The rule also contradicts the score-and-line rule taught so far, so I assume I missed a step.",
+      "fix": "Replace it with the score-versus-threshold rule, as the hi version does with {threshold}.",
+      "persona": "meera"
+    },
+    {
+      "id": "np-14",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "te",
+      "stringKey": "bh.rule",
+      "blockId": "b5",
+      "quote": "weighted sum threshold function ప్రకారం స్కోరు {threshold} లేదా అంతకంటే ఎక్కువైతే అది జంక్‌కి వెళ్తుంది.",
+      "problem": "Untranslated English jargon in Latin script ('weighted sum threshold function') opens the rule.",
+      "why": "unknown-term. I don't read English technical words in Latin script, and nothing explains them in Telugu. It sits at the start of the rule I must use.",
+      "fix": "Remove it. State the rule in Telugu: a score of 10 or more goes to junk.",
+      "persona": "telugu-student"
+    },
+    {
+      "id": "np-15",
+      "check": "number-trouble",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "bh.i1",
+      "blockId": "b5",
+      "quote": "इनाम वाला संदेश: 3 “!”, 2 पैसे वाले शब्द, 1 जल्दबाज़ी वाला शब्द (3 + 4 + 3)",
+      "problem": "The sum (3 + 4 + 3) has a 4 that comes from 2 money words at 2 points each. That multiplication is not shown. The same is true of '(4)' in bh.i7.",
+      "why": "number-trouble. I lose confidence when a number appears without its steps. I can't see where the 4 came from, so I can't check the 10.",
+      "fix": "Show the step, e.g. 2 पैसे वाले शब्द x 2 अंक = 4. Do the same in bh.i7.",
+      "persona": "rohit"
+    },
+    {
+      "id": "np-16",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "hi",
+      "stringKey": "bh.auto",
+      "blockId": "b5",
+      "quote": "वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया: दो धोखे, खाता बंद वाला संदेश और ₹99 वाला संदेश, इनबॉक्स में पहुँच गए।",
+      "problem": "A sentence of about 28 words carries a list inside it, after a colon.",
+      "why": "reading-load. Long sentences make me lose the thread, and this one asks me to keep two scams in mind.",
+      "fix": "Split it so the two slipped-through scams get their own short sentence.",
+      "persona": "rohit"
+    },
+    {
+      "id": "np-17",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "an.source",
+      "blockId": "b7",
+      "quote": "Think of an exam with a pass mark, where each answer you write earns some marks from the examiner who reads it carefully, and all of those marks from every answer on every page are then added up together into one total, and if that total reaches the pass mark that the school decided on beforehand, you pass.",
+      "problem": "The analogy is one sentence of about 66 words with four clauses chained by 'and'.",
+      "why": "reading-load. This is far beyond the roughly 18-word limit, and it is the key analogy.",
+      "fix": "Split it into short steps, as the hi and te versions already do.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-18",
+      "check": "boredom",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "cmp.explain",
+      "blockId": "b6",
+      "quote": "Only the “!” marks changed. Only the exclamation marks were different. Nothing else changed except the exclamation marks. The only difference between the two versions is the number of “!” marks.",
+      "problem": "The same point is made four times in a row.",
+      "why": "boredom. I got it after the first sentence and would skip the rest. This is the point where I start to think the lesson is slow.",
+      "fix": "Keep one statement and move straight to 'the filter cannot tell an excited friend from a scammer'.",
+      "persona": "meera"
+    },
+    {
+      "id": "np-19",
+      "check": "confusing-instruction",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "as.instruction",
+      "blockId": "b10",
+      "quote": "Do it.",
+      "problem": "The only instruction on the assemble screen is 'Do it.'. It doesn't say what to do or with what.",
+      "why": "confusing-instruction. I see five cards and don't know whether to order them, pick one, or read them. The hi and te versions say to put the steps in the right order.",
+      "fix": "Say what to do: put the filter's steps in the right order.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-20",
+      "check": "confusing-instruction",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "as.instruction",
+      "blockId": "b10",
+      "quote": "Do it.",
+      "problem": "The only instruction on the assemble screen is 'Do it.'. It doesn't say what to do or with what.",
+      "why": "confusing-instruction. I can guess from the numbered-looking cards, but a screen should not make me guess.",
+      "fix": "Say what to do: put the filter's steps in the right order.",
+      "persona": "meera"
+    },
+    {
+      "id": "np-21",
+      "check": "lost-place",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "ch.prompt",
+      "blockId": "b11",
+      "quote": "Use the rule from Part 2 to decide.",
+      "problem": "There are no numbered parts in the lesson. The prompt also gives no threshold, so I have no number to compare the score with.",
+      "why": "lost-place. I don't know what 'Part 2' means or where to look. The only rule I could find is the probability rule, which won't help.",
+      "fix": "State the rule and the threshold in the question, as hi and te do ('the threshold is 10').",
+      "persona": "asha"
+    },
+    {
+      "id": "np-22",
+      "check": "lost-place",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "ch.prompt",
+      "blockId": "b11",
+      "quote": "Use the rule from Part 2 to decide.",
+      "problem": "There are no numbered parts in the lesson. The prompt also gives no threshold, so I have no number to compare the score with.",
+      "why": "lost-place. I can reason it out from the hints, but I have to scroll back to guess which 'Part 2' is meant, and the nearest rule is the posterior-probability one.",
+      "fix": "Give the threshold in the question and drop the 'Part 2' reference.",
+      "persona": "meera"
+    },
+    {
+      "id": "np-23",
+      "check": "confusing-instruction",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "work out its score with the points above",
+      "problem": "It points to 'the points above', but this screen is in a later stage and shows no points. The 1, 2 and 3 points are only on the earlier knob screen.",
+      "why": "confusing-instruction. I don't remember the values and can't see them. The instruction refers to something not there.",
+      "fix": "Repeat the three point values on this screen, or link to them.",
+      "persona": "asha"
+    },
+    {
+      "id": "np-24",
+      "check": "confusing-instruction",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "ऊपर के अंकों से उसका स्कोर निकालिए",
+      "problem": "It points to 'the points above', but this screen is in a later stage and shows no points. The 1, 2 and 3 points are only on the earlier knob screen.",
+      "why": "confusing-instruction. I can't work out a score without the values, and I won't go and hunt for them. Working out a score on my own is the part I find hardest.",
+      "fix": "Repeat the three point values on this screen, or link to them.",
+      "persona": "rohit"
+    }
+  ],
+  "summary": {
+    "blocking": 20,
+    "advisory": 4,
+    "verdict": "needs-revision"
+  },
+  "personaVerdicts": [
+    {
+      "persona": "asha",
+      "wouldContinue": "no",
+      "reason": "The first screen says I should already know this from computer science class. Then the sort reveal, the filter description and the by-hand rule are walls of words I've never met ('features', 'linear classifier', 'posterior probability'). I would quit at the filter."
+    },
+    {
+      "persona": "rohit",
+      "wouldContinue": "maybe",
+      "reason": "The Hindi mostly reads gently and the examples are good. But the first explanation has 'probabilistic heuristic', a 0.4 ratio appears with no working, the sums skip a step, and the 'one more clue' line disagrees with the score 10. I'd keep going only if I trusted I could skip those."
+    },
+    {
+      "persona": "telugu-student",
+      "wouldContinue": "maybe",
+      "reason": "The Telugu is clear almost everywhere, the Telugu-script words are explained in context, and the analogy is friendly. The English jargon in the by-hand rule and the conflicting boundary line would stop me, but I'd probably carry on after the manual step."
+    },
+    {
+      "persona": "meera",
+      "wouldContinue": "maybe",
+      "reason": "The idea is simple and moves fast, which suits me. 'Do it.', 'Part 2', the probability-based rule and the contradiction at the threshold would irritate me. The four-times-repeated explanation would make me skip. I'd likely finish, but think the lesson is careless."
+    }
+  ]
+}

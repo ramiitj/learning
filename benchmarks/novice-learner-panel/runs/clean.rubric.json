@@ -1,0 +1,295 @@
+{
+  "agent": "novice-learner-panel",
+  "checks": [
+    {
+      "check": "unknown-term",
+      "status": "flagged",
+      "note": "Read every string in en, hi and te as each persona. English is clean (score, threshold, training are defined at first use). In hi and te, filter, junk, inbox and program appear from the title onward and are never explained. The glossary has a 'filter' entry, but no block lists it in glossaryTerms, so it cannot be tapped. Telugu also has a Latin-script PIN."
+    },
+    {
+      "check": "assumed-knowledge",
+      "status": "pass",
+      "note": "No string assumes a class, prior lesson or subject knowledge. Class 8 maths is enough. The cricket example in the hi and te model answers is fine for those locales. I only saw strings, not the on-screen hints for drag or tap, so I could not judge interface teaching."
+    },
+    {
+      "check": "unexplained-jump",
+      "status": "flagged",
+      "note": "Three jumps. Money words and urgent words are never listed, so a learner cannot tell which words earn points. knob.success contradicts the rule in bh.rule at exactly 10. The hi strings sort.m6 ('शुक्रवार को हो गया है' says practice already happened) and ch.prompt ('मीटिंग 3 बजे हो गई है') translate 'moved to' wrongly. I did not flag these separately because they do not break the lesson's logic."
+    },
+    {
+      "check": "confusing-instruction",
+      "status": "flagged",
+      "note": "bh.intro never says what to do on the screen. It says the points are already added up, but the strings show only the parts (3 + 4 + 3), so the learner does not know whether to add them or just choose Junk or Inbox. Other instructions (sort, assemble, check, break-it) were clear."
+    },
+    {
+      "check": "number-trouble",
+      "status": "flagged",
+      "note": "In bh.i1, bh.i5 and bh.i7 the step from '2 money words' to '4' is not shown, and the totals are not written. The weights from b4 must be remembered. cmp.explain (hi) says the excited version 'reached 10' without saying that ten '!' at 1 point each make 10."
+    },
+    {
+      "check": "reading-load",
+      "status": "flagged",
+      "note": "Most en strings are under 18 words. The long ones are the hi and te passive sentences in bh.intro (about 20 words) and the dense hi bh.auto (about 25 words, with an appositive list). Asha and Meera are fine."
+    },
+    {
+      "check": "boredom",
+      "status": "flagged",
+      "note": "Meera is the only persona who drags. The pre-check option pre1.b gives away the whole concept and then predict.c2 asks the same thing again. The five-step assemble and the check with a zero score are too easy after b5. 'It only counts clues, it does not understand' is stated more than five times. The interactions are otherwise engaging, and the fading formulas in b7 are by design."
+    },
+    {
+      "check": "lost-place",
+      "status": "flagged",
+      "note": "The b13 prompt (your-data) points back to 'the points above', but those points are on b4, eight blocks earlier. All other back-references match, including predict.f1's 'later' to br.t1, break-it targeting b4, and takeaway including b4, b13 and b14. The ending is clear."
+    }
+  ],
+  "flags": [
+    {
+      "id": "f1",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "title",
+      "blockId": "",
+      "quote": "जंक फ़िल्टर कैसे तय करता है?",
+      "problem": "The title and the next screens use फ़िल्टर, जंक, प्रोग्राम and (in b4) इनबॉक्स as if they were known. None of them is explained in Hindi before use.",
+      "why": "unknown-term / Article 6. Rohit knows English technical words only if they are explained in Hindi, and he cannot tap them. The glossary has 'filter', but no block's glossaryTerms includes it. 'Junk', 'inbox' and 'program' have no glossary entry at all.",
+      "fix": "Attach 'filter' to b1. Add and attach junk, inbox and program. Or give a one-line Hindi gloss at first use.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f2",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "te",
+      "stringKey": "hook.q",
+      "blockId": "b1",
+      "quote": "ఒక ప్రోగ్రామ్ ఎలా నిర్ణయించింది?",
+      "problem": "I read ప్రోగ్రామ్ in the first question, and జంక్ ఫిల్టర్ in the title. These are English words written in Telugu letters, and nothing says what they mean. ఇన్‌బాక్స్ appears later in b4 with no explanation either.",
+      "why": "unknown-term / Article 6. Untranslated English jargon is a wall for a learner with limited English. The 'filter' glossary entry exists, but no block links to it.",
+      "fix": "Link filter, junk, inbox and program as tappable glossary terms from b1, or explain them in Telugu in the hook.",
+      "persona": "telugu-student"
+    },
+    {
+      "id": "f3",
+      "check": "unknown-term",
+      "severity": "blocking",
+      "locale": "te",
+      "stringKey": "sort.m3",
+      "blockId": "b3",
+      "quote": "అత్యవసరం: మీ ఖాతా లాక్ అయింది, మీ PIN పంపండి",
+      "problem": "PIN is in English letters inside a Telugu sentence. I don't know what it is. I have to decide junk or real for this message.",
+      "why": "unknown-term. English-script jargon with no gloss, in a message the learner must judge. This message is later reused in bh.i3, bh.auto and br.",
+      "fix": "Gloss it in Telugu, for example 'మీ రహస్య సంఖ్య (PIN)'. Or swap in a Telugu phrase.",
+      "persona": "telugu-student"
+    },
+    {
+      "id": "f4",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.money",
+      "blockId": "b4",
+      "quote": "Money words (2 points each)",
+      "problem": "I don't know which words count as money words or urgent words. sort.reveal only says 'words like FREE and URGENT'. Later bh.i1 says the prize message has '2 money words, 1 urgent word', but I can't find them in 'You WON a prize!!! Click now'.",
+      "why": "unexplained-jump. Two of the three clue types are used for scoring and counting without a list. I cannot check any count or do the b13 task.",
+      "fix": "Show the filter's word lists, or highlight the counted words in each message.",
+      "persona": "asha"
+    },
+    {
+      "id": "f5",
+      "check": "confusing-instruction",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "bh.intro",
+      "blockId": "b5",
+      "quote": "Try the rule by hand first, the way the program does it.",
+      "problem": "It says the points are 'already added up', but I see '3 + 4 + 3', not a total. I can't tell what 'by hand' means here: add the numbers, pick Junk or Inbox, or both. I also don't know when I'm allowed to stop.",
+      "why": "confusing-instruction. The learner is not told which action to take, or what happens after a few items.",
+      "fix": "Say the action ('Add up each message, then tap Junk or Inbox') and say when the machine takes over.",
+      "persona": "asha"
+    },
+    {
+      "id": "f6",
+      "check": "number-trouble",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "bh.i1",
+      "blockId": "b5",
+      "quote": "इनाम वाला संदेश: 3 “!”, 2 पैसे वाले शब्द, 1 जल्दबाज़ी वाला शब्द (3 + 4 + 3)",
+      "problem": "Where does 4 come from? I have 2 money words, and I would have to remember the '2 points each' from b4. The total is never written, so I have to add the three numbers myself. The same happens in bh.i5 (6 + 2 + 3) and bh.i7 (4).",
+      "why": "number-trouble. Numbers appear without their steps, and Rohit loses confidence when that happens.",
+      "fix": "Show it as '2 पैसे वाले शब्द × 2 अंक = 4' and write '= 10' at the end, or show the weights next to the item.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f7",
+      "check": "number-trouble",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "cmp.explain",
+      "blockId": "b6",
+      "quote": "सिर्फ़ “!” चिह्न बदले, और उत्साहित रूप 10 की सीमा तक पहुँच गया।",
+      "problem": "I can't count the exclamation marks in 'जीत गए!!!!!!!!!!' by eye. Nowhere does it say there are 10 of them, each worth 1 point, so the score is 10. The 10 just appears.",
+      "why": "number-trouble. A score is stated without the count and the calculation.",
+      "fix": "State the count and the sum: 10 “!” × 1 अंक = 10; calm version = 0.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f8",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "One more clue and it goes to junk; one fewer and it reaches the inbox.",
+      "problem": "At score 10 the sentence says the message 'goes to junk', and bh.rule says '10 or more' is junk. But this line suggests that 10 is not junk yet. I don't know which is true, and I'm not sure what 'one more clue' means when clues are worth 1, 2 or 3 points.",
+      "why": "unexplained-jump. The conclusion at the line contradicts the rule given later, and I can't tell what to trust.",
+      "fix": "Make the text match the rule: 'a score of 10 already goes to junk; 9 or less reaches the inbox'.",
+      "persona": "asha"
+    },
+    {
+      "id": "f9",
+      "check": "unexplained-jump",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "knob.success",
+      "blockId": "b4",
+      "quote": "Score 10: exactly on the threshold. One more clue and it goes to junk",
+      "problem": "If '≥ threshold' means junk (bh.rule), then 10 is already junk and 'one more clue and it goes to junk' is wrong. If 10 is inbox, bh.i1 (score 10 → junk) is wrong. One of them is off by one.",
+      "why": "unexplained-jump. I'd notice immediately, and it undermines trust in the rule.",
+      "fix": "Check the rule direction at exactly 10 in the config and align this text, bh.rule and the components.",
+      "persona": "meera"
+    },
+    {
+      "id": "f10",
+      "check": "lost-place",
+      "severity": "blocking",
+      "locale": "en",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "work out its score with the points above",
+      "problem": "There are no points above this screen. The 1, 2 and 3 points were on the slider screen many steps back, and I don't remember which clue got which. I also don't know where to enter the count or score I work out.",
+      "why": "lost-place. A reference back that does not match what is on screen.",
+      "fix": "Repeat the three point values in the prompt, say where to write the working, and link to the word lists.",
+      "persona": "asha"
+    },
+    {
+      "id": "f11",
+      "check": "lost-place",
+      "severity": "blocking",
+      "locale": "hi",
+      "stringKey": "yd.prompt",
+      "blockId": "b13",
+      "quote": "ऊपर के अंकों से उसका स्कोर निकालिए",
+      "problem": "'ऊपर के अंकों' - which points? On my small shared phone the slider screen is long gone. I can't scroll back and do the sum at the same time.",
+      "why": "lost-place and number-trouble. The prompt refers to numbers that are not on this screen.",
+      "fix": "Put '“!” = 1, पैसे वाला शब्द = 2, जल्दबाज़ी वाला शब्द = 3' in the prompt.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f12",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "hi",
+      "stringKey": "bh.intro",
+      "blockId": "b5",
+      "quote": "नीचे हर संदेश के सुराग गिने जा चुके हैं और ऊपर वाले फ़िल्टर के अंकों से जोड़े जा चुके हैं।",
+      "problem": "This is a 20-word sentence with two passive clauses joined by 'और'. I lose the thread halfway.",
+      "why": "reading-load. Over the 18-word limit, and Rohit gets lost by long sentences.",
+      "fix": "Split it into two short active sentences.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f13",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "hi",
+      "stringKey": "bh.auto",
+      "blockId": "b5",
+      "quote": "वह कभी थकी नहीं, और उसने कभी अपनी समझ का इस्तेमाल भी नहीं किया: दो धोखे, खाता बंद वाला संदेश और ₹99 वाला संदेश, इनबॉक्स में पहुँच गए।",
+      "problem": "This is about 25 words, with a colon and a list inside the sentence. I can't tell which two messages got through.",
+      "why": "reading-load. The key finding of the by-hand exercise is buried in a dense sentence.",
+      "fix": "Split it: one sentence for the machine, one that names the two scams.",
+      "persona": "rohit"
+    },
+    {
+      "id": "f14",
+      "check": "reading-load",
+      "severity": "advisory",
+      "locale": "te",
+      "stringKey": "bh.intro",
+      "blockId": "b5",
+      "quote": "కింద ప్రతి సందేశంలోని ఆధారాలు ఇప్పటికే లెక్కించబడ్డాయి, పైన ఉన్న ఫిల్టర్ పాయింట్లతో కలపబడ్డాయి.",
+      "problem": "This is long and uses bookish passives (లెక్కించబడ్డాయి, కలపబడ్డాయి), which I don't use. The last sentence, 'ముందు ప్రోగ్రామ్ చేసినట్టే', could mean 'as it was programmed before', so I'm unsure what I should do.",
+      "why": "reading-load. Passive and dense for a class 9 reader who reads everyday Telugu.",
+      "fix": "Use short active sentences and plain spoken Telugu.",
+      "persona": "telugu-student"
+    },
+    {
+      "id": "f15",
+      "check": "boredom",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "pre1.b",
+      "blockId": "",
+      "quote": "It adds up clues into a score and compares it with a line",
+      "problem": "The pre-check hands me the whole idea. Then b2 asks again, and predict.c2 says nearly the same thing. By the time I 'predict', I already know the answer, and I skim the reveal.",
+      "why": "boredom. Repetition kills the predict step for a quick reader.",
+      "fix": "Make the pre-check measure something the lesson does not give away. Or hide the answer text from the first option.",
+      "persona": "meera"
+    },
+    {
+      "id": "f16",
+      "check": "boredom",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "as.instruction",
+      "blockId": "b10",
+      "quote": "Put the filter’s steps in order.",
+      "problem": "I've just done these five steps in b4 to b6. Ordering them takes five seconds and teaches me nothing. b11's 'no clues' question is just as easy.",
+      "why": "boredom. A low-demand task after a strong stretch makes me think the lesson is slow.",
+      "fix": "Make the activity optional or harder, or move it to a lower depth.",
+      "persona": "meera"
+    },
+    {
+      "id": "f17",
+      "check": "boredom",
+      "severity": "advisory",
+      "locale": "en",
+      "stringKey": "an.break",
+      "blockId": "b7",
+      "quote": "The filter only counts clues. It has no idea what a message means.",
+      "problem": "I've now read 'it only counts clues / doesn't understand' in cmp.explain and here. It comes again in ch.f3, post2.fb, take.card and eb.model. I stop reading these lines.",
+      "why": "boredom. The same point repeated five or more times.",
+      "fix": "State it once with the experience (b6) and let later blocks assume it.",
+      "persona": "meera"
+    }
+  ],
+  "summary": {
+    "blocking": 11,
+    "advisory": 6,
+    "verdict": "needs-revision"
+  },
+  "personaVerdicts": [
+    {
+      "persona": "asha",
+      "wouldContinue": "yes",
+      "reason": "The hook and the sorting game pull me in, and the exam analogy makes sense. I'd stall at the slider screen (don't know the word lists) and at b5 (what do I do by hand?), but I'd keep going."
+    },
+    {
+      "persona": "rohit",
+      "wouldContinue": "maybe",
+      "reason": "I follow the sorting and the story. The English-derived terms are not explained in Hindi, the scores in b5 and b6 appear without steps, and the long sentences wear me down. I'd probably stop at b5 if I felt I got the sums wrong."
+    },
+    {
+      "persona": "telugu-student",
+      "wouldContinue": "maybe",
+      "reason": "The Telugu is mostly clear, but filter, program, inbox and PIN are English words that nobody explains. I'd carry on if I could tap them, and give up if I could not."
+    },
+    {
+      "persona": "meera",
+      "wouldContinue": "maybe",
+      "reason": "I enjoy the sliders, compare and break-it. The predict step is already answered by the pre-check, the ordering task is trivial and the main point is repeated. I'd skim the text and notice the off-by-one at the threshold."
+    }
+  ]
+}

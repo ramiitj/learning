@@ -1,0 +1,99 @@
+{
+  "note": "Judgements on flags that do not match a planted trap. 'genuine' = a real problem in the lesson (counts as a correct flag); 'noise' = not a problem (counts as a false alarm); 'context' = would be a problem without context the panel could not see (counts as neither). Recorded by the build team on 2026-10-15; to be confirmed by the creator.",
+  "verdicts": [
+    {
+      "stringKey": "knob.success",
+      "check": "unexplained-jump",
+      "verdict": "genuine",
+      "note": "Score 10 already reaches the 10-or-more threshold, so 'one more clue' contradicts the live sentence. The Accuracy & Safety Reviewer found the same problem; fixed in the live lesson."
+    },
+    {
+      "stringKey": "bh.i1",
+      "check": "number-trouble",
+      "verdict": "genuine",
+      "note": "'(3 + 4 + 3)' hides the step 2 money words x 2 points = 4."
+    },
+    {
+      "stringKey": "bh.auto",
+      "check": "reading-load",
+      "verdict": "genuine",
+      "note": "Long sentence with an embedded list; advisory."
+    },
+    {
+      "stringKey": "yd.prompt",
+      "check": "confusing-instruction",
+      "verdict": "genuine",
+      "note": "'The points above' are not on screen. Also found by the Accuracy & Safety Reviewer; fixed in the live lesson."
+    },
+    {
+      "stringKey": "title",
+      "check": "unknown-term",
+      "locale": "hi",
+      "verdict": "genuine",
+      "note": "फ़िल्टर, जंक, प्रोग्राम, इनबॉक्स are used before any explanation; 'filter' is in the glossary but never marked as a term in the text."
+    },
+    {
+      "stringKey": "hook.q",
+      "check": "unknown-term",
+      "locale": "te",
+      "verdict": "genuine",
+      "note": "Same as the Hindi flag: English-derived terms are not explained."
+    },
+    {
+      "stringKey": "sort.m3",
+      "check": "unknown-term",
+      "locale": "te",
+      "verdict": "genuine",
+      "note": "PIN is not explained."
+    },
+    {
+      "stringKey": "knob.money",
+      "check": "unexplained-jump",
+      "verdict": "genuine",
+      "note": "The lesson never lists which words count as money or urgent words."
+    },
+    {
+      "stringKey": "bh.intro",
+      "check": "confusing-instruction",
+      "verdict": "genuine",
+      "note": "'Already added up' but only the parts are shown; the task is unclear."
+    },
+    {
+      "stringKey": "cmp.explain",
+      "check": "number-trouble",
+      "locale": "hi",
+      "verdict": "genuine",
+      "note": "The count of '!' is never stated."
+    },
+    {
+      "stringKey": "yd.prompt",
+      "check": "lost-place",
+      "verdict": "genuine",
+      "note": "Same problem as confusing-instruction on yd.prompt."
+    },
+    {
+      "stringKey": "bh.intro",
+      "check": "reading-load",
+      "verdict": "genuine",
+      "note": "Long passive sentence in hi and te; advisory."
+    },
+    {
+      "stringKey": "pre1.b",
+      "check": "boredom",
+      "verdict": "context",
+      "note": "Pre-checks are not shown to learners yet (DECISIONS 2026-09-24, deferred item 2); the panel could not know."
+    },
+    {
+      "stringKey": "as.instruction",
+      "check": "boredom",
+      "verdict": "genuine",
+      "note": "Ordering steps just done is too easy for a class 12 learner; advisory."
+    },
+    {
+      "stringKey": "an.break",
+      "check": "boredom",
+      "verdict": "noise",
+      "note": "The 'only counts clues' line is repeated on purpose: it is the core misconception and each repeat is one short line."
+    }
+  ]
+}
