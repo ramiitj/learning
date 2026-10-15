@@ -52,7 +52,10 @@ describe("knob", () => {
     renderBlock(knob, block, strings);
     const slider = screen.getByLabelText("Sensitivity");
     fireChange(slider, "6");
-    expect(screen.getByText(/Volume: 6/)).toBeInTheDocument();
+    // Once in the readout, once in the live score pinned for phones (hidden from assistive technology).
+    const shown = screen.getAllByText(/Volume: 6/);
+    expect(shown).toHaveLength(2);
+    expect(shown.filter((el) => el.closest("[aria-hidden='true']"))).toHaveLength(1);
     expect(screen.getByText(/1 × 6 \+ 1 × 0 = 6/)).toBeInTheDocument();
   });
 

@@ -61,7 +61,7 @@ export const te: Record<string, string> = {
   "tools.open": "పాఠం సాధనాలు",
   "recall.show": "నేను చేసింది చూపించండి",
   "recall.skip": "చూడకుండా కొనసాగండి",
-  "ending.title": "మీరు ఎంత దూరం వచ్చారో చూడండి",
+  "ending.title": "కొత్తదానిపై ప్రయత్నించి చూడండి",
   "ending.intro": "{n, plural, one {ఒక ప్రశ్న} other {# ప్రశ్నలు}}, ఇప్పుడు మీకు తెలిసినదానితో ప్రయత్నించడానికి. మీ జవాబులు ఇంకెవరూ చూడరు.",
   "ending.check": "నా ఆలోచనను పరీక్షించండి",
   "ending.landed": "అవును, అదే.",

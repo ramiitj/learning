@@ -61,7 +61,7 @@ export const en: Record<string, string> = {
   "tools.open": "Lesson tools",
   "recall.show": "Show me what I made",
   "recall.skip": "Carry on without looking",
-  "ending.title": "See how far you've come",
+  "ending.title": "Try it on something new",
   "ending.intro": "{n, plural, one {One question} other {# questions}} to try with what you know now. Nobody else sees your answers.",
   "ending.check": "Check my thinking",
   "ending.landed": "Yes, that's it.",

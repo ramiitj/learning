@@ -61,7 +61,7 @@ export const hi: Record<string, string> = {
   "tools.open": "पाठ के साधन",
   "recall.show": "मैंने जो बनाया वह दिखाएँ",
   "recall.skip": "बिना देखे आगे बढ़ें",
-  "ending.title": "देखिए आप कितना आगे आ गए",
+  "ending.title": "किसी नई चीज़ पर आज़माइए",
   "ending.intro": "{n, plural, one {एक सवाल} other {# सवाल}}, जिन्हें आप अब की अपनी समझ से आज़मा सकते हैं। आपके जवाब कोई और नहीं देखता।",
   "ending.check": "मेरी सोच जाँचें",
   "ending.landed": "हाँ, यही है।",

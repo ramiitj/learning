@@ -97,29 +97,31 @@ export type StageKey = (typeof STAGES)[number];
 export type StageColors = Record<StageKey, { ink: string; soft: string }>;
 
 export const stages: Record<ThemeMode, StageColors> = {
+  // Hues are kept apart from each other and from the colours that already carry meaning:
+  // indigo (actions), teal (insight feedback) and amber (look-again feedback).
   light: {
-    hook: { ink: "#9A4A07", soft: "#FDF0DC" },
-    predict: { ink: "#4338CA", soft: "#E6E4FB" },
-    manipulate: { ink: "#0B6B63", soft: "#DDF3EF" },
-    explain: { ink: "#6D28D9", soft: "#EDE7FB" },
-    "break-it": { ink: "#A63A0C", soft: "#FBE6DB" },
-    "transfer-reflect": { ink: "#3F6212", soft: "#E9F2D6" },
+    hook: { ink: "#A1185A", soft: "#FCE4EF" },
+    predict: { ink: "#1D5B96", soft: "#E0ECF8" },
+    manipulate: { ink: "#2E6B1E", soft: "#E3F1DB" },
+    explain: { ink: "#7B2FB0", soft: "#F1E6FA" },
+    "break-it": { ink: "#44505E", soft: "#E7EAEE" },
+    "transfer-reflect": { ink: "#615300", soft: "#F3EFCF" },
   },
   dark: {
-    hook: { ink: "#FBBF24", soft: "#3A2E14" },
-    predict: { ink: "#A5B4FC", soft: "#2E2B52" },
-    manipulate: { ink: "#5EEAD4", soft: "#133B37" },
-    explain: { ink: "#C4B5FD", soft: "#33275A" },
-    "break-it": { ink: "#FDBA74", soft: "#43271A" },
-    "transfer-reflect": { ink: "#BEF264", soft: "#2A3714" },
+    hook: { ink: "#F9A8D4", soft: "#45182F" },
+    predict: { ink: "#93C5FD", soft: "#15304D" },
+    manipulate: { ink: "#A3E39A", soft: "#1D3A16" },
+    explain: { ink: "#D8B4FE", soft: "#35204A" },
+    "break-it": { ink: "#CBD5E1", soft: "#2A313A" },
+    "transfer-reflect": { ink: "#E8D768", soft: "#38320F" },
   },
   projection: {
-    hook: { ink: "#7A3A00", soft: "#FFEBCC" },
-    predict: { ink: "#2A1FA8", soft: "#E4E2FF" },
-    manipulate: { ink: "#004D46", soft: "#D2F2EC" },
-    explain: { ink: "#4C1D95", soft: "#EBE3FF" },
-    "break-it": { ink: "#7C2D06", soft: "#FFE3D3" },
-    "transfer-reflect": { ink: "#2D4A0B", soft: "#E4F1CC" },
+    hook: { ink: "#7A0F42", soft: "#FFE0EE" },
+    predict: { ink: "#123F6E", soft: "#DDEBFA" },
+    manipulate: { ink: "#1F4D12", soft: "#DDF0D3" },
+    explain: { ink: "#5B1C8A", soft: "#F0E2FF" },
+    "break-it": { ink: "#2F3843", soft: "#E4E8EC" },
+    "transfer-reflect": { ink: "#453B00", soft: "#F2EDC6" },
   },
 };
 

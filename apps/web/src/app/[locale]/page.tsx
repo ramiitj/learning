@@ -70,7 +70,7 @@ export default async function Cover({ params }: { params: Promise<{ locale: stri
       ) : null}
 
       <p className="cover__preview">
-        <Link href="/preview">{t("preview")}</Link> · {s("teaching")}{" "}
+        {s("teaching")}{" "}
         {story ? <Link href={`/lessons/${story.id}/classroom`}>{s("openClassroom")}</Link> : null}
       </p>
     </div>

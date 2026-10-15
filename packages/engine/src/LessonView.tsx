@@ -76,7 +76,10 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
       const forward = e.key === "PageDown" || e.key === "ArrowRight" || (e.key === " " && !target?.closest("button, a, label"));
       const back = e.key === "PageUp" || e.key === "ArrowLeft";
       if (!forward && !back) return;
-      const steps = [...document.querySelectorAll<HTMLElement>(".lm-lesson .lm-chapter, .lm-lesson .lm-block")];
+      // A chapter banner and the block right after it share one screen, so they are one step.
+      const steps = [...document.querySelectorAll<HTMLElement>(".lm-lesson .lm-chapter, .lm-lesson .lm-block")].filter(
+        (el) => !(el.classList.contains("lm-block") && el.previousElementSibling?.classList.contains("lm-chapter")),
+      );
       const tops = steps.map((el) => el.getBoundingClientRect().top);
       const next = forward ? steps[tops.findIndex((t) => t > 8)] : steps[tops.map((t) => t < -8).lastIndexOf(true)];
       if (!next) return;
@@ -103,31 +106,43 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
   }, [lesson]);
 
   const titleId = useId();
-  const chapters = useMemo(
-    () => [
-      ...lesson.stages.map((st, i) => ({ id: `${titleId}-c${i}`, stage: st.stage as string, n: i + 1 })),
-      ...((lesson.checks?.post?.length ?? 0) > 0 ? [{ id: `${titleId}-end`, stage: "ending", n: lesson.stages.length + 1 }] : []),
-    ],
-    [lesson, titleId],
-  );
+  // The post-checks come before a final "transfer and reflect" chapter, so the lesson ends on what
+  // the learner made (their card and their own explanation), not on questions.
+  const hasEnding = (lesson.checks?.post?.length ?? 0) > 0;
+  const lastIsReflect = lesson.stages[lesson.stages.length - 1]?.stage === "transfer-reflect";
+  const endingAt = hasEnding ? (lastIsReflect ? lesson.stages.length - 1 : lesson.stages.length) : -1;
+  const chapters = useMemo(() => {
+    const list: Chapter[] = lesson.stages.map((st, i) => ({ id: `${titleId}-c${i}`, stage: st.stage as string, n: 0, index: i }));
+    if (endingAt >= 0) list.splice(endingAt, 0, { id: `${titleId}-end`, stage: "ending", n: 0, index: -1 });
+    return list.map((c, i) => ({ ...c, n: i + 1 }));
+  }, [lesson, titleId, endingAt]);
   const [current, setCurrent] = useState(0);
+  const [headingOnScreen, setHeadingOnScreen] = useState(true);
   useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return;
-    const els = chapters.map((c) => document.getElementById(c.id)).filter((e): e is HTMLElement => !!e);
-    // The chapter whose top has most recently crossed the upper third of the screen is "current".
-    const io = new IntersectionObserver(
-      () => {
-        const line = window.innerHeight / 3;
-        let idx = 0;
-        els.forEach((el, i) => {
-          if (el.getBoundingClientRect().top <= line) idx = i;
-        });
-        setCurrent(idx);
-      },
-      { rootMargin: "0px 0px -66% 0px", threshold: [0, 1] },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const line = window.innerHeight / 3;
+      let idx = 0;
+      chapters.forEach((c, i) => {
+        const el = document.getElementById(c.id);
+        if (el && el.getBoundingClientRect().top <= line) idx = i;
+      });
+      setCurrent(idx);
+      const h = document.getElementById(`${chapters[idx]?.id}-h`)?.getBoundingClientRect();
+      setHeadingOnScreen(!!h && h.top > 56 && h.top < window.innerHeight);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [chapters]);
   const draftLocale = locale !== FALLBACK_LOCALE && lesson.localeStatus[locale] !== "reviewed";
 
@@ -141,30 +156,32 @@ export function LessonView({ lesson, locale, mode = "personal", registry, glossa
           {draftLocale ? <p className="lm-notice" role="note">{ui("draft.translation")}</p> : null}
         </header>
 
-        <Toolbar depth={state.depth} hasGlossary={termsInLesson.length > 0} chapters={chapters} current={current} />
+        <Toolbar depth={state.depth} hasGlossary={termsInLesson.length > 0} chapters={chapters} current={current} showChapter={!headingOnScreen} />
 
         {state.visits > 1 ? <RecallWarmup lesson={lesson} /> : null}
 
-        {lesson.stages.map((stage, si) => (
-          <section key={`${stage.stage}-${si}`} id={chapters[si]!.id} className="lm-stage" data-stage={stage.stage} style={stageVars(stage.stage)} aria-labelledby={`${chapters[si]!.id}-h`}>
-            <header className="lm-chapter">
-              <span className="lm-chapter__num" aria-hidden="true">{si + 1}</span>
-              <div>
-                <p className="lm-chapter__part">{ui("chapter.part", { n: si + 1 })}</p>
-                <h2 id={`${chapters[si]!.id}-h`} className="lm-chapter__title" tabIndex={-1}>{ui(`stage.${stage.stage}`)}</h2>
-              </div>
-            </header>
-            {stage.blocks.map((block) =>
-              depthRank(block.depth) <= depthRank(state.depth) || state.expanded.includes(block.id) ? (
-                <BlockFrame key={block.id} block={block} firstUse={firstOfType.has(block.id)} />
-              ) : (
-                <DeeperTeaser key={block.id} blockId={block.id} />
-              ),
-            )}
-          </section>
-        ))}
-
-        <Ending checks={lesson.checks?.post ?? []} chapterId={`${titleId}-end`} n={lesson.stages.length + 1} />
+        {chapters.map((c) =>
+          c.stage === "ending" ? (
+            <Ending key={c.id} checks={lesson.checks?.post ?? []} chapterId={c.id} n={c.n} />
+          ) : (
+            <section key={c.id} id={c.id} className="lm-stage" data-stage={c.stage} style={stageVars(c.stage)} aria-labelledby={`${c.id}-h`}>
+              <ChapterHeader id={`${c.id}-h`} n={c.n} title={ui(`stage.${c.stage}`)} />
+              {lesson.stages[c.index]!.blocks.map((block) =>
+                depthRank(block.depth) <= depthRank(state.depth) || state.expanded.includes(block.id) ? (
+                  <BlockFrame key={block.id} block={block} firstUse={firstOfType.has(block.id)} />
+                ) : (
+                  <DeeperTeaser key={block.id} blockId={block.id} />
+                ),
+              )}
+            </section>
+          ),
+        )}
+        {hasEnding ? (
+          <p className="lm-ending__done">
+            <Icon name="check" />
+            {ui("ending.done")}
+          </p>
+        ) : null}
       </article>
 
       <GlossaryDialog open={glossaryOpen !== null} focus={glossaryOpen?.focus} termIds={termsInLesson} onClose={() => setGlossaryOpen(null)} />
@@ -185,6 +202,21 @@ interface Chapter {
   id: string;
   stage: string;
   n: number;
+  /** Index into lesson.stages, or -1 for the ending. */
+  index: number;
+}
+
+function ChapterHeader({ id, n, title }: { id: string; n: number; title: string }) {
+  const { ui } = useEngine();
+  return (
+    <header className="lm-chapter">
+      <span className="lm-chapter__num" aria-hidden="true">{n}</span>
+      <div>
+        <p className="lm-chapter__part">{ui("chapter.part", { n })}</p>
+        <h2 id={id} className="lm-chapter__title" tabIndex={-1}>{title}</h2>
+      </div>
+    </header>
+  );
 }
 
 /**
@@ -193,7 +225,7 @@ interface Chapter {
  * chapters, so learners never lose their place in a long story. The rail marks
  * where you are, not how much is "done": it is navigation, not a progress bar.
  */
-function Toolbar({ depth, hasGlossary, chapters, current }: { depth: Depth; hasGlossary: boolean; chapters: Chapter[]; current: number }) {
+function Toolbar({ depth, hasGlossary, chapters, current, showChapter }: { depth: Depth; hasGlossary: boolean; chapters: Chapter[]; current: number; showChapter: boolean }) {
   const { store, ui, announce, openGlossary } = useEngine();
   const [confirm, setConfirm] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
@@ -220,7 +252,7 @@ function Toolbar({ depth, hasGlossary, chapters, current }: { depth: Depth; hasG
     <div className="lm-toolbar" role="group" aria-label={ui("lesson.controls")}>
       <div className="lm-toolbar__row">
         {here ? (
-          <button type="button" className="lm-chapter-btn" style={stageVars(here.stage)} aria-expanded={chaptersOpen} aria-controls={chaptersId} onClick={() => { setChaptersOpen(!chaptersOpen); setToolsOpen(false); }}>
+          <button type="button" className="lm-chapter-btn" data-quiet={!showChapter && !chaptersOpen ? "" : undefined} style={stageVars(here.stage)} aria-expanded={chaptersOpen} aria-controls={chaptersId} onClick={() => { setChaptersOpen(!chaptersOpen); setToolsOpen(false); }}>
             <span className="lm-chapter-btn__num" aria-hidden="true">{here.n}</span>
             <span className="lm-chapter-btn__name">
               <span className="lm-sr-only">{ui("chapter.current")} </span>
@@ -541,21 +573,11 @@ function Ending({ checks, chapterId, n }: { checks: CheckItem[]; chapterId: stri
   if (!checks.length) return null;
   return (
     <section id={chapterId} className="lm-stage lm-ending" style={stageVars("ending")} aria-labelledby={`${chapterId}-h`}>
-      <header className="lm-chapter">
-        <span className="lm-chapter__num" aria-hidden="true">{n}</span>
-        <div>
-          <p className="lm-chapter__part">{ui("chapter.part", { n })}</p>
-          <h2 id={`${chapterId}-h`} className="lm-chapter__title" tabIndex={-1}>{ui("ending.title")}</h2>
-        </div>
-      </header>
+      <ChapterHeader id={`${chapterId}-h`} n={n} title={ui("ending.title")} />
       <p className="lm-lead">{ui("ending.intro", { n: checks.length })}</p>
       {checks.map((c) => (
         <PostCheck key={c.id} item={c} />
       ))}
-      <p className="lm-ending__done">
-        <Icon name="check" />
-        {ui("ending.done")}
-      </p>
     </section>
   );
 }
@@ -573,6 +595,10 @@ function PostCheck({ item }: { item: CheckItem }) {
   const landed = state.checked !== undefined && state.checked === item.answer;
   return (
     <div className="lm-block lm-act lm-postcheck">
+      <p className="lm-act__label">
+        <span className="lm-act__dot" aria-hidden="true" />
+        {ui("act.decide")}
+      </p>
       <ChoiceGroup
         legend={t.rich(item.promptKey)}
         choices={item.options.map((o) => ({ id: o, label: t.rich(o), tone: state.checked === o ? (landed ? "insight" : "warm") : undefined }))}

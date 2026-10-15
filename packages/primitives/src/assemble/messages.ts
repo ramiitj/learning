@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Put the pieces in the order you think is right. Use the up and down buttons to move a piece, then check your order.",
+    howto: "Move pieces up or down, then check your order.",
     moveUp: "Move {item} up",
     moveDown: "Move {item} down",
     atTop: "{item} is already at the top",
@@ -11,7 +11,7 @@ export const messages = {
     classroomPrompt: "Ask the class what should come next, then move a piece.",
   },
   hi: {
-    howto: "टुकड़ों को उस क्रम में रखें जो आपको सही लगे। किसी टुकड़े को हिलाने के लिए ऊपर और नीचे के बटन इस्तेमाल करें, फिर अपना क्रम जाँचें।",
+    howto: "टुकड़ों को ऊपर-नीचे खिसकाएँ, फिर क्रम जाँचें।",
     moveUp: "{item} को ऊपर ले जाएँ",
     moveDown: "{item} को नीचे ले जाएँ",
     atTop: "{item} पहले से सबसे ऊपर है",
@@ -22,7 +22,7 @@ export const messages = {
     classroomPrompt: "कक्षा से पूछें कि आगे क्या आना चाहिए, फिर एक टुकड़ा हिलाएँ।",
   },
   te: {
-    howto: "మీకు సరైనదని అనిపించే క్రమంలో ముక్కలను అమర్చండి. ఒక ముక్కను కదిలించడానికి పైకి, కిందికి బటన్లను వాడండి, తర్వాత మీ క్రమాన్ని తనిఖీ చేయండి.",
+    howto: "ముక్కలను పైకి లేదా కిందికి జరిపి, క్రమాన్ని పరీక్షించండి.",
     moveUp: "{item}ను పైకి తరలించండి",
     moveDown: "{item}ను కిందికి తరలించండి",
     atTop: "{item} ఇప్పటికే పైన ఉంది",

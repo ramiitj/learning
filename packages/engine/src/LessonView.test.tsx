@@ -36,9 +36,9 @@ const registry = new Registry([pick]);
 describe("LessonView", () => {
   beforeEach(() => localStorage.clear());
 
-  it("ends with the post-checks, framed as seeing how far you've come", async () => {
+  it("offers the post-checks as a chance to try it on something new, never as a test", async () => {
     render(<LessonView lesson={lesson} locale="en" registry={registry} storageKey="t1" />);
-    expect(screen.getByRole("heading", { name: "See how far you've come" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Try it on something new" })).toBeInTheDocument();
     await userEvent.click(screen.getByLabelText("The dark one"));
     await userEvent.click(screen.getByRole("button", { name: "Check my thinking" }));
     expect(screen.getByText(/Have another think/)).toBeInTheDocument();
@@ -46,6 +46,14 @@ describe("LessonView", () => {
     await userEvent.click(screen.getByRole("button", { name: "Check my thinking" }));
     expect(screen.getByText("Yes, that's it.")).toBeInTheDocument();
     expect(screen.getByText("Light comes from the flame.")).toBeInTheDocument();
+  });
+
+  it("places the post-checks before a final transfer-and-reflect chapter, so the lesson ends on what the learner made", () => {
+    const withReflect = { ...lesson, stages: [...lesson.stages, { stage: "transfer-reflect" as const, blocks: [{ id: "b9", type: "pick", componentVersion: "1.0", config: { labelKey: "pick" } }] }] };
+    render(<LessonView lesson={withReflect} locale="en" registry={registry} storageKey="t5" />);
+    const headings = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
+    expect(headings.indexOf("Try it on something new")).toBeLessThan(headings.indexOf("Your turn"));
+    expect(screen.getByText(/That's the end of this story/)).toBeInTheDocument();
   });
 
   it("asks a returning learner to remember before showing what they made", async () => {

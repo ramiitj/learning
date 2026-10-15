@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "For each idea below, first predict whether it will break the system, then see what happens. Finding a limit is the point, so there is no penalty for any guess.",
+    howto: "Guess if each trick breaks it, then see.",
     willItBreak: "Before you see what happens: will this break it?",
     guessBreaks: "I think it breaks",
     guessHolds: "I think it holds up",
@@ -17,7 +17,7 @@ export const messages = {
     summaryFound: "{n, plural, one {You found # way to break it} other {You found # ways to break it}}",
   },
   hi: {
-    howto: "नीचे दिए हर तरीके के लिए पहले अनुमान लगाइए कि क्या इससे सिस्टम टूटेगा, फिर देखिए क्या होता है। सीमा ढूँढना ही मक़सद है, इसलिए किसी भी अनुमान में कोई नुकसान नहीं।",
+    howto: "हर तरकीब से यह टूटेगा या नहीं, अनुमान लगाइए, फिर देखिए।",
     willItBreak: "क्या होता है यह देखने से पहले: क्या इससे यह टूटेगा?",
     guessBreaks: "मुझे लगता है यह टूटेगा",
     guessHolds: "मुझे लगता है यह टिका रहेगा",
@@ -34,7 +34,7 @@ export const messages = {
     summaryFound: "{n, plural, one {आपको इसे तोड़ने का # तरीका मिला} other {आपको इसे तोड़ने के # तरीके मिले}}",
   },
   te: {
-    howto: "కింద ఉన్న ప్రతి ఆలోచనకు, ముందుగా అది వ్యవస్థను విరగ్గొడుతుందో లేదో ఊహించండి, తర్వాత ఏం జరుగుతుందో చూడండి. ఒక పరిమితిని కనుగొనడమే లక్ష్యం, కాబట్టి ఏ అంచనాలోనూ నష్టం లేదు.",
+    howto: "ప్రతి ఉపాయంతో ఇది విరుగుతుందో ఊహించి, తర్వాత చూడండి.",
     willItBreak: "ఏం జరుగుతుందో చూసే ముందు: దీనితో ఇది విరిగిపోతుందా?",
     guessBreaks: "ఇది విరిగిపోతుందని అనుకుంటున్నాను",
     guessHolds: "ఇది తట్టుకుంటుందని అనుకుంటున్నాను",

@@ -122,9 +122,28 @@ export function Knob({ config, state, setState, t, ui, locale, block }: Props) {
     <div className="lm-knob">
       <p className="lm-lead">{t.rich(config.promptKey)}</p>
       {config.goal ? <p className="lm-notice">{t.rich(config.goal.goalKey)}</p> : null}
+      <LiveScore config={config} values={values} locale={locale} t={t} ui={ui} />
       <Controls config={config} values={values} locale={locale} t={t} ui={ui} onChange={onChange} idPrefix={`knob-${block.id}`} />
       <Readout config={config} values={values} locale={locale} t={t} ui={ui} />
     </div>
+  );
+}
+
+/**
+ * Phones: the full result sits below the sliders, out of sight while dragging. This one-line
+ * score stays pinned under the toolbar so the response is visible as the thumb moves. Hidden
+ * from assistive technology, which already gets the full sentence in the readout.
+ */
+function LiveScore({ config, values, locale, t, ui }: { config: KnobConfig; values: Values; locale: string; t: Props["t"]; ui: Props["ui"] }) {
+  const output = evaluate(config.model, values);
+  const value =
+    config.model.type === "threshold" && config.model.output.labelKeys ? t.text(config.model.output.labelKeys[output as 0 | 1]) : fmt(locale, output, config.model.output.decimals);
+  const decision = config.decision ? t.text(output >= config.decision.threshold ? config.decision.aboveKey : config.decision.belowKey) : null;
+  return (
+    <p className="lm-knob__live" aria-hidden="true">
+      <span>{ui("outputFallback", { label: t.text(config.model.output.labelKey), value })}</span>
+      {decision ? <span className="lm-knob__live-decision">→ {decision}</span> : null}
+    </p>
   );
 }
 

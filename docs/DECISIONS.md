@@ -4,6 +4,23 @@ Every decision that changes the specification is recorded here with its date and
 
 ---
 
+## 2026-10-15 — Learner-experience redesign
+
+**Engineering (design), at the creator's request** to design the platform "as an expert UI/UX designer with 20 years in ed-tech, keeping learner experience and reach in mind". The `learning-experience-reviewer` reviewed it twice, and its findings were applied.
+
+- **Chapters.** Each stage of the lesson grammar opens as a numbered chapter. Its colour is chosen to stay clear of the three colours that already carry meaning: indigo for actions, teal for "that's it" and amber for "have another look". All pairs are contrast-tested in light, dark and projection modes.
+- **Chapter rail, not a progress bar.** The sticky toolbar names the current chapter and opens a jump list. The segmented rail marks only "you are here": past chapters are never filled in and there is no percentage (Article 14).
+- **Act cards.** Every block where the learner acts is framed and labelled with the act ("Make a guess", "Try it", "Decide"…), while connective text stays unframed. First-use hints are one line, about ten words.
+- **The ending.** Post-checks are presented as "Try it on something new" and placed before a final transfer-and-reflect chapter, so the lesson ends on what the learner made (their own explanation and their card), not on questions (Article 5).
+- **Reach.**
+  - The header carries one language menu.
+  - The cover's call to action is inside the first 360×640 screen in all three languages.
+  - The knob pins a live score on phones, so the result is visible while sliding.
+  - The toolbar has no backdrop blur (costly on low-end GPUs).
+  - Nothing new was added to download: no fonts, images or dependencies.
+- **Classroom.** Each chapter title is a banner sharing the screen with its first block. A presenter's clicker (Page Down/Up, arrow keys) moves exactly one block.
+- **Cover.** The issue is labelled by its theme ("How machines learn"), not "for Kids" (Article 8). The illustration has no words in it and uses a bin, not a cross, for junk. The component preview link is removed from the learner-facing cover (the page stays available to the creator at `/preview`).
+
 ## 2026-09-24 — Phase 1 experience review: acted on, and deferred
 
 **Engineering.** The `learning-experience-reviewer` reviewed the Phase 1 UI and the test lesson before this demonstration.

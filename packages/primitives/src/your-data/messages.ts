@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Type your own answer. What you type stays on this device and is never sent anywhere.",
+    howto: "Type your own. It stays on this device.",
     privacyNote: "What you type stays on this device.",
     addLabel: "Add it",
     remove: "Remove {item}",
@@ -16,7 +16,7 @@ export const messages = {
     inputLabel: "Type one item",
   },
   hi: {
-    howto: "अपना जवाब खुद लिखें। आप जो लिखते हैं वह इसी डिवाइस पर रहता है और कहीं नहीं भेजा जाता।",
+    howto: "अपना ख़ुद का लिखिए। यह इसी डिवाइस पर रहता है।",
     privacyNote: "आप जो लिखते हैं वह इसी डिवाइस पर रहता है।",
     addLabel: "जोड़ें",
     remove: "{item} हटाएँ",
@@ -32,7 +32,7 @@ export const messages = {
     inputLabel: "एक चीज़ टाइप करें",
   },
   te: {
-    howto: "మీ సొంత సమాధానం టైప్ చేయండి. మీరు టైప్ చేసేది ఈ పరికరంలోనే ఉంటుంది, ఎక్కడికీ పంపబడదు.",
+    howto: "మీ సొంతది టైప్ చేయండి. ఇది ఈ పరికరంలోనే ఉంటుంది.",
     privacyNote: "మీరు టైప్ చేసేది ఈ పరికరంలోనే ఉంటుంది.",
     addLabel: "జోడించండి",
     remove: "{item}ను తీసివేయండి",

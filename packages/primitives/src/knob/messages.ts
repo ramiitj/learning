@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Move the controls to change the numbers going in. The result and the working below change as you move them.",
+    howto: "Move the sliders and watch the result change.",
     workingHeading: "How this is worked out",
     target: "Target: between {min} and {max}",
     targetExact: "Target: exactly {value}",
@@ -12,7 +12,7 @@ export const messages = {
     classControlsIntro: "Now watch what happens as the controls move.",
   },
   hi: {
-    howto: "आने वाली संख्याएँ बदलने के लिए नियंत्रण खिसकाएँ। उन्हें खिसकाते ही नीचे नतीजा और गणना बदलती है।",
+    howto: "स्लाइडर खिसकाइए और नतीजे को बदलते देखिए।",
     workingHeading: "यह इस तरह निकाला गया है",
     target: "लक्ष्य: {min} और {max} के बीच",
     targetExact: "लक्ष्य: ठीक {value}",
@@ -24,7 +24,7 @@ export const messages = {
     classControlsIntro: "अब देखें कि नियंत्रण घुमाने पर क्या होता है।",
   },
   te: {
-    howto: "వచ్చే సంఖ్యలను మార్చడానికి నియంత్రణలను కదిలించండి. మీరు కదిలించగానే కింద ఫలితం, లెక్క మారతాయి.",
+    howto: "స్లయిడర్లను కదిలించి, ఫలితం మారడం చూడండి.",
     workingHeading: "ఇది ఇలా లెక్కించబడింది",
     target: "లక్ష్యం: {min} నుండి {max} మధ్య",
     targetExact: "లక్ష్యం: సరిగ్గా {value}",

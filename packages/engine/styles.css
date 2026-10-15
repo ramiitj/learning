@@ -48,7 +48,8 @@ p { margin: 0 0 var(--space-3); text-wrap: pretty; }
 }
 .lm-btn:hover:not(:disabled) { background: var(--color-surface-2); }
 .lm-btn:active:not(:disabled) { transform: translateY(1px); }
-.lm-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+/* Disabled reads as "not yet", not as broken: an outline, not a faded fill. */
+.lm-btn:disabled { cursor: not-allowed; background: transparent; color: var(--color-ink-muted); border-style: dashed; border-color: var(--color-border-strong); }
 .lm-btn--primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
 .lm-btn--primary:hover:not(:disabled) { background: var(--color-accent); filter: brightness(1.08); }
 /* Quiet: a secondary action, not a link. Sits at the start edge, never floating in the middle. */
@@ -158,8 +159,8 @@ p { margin: 0 0 var(--space-3); text-wrap: pretty; }
   display: grid; gap: 0;
   padding: var(--space-1) var(--space-3) 0;
   margin-inline: calc(-1 * var(--space-3));
-  background: color-mix(in srgb, var(--color-bg) 94%, transparent);
-  backdrop-filter: blur(8px);
+  /* Opaque, no blur: backdrop blur is costly to scroll on low-end phones. */
+  background: var(--color-bg);
   border-block-end: 1px solid var(--color-border);
 }
 /* Keep focused and scrolled-to elements clear of the sticky toolbar (WCAG 2.2, 2.4.11). */
@@ -175,6 +176,8 @@ html:has(.lm-toolbar) { scroll-padding-block-start: 5rem; }
   font: inherit; font-size: var(--text-small); font-weight: 700; color: var(--color-ink); cursor: pointer;
 }
 .lm-chapter-btn:hover { background: var(--color-surface-2); }
+/* While the chapter's own heading is on screen the button would repeat it, so it steps aside. */
+.lm-chapter-btn[data-quiet] { visibility: hidden; }
 .lm-chapter-btn__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-inline-size: 12rem; }
 .lm-chapter-btn__num {
   flex: none; display: grid; place-items: center; inline-size: 1.85em; block-size: 1.85em; border-radius: 50%;
@@ -245,7 +248,8 @@ html:has(.lm-toolbar) { scroll-padding-block-start: 5rem; }
   border: 0; background: transparent; font: inherit; font-weight: 700; color: var(--stage); cursor: pointer; border-radius: var(--radius-sm);
 }
 
-.lm-ending__done { display: flex; gap: var(--space-2); align-items: center; font-weight: 600; color: var(--color-ink-muted); margin-block-start: var(--space-6); }
+.lm-ending__done { display: flex; gap: var(--space-2); align-items: flex-start; font-weight: 600; color: var(--color-ink); margin-block-start: var(--space-6); padding-block-start: var(--space-4); border-block-start: 1px solid var(--color-border); }
+.lm-ending__done .lm-icon { margin-block-start: 0.25em; }
 .lm-ending__done .lm-icon { color: var(--color-insight); }
 .lm-recall { background: var(--color-warm-soft); border-radius: var(--radius-lg); padding: var(--space-5); margin-block: var(--space-6); }
 .lm-recall blockquote { margin: var(--space-3) 0; padding-inline-start: var(--space-4); border-inline-start: 4px solid var(--color-warm); font-weight: 600; }
@@ -343,13 +347,15 @@ html:has(.lm-toolbar) { scroll-padding-block-start: 5rem; }
 [data-mode="classroom"] .lm-lesson { padding-inline: var(--space-6); }
 [data-mode="classroom"] .lm-toolbar { position: static; }
 [data-mode="classroom"] .lm-act { box-shadow: none; border: 2px solid var(--color-border-strong); }
-/* One step per screen: a clicker's Page Down moves to the next block or chapter. */
+/* One step per screen: a clicker's Page Down moves to the next block. A chapter's title is a
+   banner sharing the screen with its first block, never an empty slide of its own. */
 html:has(.lm-lesson[data-mode="classroom"]) { scroll-snap-type: y proximity; scroll-padding-block-start: 0; }
-[data-mode="classroom"] .lm-block, [data-mode="classroom"] .lm-chapter { scroll-snap-align: start; }
-[data-mode="classroom"] .lm-block { min-block-size: 92vh; margin-block: 0; padding-block: var(--space-6); scroll-margin-block-start: 0; }
-[data-mode="classroom"] .lm-chapter { min-block-size: 92vh; border: 0; justify-content: center; flex-direction: column; text-align: center; background: var(--stage-soft); border-radius: var(--radius-lg); }
-[data-mode="classroom"] .lm-chapter__num { inline-size: 120px; block-size: 120px; font-size: var(--text-h1); }
-[data-mode="classroom"] .lm-chapter__title { font-size: var(--text-h1); }
+[data-mode="classroom"] .lm-block, [data-mode="classroom"] .lm-chapter { scroll-snap-align: start; scroll-margin-block-start: 0; }
+[data-mode="classroom"] .lm-block { min-block-size: 92vh; margin-block: 0; padding-block: var(--space-6); }
+[data-mode="classroom"] .lm-chapter + .lm-block { scroll-snap-align: none; min-block-size: calc(92vh - 9rem); padding-block-start: var(--space-4); }
+[data-mode="classroom"] .lm-chapter { min-block-size: 0; margin-block-end: 0; padding: var(--space-3) var(--space-4); border: 0; border-radius: var(--radius-md); background: var(--stage-soft); }
+[data-mode="classroom"] .lm-chapter__num { inline-size: 1.9em; block-size: 1.9em; font-size: var(--text-h3); }
+[data-mode="classroom"] .lm-chapter__title { font-size: var(--text-h2); }
 
 @media (forced-colors: active) {
   .lm-pill[data-selected], .lm-choice[data-selected] label { outline: 3px solid CanvasText; }
@@ -367,3 +373,17 @@ html:has(.lm-lesson[data-mode="classroom"]) { scroll-snap-type: y proximity; scr
 /* The first chapter follows the toolbar closely; later chapters get room to breathe. */
 .lm-toolbar + .lm-stage, .lm-toolbar + .lm-recall + .lm-stage { margin-block-start: var(--space-5); }
 [data-mode="classroom"] .lm-icon { inline-size: 1.1em; block-size: 1.1em; }
+
+/* Phones: a tighter title block so the opening puzzle is on the first screen. */
+@media (max-width: 30rem) {
+  .lm-lesson { padding-block-start: var(--space-3); }
+  .lm-lesson__header { margin-block-end: var(--space-3); }
+  .lm-lesson__title { font-size: 1.85rem; }
+  :lang(hi) .lm-lesson__title, :lang(te) .lm-lesson__title { font-size: 1.6rem; }
+  .lm-lesson__subtitle { font-size: var(--text-body); margin-block-end: 0; }
+  .lm-chapter { gap: var(--space-3); padding-block: var(--space-3) var(--space-2); margin-block-end: var(--space-3); }
+  .lm-chapter__num { inline-size: 40px; block-size: 40px; font-size: 1.15rem; }
+  .lm-chapter__title { font-size: 1.45rem; }
+  .lm-stage { margin-block: var(--space-7) var(--space-5); }
+  .lm-lead { font-size: var(--text-body); }
+}

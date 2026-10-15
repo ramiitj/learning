@@ -78,7 +78,7 @@ test("progress survives a reload and a language switch, returning to the same pl
 
 test("the lesson ends with the post-checks and a labelled takeaway card", async ({ page }) => {
   await open(page);
-  await expect(page.getByRole("heading", { name: "See how far you've come" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Try it on something new" })).toBeVisible();
   const card = page.locator("#block-b15");
   await expect(card.getByText("My filter")).toBeVisible();
   await expect(card.getByText("Messages I wrote to fool it")).toBeVisible();
@@ -104,13 +104,14 @@ test("classroom: a presenter's clicker moves exactly one step at a time", async 
       const el = [...document.querySelectorAll<HTMLElement>(".lm-lesson .lm-chapter, .lm-lesson .lm-block")].find((x) => Math.abs(x.getBoundingClientRect().top) < 12);
       return el ? el.id || el.querySelector("h2")?.textContent : null;
     });
-  const expected = ["A puzzle", "block-b1", "Your guess", "block-b2"];
+  // Each chapter's title is a banner on the same screen as its first block: no empty title slides.
+  const expected = ["A puzzle", "Your guess", "Try it", "block-b4"];
   for (const want of expected) {
     await page.keyboard.press("PageDown");
     await expect.poll(atTop).toBe(want);
   }
   await page.keyboard.press("PageUp");
-  await expect.poll(atTop).toBe("Your guess");
+  await expect.poll(atTop).toBe("Try it");
 });
 
 test("the chapter menu names where you are and jumps to another chapter", async ({ page }) => {

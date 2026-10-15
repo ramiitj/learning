@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Explain the idea back in your own words, or pick the explanation that fits best. You can change your mind before you keep it.",
+    howto: "Say it in your own words. You can change it.",
     yourComparison: "Your comparison",
     yourExplanation: "Your explanation",
     keep: "Keep my explanation",
@@ -10,7 +10,7 @@ export const messages = {
     showBest: "Show the strongest explanation",
   },
   hi: {
-    howto: "इस विचार को अपने शब्दों में समझाएँ, या जो व्याख्या सबसे सही लगे उसे चुनें। रखने से पहले आप अपना मन बदल सकते हैं।",
+    howto: "इसे अपने शब्दों में कहिए। आप इसे बदल सकते हैं।",
     change: "मेरी व्याख्या बदलें",
     yourComparison: "आपकी तुलना",
     yourExplanation: "आपकी व्याख्या",
@@ -20,7 +20,7 @@ export const messages = {
     showBest: "सबसे सटीक व्याख्या दिखाएँ",
   },
   te: {
-    howto: "ఈ ఆలోచనను మీ సొంత మాటల్లో వివరించండి, లేదా బాగా సరిపోయే వివరణను ఎంచుకోండి. ఉంచే ముందు మీ మనసు మార్చుకోవచ్చు.",
+    howto: "మీ సొంత మాటల్లో చెప్పండి. తర్వాత మార్చవచ్చు.",
     change: "నా వివరణను మార్చండి",
     yourComparison: "మీ పోలిక",
     yourExplanation: "మీ వివరణ",

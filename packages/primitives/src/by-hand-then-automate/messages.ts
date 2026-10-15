@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Work through the first few by hand, one step at a time. Then let the machine repeat the same step on all of them.",
+    howto: "Do a few by hand, then let the machine do the rest.",
     stepProgress: "Item {n} of {m}, by hand",
     itemValue: "Value: {value}",
     itemValueLabelled: "{label}: {value}",
@@ -19,7 +19,7 @@ export const messages = {
     summary: "You did {m} by hand; the machine did {n}.",
   },
   hi: {
-    howto: "पहले कुछ को हाथ से, एक-एक कदम करके हल करें। फिर मशीन को वही कदम बाकी सब पर दोहराने दें।",
+    howto: "कुछ हाथ से कीजिए, फिर बाकी मशीन को करने दीजिए।",
     stepProgress: "वस्तु {n} / {m}, हाथ से",
     itemValue: "मान: {value}",
     itemValueLabelled: "{label}: {value}",
@@ -38,7 +38,7 @@ export const messages = {
     summary: "आपने {m} हाथ से किए; मशीन ने {n} किए।",
   },
   te: {
-    howto: "మొదట కొన్నింటిని చేతితో, ఒక్కో అడుగుగా చేయండి. తర్వాత అదే అడుగును యంత్రం మిగతా అన్నింటిపై చేయనివ్వండి.",
+    howto: "కొన్నింటిని చేత్తో చేయండి, మిగతావి యంత్రానికి వదిలేయండి.",
     stepProgress: "అంశం {n} / {m}, చేతితో",
     itemValue: "విలువ: {value}",
     itemValueLabelled: "{label}: {value}",

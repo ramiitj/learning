@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Tap an item to pick it up, then tap a group's button to place it there. You can pick an item up again to move it.",
+    howto: "Tap an item, then tap where it goes.",
     tray: "Not yet sorted",
     trayEmpty: "Everything is sorted.",
     backToTray: "Put {item} back in the tray",
@@ -19,7 +19,7 @@ export const messages = {
     summary: "You sorted {n} items: {counts}",
   },
   hi: {
-    howto: "किसी चीज़ को उठाने के लिए उस पर टैप करें, फिर उसे रखने के लिए किसी समूह के बटन पर टैप करें। आप उसे फिर से उठाकर कहीं और भी रख सकते हैं।",
+    howto: "किसी चीज़ को दबाएँ, फिर जहाँ वह जाए वहाँ दबाएँ।",
     tray: "अभी तक न बाँटी गई चीज़ें",
     trayEmpty: "सब कुछ बाँटा जा चुका है।",
     backToTray: "{item} को वापस सूची में रखें",
@@ -38,7 +38,7 @@ export const messages = {
     summary: "आपने {n} चीज़ें बाँटीं: {counts}",
   },
   te: {
-    howto: "ఒక వస్తువును తీసుకోవడానికి దానిపై నొక్కండి, తర్వాత దాన్ని ఉంచడానికి ఒక సమూహపు బటన్‌పై నొక్కండి. దాన్ని మళ్ళీ తీసుకుని వేరే చోట కూడా ఉంచవచ్చు.",
+    howto: "ఒక అంశాన్ని నొక్కి, అది వెళ్ళాల్సిన చోట నొక్కండి.",
     tray: "ఇంకా వర్గీకరించని వస్తువులు",
     trayEmpty: "అన్నీ వర్గీకరించబడ్డాయి.",
     backToTray: "{item}ని తిరిగి జాబితాలో పెట్టండి",

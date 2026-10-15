@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "This card collects what you made in this lesson. Download it as a picture, or keep it on this device.",
+    howto: "Your card of what you made. Download or keep it.",
     notMadeYet: "Still to make, further up in the lesson.",
     download: "Download my card",
     keep: "Keep it on this device",
@@ -9,7 +9,7 @@ export const messages = {
     classTitle: "The class's result",
   },
   hi: {
-    howto: "यह कार्ड इस पाठ में आपने जो बनाया है उसे इकट्ठा करता है। इसे चित्र के रूप में डाउनलोड करें, या इसी डिवाइस पर रखें।",
+    howto: "आपने जो बनाया उसका कार्ड। डाउनलोड करें या रख लें।",
     notMadeYet: "अभी बनाना बाकी है, पाठ में ऊपर।",
     download: "मेरा कार्ड डाउनलोड करें",
     keep: "इसे इसी डिवाइस पर रखें",
@@ -18,7 +18,7 @@ export const messages = {
     classTitle: "कक्षा का परिणाम",
   },
   te: {
-    howto: "ఈ కార్డు మీరు ఈ పాఠంలో చేసినదాన్ని సేకరిస్తుంది. దీన్ని చిత్రంగా డౌన్‌లోడ్ చేయండి, లేదా ఈ పరికరంలోనే ఉంచండి.",
+    howto: "మీరు చేసినదాని కార్డు. డౌన్‌లోడ్ చేయండి లేదా ఉంచుకోండి.",
     notMadeYet: "ఇంకా చేయాల్సి ఉంది, పాఠంలో పైన.",
     download: "నా కార్డును డౌన్‌లోడ్ చేయండి",
     keep: "దీన్ని ఈ పరికరంలోనే ఉంచండి",

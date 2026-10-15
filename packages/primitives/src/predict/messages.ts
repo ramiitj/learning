@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Pick the answer you think is right before you find out. There is no penalty for guessing, and a surprise helps you learn.",
+    howto: "Guess first. No penalty, and surprises help you learn.",
     commit: "Lock in my guess",
     change: "Change my guess",
     yourGuess: "Your guess",
@@ -14,7 +14,7 @@ export const messages = {
     summary: "You guessed: {choice}",
   },
   hi: {
-    howto: "जवाब जानने से पहले वह विकल्प चुनें जो आपको सही लगता है। अनुमान लगाने में कोई नुकसान नहीं है, और हैरानी से सीखने में मदद मिलती है।",
+    howto: "पहले अनुमान लगाइए। कोई नुकसान नहीं, और हैरानी से सीख मिलती है।",
     commit: "मेरा अनुमान पक्का करें",
     change: "मेरा अनुमान बदलें",
     yourGuess: "आपका अनुमान",
@@ -28,7 +28,7 @@ export const messages = {
     summary: "आपका अनुमान: {choice}",
   },
   te: {
-    howto: "సమాధానం తెలుసుకునే ముందు, సరైనదని మీకు అనిపించేదాన్ని ఎంచుకోండి. అంచనా వేయడంలో నష్టం లేదు, ఆశ్చర్యం నేర్చుకోవడానికి సహాయపడుతుంది.",
+    howto: "ముందు ఊహించండి. నష్టం లేదు, ఆశ్చర్యం నేర్పుతుంది.",
     commit: "నా అంచనాను ఖరారు చేయండి",
     change: "నా అంచనాను మార్చండి",
     yourGuess: "మీ అంచనా",

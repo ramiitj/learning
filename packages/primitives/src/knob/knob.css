@@ -37,3 +37,17 @@
 }
 
 [data-mode="classroom"] .lm-knob__controls { gap: var(--space-5); }
+
+/* Live score: phones only, pinned under the sticky lesson toolbar while sliding. */
+.lm-knob__live { display: none; }
+@media (max-width: 48rem) {
+  .lm-knob__live {
+    display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); align-items: baseline;
+    position: sticky; inset-block-start: 60px; z-index: 2;
+    margin: 0 0 var(--space-3); padding: var(--space-2) var(--space-3);
+    background: var(--color-surface); border: 2px solid var(--stage, var(--color-accent)); border-radius: var(--radius-md);
+    font-weight: 800; font-variant-numeric: tabular-nums;
+  }
+  .lm-knob__live-decision { color: var(--stage, var(--color-accent)); }
+  [data-mode="classroom"] .lm-knob__live { display: none; }
+}

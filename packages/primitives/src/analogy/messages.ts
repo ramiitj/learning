@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Look at how the everyday idea lines up with the formal one. Choose a pair to see the match, and check where the comparison stops working.",
+    howto: "Tap a pair to see how the two sides match.",
     everyday: "In everyday life",
     formal: "In the idea",
     fadeStart: "Everyday",
@@ -14,7 +14,7 @@ export const messages = {
     nextPair: "Next pair",
   },
   hi: {
-    howto: "देखें कि रोज़मर्रा का विचार असली अवधारणा से कैसे मेल खाता है। मेल देखने के लिए एक जोड़ी चुनें, और जाँचें कि तुलना कहाँ काम करना बंद कर देती है।",
+    howto: "दोनों पक्ष कैसे मेल खाते हैं, देखने के लिए एक जोड़ी चुनें।",
     everyday: "रोज़मर्रा की ज़िंदगी में",
     formal: "इस विचार में",
     fadeStart: "रोज़मर्रा",
@@ -28,7 +28,7 @@ export const messages = {
     nextPair: "अगली जोड़ी",
   },
   te: {
-    howto: "రోజువారీ ఆలోచన అసలు భావనతో ఎలా సరిపోతుందో చూడండి. సరిపోలికను చూడటానికి ఒక జతను ఎంచుకోండి, పోలిక ఎక్కడ పనిచేయడం ఆగిపోతుందో తనిఖీ చేయండి.",
+    howto: "రెండు వైపులా ఎలా సరిపోతాయో చూడటానికి ఒక జతను నొక్కండి.",
     everyday: "రోజువారీ జీవితంలో",
     formal: "ఈ ఆలోచనలో",
     fadeStart: "రోజువారీ",

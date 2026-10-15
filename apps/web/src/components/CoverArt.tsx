@@ -31,7 +31,8 @@ export function CoverArt() {
       <rect x="30" y="286" width="110" height="46" rx="12" fill="var(--stage-manipulate-soft)" stroke="var(--stage-manipulate)" strokeWidth="3" />
       <path d="M68 309l10 10 20-20" stroke="var(--stage-manipulate)" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="220" y="286" width="110" height="46" rx="12" fill="var(--stage-break-it-soft)" stroke="var(--stage-break-it)" strokeWidth="3" />
-      <path d="M262 299l22 22M284 299l-22 22" stroke="var(--stage-break-it)" strokeWidth="5" strokeLinecap="round" />
+      {/* a bin, not a cross: junk is a destination, never a "wrong" mark */}
+      <path d="M262 302h28M266 302l2 22h16l2-22M272 297h8" stroke="var(--stage-break-it)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

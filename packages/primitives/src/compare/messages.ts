@@ -1,6 +1,6 @@
 export const messages = {
   en: {
-    howto: "Choose which version you think will come out higher, then run both and see the working for each.",
+    howto: "Guess which comes out higher, then run both.",
     run: "Run both",
     runAgain: "Run both again",
     fixed: "Fixed for this version: {label} = {value}",
@@ -11,7 +11,7 @@ export const messages = {
     summary: "You compared {a} ({aOutput}) and {b} ({bOutput})",
   },
   hi: {
-    howto: "चुनें कि आपको कौन-सा संस्करण ज़्यादा लगता है, फिर दोनों चलाएँ और हर एक की गणना देखें।",
+    howto: "अनुमान लगाइए कि कौन ज़्यादा आएगा, फिर दोनों चलाइए।",
     run: "दोनों चलाएँ",
     runAgain: "दोनों फिर से चलाएँ",
     fixed: "इस संस्करण के लिए तय: {label} = {value}",
@@ -22,7 +22,7 @@ export const messages = {
     summary: "आपने {a} ({aOutput}) और {b} ({bOutput}) की तुलना की",
   },
   te: {
-    howto: "ఏ వెర్షన్ ఎక్కువగా వస్తుందో అనుకుంటున్నారో ఎంచుకోండి, తర్వాత రెండింటినీ నడిపి ప్రతి దాని లెక్క చూడండి.",
+    howto: "ఏది ఎక్కువ వస్తుందో ఊహించి, రెండింటినీ నడపండి.",
     run: "రెండింటినీ నడపండి",
     runAgain: "రెండింటినీ మళ్ళీ నడపండి",
     fixed: "ఈ వెర్షన్ కోసం స్థిరం చేయబడింది: {label} = {value}",
