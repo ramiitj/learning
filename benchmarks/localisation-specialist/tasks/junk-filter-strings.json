@@ -1,0 +1,121 @@
+{
+  "task": "Translate these English strings into Hindi (hi) and Telugu (te) for the school-13-17 audience.",
+  "strings": {
+    "hook.text": "A message arrives: “You WON a prize!!! Click now.” Your phone moved it to <term-junk>junk</term-junk> before you ever saw it. No person read it first.",
+    "hook.q": "So how did a <term-program>program</term-program> decide, about a message it had never seen before?",
+    "sort.instruction": "Here are eight messages. Sort them into two groups. You are the <term-filter>filter</term-filter> now.",
+    "sort.reveal": "Look at what you used to decide: money you didn’t expect, words like FREE and URGENT, lots of “!!!”. Those are clues.",
+    "knob.prompt": "Here is a tiny filter. It counts three kinds of clue in a message and adds up points. Money words are words about getting or paying money: won, prize, free, pay, fee. Urgent words hurry you: urgent, now, only today.",
+    "knob.sentence": "This message has {excl, plural, one {# “!” mark} other {# “!” marks}}, {money, plural, one {# money word} other {# money words}} and {urgent, plural, one {# urgent word} other {# urgent words}}. Its junk score is {output}, so it goes to {decision}.",
+    "knob.success": "Score 10: exactly on the threshold, and 10 is enough to go to junk. One point fewer and it reaches the <term-inbox>inbox</term-inbox>.",
+    "bh.intro": "The filter’s rule is short. Below, each message shows its clues and their points: 1 for each “!”, 2 for each money word, 3 for each urgent word. Your job: add up the points, compare the total with 10, and choose Junk or Inbox. Do two by hand, then let the machine do the rest.",
+    "bh.rule": "If a message’s score is {threshold} or more, it goes to junk. Otherwise it goes to the inbox.",
+    "bh.auto": "The machine did the same step, the same way, every time. It cannot get tired, and it has no common sense to fall back on: it only follows the steps. So two scams, the locked-account message and the pay-a-fee message, slipped into the inbox.",
+    "cmp.explain": "Only the “!” marks changed. The excited version has 10 of them, 1 point each, so its score is 10: it reached the threshold. A real message from a friend lands in junk. The filter cannot tell an excited friend from a scammer. It only counts.",
+    "an.break": "Here the comparison stops working. An examiner reads your answers and understands them. The filter only counts clues. It has no idea what a message means.",
+    "deep.text": "Real filters often use hundreds of clues, not three. Their points are usually not set by hand: the filter works them out from millions of messages that people marked as junk or as real. That is called <term-training>training</term-training>.",
+    "deepest.text": "Choosing the threshold is a trade-off. A low threshold catches more junk but also blocks more real messages. A high threshold lets real messages through but lets more junk in too. There is no setting that makes zero mistakes.",
+    "yd.prompt": "Make up to five messages that you think would fool this filter. Use made-up words only: no real names or phone numbers. For each one, work out its score: 1 point for each “!”, 2 for each money word, 3 for each urgent word. Would it reach 10?",
+    "ch.f1": "Its score is 0, because it has no clues. Is 0 at least 10?",
+    "br.r1": "The filter no longer sees a money word. The junk slips through.",
+    "take.card": "I built a junk filter today. It adds up clues into a score and compares it with a line. It never understands the message."
+  },
+  "context": "Strings from 'How does a junk filter decide?'. Learners sort messages, set three sliders (exclamation marks 1 point, money words 2, urgent words 3), apply the rule 'score 10 or more goes to junk' by hand, then try to fool the filter. {name} are ICU placeholders; <term-x> tags open a glossary definition.",
+  "glossary": {
+    "hi": {
+      "clue": {
+        "term": "सुराग",
+        "definition": "कोई छोटा-सा संकेत जो कुछ तय करने में मदद करता है, जैसे संदेश में कोई शब्द या चिह्न"
+      },
+      "score": {
+        "term": "स्कोर",
+        "definition": "अंकों को जोड़कर बनी एक संख्या"
+      },
+      "threshold": {
+        "term": "सीमा",
+        "definition": "एक रेखा जिस तक किसी संख्या को पहुँचना होता है; उस पर या उससे ऊपर एक बात होती है, नीचे दूसरी"
+      },
+      "training": {
+        "term": "ट्रेनिंग",
+        "definition": "वह तरीका जिससे कोई प्रोग्राम बहुत सारे उदाहरणों से अपनी सेटिंग ख़ुद निकालता है, बजाय इसके कि कोई इंसान उन्हें हाथ से तय करे"
+      },
+      "filter": {
+        "term": "फ़िल्टर",
+        "definition": "कोई चीज़ जो कुछ चीज़ों को आगे जाने देती है और कुछ को रोक लेती है"
+      },
+      "junk": {
+        "term": "जंक",
+        "definition": "ऐसे संदेश जो आपने नहीं माँगे, जैसे विज्ञापन और धोखे, जिन्हें आपके मुख्य संदेशों से अलग रखा जाता है"
+      },
+      "program": {
+        "term": "प्रोग्राम",
+        "definition": "सटीक कदमों की एक सूची, जिसका कंप्यूटर पालन करता है"
+      },
+      "inbox": {
+        "term": "इनबॉक्स",
+        "definition": "वह जगह जहाँ आपके चाहे हुए संदेश आते हैं"
+      }
+    },
+    "te": {
+      "clue": {
+        "term": "ఆధారం",
+        "definition": "ఏదైనా నిర్ణయించడానికి సహాయపడే చిన్న సూచన, సందేశంలోని ఒక పదం లేదా గుర్తు లాంటిది"
+      },
+      "score": {
+        "term": "స్కోరు",
+        "definition": "పాయింట్లను కలిపి వచ్చే ఒక సంఖ్య"
+      },
+      "threshold": {
+        "term": "హద్దు",
+        "definition": "ఒక సంఖ్య చేరాల్సిన గీత; దాని మీద లేదా పైన ఒకటి జరుగుతుంది, కింద మరొకటి"
+      },
+      "training": {
+        "term": "ట్రైనింగ్",
+        "definition": "ఒక మనిషి చేత్తో పెట్టే బదులు, ఒక ప్రోగ్రామ్ చాలా ఉదాహరణల నుండి తన సెట్టింగ్‌లను తానే లెక్కించుకునే విధానం"
+      },
+      "filter": {
+        "term": "ఫిల్టర్",
+        "definition": "కొన్నింటిని ముందుకు పోనిచ్చి, కొన్నింటిని ఆపే ఏదైనా"
+      },
+      "junk": {
+        "term": "జంక్",
+        "definition": "మీరు అడగని సందేశాలు, ప్రకటనలు, మోసాలు లాంటివి; వీటిని మీ ముఖ్య సందేశాల నుండి వేరుగా ఉంచుతారు"
+      },
+      "program": {
+        "term": "ప్రోగ్రామ్",
+        "definition": "కంప్యూటర్ పాటించే కచ్చితమైన అడుగుల జాబితా"
+      },
+      "inbox": {
+        "term": "ఇన్‌బాక్స్",
+        "definition": "మీకు కావాల్సిన సందేశాలు వచ్చే చోటు"
+      }
+    }
+  },
+  "audience": {
+    "id": "school-13-17",
+    "label": "School learners, classes 8-12",
+    "status": "active",
+    "readingLevel": "grade 6-8 for core text",
+    "maxSentenceWords": 18,
+    "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+    "tone": "warm, curious, direct, never condescending",
+    "theme": "school",
+    "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+    "defaultDepth": "core",
+    "analogyVariants": "school",
+    "checks": [
+      "act-density",
+      "grammar",
+      "undefined-terms",
+      "banned-phrases",
+      "analogy-completeness",
+      "anthropomorphism",
+      "reading-level",
+      "first-use-help",
+      "media-rules",
+      "locale-completeness",
+      "checks-present",
+      "ending"
+    ]
+  }
+}

@@ -61,7 +61,11 @@ function makerRubricText(r: MakerRubric): string {
         (["4", "3", "2", "1", "0"] as const).map((l) => `    ${l}: ${c.levels[l]}`).join("\n"),
     )
     .join("\n");
-  return section("Rubric: criteria and anchored levels", crit) + `\n\nPass bar: mean score at least ${r.passBar.meanScore}; every blocking criterion at least ${r.passBar.minBlockingCriterion}.`;
+  return (
+    section("Rubric: criteria and anchored levels", crit) +
+    `\n\nPass bar: mean score at least ${r.passBar.meanScore}; every blocking criterion at least ${r.passBar.minBlockingCriterion}.` +
+    `\n\nAutomatic checks run on every artifact before it is judged; a blocking failure rejects it: ${r.artifactChecks.join(", ")}.`
+  );
 }
 
 const section = (title: string, body: string) => `## ${title}\n\n${body.trim()}`;

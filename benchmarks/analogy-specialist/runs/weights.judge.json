@@ -1,0 +1,36 @@
+{
+  "agent": "analogy-specialist",
+  "scores": [
+    {
+      "criterion": "structural-fit",
+      "score": 3,
+      "evidence": "See-saw and marks-scheme mappings keep the important relations: clue present/absent maps to item on/off the pile or question right/wrong; heavier/more marks maps to bigger contribution; total is a sum; result flips at a fixed line; changing one weight can flip a message. The recipe analogy has a weak mapping: 'Many batches over many days' maps to 'Many labelled examples', but batches are repeated trials of the same soup, while training examples are different messages, each with its own label. The soup also has no present/absent clues, so the mapping 'Amount of each ingredient' to 'weight of each clue' loses the link between input and clue. In the see-saw, the threshold, 'the point where the see-saw tips', has no counterweight. A real see-saw tips against whatever sits on the other side, and the mapping does not name that.",
+      "improve": "In the recipe analogy, make each batch a different dish or a different taster's order, so each batch is a separate labelled case. Map the clues to ingredients that are either in a dish or not. In the see-saw, name a fixed counterweight on the far side as the threshold."
+    },
+    {
+      "criterion": "break-point",
+      "score": 3,
+      "evidence": "The recipe break point is strong: 'The filter tastes nothing and wants nothing... if the tasters were unusual, the recipe will be too.' The marks-scheme break point teaches data bias well, but its first claim, 'The filter's weights come from numbers and examples, not from judgement', contradicts the analogy's own mapping 'Teacher changes a question from 1 mark to 5 ↔ Changing a clue's weight by hand'. It also contradicts the earlier lesson, where people set the weights (3 points and 1 point) by judgement. The see-saw break point says a negative weight is something 'no real object can be'. That is true of mass, but it misses the more useful point: on a see-saw, an object on the other side does push the total down. So the break point names a weaker difference and misses a teaching moment.",
+      "improve": "Revise the marks-scheme break point to say that hand-set weights do reflect people's judgement and trained weights reflect only the examples. Then the contrast is accurate. For the see-saw, show negative weights as objects on the other side, and make the break point that weights are numbers chosen or adjusted by people or training, not physical mass."
+    },
+    {
+      "criterion": "universality",
+      "score": 3,
+      "evidence": "The base sources are a see-saw, a school test with different marks per question, and cooking soup. These are broadly universal (childhood games, school, food). The hi and te locale variants swap in a balance scale (तराज़ू / త్రాసు) and dal/pappu, which helps. Two details are weaker. The base see-saw uses a 'bowling ball', which many learners in hi and te locales may not recognise without explanation. The te variant renders see-saw as 'సీసా', which commonly means 'bottle' and could confuse readers. The variants also replace the see-saw with a balance scale, so the fading interactions (see-saw tips, bar fills) would need matching locale designs, and none are given.",
+      "improve": "Replace the bowling ball with a universal heavy object such as a big stone or a bag of rice. Fix the Telugu term for see-saw, for example ఊయల-బల్ల or a descriptive phrase, and get it checked by a native speaker. State how the fading steps work with the balance-scale variant."
+    },
+    {
+      "criterion": "fading",
+      "score": 4,
+      "evidence": "Each analogy has a fading sequence of three or four steps, and every step has a learner act. The see-saw goes from picture to bridge ('relabelled with its clue name and a number of points') to formal ('Score = sum of weights of present clues, compared with the threshold'), then a transfer step on negative weights. The marks scheme ends at 'the clue table of the junk filter, with a column for weight and a running sum'. The recipe sequence ends in a formal table of rounds and a break-it step. Acts include predict, drag, slider, write sum, choose, run rounds by hand, and describe failure.",
+      "improve": "Already at the top level. Optionally, make sure the locale-variant sources (balance scale, dal) have their own matching fading steps."
+    },
+    {
+      "criterion": "ai-framing",
+      "score": 4,
+      "evidence": "No mind verbs are used for the filter outside break points. Mechanistic language runs throughout: 'adds numbers and compares the total with the threshold', 'runs a fixed rule that nudges numbers so its scores match the labels better', 'nudges the weights that were involved'. Human qualities appear only in break points, and each is paired with what the machine lacks: 'The filter does not feel anything tip', 'The filter tastes nothing and wants nothing', 'not from judgement'. The marks break point also warns that weights are only as good as the examples, which corrects the 'AI is objective' reading.",
+      "improve": "Already at the top level. Optionally, replace 'compares its answers' in the structure text with 'compares its scores', to avoid any suggestion of answering."
+    }
+  ],
+  "overall": "Pass. Scores are 3/3/3/4/4: mean 3.4, weighted mean 3.38, and every blocking criterion is at least 3. The three analogies are well chosen and break in different places, the fading sequences are fully designed as acts, and the AI framing is careful. Main fixes: (1) the marks-scheme break point wrongly says weights never come from judgement, though hand-set weights do; (2) the see-saw misses that objects on the far side model negative weights, and its threshold has no counterweight; (3) the recipe treats repeated batches as distinct labelled examples; (4) the bowling ball and the Telugu 'సీసా' (bottle) are weak for locale learners."
+}

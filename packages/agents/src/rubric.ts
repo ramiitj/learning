@@ -49,6 +49,8 @@ export interface MakerRubric extends RubricBase {
   criteria: Criterion[];
   /** JSON Schema for the maker's artifact. */
   artifactSchema: object;
+  /** Deterministic checks run on every artifact before the judge (src/artifact-checks.ts). */
+  artifactChecks: string[];
   passBar: { meanScore: number; minBlockingCriterion: number };
 }
 

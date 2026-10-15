@@ -1,0 +1,227 @@
+{
+  "agent": "editor-in-chief",
+  "resolutions": [
+    {
+      "conflictId": "c1",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Remove the 'does not understand, only counts clues' line from explain; it slows pace and repeats the compare block.",
+          "serves": "experience"
+        },
+        {
+          "agent": "accuracy-safety-reviewer",
+          "position": "Blocking ai-framing flag: without the line learners may believe the filter understands messages.",
+          "serves": "accuracy"
+        }
+      ],
+      "decision": "side-b",
+      "resolution": "Keep the line in the explain stage. The designer's task becomes making it land quickly, e.g. tying it in one short sentence to what learners just saw in the compare block rather than repeating it at length.",
+      "reason": "Accuracy ranks above experience (Article 3), and Article 7 requires the break point of any human metaphor for AI to be shown. A blocking accuracy flag cannot be overridden without escalation, and nothing here justifies one.",
+      "options": []
+    },
+    {
+      "conflictId": "c2",
+      "positions": [
+        {
+          "agent": "analogy-specialist",
+          "position": "Use a cricket run chase as the base English analogy for threshold.",
+          "serves": "experience"
+        },
+        {
+          "agent": "localisation-specialist",
+          "position": "Base analogy must use a universal source; cricket only in hi and te locale variants.",
+          "serves": "clarity"
+        }
+      ],
+      "decision": "side-b",
+      "resolution": "Base analogy uses a universal source domain (e.g. a school exam pass mark or filling a water bucket to a line). The cricket chase is kept as the hi and te locale variant. Both state where they break.",
+      "reason": "Article 7 settles this directly: source domains must be recognisable anywhere, and culture-specific examples belong only in locale variants. The analogy specialist's goal (a vivid analogy for Indian learners) is still served in the locale variants.",
+      "options": []
+    },
+    {
+      "conflictId": "c3",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "A 120-word atmospheric story about a late-night scam message as the hook.",
+          "serves": "experience"
+        },
+        {
+          "agent": "novice-learner-panel",
+          "position": "Rohit (class 10, Hindi, shared phone) lost the thread; keep the hook under 40 words.",
+          "serves": "clarity"
+        }
+      ],
+      "decision": "side-b",
+      "resolution": "Hook stays under 40 words. The designer builds tension through a single vivid moment (one message on screen and a question to the learner) rather than prose, with any longer story available as an optional layer.",
+      "reason": "Clarity ranks above experience (Article 3); Article 6 forbids assuming language fluency and Article 14 refuses walls of text. A novice who stops on screen one learns nothing.",
+      "options": []
+    },
+    {
+      "conflictId": "c4",
+      "positions": [
+        {
+          "agent": "curriculum-instructional-designer",
+          "position": "Core path cannot fit 20 minutes without dropping break-it, which the lesson grammar requires; needs about 30 minutes.",
+          "serves": "clarity"
+        },
+        {
+          "agent": "learning-experience-designer",
+          "position": "Cut break-it to meet 20 minutes.",
+          "serves": "experience"
+        }
+      ],
+      "decision": "escalate",
+      "resolution": "Creator is asked to choose between the 20-minute limit they set and the full lesson grammar (Article 5). The draft is held at the current structure until decided.",
+      "reason": "Keeping break-it conflicts with the creator's stated intent ('keep it to 20 minutes'); cutting it breaches Article 5. Disagreements with the creator's stated intent must be escalated, not resolved by me.",
+      "options": [
+        "Keep break-it and accept a ~30-minute core path (taster label adjusted).",
+        "Keep a compressed one-interaction break-it and trim manipulate and transfer to approach 20 minutes; curriculum designer to confirm what is lost.",
+        "Cut break-it to hit 20 minutes, as an explicit logged override of Article 5 for this taster."
+      ]
+    },
+    {
+      "conflictId": "c5",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Build a new 'race' component showing speed and accuracy together.",
+          "serves": "experience"
+        },
+        {
+          "agent": "curriculum-instructional-designer",
+          "position": "Use the existing compare component; a new one is not needed for the objective.",
+          "serves": "clarity"
+        }
+      ],
+      "decision": "side-b",
+      "resolution": "Use the existing compare component for this lesson. The 'race' idea is logged as a component proposal for the creator to consider later, not built now.",
+      "reason": "The lesson objective is served by compare (clarity ranks above experience), and speed is not part of the objective, so by Article 4's test the race adds nothing to understanding here. A new component is a larger build outside this request.",
+      "options": []
+    },
+    {
+      "conflictId": "c6",
+      "positions": [
+        {
+          "agent": "accuracy-safety-reviewer",
+          "position": "Blocking sourcing flag: 'hundreds of clues' is a specific unsourced claim.",
+          "serves": "accuracy"
+        },
+        {
+          "agent": "curriculum-instructional-designer",
+          "position": "Fair simplification; the number makes the contrast with three clues vivid.",
+          "serves": "clarity"
+        }
+      ],
+      "decision": "side-a",
+      "resolution": "Attach a reliable source for the figure, or reword to an accurate unquantified contrast such as 'Real filters use far more clues than our three.' The reviewer re-checks before sign-off.",
+      "reason": "Accuracy ranks above clarity, and Article 11 requires content to be sourced so simplifications never become falsehoods. The contrast can stay vivid without an unsourced number.",
+      "options": []
+    },
+    {
+      "conflictId": "c7",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Warm amber chapter colour; feels reflective.",
+          "serves": "aesthetics"
+        },
+        {
+          "agent": "design-system-engineer",
+          "position": "Cool violet; amber already carries meaning elsewhere. Both pass all accessibility and contrast checks.",
+          "serves": "aesthetics"
+        }
+      ],
+      "decision": "escalate",
+      "resolution": "Creator chooses the chapter colour for 'transfer-reflect'.",
+      "reason": "Both positions are purely visual and pass every accessibility check, so the priority order does not settle it; unsettled conflicts go to the decision queue. Note: reusing amber may blur an existing meaning in the system.",
+      "options": [
+        "Cool violet (design-system-engineer).",
+        "Warm amber (learning-experience-designer), with the system's existing amber meaning reviewed.",
+        "Ask design-system-engineer for a third warm, unused hue."
+      ]
+    },
+    {
+      "conflictId": "c8",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Learners paste real messages from their own inbox for authenticity.",
+          "serves": "experience"
+        },
+        {
+          "agent": "accuracy-safety-reviewer",
+          "position": "Blocking privacy flag: real messages contain names, numbers and others' personal data; use made-up messages.",
+          "serves": "safety"
+        }
+      ],
+      "decision": "side-b",
+      "resolution": "The your-data block uses made-up messages only. The designer keeps authenticity by letting learners write their own invented message or pick from realistic, fictional samples; no real inbox content is requested or stored.",
+      "reason": "Safety ranks first. Article 10 forbids collecting personal data from children in v1, and changing learner-data handling is outside any agent's authority.",
+      "options": []
+    },
+    {
+      "conflictId": "c9",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Use the creator's opening line 'AI thinks like a brain...' as written.",
+          "serves": "experience"
+        },
+        {
+          "agent": "accuracy-safety-reviewer",
+          "position": "Blocking ai-framing flag: the line gives the filter a mind and the lesson never shows the break point.",
+          "serves": "accuracy"
+        }
+      ],
+      "decision": "escalate",
+      "resolution": "Creator is asked how to handle their requested opening line, which carries a blocking accuracy flag. Draft holds the line pending decision.",
+      "reason": "Accuracy would prevail under Article 3 and Article 7, but this is the creator's explicit wording, and I may neither override a blocking accuracy flag nor disagree with the creator's stated intent without escalating.",
+      "options": [
+        "Turn it into a question the lesson answers: 'Does AI think like a brain? Let's see how it decides what is junk.'",
+        "Keep the line as written and add an explicit break-point moment showing the filter only counts clues.",
+        "Use the line as written without a break point, as a logged override of the accuracy flag."
+      ]
+    },
+    {
+      "conflictId": "c10",
+      "positions": [
+        {
+          "agent": "learning-experience-designer",
+          "position": "Publish now so schools can use it before term starts.",
+          "serves": "experience"
+        },
+        {
+          "agent": "localisation-specialist",
+          "position": "Hindi and Telugu remain drafts until native-speaker review; publish English only, and only when the creator decides.",
+          "serves": "accuracy"
+        }
+      ],
+      "decision": "escalate",
+      "resolution": "Publishing is the creator's decision alone. The English draft is ready for review; hi and te are marked draft pending native-speaker review.",
+      "reason": "No agent may publish (Article 2). Article 11 states translations are by native speakers, so unreviewed hi/te cannot go out. The term deadline is noted for the creator.",
+      "options": [
+        "Publish English only now; hi and te after native-speaker review.",
+        "Wait and publish all three locales together after native-speaker review.",
+        "Hold everything until the open decisions (c4, c9) are settled, then publish English."
+      ]
+    }
+  ],
+  "creatorSummary": {
+    "made": "Junk-filter lesson draft with all validations passing; English ready for your review, Hindi and Telugu drafted but awaiting native-speaker review.",
+    "flagsAndResolutions": "Resolved by priority order: kept the 'filter only counts clues' line (accuracy); universal base analogy for threshold with cricket in hi/te variants (Article 7); hook under 40 words (clarity); existing compare component instead of a new race component; 'hundreds of clues' to be sourced or softened (accuracy); made-up messages only in the your-data block (safety).",
+    "forYourDecision": [
+      "c4: 20-minute limit vs keeping the break-it stage (needs ~30 min).",
+      "c9: your opening line 'AI thinks like a brain' has a blocking accuracy flag; reframe, add a break point, or override.",
+      "c7: chapter colour for transfer-reflect, amber or violet (purely visual).",
+      "c10: whether and when to publish; English only now, or wait for hi/te review. Schools start next week."
+    ],
+    "weaknesses": [
+      "Lesson length and opening are unsettled until c4 and c9 are decided.",
+      "Hindi and Telugu translations are unreviewed by native speakers.",
+      "The 'hundreds of clues' claim still needs a source or rewording before review sign-off.",
+      "The short hook has not yet been re-tested with the novice panel."
+    ]
+  }
+}

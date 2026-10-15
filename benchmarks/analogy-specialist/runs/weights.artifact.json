@@ -1,0 +1,84 @@
+{
+  "agent": "analogy-specialist",
+  "concept": "weight",
+  "structure": "Each clue is either present or absent in a message. A present clue adds its weight to a running total. A big weight pushes the total up a lot. A small weight pushes it up a little. A negative weight pushes it down. The total is compared with a threshold. Changing one weight can move a message across the threshold. In training, a system compares its answers with labelled examples. After a mistake it nudges the weights that were involved, so the totals come out better next time.",
+  "analogies": [
+    {
+      "id": "weight-seesaw",
+      "source": "A see-saw with a pile of objects on one side. A bowling ball, a shoe and a feather each push the see-saw down by a different amount. The see-saw tips when the pile is heavy enough.",
+      "domain": "childhood-games",
+      "mappings": [
+        { "source": "Each object you can put on the pile", "target": "Each clue in the message", "relation": "Every clue is a separate item that either goes on the pile or stays off it." },
+        { "source": "How heavy the object is", "target": "The weight of the clue (3 points for an urgent word, 1 for an exclamation mark)", "relation": "A heavier item moves the total more, so a bigger weight counts more towards the decision." },
+        { "source": "Total push on the see-saw", "target": "The score, which is the sum of the weights of the clues present", "relation": "Effects add up: the total is the sum of all the items present." },
+        { "source": "The point where the see-saw tips", "target": "The threshold", "relation": "The decision changes only when the total passes a fixed line." },
+        { "source": "Swapping a feather for a brick", "target": "Changing a clue's weight", "relation": "Changing one item's heaviness can tip a see-saw that stayed level before." }
+      ],
+      "breakPoint": "Real objects are heavy because of their mass, and nobody chooses it. A clue's weight is only a number that people set, or that training adjusts. A weight can also be negative, which no real object can be, and it can be wrong. The filter does not feel anything tip. It adds numbers and compares the total with the threshold.",
+      "fading": [
+        { "step": "Picture: three objects of different heaviness sit beside a see-saw. A message has some of the matching clues.", "learnerAct": "Drag the objects that match the clues in the message onto the see-saw and predict, before pressing the button, whether it tips." },
+        { "step": "Bridge: each object is relabelled with its clue name and a number of points. The see-saw becomes a bar that fills up.", "learnerAct": "Change one clue's heaviness with a slider and watch which messages in a small list cross the line." },
+        { "step": "Formal: the bar becomes the score line. Score = sum of weights of present clues, compared with the threshold.", "learnerAct": "Write the sum for a new message step by step, then choose junk or not junk." },
+        { "step": "Transfer: a negative weight is introduced for a word that appears in normal messages from friends.", "learnerAct": "Set a weight below zero so that a friendly message with one urgent word stays below the threshold." }
+      ],
+      "localeVariants": {
+        "hi": "सीसॉ (झूला-पटरी) की जगह तराज़ू का इस्तेमाल करें: पलड़े पर आम, किताब और पंख रखें। हर चीज़ का वज़न अलग है, और पलड़ा तब झुकता है जब कुल वज़न तय सीमा से ज़्यादा हो जाए।",
+        "te": "సీసా బదులు త్రాసు వాడవచ్చు: పళ్ళెంలో మామిడిపండు, పుస్తకం, ఈక పెట్టండి. ప్రతి వస్తువు బరువు వేరు, మొత్తం బరువు నిర్ణీత హద్దు దాటినప్పుడు త్రాసు వంగుతుంది."
+      },
+      "interaction": "The learner drags clue objects onto a see-saw, predicts whether it tips, then changes one object's heaviness with a slider. The see-saw tips or stays level, and a list of sample messages shows which ones change side."
+    },
+    {
+      "id": "weight-marks-scheme",
+      "source": "A school test where each question carries different marks. A long question is worth 5 marks and a quick one is worth 1. Your total marks are compared with the pass mark.",
+      "domain": "school",
+      "mappings": [
+        { "source": "A question on the test", "target": "A clue the filter looks for", "relation": "Each is one separate item that is checked." },
+        { "source": "Marks the question is worth", "target": "The weight of the clue", "relation": "A question worth more marks changes the total more, just as a clue with a bigger weight does." },
+        { "source": "Getting a question right", "target": "The clue being present in the message", "relation": "Marks are added only for questions answered right, and weights only for clues present." },
+        { "source": "Total marks", "target": "The junk score", "relation": "The total is the sum of the marks earned." },
+        { "source": "Teacher changes a question from 1 mark to 5", "target": "Changing a clue's weight by hand", "relation": "A student with the same answers can pass or fail depending on how the marks are set." }
+      ],
+      "breakPoint": "A teacher gives marks because the teacher judges that a question matters more. The filter's weights come from numbers and examples, not from judgement. A trained filter can give a high weight to a clue just because it appeared often in the examples it was given, even if that clue is unfair or useless in real life. Weights are only as good as the examples.",
+      "fading": [
+        { "step": "Picture: a small test sheet with five questions, each showing its marks.", "learnerAct": "Tick which questions a student got right and predict whether the student passes." },
+        { "step": "Bridge: the question text is replaced by clue names, and the pass mark is labelled threshold.", "learnerAct": "Move the marks on two questions and find a student whose result flips from pass to fail." },
+        { "step": "Formal: the test sheet becomes the clue table of the junk filter, with a column for weight and a running sum.", "learnerAct": "Fill in the sum for a message by adding the weights of its clues, one row at a time." }
+      ],
+      "localeVariants": {
+        "hi": "भारतीय स्कूल की परीक्षा में प्रश्न-पत्र लें: कोई प्रश्न 1 अंक का, कोई 5 अंक का। कुल अंकों की तुलना उत्तीर्ण अंक से करें।",
+        "te": "పాఠశాల పరీక్షలో ప్రశ్నపత్రం తీసుకోండి: కొన్ని ప్రశ్నలకు 1 మార్కు, కొన్నింటికి 5 మార్కులు. మొత్తం మార్కులను పాస్ మార్కుతో పోల్చండి."
+      },
+      "interaction": "The learner ticks which questions a student got right, predicts pass or fail, then edits the marks on two questions to flip a result."
+    },
+    {
+      "id": "weight-recipe-tuning",
+      "source": "A family cooks the same soup many times. After each batch, tasters say 'too salty' or 'needs more salt'. The cook then changes the amount of each ingredient a little before the next batch.",
+      "domain": "food-and-cooking",
+      "mappings": [
+        { "source": "Amount of each ingredient in the recipe", "target": "The weight of each clue", "relation": "Each amount is one adjustable number that shapes the result." },
+        { "source": "Taster's verdict on a batch", "target": "The label on a training example (junk or not junk)", "relation": "A known answer is used to check the result." },
+        { "source": "Comparing the taste with the verdict", "target": "Comparing the filter's score with the label", "relation": "A mismatch tells which way the result is off." },
+        { "source": "Small change to the ingredient after a bad batch", "target": "Nudging the weights that were involved in the mistake", "relation": "A small change in the right direction, repeated many times, brings the result closer to the answers." },
+        { "source": "Many batches over many days", "target": "Many labelled examples", "relation": "One batch is not enough, and the amounts settle after many rounds." }
+      ],
+      "breakPoint": "A cook can taste and wants the soup to be good. The filter tastes nothing and wants nothing. It only runs a fixed rule that nudges numbers so its scores match the labels better. It also fits only the examples it was given, so if the tasters were unusual, the recipe will be too.",
+      "fading": [
+        { "step": "Picture: three soup batches with a salt amount and the tasters' verdicts.", "learnerAct": "Predict whether the next batch needs more or less salt, then adjust the salt slider." },
+        { "step": "Bridge: batches become labelled messages. Salt becomes the weight of a clue. Verdicts become junk or not junk.", "learnerAct": "For a message the filter got wrong, choose which clue's weight to raise or lower." },
+        { "step": "Formal: a table lists messages, their labels, the score and the weights after each round.", "learnerAct": "Run three rounds by hand with a given nudge size and watch the number of mistakes fall." },
+        { "step": "Break it: the labelled examples come from only one kind of message.", "learnerAct": "Test the trained weights on a different message and describe what went wrong." }
+      ],
+      "localeVariants": {
+        "hi": "सूप की जगह दाल का उदाहरण लें: हर बार नमक या मसाला थोड़ा बदलें, और घर के लोगों के कहने पर अगली बार सुधार करें।",
+        "te": "సూప్ బదులు పప్పు ఉదాహరణ తీసుకోండి: ప్రతిసారి ఉప్పు, కారం కొద్దిగా మార్చి, ఇంట్లో వాళ్ళు చెప్పిన తర్వాత తదుపరిసారి సరిచేయండి."
+      },
+      "interaction": "The learner adjusts ingredient sliders after each batch verdict, then switches to the message view and picks which clue weight to raise or lower after a mistake."
+    }
+  ],
+  "notesForCreator": [
+    "The first two analogies break in different places: the see-saw shows that weights are chosen numbers (and can be negative), and the marks scheme shows that weights reflect someone's choices or the data's choices. The recipe analogy covers training.",
+    "Locale variants are short pointers, not full translations. They need review by native speakers, as the constitution requires for translations.",
+    "The marks scheme reuses the school/exam source of the existing threshold analogy. It is a deliberate link between the two ideas, but the creator may prefer a different source to avoid overlap.",
+    "No mind verbs are used for the filter. The cook is described as tasting and wanting only inside break points to show what the filter does not do."
+  ]
+}

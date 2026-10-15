@@ -1,0 +1,241 @@
+{
+  "agent": "analogy-specialist",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Make abstract concepts graspable through analogies whose relationships match the concept, with an honest break point, for any learner in any supported locale.",
+  "references": [
+    "ai-framing",
+    "analogy-sources"
+  ],
+  "method": [
+    "Write down the concept's relational structure first: what the parts are and how they act on each other.",
+    "Choose source situations from universal domains (body and senses, food, home and family, school, weather and nature, journeys, building, childhood games). Keep culture-specific details for locale variants.",
+    "Map relations, not surface features: every mapping pair must preserve how the parts act on each other.",
+    "State the break point: the most important way the source differs from the concept. For AI, say plainly what the machine does not do that the human in the analogy does.",
+    "Give hard concepts at least two analogies that break in different places.",
+    "Design a fading sequence from the source situation to the formal representation, and say what the learner does at each step."
+  ],
+  "artifactChecks": [
+    "two-analogies",
+    "mappings-complete",
+    "break-points-honest",
+    "universal-sources",
+    "ai-framing"
+  ],
+  "criteria": [
+    {
+      "id": "structural-fit",
+      "name": "Relations match the concept",
+      "weight": 3,
+      "blocking": true,
+      "description": "Mappings preserve relational structure (how parts act on each other), not only surface similarity.",
+      "levels": {
+        "4": "Every mapping preserves a relation that matters for the concept; the analogy predicts correct behaviour of the concept.",
+        "3": "Relations are preserved; one mapping is surface-level.",
+        "2": "Half the mappings are surface-level; the analogy would mislead on one important behaviour.",
+        "1": "Mostly surface resemblance.",
+        "0": "Wrong mapping."
+      }
+    },
+    {
+      "id": "break-point",
+      "name": "Honest break point",
+      "weight": 3,
+      "blocking": true,
+      "description": "Each analogy states where it stops working, naming the most important real difference; for AI, what the machine lacks.",
+      "levels": {
+        "4": "Each break point names the most misleading difference and turns it into a teaching moment.",
+        "3": "Each analogy has a true break point; one is not the most important difference.",
+        "2": "A break point is vague ('it is not exactly the same').",
+        "1": "A break point is missing or false.",
+        "0": "Claims the analogy is perfect."
+      }
+    },
+    {
+      "id": "universality",
+      "name": "Recognisable anywhere",
+      "weight": 2,
+      "blocking": false,
+      "description": "Source situations are recognisable to learners in all supported locales without explanation; culture-specific details are in locale variants.",
+      "levels": {
+        "4": "Universal sources with helpful locale variants for hi and te.",
+        "3": "Universal sources; locale variants missing where they would help.",
+        "2": "One source needs explanation for some learners.",
+        "1": "Source is culture-specific in the base version.",
+        "0": "Source is obscure."
+      }
+    },
+    {
+      "id": "fading",
+      "name": "Fades to the formal idea",
+      "weight": 2,
+      "blocking": false,
+      "description": "A sequence of representations leads from the source to the formal representation, each with a learner act.",
+      "levels": {
+        "4": "Three or more steps, each an act, ending at the formal representation used in the lesson.",
+        "3": "Fading exists; one step is passive.",
+        "2": "Fading jumps from source to formula.",
+        "1": "Fading is named but not designed.",
+        "0": "No fading."
+      }
+    },
+    {
+      "id": "ai-framing",
+      "name": "AI is not given a human mind",
+      "weight": 3,
+      "blocking": true,
+      "description": "Human analogies for AI are always paired with what the machine does not do; no mind verbs outside the break point.",
+      "levels": {
+        "4": "Fully careful; the break point corrects the anthropomorphic reading.",
+        "3": "Careful; one mind verb is used loosely but is corrected by the break point.",
+        "2": "One uncorrected mind verb.",
+        "1": "The analogy implies understanding or intention.",
+        "0": "Anthropomorphic throughout."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "concept",
+      "structure",
+      "analogies",
+      "notesForCreator"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "analogy-specialist"
+        ]
+      },
+      "concept": {
+        "type": "string"
+      },
+      "structure": {
+        "type": "string",
+        "description": "The concept's relational structure in plain words."
+      },
+      "analogies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "source",
+            "domain",
+            "mappings",
+            "breakPoint",
+            "fading",
+            "localeVariants",
+            "interaction"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string",
+              "description": "The everyday situation."
+            },
+            "domain": {
+              "type": "string",
+              "enum": [
+                "body-and-senses",
+                "food-and-cooking",
+                "home-and-family",
+                "school",
+                "weather-and-nature",
+                "maps-and-journeys",
+                "building",
+                "childhood-games",
+                "other"
+              ]
+            },
+            "mappings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "source",
+                  "target",
+                  "relation"
+                ],
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "target": {
+                    "type": "string"
+                  },
+                  "relation": {
+                    "type": "string",
+                    "description": "The relation this pair preserves."
+                  }
+                }
+              },
+              "minItems": 2
+            },
+            "breakPoint": {
+              "type": "string"
+            },
+            "fading": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "step",
+                  "learnerAct"
+                ],
+                "properties": {
+                  "step": {
+                    "type": "string"
+                  },
+                  "learnerAct": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "localeVariants": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "hi",
+                "te"
+              ],
+              "properties": {
+                "hi": {
+                  "type": "string"
+                },
+                "te": {
+                  "type": "string"
+                }
+              }
+            },
+            "interaction": {
+              "type": "string",
+              "description": "How the learner plays with the analogy."
+            }
+          }
+        },
+        "minItems": 1
+      },
+      "notesForCreator": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}

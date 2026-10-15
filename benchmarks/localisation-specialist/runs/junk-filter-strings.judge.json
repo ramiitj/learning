@@ -1,0 +1,42 @@
+{
+  "agent": "localisation-specialist",
+  "scores": [
+    {
+      "criterion": "meaning",
+      "score": 3,
+      "evidence": "All 36 strings keep the numbers and logic (1/2/3 points, threshold 10, 'Is 0 at least 10?' -> 'क्या 0, 10 या उससे ज़्यादा है?' / '0 అనేది 10 లేదా అంతకంటే ఎక్కువా?'). 'millions' stays millions ('कई मिलियन', 'మిలియన్ల'), not lakhs. A few nuances are slightly off, though none is wrong: te knob.success 'సరిగ్గా హద్దు దగ్గర ఉంది' ('దగ్గర' can read as 'near') is weaker than 'exactly on the threshold', which is the point of that screen. hi take.card 'उसे एक रेखा से मिलाता है' says 'matches/joins with' rather than 'compares'. hi deepest.text adds 'हमेशा' (always), which is not in the source. hi bh.auto 'वह थकती नहीं' says 'does not tire' where the source says 'cannot get tired'. Since there is more than one such nuance, this is scored at the lower level.",
+      "improve": "Use 'సరిగ్గా హద్దు మీద' (te knob.success), 'उसकी तुलना एक रेखा से करता है' (hi take.card), and remove 'हमेशा' from hi deepest.text."
+    },
+    {
+      "criterion": "naturalness",
+      "score": 3,
+      "evidence": "Most of it reads as natural spoken Hindi and Telugu, for example 'अब आप फ़िल्टर हैं', 'అది లెక్క పెడుతుంది, అంతే', 'ఒకటి ఇచ్చి ఒకటి తీసుకోవడం' and 'कुछ देना और कुछ पाना'. A few phrases are stiff. hi bh.auto: 'उसके पास सहारा लेने के लिए अपनी कोई समझ भी नहीं है'. te bh.auto: 'ఆధారపడటానికి దానికి సొంత తెలివి కూడా లేదు' (this also reuses the root of the glossary word ఆధారం for 'clue'). te take.card 'ఒక స్కోరు చేస్తుంది' and te deep.text 'ప్రజలు' are bookish. hi take.card 'रेखा से मिलाता है' is also stiff.",
+      "improve": "Recast the 'common sense' line more plainly: hi 'उसमें अपनी कोई समझ नहीं होती'; te 'దానికి సొంత బుద్ధి లేదు'. Use te 'ఆధారాలను కలిపి ఒక స్కోరు లెక్కిస్తుంది' and 'మనుషులు' in place of 'ప్రజలు'."
+    },
+    {
+      "criterion": "terminology",
+      "score": 4,
+      "evidence": "Every glossary rendering is used consistently in every string. hi: सुराग, स्कोर, सीमा, ट्रेनिंग, फ़िल्टर, जंक, प्रोग्राम, इनबॉक्स. te: ఆధారం, స్కోరు, హద్దు, ట్రైనింగ్, ఫిల్టర్, జంక్, ప్రోగ్రామ్, ఇన్‌బాక్స్. Loan terms are written in the target script, as the policy says. New terms are listed with newProposal:true and named in notesForReviewers: money words, urgent words, and point (अंक / పాయింట్). The point rendering matches the wording of the glossary's own 'score' definition. 'scams' as 'धोखे वाले संदेश' matches the glossary's 'धोखे'.",
+      "improve": "None needed at this level. A short justification for the cross-locale split (hi 'जल्दी वाले शब्द' translated, te 'అర్జెంట్ పదాలు' loan) would help the creator decide."
+    },
+    {
+      "criterion": "format-integrity",
+      "score": 3,
+      "evidence": "Everything is intact. Placeholders {excl}, {money}, {urgent}, {output}, {decision} and {threshold} are kept, # is kept in every branch, the one/other branches are kept, all 6 tag pairs are kept with target words inside, and every numeral keeps its value. One plural branch is slightly awkward. Under Hindi CLDR, 'one' also covers 0, so a count of 0 renders as '0 पैसे वाला शब्द' / '0 जल्दी वाला शब्द' where '0 पैसे वाले शब्द' is natural. The agent noted this but did not fix it. Also, te '{decision}కి' joins a suffix directly to a runtime value, which can render 'జంక్కి' / 'ఇన్‌బాక్స్కి' without the ZWNJ the agent uses elsewhere ('ఇన్‌బాక్స్‌కి'). This one is flagged.",
+      "improve": "Add an explicit =0 branch to each Hindi plural (e.g. '=0 {कोई पैसे वाला शब्द नहीं}'). Have {decision} supply the full case-marked form in Telugu, or use a postposition that does not join to the value."
+    },
+    {
+      "criterion": "register",
+      "score": 3,
+      "evidence": "The learner is addressed consistently as आप with -इए imperatives ('बाँटिए', 'देखिए', 'बनाइए') and as మీరు with -ండి forms. The tone is warm, with active voice and no condescension. There are a few formal or long spots. hi an.break uses 'परीक्षक' (formal; flagged). te deep.text uses 'ప్రజలు'. hi deep.text's second sentence runs to about 27 words, above the audience limit of 18.",
+      "improve": "Use 'कॉपी जाँचने वाले टीचर' for examiner, and split hi/te deep.text so the source-of-points clause is its own sentence."
+    },
+    {
+      "criterion": "honesty",
+      "score": 3,
+      "evidence": "The notes are specific and useful: the Hindi CLDR 0-in-'one' issue, the Telugu suffix after {decision}, मिलियन vs लाख, परीक्षक vs a spoken alternative, the loss of capital-letter emphasis, banned phrases avoided, and 'No locale is marked reviewed'. Confidence is mostly calibrated, but two strings with real nuance issues are marked high: te knob.success ('హద్దు దగ్గర' vs 'exactly on') and hi take.card ('मिलाता है' vs 'compares').",
+      "improve": "Mark te knob.success and hi take.card as medium, with a note on the 'on vs near' and 'compare vs match' wording."
+    }
+  ],
+  "overall": "Pass. Mean 3.17 (meaning 3, naturalness 3, terminology 4, format-integrity 3, register 3, honesty 3). Every blocking criterion is at least 3. These are strong drafts: glossary terms are used consistently, every placeholder and tag survives, quantities are preserved, and reviewer notes are specific. Before native-speaker review, fix the Hindi zero-count plural branch, te knob.success 'హద్దు దగ్గర' and hi take.card 'मिलाता है', and simplify a few stiff phrases."
+}

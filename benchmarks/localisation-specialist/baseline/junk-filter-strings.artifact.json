@@ -1,0 +1,406 @@
+{
+ "agent": "localisation-specialist",
+ "strings": [
+  {
+   "key": "hook.text",
+   "locale": "hi",
+   "text": "एक संदेश आता है: “आपने इनाम जीता!!! अभी क्लिक करें।” आपके फ़ोन ने उसे आपके देखने से पहले ही <term-junk>जंक</term-junk> में डाल दिया। पहले उसे किसी इंसान ने नहीं पढ़ा।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "hook.text",
+   "locale": "te",
+   "text": "ఒక సందేశం వస్తుంది: “మీరు బహుమతి గెలిచారు!!! ఇప్పుడే క్లిక్ చేయండి.” మీరు చూడకముందే మీ ఫోన్ దాన్ని <term-junk>జంక్</term-junk>లోకి పంపేసింది. ముందుగా ఏ మనిషీ దాన్ని చదవలేదు.",
+   "confidence": "medium",
+   "note": "Suffix attached directly after the closing term tag (జంక్‌లోకి); please check the tag renders cleanly with the case ending."
+  },
+  {
+   "key": "hook.q",
+   "locale": "hi",
+   "text": "तो एक <term-program>प्रोग्राम</term-program> ने ऐसे संदेश के बारे में कैसे तय किया, जिसे उसने पहले कभी देखा ही नहीं था?",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "hook.q",
+   "locale": "te",
+   "text": "మరి ఒక <term-program>ప్రోగ్రామ్</term-program> ఇంతకు ముందెప్పుడూ చూడని సందేశం గురించి ఎలా నిర్ణయించింది?",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "sort.instruction",
+   "locale": "hi",
+   "text": "ये आठ संदेश हैं। इन्हें दो समूहों में बाँटिए। अब आप ही <term-filter>फ़िल्टर</term-filter> हैं।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "sort.instruction",
+   "locale": "te",
+   "text": "ఇవిగో ఎనిమిది సందేశాలు. వీటిని రెండు గుంపులుగా విభజించండి. ఇప్పుడు మీరే <term-filter>ఫిల్టర్</term-filter>.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "sort.reveal",
+   "locale": "hi",
+   "text": "देखिए, आपने किस आधार पर तय किया: ऐसा पैसा जिसकी उम्मीद नहीं थी, FREE और URGENT जैसे शब्द, और ढेर सारे “!!!”। यही सुराग हैं।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "sort.reveal",
+   "locale": "te",
+   "text": "మీరు దేన్ని బట్టి నిర్ణయించారో చూడండి: ఊహించని డబ్బు, FREE, URGENT లాంటి పదాలు, చాలా “!!!”. ఇవే ఆధారాలు.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "knob.prompt",
+   "locale": "hi",
+   "text": "यह एक छोटा-सा फ़िल्टर है। यह संदेश में तीन तरह के सुराग गिनता है और अंक जोड़ता है। पैसे वाले शब्द वे हैं जो पैसा पाने या देने की बात करते हैं: won, prize, free, pay, fee। जल्दबाज़ी वाले शब्द आपको हड़बड़ाते हैं: urgent, now, only today।",
+   "confidence": "medium",
+   "note": "Example words are kept in English because the learner sees English messages; consider adding Hindi glosses. 'पैसे वाले शब्द' and 'जल्दबाज़ी वाले शब्द' are my renderings of 'money words' and 'urgent words' and are new terms."
+  },
+  {
+   "key": "knob.prompt",
+   "locale": "te",
+   "text": "ఇది ఒక చిన్న ఫిల్టర్. ఇది సందేశంలో మూడు రకాల ఆధారాలను లెక్కించి, పాయింట్లు కలుపుతుంది. డబ్బు పదాలు అంటే డబ్బు పొందడం లేదా చెల్లించడం గురించిన పదాలు: won, prize, free, pay, fee. తొందర పదాలు మిమ్మల్ని తొందరపెడతాయి: urgent, now, only today.",
+   "confidence": "medium",
+   "note": "Example words kept in English because the learner sees English messages. 'డబ్బు పదాలు' and 'తొందర పదాలు' are my renderings of 'money words' and 'urgent words' and are new terms."
+  },
+  {
+   "key": "knob.sentence",
+   "locale": "hi",
+   "text": "इस संदेश में {excl, plural, one {# “!” चिह्न} other {# “!” चिह्न}}, {money, plural, one {# पैसे वाला शब्द} other {# पैसे वाले शब्द}} और {urgent, plural, one {# जल्दबाज़ी वाला शब्द} other {# जल्दबाज़ी वाले शब्द}} हैं। इसका जंक स्कोर {output} है, इसलिए यह {decision} में जाएगा।",
+   "confidence": "medium",
+   "note": "Hindi 'one' category covers 0 and 1; noun 'चिह्न' does not change. '{decision} में' assumes {decision} is localised as a noun (जंक / इनबॉक्स); please verify placeholder values and word order in the UI."
+  },
+  {
+   "key": "knob.sentence",
+   "locale": "te",
+   "text": "ఈ సందేశంలో {excl, plural, one {# “!” గుర్తు} other {# “!” గుర్తులు}}, {money, plural, one {# డబ్బు పదం} other {# డబ్బు పదాలు}}, {urgent, plural, one {# తొందర పదం} other {# తొందర పదాలు}} ఉన్నాయి. దీని జంక్ స్కోరు {output}, కాబట్టి ఇది {decision}కి వెళ్తుంది.",
+   "confidence": "medium",
+   "note": "Case suffix 'కి' attached directly to {decision}; if the placeholder ends in a vowel or is inflected differently (జంక్‌కి vs ఇన్‌బాక్స్‌కి) this may need a different construction. Verify the plural forms and the word order."
+  },
+  {
+   "key": "knob.success",
+   "locale": "hi",
+   "text": "स्कोर 10: ठीक सीमा पर, और जंक में जाने के लिए 10 काफ़ी है। एक अंक कम होता तो यह <term-inbox>इनबॉक्स</term-inbox> में पहुँचता।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "knob.success",
+   "locale": "te",
+   "text": "స్కోరు 10: సరిగ్గా హద్దు మీద ఉంది, జంక్‌కి వెళ్లడానికి 10 సరిపోతుంది. ఒక పాయింట్ తక్కువైతే అది <term-inbox>ఇన్‌బాక్స్</term-inbox>కి చేరేది.",
+   "confidence": "medium",
+   "note": "Suffix attached directly after the closing term tag; check rendering."
+  },
+  {
+   "key": "bh.intro",
+   "locale": "hi",
+   "text": "फ़िल्टर का नियम छोटा है। नीचे हर संदेश अपने सुराग और उनके अंक दिखाता है: हर “!” का 1, हर पैसे वाले शब्द का 2, हर जल्दबाज़ी वाले शब्द का 3। आपका काम: अंक जोड़िए, कुल की 10 से तुलना कीजिए, और जंक या इनबॉक्स चुनिए। दो हाथ से कीजिए, बाकी मशीन को करने दीजिए।",
+   "confidence": "medium",
+   "note": "Three-part sentence structure in the second half; check that the 'Do two by hand' instruction reads naturally."
+  },
+  {
+   "key": "bh.intro",
+   "locale": "te",
+   "text": "ఫిల్టర్ నియమం చిన్నది. కింద ప్రతి సందేశం తన ఆధారాలను, వాటి పాయింట్లను చూపిస్తుంది: ప్రతి “!”కి 1, ప్రతి డబ్బు పదానికి 2, ప్రతి తొందర పదానికి 3. మీ పని: పాయింట్లు కూడండి, మొత్తాన్ని 10తో పోల్చండి, జంక్ లేదా ఇన్‌బాక్స్ ఎంచుకోండి. రెండు చేత్తో చేయండి, మిగతావి యంత్రం చేయనివ్వండి.",
+   "confidence": "medium",
+   "note": "Please confirm 'కూడండి' (add) is natural for this age group versus 'కలపండి'."
+  },
+  {
+   "key": "bh.rule",
+   "locale": "hi",
+   "text": "अगर किसी संदेश का स्कोर {threshold} या उससे ज़्यादा है, तो वह जंक में जाता है। नहीं तो वह इनबॉक्स में जाता है।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "bh.rule",
+   "locale": "te",
+   "text": "సందేశం స్కోరు {threshold} లేదా అంతకంటే ఎక్కువ అయితే అది జంక్‌కి వెళ్తుంది. లేకపోతే ఇన్‌బాక్స్‌కి వెళ్తుంది.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "bh.auto",
+   "locale": "hi",
+   "text": "मशीन ने हर बार वही कदम, उसी तरह उठाया। वह थकती नहीं, और उसके पास सहारे के लिए सामान्य समझ नहीं है: वह बस कदमों का पालन करती है। इसलिए दो धोखे, खाता-बंद वाला संदेश और फ़ीस भरने वाला संदेश, इनबॉक्स में चले गए।",
+   "confidence": "medium",
+   "note": "Source says 'it cannot get tired, and it has no common sense to fall back on'; I used 'वह थकती नहीं' (does not tire). 'मशीन' is feminine here; check against how the UI refers to the machine. Also 'बस' is used for 'only', which is natural in Hindi; the platform's banned word 'just' does not apply."
+  },
+  {
+   "key": "bh.auto",
+   "locale": "te",
+   "text": "యంత్రం ప్రతిసారీ ఒకే అడుగును ఒకే విధంగా చేసింది. దానికి అలసట రాదు, అలాగే దానికి సాధారణ జ్ఞానం కూడా లేదు: అది అడుగులను మాత్రమే పాటిస్తుంది. అందుకే రెండు మోసాలు, ఖాతా లాక్ అయిందనే సందేశం, రుసుము చెల్లించమనే సందేశం, ఇన్‌బాక్స్‌లోకి జారిపోయాయి.",
+   "confidence": "medium",
+   "note": "'రుసుము' (fee) may be formal for teens; 'ఫీజు' may be more natural. Please choose. Also check the long appositive list of the two scams."
+  },
+  {
+   "key": "cmp.explain",
+   "locale": "hi",
+   "text": "सिर्फ़ “!” चिह्न बदले। उत्साह वाले संदेश में 10 हैं, हर एक का 1 अंक, इसलिए स्कोर 10 है: वह सीमा तक पहुँच गया। दोस्त का असली संदेश जंक में चला जाता है। फ़िल्टर उत्साही दोस्त और ठग में फ़र्क़ नहीं कर पाता। वह बस गिनता है।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "cmp.explain",
+   "locale": "te",
+   "text": "మారింది “!” గుర్తులు మాత్రమే. ఉత్సాహంగా ఉన్న సందేశంలో 10 ఉన్నాయి, ఒక్కోదానికి 1 పాయింట్, కాబట్టి స్కోరు 10: అది హద్దుకు చేరింది. స్నేహితుడి నిజమైన సందేశం జంక్‌లోకి వెళ్తుంది. ఉత్సాహంగా ఉన్న స్నేహితుడికీ మోసగాడికీ ఫిల్టర్ తేడా చెప్పలేదు. అది లెక్కిస్తుంది, అంతే.",
+   "confidence": "medium",
+   "note": "'అంతే' used for 'only'; check tone. 'మోసగాడు' for scammer; confirm it is not too harsh."
+  },
+  {
+   "key": "an.break",
+   "locale": "hi",
+   "text": "यहाँ तुलना काम करना बंद कर देती है। परीक्षक आपके उत्तर पढ़ता है और समझता है। फ़िल्टर बस सुराग गिनता है। उसे नहीं पता कि संदेश का मतलब क्या है।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "an.break",
+   "locale": "te",
+   "text": "ఇక్కడ పోలిక పని చేయదు. పరీక్షకుడు మీ జవాబులను చదివి అర్థం చేసుకుంటాడు. ఫిల్టర్ ఆధారాలను మాత్రమే లెక్కిస్తుంది. సందేశం అర్థం ఏమిటో దానికి తెలియదు.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "deep.text",
+   "locale": "hi",
+   "text": "असली फ़िल्टर अक्सर तीन नहीं, सैकड़ों सुराग इस्तेमाल करते हैं। उनके अंक आम तौर पर हाथ से तय नहीं होते: फ़िल्टर उन्हें लाखों संदेशों से निकालता है, जिन्हें लोगों ने जंक या असली बताया था। इसे <term-training>ट्रेनिंग</term-training> कहते हैं।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "deep.text",
+   "locale": "te",
+   "text": "నిజమైన ఫిల్టర్లు తరచుగా మూడు కాదు, వందల ఆధారాలను వాడతాయి. వాటి పాయింట్లను సాధారణంగా చేత్తో పెట్టరు: ప్రజలు జంక్‌గా లేదా నిజమైనవిగా గుర్తించిన లక్షల సందేశాల నుండి ఫిల్టరే వాటిని లెక్కిస్తుంది. దీన్నే <term-training>ట్రైనింగ్</term-training> అంటారు.",
+   "confidence": "medium",
+   "note": "Long sentence in the middle; consider splitting. Check 'ప్రజలు' (people) versus 'మనుషులు'."
+  },
+  {
+   "key": "deepest.text",
+   "locale": "hi",
+   "text": "सीमा चुनना एक समझौता है। कम सीमा ज़्यादा जंक पकड़ती है, पर ज़्यादा असली संदेश भी रोक देती है। ऊँची सीमा असली संदेश आने देती है, पर ज़्यादा जंक भी आने देती है। ऐसी कोई सेटिंग नहीं जिसमें ज़रा भी गलती न हो।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "deepest.text",
+   "locale": "te",
+   "text": "హద్దును ఎంచుకోవడం ఒక రాజీ. తక్కువ హద్దు ఎక్కువ జంక్‌ను పట్టుకుంటుంది, కానీ ఎక్కువ నిజమైన సందేశాలను కూడా ఆపుతుంది. ఎక్కువ హద్దు నిజమైన సందేశాలను రానిస్తుంది, కానీ ఎక్కువ జంక్ కూడా లోపలికి వస్తుంది. ఏ తప్పూ లేకుండా చేసే సెట్టింగ్ లేదు.",
+   "confidence": "medium",
+   "note": "'ఎక్కువ హద్దు' for 'high threshold' may read as 'larger boundary'; 'ఎత్తైన హద్దు' might be clearer. Please advise."
+  },
+  {
+   "key": "yd.prompt",
+   "locale": "hi",
+   "text": "ज़्यादा से ज़्यादा पाँच संदेश बनाइए जो आपके हिसाब से इस फ़िल्टर को चकमा देंगे। सिर्फ़ गढ़े हुए शब्द इस्तेमाल कीजिए: असली नाम या फ़ोन नंबर नहीं। हर एक का स्कोर निकालिए: हर “!” का 1 अंक, हर पैसे वाले शब्द का 2, हर जल्दबाज़ी वाले शब्द का 3। क्या वह 10 तक पहुँचेगा?",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "yd.prompt",
+   "locale": "te",
+   "text": "ఈ ఫిల్టర్‌ను మోసం చేస్తాయని మీరు అనుకునే ఐదు వరకు సందేశాలు రాయండి. కల్పిత పదాలనే వాడండి: నిజమైన పేర్లు, ఫోన్ నంబర్లు వద్దు. ప్రతిదానికి స్కోరు లెక్కించండి: ప్రతి “!”కి 1 పాయింట్, ప్రతి డబ్బు పదానికి 2, ప్రతి తొందర పదానికి 3. అది 10కి చేరుతుందా?",
+   "confidence": "medium",
+   "note": "'మోసం చేయడం' for 'fool' (trick); confirm it is not too strong for a game context."
+  },
+  {
+   "key": "ch.f1",
+   "locale": "hi",
+   "text": "इसका स्कोर 0 है, क्योंकि इसमें कोई सुराग नहीं है। क्या 0, कम से कम 10 है?",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "ch.f1",
+   "locale": "te",
+   "text": "దీని స్కోరు 0, ఎందుకంటే ఆధారాలేమీ లేవు. 0 కనీసం 10 అవుతుందా?",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "br.r1",
+   "locale": "hi",
+   "text": "फ़िल्टर को अब कोई पैसे वाला शब्द नहीं दिखता। जंक निकल जाता है।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "br.r1",
+   "locale": "te",
+   "text": "ఫిల్టర్‌కు ఇక డబ్బు పదం కనిపించదు. జంక్ జారిపోతుంది.",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "take.card",
+   "locale": "hi",
+   "text": "आज मैंने एक जंक फ़िल्टर बनाया। वह सुराग जोड़कर स्कोर बनाता है और उसकी एक रेखा से तुलना करता है। वह संदेश को कभी नहीं समझता।",
+   "confidence": "high",
+   "note": ""
+  },
+  {
+   "key": "take.card",
+   "locale": "te",
+   "text": "ఈ రోజు నేను జంక్ ఫిల్టర్ తయారు చేశాను. ఇది ఆధారాలను కూడి స్కోరుగా చేసి, ఒక గీతతో పోలుస్తుంది. అది సందేశాన్ని ఎప్పటికీ అర్థం చేసుకోదు.",
+   "confidence": "medium",
+   "note": "Mixed pronouns 'ఇది/అది' for the filter; make consistent."
+  }
+ ],
+ "terminology": [
+  {
+   "term": "junk",
+   "locale": "hi",
+   "rendering": "जंक",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "program",
+   "locale": "hi",
+   "rendering": "प्रोग्राम",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "filter",
+   "locale": "hi",
+   "rendering": "फ़िल्टर",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "inbox",
+   "locale": "hi",
+   "rendering": "इनबॉक्स",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "training",
+   "locale": "hi",
+   "rendering": "ट्रेनिंग",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "score",
+   "locale": "hi",
+   "rendering": "स्कोर",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "clue",
+   "locale": "hi",
+   "rendering": "सुराग",
+   "policy": "translate",
+   "newProposal": false
+  },
+  {
+   "term": "threshold",
+   "locale": "hi",
+   "rendering": "सीमा",
+   "policy": "translate",
+   "newProposal": false
+  },
+  {
+   "term": "junk",
+   "locale": "te",
+   "rendering": "జంక్",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "program",
+   "locale": "te",
+   "rendering": "ప్రోగ్రామ్",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "filter",
+   "locale": "te",
+   "rendering": "ఫిల్టర్",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "inbox",
+   "locale": "te",
+   "rendering": "ఇన్‌బాక్స్",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "training",
+   "locale": "te",
+   "rendering": "ట్రైనింగ్",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "score",
+   "locale": "te",
+   "rendering": "స్కోరు",
+   "policy": "keep-english-in-script",
+   "newProposal": false
+  },
+  {
+   "term": "clue",
+   "locale": "te",
+   "rendering": "ఆధారం",
+   "policy": "translate",
+   "newProposal": false
+  },
+  {
+   "term": "threshold",
+   "locale": "te",
+   "rendering": "హద్దు",
+   "policy": "translate",
+   "newProposal": false
+  },
+  {
+   "term": "money word",
+   "locale": "hi",
+   "rendering": "पैसे वाला शब्द",
+   "policy": "translate",
+   "newProposal": true
+  },
+  {
+   "term": "urgent word",
+   "locale": "hi",
+   "rendering": "जल्दबाज़ी वाला शब्द",
+   "policy": "translate",
+   "newProposal": true
+  },
+  {
+   "term": "money word",
+   "locale": "te",
+   "rendering": "డబ్బు పదం",
+   "policy": "translate",
+   "newProposal": true
+  },
+  {
+   "term": "urgent word",
+   "locale": "te",
+   "rendering": "తొందర పదం",
+   "policy": "translate",
+   "newProposal": true
+  }
+ ],
+ "notesForReviewers": [
+  "Placeholders ({excl}, {money}, {urgent}, {output}, {decision}, {threshold}) and <term-x> tags are preserved exactly; please verify that {decision} is localised as a noun in each locale so the case endings work.",
+  "Example spam words (won, prize, free, pay, fee, urgent, now, only today, FREE, URGENT) are left in English because learners sort English messages; consider adding Hindi/Telugu glosses.",
+  "'money word' and 'urgent word' are not in the supplied glossaries; renderings are proposed for the creator's approval.",
+  "Telugu case suffixes attached to term tags and placeholders (e.g. జంక్‌లోకి, {decision}కి) need a rendering check.",
+  "All locales remain unreviewed; native-speaker review is required."
+ ]
+}

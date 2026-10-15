@@ -1,0 +1,72 @@
+{
+  "decisions": [
+    {
+      "conflictId": "c1",
+      "decision": "side-b",
+      "alsoAccept": [
+        "both"
+      ],
+      "why": "Accuracy outranks experience; the designer's task becomes making the line delightful, not removing it."
+    },
+    {
+      "conflictId": "c2",
+      "decision": "side-b",
+      "alsoAccept": [
+        "both"
+      ],
+      "why": "Article 7: culture-specific examples only in locale variants; cricket can live in hi/te variants."
+    },
+    {
+      "conflictId": "c3",
+      "decision": "side-b",
+      "alsoAccept": [
+        "both"
+      ],
+      "why": "Clarity outranks experience; make a short hook that still builds tension."
+    },
+    {
+      "conflictId": "c4",
+      "decision": "escalate",
+      "why": "Either option contradicts something the creator must own: their stated 20 minutes, or the lesson grammar in the constitution."
+    },
+    {
+      "conflictId": "c5",
+      "decision": "escalate",
+      "alsoAccept": [
+        "side-b"
+      ],
+      "why": "New components are always-ask; the orchestrator may also settle on the existing component and offer the new one as a proposal."
+    },
+    {
+      "conflictId": "c6",
+      "decision": "both",
+      "alsoAccept": [
+        "side-a"
+      ],
+      "why": "An accuracy flag is resolved only by removing the problem: 'many clues, not three' keeps the contrast."
+    },
+    {
+      "conflictId": "c7",
+      "decision": "escalate",
+      "why": "Same priority (aesthetics), mutually exclusive; the order does not settle it."
+    },
+    {
+      "conflictId": "c8",
+      "decision": "side-b",
+      "alsoAccept": [
+        "both"
+      ],
+      "why": "Safety outranks experience; made-up messages that feel real keep the authenticity."
+    },
+    {
+      "conflictId": "c9",
+      "decision": "escalate",
+      "why": "Following the creator's intent would override an accuracy flag; both must go to the creator."
+    },
+    {
+      "conflictId": "c10",
+      "decision": "escalate",
+      "why": "Publishing is always-ask."
+    }
+  ]
+}

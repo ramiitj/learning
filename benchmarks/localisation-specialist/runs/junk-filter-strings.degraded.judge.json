@@ -1,0 +1,42 @@
+{
+  "agent": "localisation-specialist",
+  "scores": [
+    {
+      "criterion": "meaning",
+      "score": 1,
+      "evidence": "Hindi sort.reveal and knob.prompt are swapped. hi sort.reveal reads 'यह एक छोटा-सा छलनी है। यह संदेश में तीन तरह के सुराग गिनता है...', which is the knob.prompt source (the tiny filter and the money/urgent word lists). hi knob.prompt reads 'देखिए, आपने किस आधार पर तय किया: ऐसे पैसे जिनकी आपको उम्मीद नहीं थी...', which is the sort.reveal source. On screen, learners would see the reveal before sorting and the filter description in its place, so both strings are wrong. Smaller point: hi deepest.text adds 'हमेशा' ('always') to 'is a trade-off'. Telugu is faithful throughout, and the numbers (1/2/3 points, 10, 0, five, eight, millions as मिलियन/మిలియన్) are preserved in both locales.",
+      "improve": "Put the Hindi sort.reveal and knob.prompt texts back under their correct keys and drop the added 'हमेशा' in deepest.text. That would reach 3 or 4."
+    },
+    {
+      "criterion": "naturalness",
+      "score": 2,
+      "evidence": "Telugu reads naturally (e.g. 'అది లెక్క పెడుతుంది, అంతే.', 'ఒకటి ఇచ్చి ఒకటి తీసుకోవడం'). The Hindi has repeated grammatical-gender errors with the feminine noun छलनी: 'यह एक छोटा-सा छलनी है', 'छलनी ... फ़र्क़ नहीं कर पाता', 'छलनी सिर्फ़ सुराग गिनता है', 'आज मैंने एक जंक छलनी बनाया'. It also uses the bookish 'प्राप्तांक' for score in seven strings. A native speaker would notice these straight away.",
+      "improve": "Use the glossary term फ़िल्टर, which removes the gender clashes (or fix the agreement to छोटी-सी, कर पाती, बनाई), and replace प्राप्तांक with the everyday स्कोर."
+    },
+    {
+      "criterion": "terminology",
+      "score": 1,
+      "evidence": "Hindi breaks the glossary in two ways. (1) filter: the glossary gives फ़िल्टर, but the Hindi uses छलनी inside the tag in sort.instruction ('<term-filter>छलनी</term-filter>'), then in bh.intro, cmp.explain, an.break, yd.prompt and take.card. It also switches between the two inside single strings: deep.text has 'असली छलनी ... फ़िल्टर उन्हें', and br.r1 has 'छलनी को ... फ़िल्टर से बच निकलता है'. (2) score: the glossary gives स्कोर, but knob.sentence, knob.success, bh.rule, cmp.explain, yd.prompt, ch.f1 and take.card all use प्राप्तांक. The terminology table still claims 'स्कोर' and 'फ़िल्टर', and neither deviation is proposed or noted. Telugu is consistent with its glossary (ఫిల్టర్, స్కోరు, హద్దు, ఆధారం, ట్రైనింగ్).",
+      "improve": "In Hindi, use फ़िल्टर and स्कोर everywhere, matching the glossary. If छलनी is wanted as an explanatory analogy, put it forward as a marked new proposal and use it consistently."
+    },
+    {
+      "criterion": "format-integrity",
+      "score": 4,
+      "evidence": "All ICU placeholders are kept in both locales: {excl}, {money}, {urgent}, {output}, {decision}, {threshold}. The plural arguments keep their one/other branches and # marks, and the branches are grammatical: hi 'पैसे वाला शब्द'/'पैसे वाले शब्द', te 'గుర్తు'/'గుర్తులు', 'పదం'/'పదాలు'. All five <term-x> tags appear in both locales: junk, program, filter, inbox, training. Numbers are numerals with unchanged values. The wrong word inside the hi <term-filter> tag is a terminology problem, not a tag break.",
+      "improve": "None needed for this level. If anything, confirm the agglutinated Telugu '{decision}కి' against the real runtime values, as the notes already ask."
+    },
+    {
+      "criterion": "register",
+      "score": 3,
+      "evidence": "Both locales address the learner respectfully (आप forms such as 'बाँटिए', 'कीजिए'; మీరు, 'చేయండి'), and sentences are mostly short and active. The Hindi 'प्राप्तांक' sounds like an exam-sheet term rather than a teacher talking to a class 8 student. bh.intro and yd.prompt (hi) are long, though they mirror the English.",
+      "improve": "Replace प्राप्तांक with स्कोर and split the longer Hindi bh.intro and yd.prompt sentences."
+    },
+    {
+      "criterion": "honesty",
+      "score": 2,
+      "evidence": "All 36 strings are marked 'confidence': 'high' with empty notes. That includes the Hindi strings that depart from the glossary (छलनी, प्राप्तांक) and use the feminine noun with masculine agreement. The terminology table says the Hindi renderings are 'स्कोर' and 'फ़िल्टर', which does not match the text. The general notesForReviewers are specific and useful (new-term proposals, English trigger words, millions, {decision} forms, no review status claimed), but they do not cover these doubts.",
+      "improve": "Mark the Hindi strings that use छलनी/प्राप्तांक as medium confidence with a specific note, or fix them. Make the terminology table match what the strings actually use."
+    }
+  ],
+  "overall": "Fail. The mean is 2.17, and the blocking criteria meaning (1) and terminology (1) are below 3. Telugu is close to publishable: it is faithful, natural, consistent with its glossary and keeps the format. Hindi has two strings swapped (sort.reveal and knob.prompt). It replaces the glossary's फ़िल्टर and स्कोर with छलनी and प्राप्तांक, and switches between छलनी and फ़िल्टर inside the same string. It also has repeated gender-agreement errors with छलनी. All of this is marked high confidence, and the terminology table misreports it."
+}

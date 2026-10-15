@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { enforceJudge, enforceReviewer, type Violation } from "./enforce";
+import { enforceArtifact, enforceJudge, enforceReviewer, type Violation } from "./enforce";
 import { judgeOutputSchema, reviewerOutputSchema } from "./contract";
 import { judgePrompt, systemPrompt } from "./prompt";
 import type { AgentKit, MakerRubric } from "./rubric";
@@ -26,6 +26,13 @@ export async function runReviewer(kit: AgentKit, input: unknown, client = new An
   if (kit.rubric.kind !== "reviewer") throw new Error(`${kit.id} is not a reviewer`);
   const rubric = kit.rubric;
   return runWithRubric(client, kit.model, systemPrompt(kit), reviewerOutputSchema(rubric) as unknown as Record<string, unknown>, input, (o) => enforceReviewer(o, rubric));
+}
+
+/** Runs a maker on a task: schema-constrained output, then the deterministic checks, with one redo on failure. */
+export async function runMaker(kit: AgentKit, task: unknown, client = new Anthropic()): Promise<RunResult> {
+  if (kit.rubric.kind !== "maker") throw new Error(`${kit.id} is not a maker`);
+  const rubric = kit.rubric as MakerRubric;
+  return runWithRubric(client, kit.model, systemPrompt(kit), rubric.artifactSchema as Record<string, unknown>, task, (o) => enforceArtifact(o, rubric, task));
 }
 
 export async function runJudge(kit: AgentKit, artifact: unknown, task: unknown, client = new Anthropic()): Promise<RunResult> {
@@ -65,7 +72,7 @@ async function runWithRubric(client: Anthropic, model: string, system: string, s
     messages.push({ role: "assistant", content: response.content });
     messages.push({
       role: "user",
-      content: `Your output broke the rubric and was rejected:\n${violations.map((x) => `- ${x.rule}: ${x.detail}`).join("\n")}\nRedo the review, following the rubric exactly, and return the complete JSON.`,
+      content: `Your output broke the rubric and was rejected:\n${violations.map((x) => `- ${x.rule}: ${x.detail}`).join("\n")}\nRedo the work, following the rubric exactly, and return the complete JSON.`,
     });
   }
   return { output, violations, attempts: MAX_ATTEMPTS, usage };

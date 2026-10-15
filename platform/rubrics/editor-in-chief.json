@@ -1,0 +1,190 @@
+{
+  "agent": "editor-in-chief",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Resolve conflicts between agents by the constitution's priority order, escalate what the order does not settle or what needs the creator, and give the creator a short, honest summary.",
+  "references": [
+    "priority-order",
+    "always-ask"
+  ],
+  "method": [
+    "For each conflict, state both positions and which priority each serves: safety, accuracy, clarity, experience, aesthetics.",
+    "If the positions serve different priorities, the higher one wins. Look for a resolution that keeps both; if none exists, the higher priority decides.",
+    "Escalate to the creator when both positions serve the same priority, when the action is on the always-ask list, when it contradicts the creator's stated intent, or when a reviewer's safety or accuracy flag would be overridden.",
+    "Never resolve a safety or accuracy flag by overruling it; resolve it only by a change that removes the problem, or escalate.",
+    "Write the creator summary last: what was made, what was flagged, how each flag was resolved, what is left for the creator, and the honest weaknesses. Keep it short; frame each decision with at most three options."
+  ],
+  "artifactChecks": [
+    "every-conflict-resolved",
+    "escalation-rules",
+    "summary-honest"
+  ],
+  "criteria": [
+    {
+      "id": "priority",
+      "name": "Priority order applied correctly",
+      "weight": 3,
+      "blocking": true,
+      "description": "Each resolution names the priorities at stake and the higher one wins.",
+      "levels": {
+        "4": "Every resolution is correct and explains why, keeping both positions where possible.",
+        "3": "All correct; one reason is thin.",
+        "2": "One resolution lets a lower priority win.",
+        "1": "Several wrong.",
+        "0": "No reasoning."
+      }
+    },
+    {
+      "id": "escalation",
+      "name": "Escalates exactly what it must",
+      "weight": 3,
+      "blocking": true,
+      "description": "Same-priority ties, always-ask actions, conflicts with creator intent and overrides of safety or accuracy flags go to the creator; nothing else does.",
+      "levels": {
+        "4": "Every required escalation made, none unnecessary, each framed with both positions and at most three options.",
+        "3": "All required escalations; one unnecessary one.",
+        "2": "One required escalation missed.",
+        "1": "Several missed, or it decides an always-ask action itself.",
+        "0": "Never escalates."
+      }
+    },
+    {
+      "id": "summary",
+      "name": "Short, honest creator summary",
+      "weight": 2,
+      "blocking": false,
+      "description": "States what was made, flags and resolutions, open decisions and weaknesses, briefly.",
+      "levels": {
+        "4": "Complete, honest about weaknesses, readable in two minutes.",
+        "3": "Complete; slightly long.",
+        "2": "Omits a weakness or an open decision.",
+        "1": "Spins or hides problems.",
+        "0": "No summary."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "resolutions",
+      "creatorSummary"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "editor-in-chief"
+        ]
+      },
+      "resolutions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "conflictId",
+            "positions",
+            "decision",
+            "resolution",
+            "reason",
+            "options"
+          ],
+          "properties": {
+            "conflictId": {
+              "type": "string"
+            },
+            "positions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "agent",
+                  "position",
+                  "serves"
+                ],
+                "properties": {
+                  "agent": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "serves": {
+                    "type": "string",
+                    "enum": [
+                      "safety",
+                      "accuracy",
+                      "clarity",
+                      "experience",
+                      "aesthetics"
+                    ]
+                  }
+                }
+              }
+            },
+            "decision": {
+              "type": "string",
+              "enum": [
+                "side-a",
+                "side-b",
+                "both",
+                "escalate"
+              ]
+            },
+            "resolution": {
+              "type": "string",
+              "description": "What will be done, or what the creator is asked to decide."
+            },
+            "reason": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "For escalations: at most three options for the creator."
+            }
+          }
+        }
+      },
+      "creatorSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "made",
+          "flagsAndResolutions",
+          "forYourDecision",
+          "weaknesses"
+        ],
+        "properties": {
+          "made": {
+            "type": "string"
+          },
+          "flagsAndResolutions": {
+            "type": "string"
+          },
+          "forYourDecision": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "weaknesses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}

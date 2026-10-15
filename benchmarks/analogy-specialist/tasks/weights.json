@@ -1,0 +1,44 @@
+{
+  "task": "Design analogies for this concept, for the lesson that follows the junk-filter lesson.",
+  "concept": "weight: how much one clue counts towards a decision. In the junk filter, an urgent word counts 3 points and an exclamation mark 1. In training, the weights are adjusted using many labelled examples instead of being set by hand.",
+  "lessonContext": "Learners may have done 'How does a junk filter decide?': a filter adds up clues into a score and compares it with a threshold; a deeper layer says real filters work out their points from many examples (training).",
+  "audience": {
+    "id": "school-13-17",
+    "label": "School learners, classes 8-12",
+    "status": "active",
+    "readingLevel": "grade 6-8 for core text",
+    "maxSentenceWords": 18,
+    "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+    "tone": "warm, curious, direct, never condescending",
+    "theme": "school",
+    "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+    "defaultDepth": "core",
+    "analogyVariants": "school",
+    "checks": [
+      "act-density",
+      "grammar",
+      "undefined-terms",
+      "banned-phrases",
+      "analogy-completeness",
+      "anthropomorphism",
+      "reading-level",
+      "first-use-help",
+      "media-rules",
+      "locale-completeness",
+      "checks-present",
+      "ending"
+    ]
+  },
+  "locales": [
+    "en",
+    "hi",
+    "te"
+  ],
+  "existingAnalogies": [
+    {
+      "concept": "threshold",
+      "source": "an exam with a pass mark",
+      "breakPoint": "An examiner reads and understands your answers. The filter only counts clues."
+    }
+  ]
+}

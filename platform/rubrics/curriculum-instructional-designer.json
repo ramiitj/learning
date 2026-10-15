@@ -1,0 +1,364 @@
+{
+  "agent": "curriculum-instructional-designer",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Turn a lesson request into a complete, zero-assumption learning sequence that anyone can start and finish with no background knowledge.",
+  "references": [
+    "ai-misconceptions",
+    "banned-phrases",
+    "lesson-grammar"
+  ],
+  "method": [
+    "Write the objectives first, as things a learner can do or explain, and plan a post-check item for each.",
+    "Decompose every concept by asking 'what must someone already understand to follow this?' until the answer is everyday experience. Each answer becomes an assumed everyday idea, an earlier lesson, or a detour.",
+    "Lay out the sequence stage by stage in the lesson grammar order. In every step, give the learner something to do before telling them anything.",
+    "Name an idea only after the learner has met it. Record each new term in termsIntroduced at the step where it is first used, and give it a glossary definition in plain words.",
+    "Write every calculation with all its steps. Put mathematics beyond the core path in deeper layers.",
+    "Plan for the misconceptions in the reference list that touch this concept: where each is surfaced and how it is corrected.",
+    "Read the whole sequence as a class 8 learner who reads slowly, has never seen the platform and is unsure about fractions. Fix every place they would stop."
+  ],
+  "artifactChecks": [
+    "grammar-order",
+    "terms-defined-before-use",
+    "objectives-checked",
+    "act-density",
+    "prerequisites-resolved",
+    "banned-phrases",
+    "reading-level"
+  ],
+  "criteria": [
+    {
+      "id": "prerequisites",
+      "name": "Zero-assumption decomposition",
+      "weight": 3,
+      "blocking": true,
+      "description": "Every concept is decomposed until it rests on everyday experience; each prerequisite is assumed-everyday, a prior lesson, or a detour with an outline.",
+      "levels": {
+        "4": "Every prerequisite, including numeracy and vocabulary, is found and handled; detours are short, return the learner, and none is missing.",
+        "3": "All conceptual prerequisites are handled; at most one minor numeracy or vocabulary assumption is left implicit.",
+        "2": "One real prerequisite is assumed without a detour, or a detour has no outline.",
+        "1": "Several prerequisites are assumed; detours are named but not designed.",
+        "0": "No prerequisite analysis."
+      }
+    },
+    {
+      "id": "experience-before-naming",
+      "name": "Experience before naming",
+      "weight": 2,
+      "blocking": false,
+      "description": "Learners meet each idea through an act before it is named or explained.",
+      "levels": {
+        "4": "Every key idea is experienced first and named after; terms are defined at first use in plain words.",
+        "3": "Most ideas are experienced first; one is named before it is met but defined on the spot.",
+        "2": "About half the ideas are told before they are experienced.",
+        "1": "The sequence mostly explains, then asks the learner to apply.",
+        "0": "Lecture-style throughout."
+      }
+    },
+    {
+      "id": "stepwise-working",
+      "name": "Every step shown",
+      "weight": 2,
+      "blocking": false,
+      "description": "Every calculation and every 'why' is answered in the sequence; mathematics beyond the core sits in deeper layers with its own scaffolding.",
+      "levels": {
+        "4": "All working is shown; deeper layers carry the maths with scaffolding; nothing asks the learner to take a number on trust.",
+        "3": "Working is shown everywhere on the core path; a deeper layer skips one step.",
+        "2": "One core calculation or 'why' is left unexplained.",
+        "1": "Several jumps in working.",
+        "0": "Numbers appear without working."
+      }
+    },
+    {
+      "id": "checks-aligned",
+      "name": "Checks measure the objectives",
+      "weight": 3,
+      "blocking": true,
+      "description": "Pre-check and post-check items each map to an objective, test understanding rather than recall of wording, and include at least one transfer item.",
+      "levels": {
+        "4": "Every objective has at least one post-check item; items test understanding in new situations; distractors come from real misconceptions.",
+        "3": "Every objective is covered; one item tests recall of wording rather than understanding.",
+        "2": "One objective has no post-check item, or items mostly test recall.",
+        "1": "Checks exist but do not map to the objectives.",
+        "0": "No checks."
+      }
+    },
+    {
+      "id": "misconceptions",
+      "name": "Misconceptions surfaced and corrected",
+      "weight": 2,
+      "blocking": false,
+      "description": "Relevant misconceptions from the reference list are designed into the sequence: surfaced by a prediction or task, then corrected by evidence.",
+      "levels": {
+        "4": "Each relevant misconception is surfaced by the learner's own prediction and corrected by what they see.",
+        "3": "Relevant misconceptions are addressed, one only by telling.",
+        "2": "Misconceptions are mentioned but not designed for.",
+        "1": "A relevant misconception is reinforced by the wording.",
+        "0": "Ignored."
+      }
+    },
+    {
+      "id": "cognitive-load",
+      "name": "One idea at a time, at the reading level",
+      "weight": 2,
+      "blocking": false,
+      "description": "Each step introduces at most one new idea; sentences are short and in plain words for the audience's reading level; no banned phrases.",
+      "levels": {
+        "4": "Every step carries one idea; text would read comfortably for a class 8 learner in a second language.",
+        "3": "One step carries two new ideas, or a few sentences are long.",
+        "2": "Several overloaded steps or dense text.",
+        "1": "Text-heavy and abstract.",
+        "0": "Unreadable for the audience."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "title",
+      "objectives",
+      "prerequisites",
+      "sequence",
+      "glossary",
+      "checks",
+      "notesForCreator"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "curriculum-instructional-designer"
+        ]
+      },
+      "title": {
+        "type": "string"
+      },
+      "objectives": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "text"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string",
+              "description": "What the learner can do or explain afterwards."
+            }
+          }
+        },
+        "minItems": 1
+      },
+      "prerequisites": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "concept",
+            "handledBy",
+            "detourOutline"
+          ],
+          "properties": {
+            "concept": {
+              "type": "string"
+            },
+            "handledBy": {
+              "type": "string",
+              "enum": [
+                "assumed-everyday",
+                "prior-lesson",
+                "detour"
+              ]
+            },
+            "detourOutline": {
+              "type": "string",
+              "description": "For detours: the steps of the detour; '' otherwise."
+            }
+          }
+        }
+      },
+      "sequence": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "stage",
+            "learnerAct",
+            "purpose",
+            "draftText",
+            "termsIntroduced",
+            "termsUsed",
+            "depth",
+            "misconceptionAddressed"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "stage": {
+              "type": "string",
+              "enum": [
+                "hook",
+                "predict",
+                "manipulate",
+                "explain",
+                "break-it",
+                "transfer-reflect"
+              ]
+            },
+            "learnerAct": {
+              "type": "string",
+              "enum": [
+                "decide",
+                "predict",
+                "build",
+                "explore",
+                "explain",
+                "none"
+              ]
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "draftText": {
+              "type": "string",
+              "description": "The learner-facing text, in full, in English."
+            },
+            "termsIntroduced": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "termsUsed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "depth": {
+              "type": "string",
+              "enum": [
+                "core",
+                "deeper",
+                "deepest"
+              ]
+            },
+            "misconceptionAddressed": {
+              "type": "string",
+              "description": "Id from the misconceptions reference, or ''."
+            }
+          }
+        },
+        "minItems": 6
+      },
+      "glossary": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "term",
+            "definition"
+          ],
+          "properties": {
+            "term": {
+              "type": "string"
+            },
+            "definition": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "checks": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pre",
+          "post"
+        ],
+        "properties": {
+          "pre": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "objective",
+                "question",
+                "answer"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "objective": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "post": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "objective",
+                "question",
+                "answer",
+                "transfer"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "objective": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                },
+                "transfer": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "notesForCreator": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}

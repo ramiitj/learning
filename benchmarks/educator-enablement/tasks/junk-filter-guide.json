@@ -1,0 +1,781 @@
+{
+  "task": "Write the teacher guide for this lesson.",
+  "lesson": {
+    "id": "every-primitive",
+    "schemaVersion": "1.0",
+    "version": 1,
+    "status": "draft",
+    "meta": {
+      "titleKey": "title",
+      "subtitleKey": "subtitle",
+      "subject": "ai",
+      "course": "ai-for-kids",
+      "issue": "issue-01",
+      "concepts": [
+        "clue",
+        "score",
+        "threshold"
+      ],
+      "objectives": [
+        {
+          "id": "o1",
+          "textKey": "obj.o1"
+        },
+        {
+          "id": "o2",
+          "textKey": "obj.o2"
+        }
+      ],
+      "prerequisites": [],
+      "audiences": [
+        "school-13-17"
+      ],
+      "curriculumTags": [],
+      "estimatedMinutes": 25,
+      "provenance": "Phase 1 hand-written test lesson using every universal primitive; hi and te are unreviewed drafts"
+    },
+    "stages": [
+      {
+        "stage": "hook",
+        "blocks": [
+          {
+            "id": "b1",
+            "type": "reveal",
+            "componentVersion": "1.0",
+            "config": {
+              "textKey": "hook.text",
+              "questionKey": "hook.q"
+            },
+            "glossaryTerms": [
+              "junk",
+              "program"
+            ]
+          }
+        ]
+      },
+      {
+        "stage": "predict",
+        "blocks": [
+          {
+            "id": "b2",
+            "type": "predict",
+            "componentVersion": "1.0",
+            "config": {
+              "promptKey": "predict.prompt",
+              "choices": [
+                "predict.c1",
+                "predict.c2",
+                "predict.c3"
+              ],
+              "answer": "predict.c2",
+              "confidence": true,
+              "revealKey": "predict.reveal",
+              "choiceFeedback": {
+                "predict.c1": "predict.f1",
+                "predict.c3": "predict.f3"
+              }
+            },
+            "classroom": {
+              "mode": "class-vote"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "manipulate",
+        "blocks": [
+          {
+            "id": "b3",
+            "type": "sort",
+            "componentVersion": "1.0",
+            "config": {
+              "instructionKey": "sort.instruction",
+              "groups": [
+                "sort.g1",
+                "sort.g2"
+              ],
+              "items": [
+                {
+                  "id": "m1",
+                  "labelKey": "sort.m1",
+                  "symbol": "🎁",
+                  "group": "sort.g1"
+                },
+                {
+                  "id": "m2",
+                  "labelKey": "sort.m2",
+                  "symbol": "📘",
+                  "group": "sort.g2"
+                },
+                {
+                  "id": "m3",
+                  "labelKey": "sort.m3",
+                  "symbol": "🔒",
+                  "group": "sort.g1"
+                },
+                {
+                  "id": "m4",
+                  "labelKey": "sort.m4",
+                  "symbol": "🍲",
+                  "group": "sort.g2"
+                },
+                {
+                  "id": "m5",
+                  "labelKey": "sort.m5",
+                  "symbol": "📱",
+                  "group": "sort.g1"
+                },
+                {
+                  "id": "m6",
+                  "labelKey": "sort.m6",
+                  "symbol": "📅",
+                  "group": "sort.g2"
+                },
+                {
+                  "id": "m7",
+                  "labelKey": "sort.m7",
+                  "symbol": "💸",
+                  "group": "sort.g1"
+                },
+                {
+                  "id": "m8",
+                  "labelKey": "sort.m8",
+                  "symbol": "🔬",
+                  "group": "sort.g2"
+                }
+              ],
+              "revealKey": "sort.reveal"
+            },
+            "classroom": {
+              "mode": "vote-per-item"
+            },
+            "glossaryTerms": [
+              "filter",
+              "clue"
+            ]
+          },
+          {
+            "id": "b4",
+            "type": "knob",
+            "componentVersion": "1.0",
+            "config": {
+              "promptKey": "knob.prompt",
+              "model": {
+                "type": "linear",
+                "bias": 0,
+                "inputs": [
+                  {
+                    "id": "excl",
+                    "labelKey": "knob.excl",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 10,
+                    "step": 1,
+                    "initial": 2,
+                    "weight": 1
+                  },
+                  {
+                    "id": "money",
+                    "labelKey": "knob.money",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 3,
+                    "step": 1,
+                    "initial": 0,
+                    "weight": 2
+                  },
+                  {
+                    "id": "urgent",
+                    "labelKey": "knob.urgent",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 3,
+                    "step": 1,
+                    "initial": 0,
+                    "weight": 3
+                  }
+                ],
+                "output": {
+                  "labelKey": "knob.output",
+                  "min": 0,
+                  "max": 25
+                }
+              },
+              "outputTemplateKey": "knob.sentence",
+              "decision": {
+                "threshold": 10,
+                "aboveKey": "knob.junk",
+                "belowKey": "knob.inbox"
+              },
+              "goal": {
+                "target": 10,
+                "tolerance": 0,
+                "goalKey": "knob.goal",
+                "successKey": "knob.success"
+              }
+            },
+            "glossaryTerms": [
+              "score",
+              "threshold",
+              "inbox"
+            ],
+            "detours": [
+              "threshold"
+            ]
+          },
+          {
+            "id": "b5",
+            "type": "by-hand-then-automate",
+            "componentVersion": "1.0",
+            "config": {
+              "introKey": "bh.intro",
+              "ruleKey": "bh.rule",
+              "process": {
+                "type": "threshold",
+                "threshold": 10,
+                "aboveKey": "bh.above",
+                "belowKey": "bh.below"
+              },
+              "items": [
+                {
+                  "id": "i1",
+                  "labelKey": "bh.i1",
+                  "value": 10
+                },
+                {
+                  "id": "i2",
+                  "labelKey": "bh.i2",
+                  "value": 0
+                },
+                {
+                  "id": "i3",
+                  "labelKey": "bh.i3",
+                  "value": 3
+                },
+                {
+                  "id": "i4",
+                  "labelKey": "bh.i4",
+                  "value": 0
+                },
+                {
+                  "id": "i5",
+                  "labelKey": "bh.i5",
+                  "value": 11
+                },
+                {
+                  "id": "i6",
+                  "labelKey": "bh.i6",
+                  "value": 0
+                },
+                {
+                  "id": "i7",
+                  "labelKey": "bh.i7",
+                  "value": 4
+                },
+                {
+                  "id": "i8",
+                  "labelKey": "bh.i8",
+                  "value": 0
+                }
+              ],
+              "manualCount": 2,
+              "automateKey": "bh.auto",
+              "valueLabelKey": "bh.value"
+            }
+          },
+          {
+            "id": "b6",
+            "type": "compare",
+            "componentVersion": "1.0",
+            "config": {
+              "promptKey": "cmp.prompt",
+              "model": {
+                "type": "linear",
+                "bias": 0,
+                "inputs": [
+                  {
+                    "id": "excl",
+                    "labelKey": "knob.excl",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 10,
+                    "step": 1,
+                    "initial": 2,
+                    "weight": 1
+                  },
+                  {
+                    "id": "money",
+                    "labelKey": "knob.money",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 3,
+                    "step": 1,
+                    "initial": 0,
+                    "weight": 2
+                  },
+                  {
+                    "id": "urgent",
+                    "labelKey": "knob.urgent",
+                    "kind": "slider",
+                    "min": 0,
+                    "max": 3,
+                    "step": 1,
+                    "initial": 0,
+                    "weight": 3
+                  }
+                ],
+                "output": {
+                  "labelKey": "knob.output",
+                  "min": 0,
+                  "max": 25
+                }
+              },
+              "shared": [
+                "money",
+                "urgent"
+              ],
+              "variants": [
+                {
+                  "id": "calm",
+                  "labelKey": "cmp.a",
+                  "overrides": {
+                    "excl": 0
+                  }
+                },
+                {
+                  "id": "excited",
+                  "labelKey": "cmp.b",
+                  "overrides": {
+                    "excl": 10
+                  }
+                }
+              ],
+              "predictKey": "cmp.predict",
+              "explainKey": "cmp.explain"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "explain",
+        "blocks": [
+          {
+            "id": "b7",
+            "type": "analogy",
+            "componentVersion": "1.0",
+            "config": {
+              "concept": "threshold",
+              "sourceKey": "an.source",
+              "mappings": [
+                {
+                  "sourceKey": "an.m1s",
+                  "targetKey": "an.m1t"
+                },
+                {
+                  "sourceKey": "an.m2s",
+                  "targetKey": "an.m2t"
+                },
+                {
+                  "sourceKey": "an.m3s",
+                  "targetKey": "an.m3t"
+                },
+                {
+                  "sourceKey": "an.m4s",
+                  "targetKey": "an.m4t"
+                }
+              ],
+              "breakPointKey": "an.break",
+              "fading": [
+                "an.f1",
+                "an.f2",
+                "an.f3"
+              ]
+            },
+            "glossaryTerms": [
+              "threshold"
+            ]
+          },
+          {
+            "id": "b8",
+            "type": "reveal",
+            "componentVersion": "1.0",
+            "config": {
+              "textKey": "deep.text"
+            },
+            "depth": "deeper",
+            "glossaryTerms": [
+              "training"
+            ]
+          },
+          {
+            "id": "b9",
+            "type": "reveal",
+            "componentVersion": "1.0",
+            "config": {
+              "textKey": "deepest.text"
+            },
+            "depth": "deepest"
+          },
+          {
+            "id": "b10",
+            "type": "assemble",
+            "componentVersion": "1.0",
+            "config": {
+              "instructionKey": "as.instruction",
+              "pieces": [
+                {
+                  "id": "p1",
+                  "labelKey": "as.p1"
+                },
+                {
+                  "id": "p2",
+                  "labelKey": "as.p2"
+                },
+                {
+                  "id": "p3",
+                  "labelKey": "as.p3"
+                },
+                {
+                  "id": "p4",
+                  "labelKey": "as.p4"
+                },
+                {
+                  "id": "p5",
+                  "labelKey": "as.p5"
+                }
+              ],
+              "targetOrder": [
+                "p1",
+                "p2",
+                "p3",
+                "p4",
+                "p5"
+              ],
+              "successKey": "as.success",
+              "checkKey": "as.check"
+            }
+          },
+          {
+            "id": "b11",
+            "type": "check",
+            "componentVersion": "1.0",
+            "config": {
+              "promptKey": "ch.prompt",
+              "options": [
+                "ch.o1",
+                "ch.o2",
+                "ch.o3"
+              ],
+              "answer": "ch.o2",
+              "feedback": {
+                "ch.o1": "ch.f1",
+                "ch.o3": "ch.f3"
+              },
+              "hints": [
+                "ch.h1",
+                "ch.h2"
+              ],
+              "explainKey": "ch.explain",
+              "detour": "threshold"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "break-it",
+        "blocks": [
+          {
+            "id": "b12",
+            "type": "break-it",
+            "componentVersion": "1.0",
+            "config": {
+              "challengeKey": "br.challenge",
+              "target": "b4",
+              "attempts": [
+                {
+                  "id": "t1",
+                  "labelKey": "br.t1",
+                  "resultKey": "br.r1",
+                  "breaks": true
+                },
+                {
+                  "id": "t2",
+                  "labelKey": "br.t2",
+                  "resultKey": "br.r2",
+                  "breaks": true
+                },
+                {
+                  "id": "t3",
+                  "labelKey": "br.t3",
+                  "resultKey": "br.r3",
+                  "breaks": false
+                },
+                {
+                  "id": "t4",
+                  "labelKey": "br.t4",
+                  "resultKey": "br.r4",
+                  "breaks": false
+                }
+              ],
+              "reflectKey": "br.reflect"
+            }
+          },
+          {
+            "id": "b13",
+            "type": "your-data",
+            "componentVersion": "1.0",
+            "config": {
+              "promptKey": "yd.prompt",
+              "kind": "list",
+              "maxItems": 5,
+              "maxLength": 120,
+              "placeholderKey": "yd.placeholder",
+              "exampleKeys": [
+                "yd.e1",
+                "yd.e2"
+              ]
+            },
+            "classroom": {
+              "maxItems": 12
+            }
+          }
+        ]
+      },
+      {
+        "stage": "transfer-reflect",
+        "blocks": [
+          {
+            "id": "b14",
+            "type": "explain-back",
+            "componentVersion": "1.0",
+            "config": {
+              "mode": "own-analogy",
+              "promptKey": "eb.prompt",
+              "breakPointPromptKey": "eb.break",
+              "modelAnswerKey": "eb.model"
+            }
+          },
+          {
+            "id": "b15",
+            "type": "takeaway",
+            "componentVersion": "1.0",
+            "config": {
+              "titleKey": "take.title",
+              "cardKey": "take.card",
+              "includes": [
+                "b4",
+                "b13",
+                "b14"
+              ],
+              "labelKeys": [
+                "take.l1",
+                "take.l2",
+                "take.l3"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "pre": [
+        {
+          "id": "pre1",
+          "objective": "o1",
+          "promptKey": "pre1.q",
+          "options": [
+            "pre1.a",
+            "pre1.b",
+            "pre1.c"
+          ],
+          "answer": "pre1.b"
+        }
+      ],
+      "post": [
+        {
+          "id": "post1",
+          "objective": "o1",
+          "promptKey": "post1.q",
+          "options": [
+            "post1.a",
+            "post1.b",
+            "post1.c"
+          ],
+          "answer": "post1.b",
+          "feedbackKey": "post1.fb"
+        },
+        {
+          "id": "post2",
+          "objective": "o2",
+          "promptKey": "post2.q",
+          "options": [
+            "post2.a",
+            "post2.b",
+            "post2.c"
+          ],
+          "answer": "post2.c",
+          "feedbackKey": "post2.fb"
+        }
+      ]
+    },
+    "localeStatus": {
+      "en": "draft",
+      "hi": "draft",
+      "te": "draft"
+    },
+    "strings": {
+      "en": {
+        "title": "How does a junk filter decide?",
+        "subtitle": "Build one, then try to fool it.",
+        "obj.o1": "Explain that a filter adds up clues into a score and compares the score with a threshold.",
+        "obj.o2": "Show how a filter can be fooled, because it counts clues without understanding the message.",
+        "hook.text": "A message arrives: “You WON a prize!!! Click now.” Your phone moved it to <term-junk>junk</term-junk> before you ever saw it. No person read it first.",
+        "hook.q": "So how did a <term-program>program</term-program> decide, about a message it had never seen before?",
+        "predict.prompt": "What do you think the filter does?",
+        "predict.c1": "It checks each message against a list of banned words that someone typed in.",
+        "predict.c2": "It gives each message a score from clues, and blocks it if the score is high enough.",
+        "predict.c3": "It reads and understands every message, the way a person would.",
+        "predict.reveal": "It adds up clues into a <term-score>score</term-score>. If the score reaches a line, called a <term-threshold>threshold</term-threshold>, the message goes to junk. You are about to build one.",
+        "sort.instruction": "Here are eight messages. Sort them into two groups. You are the <term-filter>filter</term-filter> now.",
+        "sort.g1": "Junk",
+        "sort.g2": "Real",
+        "sort.m1": "You WON a prize!!! Click now",
+        "sort.m2": "Maths homework is on page 42",
+        "sort.m3": "URGENT: your account is locked, send your PIN (secret number)",
+        "sort.m4": "Grandma says dinner is at 8",
+        "sort.m5": "FREE phone!!! Only today!!!",
+        "sort.m6": "Football practice moved to Friday",
+        "sort.m7": "Congratulations, you are selected. Pay a small fee to claim",
+        "sort.m8": "Can you send me the science notes?",
+        "sort.reveal": "Look at what you used to decide: money you didn’t expect, words like FREE and URGENT, lots of “!!!”. Those are clues.",
+        "knob.prompt": "Here is a tiny filter. It counts three kinds of clue in a message and adds up points. Money words are words about getting or paying money: won, prize, free, pay, fee. Urgent words hurry you: urgent, now, only today.",
+        "knob.goal": "Challenge: build a message whose junk score is exactly 10, right on the line.",
+        "knob.excl": "Exclamation marks “!” (1 point each)",
+        "knob.money": "Money words (2 points each)",
+        "knob.urgent": "Urgent words (3 points each)",
+        "knob.output": "Junk score",
+        "knob.sentence": "This message has {excl, plural, one {# “!” mark} other {# “!” marks}}, {money, plural, one {# money word} other {# money words}} and {urgent, plural, one {# urgent word} other {# urgent words}}. Its junk score is {output}, so it goes to {decision}.",
+        "knob.success": "Score 10: exactly on the threshold, and 10 is enough to go to junk. One point fewer and it reaches the <term-inbox>inbox</term-inbox>.",
+        "bh.intro": "The filter’s rule is short. Below, each message shows its clues and their points: 1 for each “!”, 2 for each money word, 3 for each urgent word. Your job: add up the points, compare the total with 10, and choose Junk or Inbox. Do two by hand, then let the machine do the rest.",
+        "bh.rule": "If a message’s score is {threshold} or more, it goes to junk. Otherwise it goes to the inbox.",
+        "bh.above": "Junk",
+        "bh.below": "Inbox",
+        "bh.i1": "The prize message: 3 “!” = 3 points, 2 money words = 4 points, 1 urgent word = 3 points",
+        "bh.i2": "The homework reminder: no clues",
+        "bh.i3": "The locked-account message: 1 urgent word = 3 points",
+        "bh.i4": "Grandma’s dinner message: no clues",
+        "bh.i5": "The free-phone message: 6 “!” = 6 points, 1 money word = 2 points, 1 urgent word = 3 points",
+        "bh.i6": "The football message: no clues",
+        "bh.i7": "The pay-a-fee message: 2 money words = 4 points",
+        "bh.i8": "The science-notes message: no clues",
+        "bh.auto": "The machine did the same step, the same way, every time. It cannot get tired, and it has no common sense to fall back on: it only follows the steps. So two scams, the locked-account message and the pay-a-fee message, slipped into the inbox.",
+        "cmp.prompt": "Two versions of the same real message from a friend.",
+        "cmp.a": "Calm: “We are in the final.”",
+        "cmp.b": "Excited: “We are in the FINAL!!!!!!!!!!”",
+        "cmp.predict": "The threshold is 10. Which version ends up in junk?",
+        "cmp.explain": "Only the “!” marks changed. The excited version has 10 of them, 1 point each, so its score is 10: it reached the threshold. A real message from a friend lands in junk. The filter cannot tell an excited friend from a scammer. It only counts.",
+        "an.source": "Think of an exam with a pass mark. Each answer earns marks. The marks are added up. If the total reaches the pass mark, you pass.",
+        "an.m1s": "The marks for each answer",
+        "an.m1t": "The points for each clue",
+        "an.m2s": "Your total marks",
+        "an.m2t": "The junk score",
+        "an.m3s": "The pass mark",
+        "an.m3t": "The threshold",
+        "an.m4s": "Pass, or not yet",
+        "an.m4t": "Junk, or inbox",
+        "an.break": "Here the comparison stops working. An examiner reads your answers and understands them. The filter only counts clues. It has no idea what a message means.",
+        "an.f1": "marks + marks + marks ≥ pass mark → pass. (“≥” means “is at least”; “→” means “leads to”.)",
+        "an.f2": "points + points + points ≥ threshold → junk",
+        "an.f3": "1 × “!” marks + 2 × money words + 3 × urgent words ≥ 10 → junk. (“×” means “times”.)",
+        "deep.text": "Real filters often use hundreds of clues, not three. Their points are usually not set by hand: the filter works them out from millions of messages that people marked as junk or as real. That is called <term-training>training</term-training>.",
+        "deepest.text": "Choosing the threshold is a trade-off. A low threshold catches more junk but also blocks more real messages. A high threshold lets real messages through but lets more junk in too. There is no setting that makes zero mistakes.",
+        "as.instruction": "Put the filter’s steps in order.",
+        "as.p1": "Read the message",
+        "as.p2": "Count each kind of clue",
+        "as.p3": "Add up the points into a score",
+        "as.p4": "Compare the score with the threshold",
+        "as.p5": "Send it to junk or to the inbox",
+        "as.success": "That is the whole filter: clues, a score, a line.",
+        "as.check": "Each step needs the one before it. You can’t add up clues you haven’t counted.",
+        "ch.prompt": "A message says “Meeting moved to 3 pm.” It has no clues at all. The threshold is 10. Where does it go?",
+        "ch.o1": "Junk",
+        "ch.o2": "Inbox",
+        "ch.o3": "It depends on who sent it",
+        "ch.f1": "Its score is 0, because it has no clues. Is 0 at least 10?",
+        "ch.f3": "A person would think about the sender. This filter only adds up clues. What is the score here?",
+        "ch.h1": "Count the clues: exclamation marks, money words, urgent words.",
+        "ch.h2": "No clues gives a score of 0. Now compare: 0 is less than 10, so the message does not reach the threshold.",
+        "ch.explain": "Score 0 is below the threshold of 10, so the message goes to the inbox.",
+        "br.challenge": "Try to fool the filter. Which tricks get junk into the inbox, or push a real message into junk?",
+        "br.t1": "Write “fr ee” instead of “free”",
+        "br.r1": "The filter no longer sees a money word. The junk slips through.",
+        "br.t2": "A friend writes “I WON the quiz!!!!!!!!!!”",
+        "br.r2": "Ten exclamation marks score 10 points. A real message lands in junk.",
+        "br.t3": "Add a polite, normal sentence to a junk message",
+        "br.r3": "The money and urgent words are still there, so the score stays high. It is still caught.",
+        "br.t4": "Send the same junk message twice",
+        "br.r4": "Same clues, same score, same result, both times.",
+        "br.reflect": "What do the tricks that worked have in common?",
+        "yd.prompt": "Make up to five messages that you think would fool this filter. Use made-up words only: no real names or phone numbers. For each one, work out its score: 1 point for each “!”, 2 for each money word, 3 for each urgent word. Would it reach 10?",
+        "yd.placeholder": "Type a message",
+        "yd.e1": "Hello friend, a small gift is waiting for you, reply with your address",
+        "yd.e2": "Exam results are out!!!! Check the school notice board",
+        "eb.prompt": "Think of something else in life where points are added up and the total has to reach a line. Describe it as your own comparison.",
+        "eb.break": "Where does your comparison stop working?",
+        "eb.model": "A class needs 30 signatures to start a new school club. Each signature adds one, and 30 is the line. But the students can read the petition and change it; the filter can’t see anything beyond the clues.",
+        "take.title": "My junk filter",
+        "take.card": "I built a junk filter today. It adds up clues into a score and compares it with a line. It never understands the message.",
+        "pre1.q": "How does a junk filter usually decide?",
+        "pre1.a": "A person reads each message first",
+        "pre1.b": "It adds up clues into a score and compares it with a line",
+        "pre1.c": "It understands what each message means",
+        "post1.q": "A message scores 12. The threshold is 10. Where does it go?",
+        "post1.a": "Inbox",
+        "post1.b": "Junk",
+        "post1.c": "It depends on who sent it",
+        "post1.fb": "12 is at least 10, so it reaches the threshold and goes to junk.",
+        "post2.q": "Why can a friend’s excited message end up in junk?",
+        "post2.a": "The filter knows the friend is lying",
+        "post2.b": "Friends’ messages are always blocked",
+        "post2.c": "The filter counts clues like “!!!” without understanding the message",
+        "post2.fb": "It only counts clues. An excited friend and a scammer can look the same to it.",
+        "predict.f1": "Early filters worked a lot like that. The trouble: scammers change one letter and the list misses it. Watch for that idea later.",
+        "predict.f3": "It can seem that way, because the results are often right. Keep that guess in mind: by the end you can test it yourself.",
+        "knob.junk": "junk",
+        "knob.inbox": "the inbox",
+        "bh.value": "Junk score",
+        "take.l1": "My filter",
+        "take.l2": "Messages I wrote to fool it",
+        "take.l3": "My own comparison"
+      }
+    }
+  },
+  "audience": {
+    "id": "school-13-17",
+    "label": "School learners, classes 8-12",
+    "status": "active",
+    "readingLevel": "grade 6-8 for core text",
+    "maxSentenceWords": 18,
+    "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+    "tone": "warm, curious, direct, never condescending",
+    "theme": "school",
+    "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+    "defaultDepth": "core",
+    "analogyVariants": "school",
+    "checks": [
+      "act-density",
+      "grammar",
+      "undefined-terms",
+      "banned-phrases",
+      "analogy-completeness",
+      "anthropomorphism",
+      "reading-level",
+      "first-use-help",
+      "media-rules",
+      "locale-completeness",
+      "checks-present",
+      "ending"
+    ]
+  },
+  "classroomMode": "The teacher projects one screen; each chapter title shares the screen with its first block; Page Down or a clicker moves one block; votes use a show-of-hands tally entered by the teacher."
+}

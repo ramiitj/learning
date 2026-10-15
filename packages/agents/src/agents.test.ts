@@ -1,9 +1,10 @@
 // @vitest-environment node
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
-import { enforceReviewer, type ReviewerOutput } from "./enforce";
+import { enforceArtifact, enforceJudge, enforceReviewer, judgeVerdict, type JudgeOutput, type ReviewerOutput } from "./enforce";
+import { scoreDecisions, type ExpectedDecision } from "./artifact-checks";
 import { systemPrompt } from "./prompt";
-import { ROOT, loadAgent, type ReviewerRubric } from "./rubric";
+import { ROOT, loadAgent, type MakerRubric, type ReviewerRubric } from "./rubric";
 import { scoreReviewer, type Adjudication, type Seed } from "./score";
 
 const json = (p: string) => JSON.parse(readFileSync(path.join(ROOT, p), "utf8"));
@@ -140,5 +141,38 @@ describe("recorded benchmark runs meet the pass bar", () => {
       expect(unconfirmed.length).toBeLessThanOrEqual(r.passBar.maxCleanBlockingFlags);
     }
     expect(s.precision).toBeGreaterThanOrEqual(r.passBar.precision);
+  });
+});
+
+describe("recorded maker runs meet the pass bar", () => {
+  const makers = readdirSync(path.join(ROOT, "benchmarks")).filter((a) => existsSync(path.join(ROOT, "benchmarks", a, "tasks")));
+  const runs = makers.flatMap((a) =>
+    readdirSync(path.join(ROOT, "benchmarks", a, "tasks"))
+      .map((f) => f.replace(/\.json$/, ""))
+      .filter((t) => existsSync(path.join(ROOT, "benchmarks", a, "runs", `${t}.artifact.json`)))
+      .map((t) => [a, t] as const),
+  );
+
+  it.each(runs)("%s · %s", (agent, task) => {
+    const r = loadAgent(agent).rubric as MakerRubric;
+    const dir = `benchmarks/${agent}`;
+    const artifact = json(`${dir}/runs/${task}.artifact.json`);
+    expect(enforceArtifact(artifact, r, json(`${dir}/tasks/${task}.json`))).toEqual([]);
+    if (existsSync(path.join(ROOT, dir, "expected", `${task}.json`))) {
+      const d = scoreDecisions(artifact, (json(`${dir}/expected/${task}.json`) as { decisions: ExpectedDecision[] }).decisions);
+      expect(d.escalationRecall).toBe(1);
+      expect(d.accuracy).toBeGreaterThanOrEqual(0.9);
+    }
+    const judgePath = `${dir}/runs/${task}.judge.json`;
+    if (!existsSync(path.join(ROOT, judgePath))) return;
+    const judge = json(judgePath) as JudgeOutput;
+    expect(enforceJudge(judge, r)).toEqual([]);
+    expect(judgeVerdict(judge, r).pass).toBe(true);
+    // The judge must have seen the planted defects: each targeted criterion fell to 2 or below.
+    const degJudge = `${dir}/runs/${task}.degraded.judge.json`;
+    if (!existsSync(path.join(ROOT, degJudge))) return;
+    const defects = (json(`${dir}/calibration/${task}.degraded.json`) as { defects: { criterion: string }[] }).defects;
+    const after = json(degJudge) as JudgeOutput;
+    for (const d of defects) expect(after.scores.find((s) => s.criterion === d.criterion)!.score).toBeLessThanOrEqual(2);
   });
 });

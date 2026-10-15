@@ -1,0 +1,207 @@
+{
+  "agent": "educator-enablement",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Write a one-page guide that lets a busy teacher who has never used the platform, and may not be confident about AI, run the lesson in a 40-minute period with or without devices.",
+  "references": [
+    "ai-misconceptions",
+    "classroom-context"
+  ],
+  "method": [
+    "Read the whole lesson in classroom mode as a teacher with 45 students, one projector and no student devices.",
+    "Write the objectives in words a teacher could say aloud to the class.",
+    "Plan the 40 minutes block by block; include settling and wrap-up; the total must be 40 minutes or less.",
+    "For each likely misconception, write what students say and a good response the teacher can give, which must be accurate.",
+    "Give a no-device and no-projector alternative that still keeps every learner acting.",
+    "Write discussion prompts that have no single right answer.",
+    "Keep it to one page (about 600 words). Use plain words; explain any AI term in one line."
+  ],
+  "artifactChecks": [
+    "timing-fits",
+    "no-device-path",
+    "misconceptions-covered",
+    "one-page",
+    "banned-phrases"
+  ],
+  "criteria": [
+    {
+      "id": "runnable",
+      "name": "Runnable from the guide alone",
+      "weight": 3,
+      "blocking": true,
+      "description": "A teacher who has never seen the platform could run the period from the guide: what to project, what to say, what students do, when to move on.",
+      "levels": {
+        "4": "Every segment says what to show, say and ask; transitions are clear; nothing needs the platform explained elsewhere.",
+        "3": "Runnable; one segment is vague about what students do.",
+        "2": "A teacher would need to explore the platform first.",
+        "1": "A description of the lesson, not a plan.",
+        "0": "Not usable."
+      }
+    },
+    {
+      "id": "timing",
+      "name": "Realistic 40-minute timing",
+      "weight": 2,
+      "blocking": false,
+      "description": "Timing fits a real Indian classroom period, including settling, voting by show of hands with 40+ students, and wrap-up.",
+      "levels": {
+        "4": "Realistic and fits with a buffer; says what to cut if time runs short.",
+        "3": "Fits; one segment is optimistic.",
+        "2": "Overruns or ignores settling and wrap-up.",
+        "1": "Unrealistic.",
+        "0": "No timing."
+      }
+    },
+    {
+      "id": "misconceptions",
+      "name": "Accurate misconception responses",
+      "weight": 3,
+      "blocking": true,
+      "description": "Likely misconceptions are listed with what students say and an accurate, simple response.",
+      "levels": {
+        "4": "The important misconceptions are covered and every response is accurate and sayable.",
+        "3": "Covered; one response is wordy.",
+        "2": "One response is inaccurate or one key misconception is missing.",
+        "1": "Responses would reinforce a misconception.",
+        "0": "None."
+      }
+    },
+    {
+      "id": "no-device",
+      "name": "A real no-device path",
+      "weight": 2,
+      "blocking": false,
+      "description": "Without devices or projector, every learner still acts (hands, paper, board).",
+      "levels": {
+        "4": "A complete alternative for every act, using board, paper and hands.",
+        "3": "Alternative covers most acts.",
+        "2": "The alternative is 'read aloud'.",
+        "1": "Mentioned only.",
+        "0": "None."
+      }
+    },
+    {
+      "id": "teacher-confidence",
+      "name": "Builds teacher confidence",
+      "weight": 2,
+      "blocking": false,
+      "description": "Plain, warm language; AI terms explained in one line; tells the teacher it is fine not to know and what to say then.",
+      "levels": {
+        "4": "A teacher unsure about AI would feel ready.",
+        "3": "Plain and supportive; one unexplained term.",
+        "2": "Assumes AI knowledge.",
+        "1": "Condescending or jargon-heavy.",
+        "0": "Unusable for a non-specialist."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "objectivesPlain",
+      "before",
+      "timing",
+      "ifShortOfTime",
+      "misconceptions",
+      "discussionPrompts",
+      "noDeviceAlternative",
+      "ifYouDontKnow",
+      "parentNote"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "educator-enablement"
+        ]
+      },
+      "objectivesPlain": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1
+      },
+      "before": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "What to prepare."
+        }
+      },
+      "timing": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "segment",
+            "minutes",
+            "teacherDoes",
+            "studentsDo"
+          ],
+          "properties": {
+            "segment": {
+              "type": "string"
+            },
+            "minutes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "teacherDoes": {
+              "type": "string"
+            },
+            "studentsDo": {
+              "type": "string"
+            }
+          }
+        },
+        "minItems": 3
+      },
+      "ifShortOfTime": {
+        "type": "string"
+      },
+      "misconceptions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "studentsSay",
+            "goodResponse"
+          ],
+          "properties": {
+            "studentsSay": {
+              "type": "string"
+            },
+            "goodResponse": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "discussionPrompts": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "noDeviceAlternative": {
+        "type": "string"
+      },
+      "ifYouDontKnow": {
+        "type": "string",
+        "description": "What a teacher can say when a student asks something they cannot answer."
+      },
+      "parentNote": {
+        "type": "string"
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}

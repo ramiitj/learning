@@ -1,0 +1,296 @@
+{
+  "agent": "learning-experience-designer",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Turn an instructional sequence into an experience a curious 13-year-old would want to keep exploring: hook, component choice and configuration for every block, classroom variants, the arc and ending, and final English text.",
+  "references": [
+    "component-catalogue",
+    "banned-phrases",
+    "ai-framing"
+  ],
+  "method": [
+    "Read the instructional draft as a curious learner and mark where curiosity rises and where it would sag.",
+    "Open with a question, puzzle or surprise the learner wants answered.",
+    "For every block, choose a component from the catalogue and say what the learner does. Apply the removal test: if this block were removed, would the learner understand less? Remove or merge blocks that fail it.",
+    "Design each wrong answer as an interesting moment: what the learner sees, and why it is worth being wrong.",
+    "Give every block a classroom variant that works with one projected screen and no student devices.",
+    "End with something the learner keeps: their own explanation, a card, a thing they built.",
+    "Check every design choice against constitution Article 14 and the banned phrases. Do not trade away anything the instructional designer or a reviewer marked necessary for clarity or safety; redesign it instead."
+  ],
+  "artifactChecks": [
+    "act-density",
+    "hook-is-question",
+    "classroom-variants",
+    "ending-keepable",
+    "refused-patterns",
+    "banned-phrases",
+    "ai-framing"
+  ],
+  "criteria": [
+    {
+      "id": "hook",
+      "name": "The hook makes the learner want to know",
+      "weight": 2,
+      "blocking": false,
+      "description": "The opening is a question, puzzle or surprise tied to the lesson's core idea, answerable only by going through the lesson.",
+      "levels": {
+        "4": "A genuine puzzle or surprise, concrete and relevant to a teenager, that the core idea resolves.",
+        "3": "A clear question tied to the core idea, but not surprising.",
+        "2": "A generic opener ('Have you ever wondered…').",
+        "1": "A statement of objectives.",
+        "0": "No hook."
+      }
+    },
+    {
+      "id": "acts",
+      "name": "Every screen is an act",
+      "weight": 3,
+      "blocking": true,
+      "description": "Every block asks the learner to decide, predict, build, explore or explain, and each passes the removal test.",
+      "levels": {
+        "4": "Every block is an act with a reason to exist; no two passive blocks in a row.",
+        "3": "One block is passive but short and needed.",
+        "2": "Two passive blocks in a row, or one block fails the removal test.",
+        "1": "Mostly reading with occasional interaction.",
+        "0": "A slideshow."
+      }
+    },
+    {
+      "id": "wrong-answers",
+      "name": "Wrong answers are the interesting moment",
+      "weight": 2,
+      "blocking": false,
+      "description": "Each prediction or decision has specific feedback for each wrong answer that shows the learner something new, without judgement.",
+      "levels": {
+        "4": "Every wrong answer leads to a specific, non-judgemental reveal that teaches.",
+        "3": "Most wrong answers have specific feedback; one is generic.",
+        "2": "Wrong answers get 'Try again' or generic feedback.",
+        "1": "Wrong answers are punished or ignored.",
+        "0": "No wrong answers are possible."
+      }
+    },
+    {
+      "id": "component-fit",
+      "name": "Components carry the idea",
+      "weight": 2,
+      "blocking": false,
+      "description": "Each component is the one best suited to the idea, configured so the learner's action produces the insight.",
+      "levels": {
+        "4": "Each component makes the idea visible through the learner's action; configurations are complete.",
+        "3": "Components fit; one configuration is incomplete or one choice is weaker than an available alternative.",
+        "2": "Several components are decorative or mismatched.",
+        "1": "Components are chosen arbitrarily.",
+        "0": "No component choices."
+      }
+    },
+    {
+      "id": "classroom",
+      "name": "Works in a real classroom",
+      "weight": 2,
+      "blocking": false,
+      "description": "Every block has a classroom variant that a teacher can run on one projected screen with 40+ students and no devices.",
+      "levels": {
+        "4": "Every variant is runnable by a teacher with one screen; votes use a show of hands; timing is realistic.",
+        "3": "Every block has a variant; one would be awkward with a large class.",
+        "2": "Some blocks have no workable variant.",
+        "1": "Variants are only 'project the same screen'.",
+        "0": "No classroom thinking."
+      }
+    },
+    {
+      "id": "ending",
+      "name": "A strong ending with something to keep",
+      "weight": 2,
+      "blocking": false,
+      "description": "The lesson ends on what the learner made or concluded, not on a quiz.",
+      "levels": {
+        "4": "The ending gives the learner their own artefact (explanation, card, creation) that captures the core idea.",
+        "3": "A clear reflection prompt, but nothing kept.",
+        "2": "A summary written for the learner.",
+        "1": "Ends on a quiz.",
+        "0": "No ending."
+      }
+    },
+    {
+      "id": "voice-and-respect",
+      "name": "Voice, respect and refused patterns",
+      "weight": 3,
+      "blocking": true,
+      "description": "Warm, direct, never condescending; no banned phrases; no Article 14 patterns (streaks, confetti, progress bars as motivator, 'Next' as the main interaction, walls of text); AI is not given a human mind.",
+      "levels": {
+        "4": "Fully compliant and genuinely warm.",
+        "3": "Compliant; voice is slightly flat in places.",
+        "2": "One banned phrase or one mildly condescending line.",
+        "1": "An Article 14 pattern or anthropomorphic AI claim.",
+        "0": "Several violations."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "hook",
+      "blocks",
+      "ending",
+      "droppedOrMerged",
+      "notesForCreator"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "learning-experience-designer"
+        ]
+      },
+      "hook": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text",
+          "why"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string",
+            "description": "Why a 13-year-old would want the answer."
+          }
+        }
+      },
+      "blocks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "stage",
+            "component",
+            "learnerAct",
+            "text",
+            "configSummary",
+            "wrongAnswerDesign",
+            "classroomVariant",
+            "removalTest"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "stage": {
+              "type": "string",
+              "enum": [
+                "hook",
+                "predict",
+                "manipulate",
+                "explain",
+                "break-it",
+                "transfer-reflect"
+              ]
+            },
+            "component": {
+              "type": "string",
+              "enum": [
+                "predict",
+                "sort",
+                "knob",
+                "compare",
+                "by-hand-then-automate",
+                "analogy",
+                "reveal",
+                "break-it",
+                "your-data",
+                "assemble",
+                "explain-back",
+                "takeaway",
+                "check"
+              ]
+            },
+            "learnerAct": {
+              "type": "string",
+              "enum": [
+                "decide",
+                "predict",
+                "build",
+                "explore",
+                "explain",
+                "none"
+              ]
+            },
+            "text": {
+              "type": "string",
+              "description": "Final English learner-facing text for the block."
+            },
+            "configSummary": {
+              "type": "string",
+              "description": "How the component is configured: items, sliders, choices, thresholds."
+            },
+            "wrongAnswerDesign": {
+              "type": "string",
+              "description": "What happens on each wrong answer, or '' if no answer can be wrong."
+            },
+            "classroomVariant": {
+              "type": "string",
+              "description": "How it runs on one projected screen with no student devices."
+            },
+            "removalTest": {
+              "type": "string",
+              "description": "What the learner would fail to understand if this block were removed."
+            }
+          }
+        },
+        "minItems": 6
+      },
+      "ending": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "keepable",
+          "text"
+        ],
+        "properties": {
+          "keepable": {
+            "type": "string",
+            "description": "What the learner keeps."
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "droppedOrMerged": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "from",
+            "reason"
+          ],
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "notesForCreator": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}

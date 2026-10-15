@@ -1,0 +1,35 @@
+{
+  "agent": "localisation-specialist",
+  "task": "junk-filter-strings",
+  "violations": [],
+  "advisories": [],
+  "judge": {
+    "violations": [],
+    "mean": 3.2,
+    "minBlocking": 3,
+    "failing": [],
+    "pass": true,
+    "scores": {
+      "meaning": 3,
+      "naturalness": 3,
+      "terminology": 4,
+      "format-integrity": 3,
+      "register": 3,
+      "honesty": 3
+    }
+  },
+  "calibration": {
+    "targeted": [
+      "meaning",
+      "terminology",
+      "honesty"
+    ],
+    "detected": [
+      "meaning",
+      "terminology",
+      "honesty"
+    ],
+    "drift": [],
+    "sensitivity": 1
+  }
+}

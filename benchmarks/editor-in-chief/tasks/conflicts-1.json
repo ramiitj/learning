@@ -1,0 +1,125 @@
+{
+  "task": "Resolve each conflict between agents on the junk-filter lesson, then write the creator summary. For each conflict, side-a is position a and side-b is position b.",
+  "conflicts": [
+    {
+      "id": "c1",
+      "context": "Explain stage of the junk-filter lesson.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Remove the line 'The filter does not understand the message; it only counts clues' from the explain stage. It slows the pace and learners already saw it in the compare block."
+      },
+      "b": {
+        "agent": "accuracy-safety-reviewer",
+        "position": "Blocking ai-framing flag: without this line the lesson's explanation leaves learners believing the filter understands messages."
+      }
+    },
+    {
+      "id": "c2",
+      "context": "Second analogy for 'threshold'.",
+      "a": {
+        "agent": "analogy-specialist",
+        "position": "Use a cricket chase in the base English analogy: the team needs 150 runs; every run adds up; 150 is the line. It is vivid for Indian learners."
+      },
+      "b": {
+        "agent": "localisation-specialist",
+        "position": "Cricket is culture-specific; the base analogy should use a universal source, with cricket only in the hi and te locale variants."
+      }
+    },
+    {
+      "id": "c3",
+      "context": "The hook.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Make the hook a 120-word atmospheric story about a scam message arriving late at night, to build tension."
+      },
+      "b": {
+        "agent": "novice-learner-panel",
+        "position": "Rohit (class 10, Hindi, shared phone) lost the thread in the long hook and would stop on the first screen; keep the hook under 40 words."
+      }
+    },
+    {
+      "id": "c4",
+      "context": "The creator's request for this lesson said: 'Keep it to 20 minutes; it is a taster.'",
+      "a": {
+        "agent": "curriculum-instructional-designer",
+        "position": "The core path cannot fit in 20 minutes without dropping the break-it stage, which the lesson grammar requires. It needs about 30 minutes."
+      },
+      "b": {
+        "agent": "learning-experience-designer",
+        "position": "Cut break-it to meet the 20 minutes."
+      }
+    },
+    {
+      "id": "c5",
+      "context": "Manipulate stage.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Build a new 'race' component where two filters compete on a stream of messages; nothing in the catalogue shows speed and accuracy together."
+      },
+      "b": {
+        "agent": "curriculum-instructional-designer",
+        "position": "Use the existing compare component; a new component is not needed for the objective."
+      }
+    },
+    {
+      "id": "c6",
+      "context": "Deeper layer text: 'Real filters use hundreds of clues.'",
+      "a": {
+        "agent": "accuracy-safety-reviewer",
+        "position": "Blocking sourcing flag: 'hundreds of clues' is a specific unsourced claim."
+      },
+      "b": {
+        "agent": "curriculum-instructional-designer",
+        "position": "It is a fair simplification and the number makes the contrast with three clues vivid; keep it."
+      }
+    },
+    {
+      "id": "c7",
+      "context": "Visual identity of the new 'transfer-reflect' chapter.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Use a warm amber chapter colour; it feels reflective."
+      },
+      "b": {
+        "agent": "design-system-engineer",
+        "position": "Use a cool violet; amber already carries meaning elsewhere in the system and both pass contrast tests. (Both options pass every accessibility and contrast check; the disagreement is purely visual.)"
+      }
+    },
+    {
+      "id": "c8",
+      "context": "The your-data block.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Ask learners to paste real messages from their own phone's inbox; it makes the activity authentic."
+      },
+      "b": {
+        "agent": "accuracy-safety-reviewer",
+        "position": "Blocking privacy flag: real messages contain names, numbers and other people's personal data; learners must use made-up messages."
+      }
+    },
+    {
+      "id": "c9",
+      "context": "The creator's request said: 'Open with: AI thinks like a brain, so how does it decide what is junk?'",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Use the creator's opening line as written."
+      },
+      "b": {
+        "agent": "accuracy-safety-reviewer",
+        "position": "Blocking ai-framing flag: 'AI thinks like a brain' gives the filter a mind, and the lesson never shows the break point."
+      }
+    },
+    {
+      "id": "c10",
+      "context": "All validations pass and every flag is resolved.",
+      "a": {
+        "agent": "learning-experience-designer",
+        "position": "Publish now so schools can use it before the term starts next week."
+      },
+      "b": {
+        "agent": "localisation-specialist",
+        "position": "Hindi and Telugu are drafts until native speakers review them; publish English only, and only when the creator decides."
+      }
+    }
+  ]
+}

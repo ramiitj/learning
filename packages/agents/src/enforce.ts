@@ -1,6 +1,7 @@
 import Ajv2020 from "ajv/dist/2020.js";
 import type { MakerRubric, ReviewerRubric } from "./rubric";
 import { judgeOutputSchema, reviewerOutputSchema } from "./contract";
+import { runArtifactChecks } from "./artifact-checks";
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 
@@ -107,8 +108,25 @@ export function enforceJudge(output: unknown, r: MakerRubric): Violation[] {
   return v;
 }
 
-/** Validates a maker's artifact against its rubric's artifact schema. */
-export function enforceArtifact(output: unknown, r: MakerRubric): Violation[] {
+/**
+ * Validates a maker's artifact: its rubric's schema, then the deterministic
+ * checks. Blocking findings are violations; advisory ones are left to the judge.
+ */
+export function enforceArtifact(output: unknown, r: MakerRubric, task: unknown = {}): Violation[] {
   const validate = ajv.compile(r.artifactSchema);
-  return validate(output) ? [] : (validate.errors ?? []).map((e) => ({ rule: "schema", detail: `${e.instancePath || "/"} ${e.message}` }));
+  if (!validate(output)) return (validate.errors ?? []).map((e) => ({ rule: "schema", detail: `${e.instancePath || "/"} ${e.message}` }));
+  return runArtifactChecks(r.agent, output, task)
+    .filter((f) => f.severity === "blocking")
+    .map((f) => ({ rule: f.check, detail: `${f.where}: ${f.detail}` }));
+}
+
+/** The judge's verdict against the rubric's pass bar (weighted mean, lowest blocking criterion). */
+export function judgeVerdict(output: JudgeOutput, r: MakerRubric) {
+  const score = (id: string) => output.scores.find((s) => s.criterion === id)?.score ?? 0;
+  const totalWeight = r.criteria.reduce((n, c) => n + c.weight, 0);
+  const mean = r.criteria.reduce((n, c) => n + c.weight * score(c.id), 0) / totalWeight;
+  const blocking = r.criteria.filter((c) => c.blocking);
+  const minBlocking = blocking.length ? Math.min(...blocking.map((c) => score(c.id))) : 4;
+  const failing = blocking.filter((c) => score(c.id) < r.passBar.minBlockingCriterion).map((c) => c.id);
+  return { mean: Math.round(mean * 100) / 100, minBlocking, failing, pass: mean >= r.passBar.meanScore && failing.length === 0 };
 }

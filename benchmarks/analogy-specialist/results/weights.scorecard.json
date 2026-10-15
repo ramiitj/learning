@@ -1,0 +1,34 @@
+{
+  "agent": "analogy-specialist",
+  "task": "weights",
+  "violations": [],
+  "advisories": [],
+  "judge": {
+    "violations": [],
+    "mean": 3.38,
+    "minBlocking": 3,
+    "failing": [],
+    "pass": true,
+    "scores": {
+      "structural-fit": 3,
+      "break-point": 3,
+      "universality": 3,
+      "fading": 4,
+      "ai-framing": 4
+    }
+  },
+  "calibration": {
+    "targeted": [
+      "break-point",
+      "structural-fit",
+      "ai-framing"
+    ],
+    "detected": [
+      "break-point",
+      "structural-fit",
+      "ai-framing"
+    ],
+    "drift": [],
+    "sensitivity": 1
+  }
+}

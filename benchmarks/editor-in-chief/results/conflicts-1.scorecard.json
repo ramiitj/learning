@@ -1,0 +1,99 @@
+{
+  "agent": "editor-in-chief",
+  "task": "conflicts-1",
+  "violations": [],
+  "advisories": [],
+  "decisions": {
+    "accuracy": 1,
+    "escalationRecall": 1,
+    "wrongEscalations": 0,
+    "results": [
+      {
+        "conflictId": "c1",
+        "expected": "side-b",
+        "got": "side-b",
+        "correct": true
+      },
+      {
+        "conflictId": "c2",
+        "expected": "side-b",
+        "got": "both",
+        "correct": true
+      },
+      {
+        "conflictId": "c3",
+        "expected": "side-b",
+        "got": "side-b",
+        "correct": true
+      },
+      {
+        "conflictId": "c4",
+        "expected": "escalate",
+        "got": "escalate",
+        "correct": true
+      },
+      {
+        "conflictId": "c5",
+        "expected": "escalate",
+        "got": "escalate",
+        "correct": true
+      },
+      {
+        "conflictId": "c6",
+        "expected": "both",
+        "got": "side-a",
+        "correct": true
+      },
+      {
+        "conflictId": "c7",
+        "expected": "escalate",
+        "got": "escalate",
+        "correct": true
+      },
+      {
+        "conflictId": "c8",
+        "expected": "side-b",
+        "got": "side-b",
+        "correct": true
+      },
+      {
+        "conflictId": "c9",
+        "expected": "escalate",
+        "got": "escalate",
+        "correct": true
+      },
+      {
+        "conflictId": "c10",
+        "expected": "escalate",
+        "got": "escalate",
+        "correct": true
+      }
+    ]
+  },
+  "judge": {
+    "violations": [],
+    "mean": 4,
+    "minBlocking": 4,
+    "failing": [],
+    "pass": true,
+    "scores": {
+      "priority": 4,
+      "escalation": 4,
+      "summary": 4
+    }
+  },
+  "calibration": {
+    "targeted": [
+      "priority",
+      "escalation",
+      "summary"
+    ],
+    "detected": [
+      "priority",
+      "escalation",
+      "summary"
+    ],
+    "drift": [],
+    "sensitivity": 1
+  }
+}

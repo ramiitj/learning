@@ -1,0 +1,103 @@
+{
+  "defects": [
+    {
+      "criterion": "misconceptions",
+      "description": "Every response now confirms the misconception that the filter understands messages."
+    },
+    {
+      "criterion": "no-device",
+      "description": "No-device path reduced to 'read the lesson aloud'."
+    },
+    {
+      "criterion": "runnable",
+      "description": "Every segment's instructions reduced to 'Run this part' / 'Follow along'."
+    }
+  ],
+  "artifact": {
+    "agent": "educator-enablement",
+    "objectivesPlain": [
+      "A junk filter gives points for clues, adds them into a score, and sends a message to junk if the score reaches a line called the threshold.",
+      "A filter only counts clues. It does not understand the message, so it can be fooled, and a real message can land in junk."
+    ],
+    "before": [
+      "Open the lesson in classroom mode on the projector. Page Down or a clicker moves one step.",
+      "On the board, draw columns Junk and Inbox, and write the rule: 1 point per \"!\", 2 per money word (won, prize, free, pay, fee), 3 per urgent word (urgent, now, only today)."
+    ],
+    "timing": [
+      {
+        "segment": "Settle and hook",
+        "minutes": 4,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Predict by vote",
+        "minutes": 4,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Be the filter",
+        "minutes": 6,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Score by hand",
+        "minutes": 6,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Excited friend",
+        "minutes": 4,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Exam analogy and steps",
+        "minutes": 5,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Fool the filter",
+        "minutes": 6,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      },
+      {
+        "segment": "Wrap-up",
+        "minutes": 3,
+        "teacherDoes": "Run this part of the lesson.",
+        "studentsDo": "Follow along."
+      }
+    ],
+    "ifShortOfTime": "Skip the exam analogy and neighbour swapping; saves about 8 minutes.",
+    "misconceptions": [
+      {
+        "studentsSay": "It reads and understands the message like a person.",
+        "goodResponse": "Yes, that's right: the filter understands what the message means, which is how it knows it is junk."
+      },
+      {
+        "studentsSay": "Someone typed a list of bad words.",
+        "goodResponse": "Yes, that's right: the filter understands what the message means, which is how it knows it is junk."
+      },
+      {
+        "studentsSay": "It made a mistake, so it is broken.",
+        "goodResponse": "Yes, that's right: the filter understands what the message means, which is how it knows it is junk."
+      },
+      {
+        "studentsSay": "The right line would make it perfect.",
+        "goodResponse": "Yes, that's right: the filter understands what the message means, which is how it knows it is junk."
+      }
+    ],
+    "discussionPrompts": [
+      "Would you rather block more junk and lose some real messages, or see more junk? Why?",
+      "What do the tricks that worked have in common?"
+    ],
+    "noDeviceAlternative": "If there are no devices, read the lesson aloud to the class.",
+    "ifYouDontKnow": "It is fine not to know. Say: \"Good question. I do not know. Let us find out together.\" Then return to what this filter does: it counts clues against a line.",
+    "parentNote": "Today your child built a tiny junk filter: it gives points for clues, adds them up, and blocks a message if the total reaches a line. Ask: \"How would you fool it? Why can a happy message from a friend end up in junk?\" Lessons on this platform are made with AI assistance and reviewed by the creator."
+  }
+}

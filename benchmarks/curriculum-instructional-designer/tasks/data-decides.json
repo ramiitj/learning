@@ -1,0 +1,85 @@
+{
+  "task": "Design the complete learning sequence for this module as one self-paced lesson of about 30 minutes that also works in a 40-minute class period.",
+  "module": "## Module 2 — Data decides\n\nHook: a machine that is very accurate, except for some people. Signature interaction: train on a skewed dataset, test on a balanced one, and discover the unfairness; then fix the data. Core analogy: a cook who has only learned one family's recipes. Second: judging all weather from one rainy week. Break point: the machine has no way of noticing its own gap. Reflection: who should be responsible when data is unfair? Detours: what \"a sample\" is; what a percentage means.\n",
+  "conceptGraph": "pattern → example → learning from examples → dataset → bias → number representation → pixel → token → vocabulary → probability → prediction → error → training → weight → layer → overfitting → generalisation → fairness → responsibility.",
+  "priorLessons": [
+    "Learners may have done 'How does a junk filter decide?': a filter adds up clues into a score and compares it with a threshold; a deeper layer says real filters work out their points from many examples (training)."
+  ],
+  "audience": {
+    "id": "school-13-17",
+    "label": "School learners, classes 8-12",
+    "status": "active",
+    "readingLevel": "grade 6-8 for core text",
+    "maxSentenceWords": 18,
+    "pacing": "short loops; visible response within 1 second; mini-cycle within 3 minutes",
+    "tone": "warm, curious, direct, never condescending",
+    "theme": "school",
+    "gamification": "light: challenges and takeaways; no points, streaks or leaderboards",
+    "defaultDepth": "core",
+    "analogyVariants": "school",
+    "checks": [
+      "act-density",
+      "grammar",
+      "undefined-terms",
+      "banned-phrases",
+      "analogy-completeness",
+      "anthropomorphism",
+      "reading-level",
+      "first-use-help",
+      "media-rules",
+      "locale-completeness",
+      "checks-present",
+      "ending"
+    ]
+  },
+  "existingGlossary": {
+    "clue": {
+      "term": "clue",
+      "definition": "a small sign that helps you decide something, like a word or a mark in a message"
+    },
+    "score": {
+      "term": "score",
+      "definition": "a number made by adding up points"
+    },
+    "threshold": {
+      "term": "threshold",
+      "definition": "a line a number has to reach; at or above it, one thing happens, below it, another"
+    },
+    "training": {
+      "term": "training",
+      "definition": "the way a program works out its own settings from many examples, instead of a person setting them by hand"
+    },
+    "filter": {
+      "term": "filter",
+      "definition": "something that lets some things through and holds others back"
+    },
+    "junk": {
+      "term": "junk",
+      "definition": "messages you did not ask for, such as adverts and tricks, kept apart from your main messages"
+    },
+    "program": {
+      "term": "program",
+      "definition": "a list of exact steps that a computer follows"
+    },
+    "inbox": {
+      "term": "inbox",
+      "definition": "the place where the messages you want arrive"
+    }
+  },
+  "availableComponents": [
+    "predict",
+    "sort",
+    "knob",
+    "compare",
+    "by-hand-then-automate",
+    "analogy",
+    "reveal",
+    "break-it",
+    "your-data",
+    "assemble",
+    "explain-back",
+    "takeaway",
+    "check",
+    "train-classifier (domain simulation, Phase 5)"
+  ]
+}

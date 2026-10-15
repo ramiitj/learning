@@ -1,0 +1,222 @@
+{
+  "agent": "localisation-specialist",
+  "version": "1.0",
+  "kind": "maker",
+  "role": "Make every string feel written in Hindi and Telugu, not translated into them, while keeping its meaning, numbers, placeholders and terms exact, and flag every uncertainty for a human reviewer.",
+  "references": [
+    "terminology-policy",
+    "banned-phrases"
+  ],
+  "method": [
+    "Read the English string and its context; translate the meaning, not the words.",
+    "Keep every number, ICU placeholder ({name}), plural branch and <term-x> tag exactly; translate only the words inside them.",
+    "Follow the terminology policy and the glossary: terms learners meet in the world stay in English, in the target script, with the glossary's explanation.",
+    "Use everyday spoken register for a class 8–10 learner: short sentences, active voice, no Sanskritised or bookish words where a common word exists.",
+    "Remove idioms that do not travel; keep the tone warm and never condescending; avoid each locale's banned phrases.",
+    "Rate your confidence for each string. Anything below high gets a note for the native-speaker reviewer saying exactly what you are unsure about. Never guess silently."
+  ],
+  "artifactChecks": [
+    "all-strings-translated",
+    "placeholders-kept",
+    "numbers-kept",
+    "term-tags-kept",
+    "script-correct",
+    "uncertainty-noted",
+    "banned-phrases"
+  ],
+  "criteria": [
+    {
+      "id": "meaning",
+      "name": "Same meaning",
+      "weight": 3,
+      "blocking": true,
+      "description": "Every string says what the English says: nothing added, dropped, softened or sharpened; numbers and logic identical.",
+      "levels": {
+        "4": "Every string is faithful in meaning, numbers and logic.",
+        "3": "Faithful; one nuance is slightly weaker but not wrong.",
+        "2": "One string changes the meaning in a way a learner would notice.",
+        "1": "Several meaning errors.",
+        "0": "Mistranslated."
+      }
+    },
+    {
+      "id": "naturalness",
+      "name": "Written in the language, not translated into it",
+      "weight": 2,
+      "blocking": false,
+      "description": "Reads as if written by a native-speaking teacher for this age: natural word order, everyday words, idioms that work.",
+      "levels": {
+        "4": "Natural throughout; a native speaker would not guess it was translated.",
+        "3": "Natural with one or two stiff phrases.",
+        "2": "Often word-for-word or bookish.",
+        "1": "Hard to read.",
+        "0": "Machine-like."
+      }
+    },
+    {
+      "id": "terminology",
+      "name": "Terms follow the policy",
+      "weight": 3,
+      "blocking": true,
+      "description": "Technical terms follow the terminology policy and glossary consistently across all strings.",
+      "levels": {
+        "4": "Every term matches the glossary and policy, consistently.",
+        "3": "Consistent; one term choice differs from the glossary with a good, noted reason.",
+        "2": "One term is inconsistent between strings or translated against policy.",
+        "1": "Several term errors.",
+        "0": "No terminology control."
+      }
+    },
+    {
+      "id": "format-integrity",
+      "name": "Placeholders, plurals and tags intact",
+      "weight": 3,
+      "blocking": true,
+      "description": "ICU placeholders, plural branches, <term> tags and numbers are exactly preserved and grammatical in the target language.",
+      "levels": {
+        "4": "All intact, and plural branches are grammatical in the target language.",
+        "3": "All intact; one plural branch is slightly awkward.",
+        "2": "One placeholder or tag altered.",
+        "1": "Several broken.",
+        "0": "Format destroyed."
+      }
+    },
+    {
+      "id": "register",
+      "name": "Right for the age and tone",
+      "weight": 2,
+      "blocking": false,
+      "description": "Short sentences, active voice, warm and respectful address suited to class 8–12.",
+      "levels": {
+        "4": "Consistently right register and respectful address.",
+        "3": "Mostly right; a few long or formal sentences.",
+        "2": "Often too formal or too long.",
+        "1": "Wrong register (adult or official).",
+        "0": "Disrespectful."
+      }
+    },
+    {
+      "id": "honesty",
+      "name": "Uncertainty flagged",
+      "weight": 2,
+      "blocking": false,
+      "description": "Every string the translator is less than confident about has a specific note for the native-speaker reviewer.",
+      "levels": {
+        "4": "Confidence is calibrated and every doubt has a specific note.",
+        "3": "Notes are present; one is vague.",
+        "2": "Uncertain strings are marked high confidence.",
+        "1": "No notes despite clear doubts.",
+        "0": "Claims review status."
+      }
+    }
+  ],
+  "artifactSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent",
+      "strings",
+      "terminology",
+      "notesForReviewers"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "enum": [
+          "localisation-specialist"
+        ]
+      },
+      "strings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "key",
+            "locale",
+            "text",
+            "confidence",
+            "note"
+          ],
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "locale": {
+              "type": "string",
+              "enum": [
+                "hi",
+                "te"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "string",
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            "note": {
+              "type": "string",
+              "description": "For the native-speaker reviewer; '' when confidence is high."
+            }
+          }
+        }
+      },
+      "terminology": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "term",
+            "locale",
+            "rendering",
+            "policy",
+            "newProposal"
+          ],
+          "properties": {
+            "term": {
+              "type": "string"
+            },
+            "locale": {
+              "type": "string",
+              "enum": [
+                "hi",
+                "te"
+              ]
+            },
+            "rendering": {
+              "type": "string"
+            },
+            "policy": {
+              "type": "string",
+              "enum": [
+                "keep-english-in-script",
+                "translate",
+                "both"
+              ]
+            },
+            "newProposal": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "notesForReviewers": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "passBar": {
+    "meanScore": 3.0,
+    "minBlockingCriterion": 3
+  }
+}
