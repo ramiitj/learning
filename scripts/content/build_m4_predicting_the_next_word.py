@@ -241,6 +241,9 @@ add("hs.goal", "Reach the lowest error in as few steps as you can. Use the slope
 add("hs.fade", "Each step downhill made the error smaller. Training does this for every setting at once, again and again, often many thousands of times. People call this error the loss, so the chart is a loss curve.",
     "नीचे की ओर हर क़दम से ग़लती छोटी हुई। ट्रेनिंग यही सारी सेटिंग्स के साथ एक साथ करती है, बार-बार, अक्सर हज़ारों बार। लोग इस ग़लती को “लॉस” भी कहते हैं, इसलिए इस चार्ट को लॉस कर्व कहते हैं।",
     "కిందికి వేసిన ప్రతి అడుగుతో పొరపాటు తగ్గింది. ట్రైనింగ్ ఇదే పనిని అన్ని సెట్టింగ్‌లకూ ఒకేసారి, మళ్ళీ మళ్ళీ, తరచుగా వేల సార్లు చేస్తుంది. ఈ పొరపాటును “లాస్” అని కూడా అంటారు, అందుకే ఈ చార్ట్‌ను లాస్ కర్వ్ అంటారు.")
+add("hs.breaks", "Where this picture breaks: a real model has millions of settings, not one. Its hill has millions of directions at once. And a computer does not pick its step size by feel. A rule called the learning rate sets it.",
+    "यह तस्वीर यहाँ टूटती है: असली मॉडल में एक नहीं, लाखों सेटिंग्स होती हैं। उसकी पहाड़ी की एक साथ लाखों दिशाएँ होती हैं। और कंप्यूटर क़दम का आकार अंदाज़े से नहीं चुनता। उसे सीखने की दर (लर्निंग रेट) नाम का नियम तय करता है।",
+    "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: నిజమైన మోడల్‌కు ఒక్క సెట్టింగ్ కాదు, లక్షలాది సెట్టింగ్‌లు ఉంటాయి. దాని కొండకు ఒకేసారి లక్షలాది దిశలు ఉంటాయి. అడుగు పరిమాణాన్ని కంప్యూటర్ అంచనాతో ఎంచుకోదు. లెర్నింగ్ రేట్ అనే నియమం దాన్ని నిర్ణయిస్తుంది.")
 
 # ---------------------------------------------------------------- break it
 add("br.challenge", "Now try to make your model fail. Pick an attempt, guess what will happen, then open it. You can also try some on your model above.",
@@ -460,7 +463,7 @@ stages = [
               classroom={"mode": "class-vote"}, glossaryTerms=["training"]),
         block("b12", "hillside", {"promptKey": "hs.prompt", "landscape": {"type": "bowl", "min": 0, "max": 100}, "start": 8,
                                   "stepMin": 2, "stepMax": 20, "maxSteps": 10, "leftKey": "hs.left", "rightKey": "hs.right",
-                                  "goalKey": "hs.goal", "fadeKey": "hs.fade"},
+                                  "goalKey": "hs.goal", "fadeKey": "hs.fade", "breaksKey": "hs.breaks"},
               classroom={"maxSteps": 8}, glossaryTerms=["error"]),
     ]},
     {"stage": "break-it", "blocks": [

@@ -94,6 +94,7 @@ stages = [
                     "rightKey": "hs.right",
                     "goalKey": "hs.goal",
                     "fadeKey": "hs.fade",
+                    "breaksKey": "hs.breaks",
                 },
                 glossaryTerms=["training", "error", "loss-curve"],
                 detours=["weights"],

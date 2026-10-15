@@ -1,4 +1,5 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { LessonView, LiveVotesContext, Registry, type LiveVotes } from "@lm/engine";
 import userEvent from "@testing-library/user-event";
 import { validateBlocks } from "@lm/schema/validate";
 import { a11yViolations, renderBlock } from "@lm/primitives/test-utils";
@@ -15,7 +16,7 @@ const strings = {
 };
 const valleys: HillsideConfig = {
   promptKey: "p", landscape: { type: "two-valleys", min: 0, max: 100 }, start: 10, stepMin: 2, stepMax: 10, maxSteps: 12,
-  leftKey: "left", rightKey: "right", goalKey: "goal", fadeKey: "fade",
+  leftKey: "left", rightKey: "right", goalKey: "goal", fadeKey: "fade", breaksKey: "breaks",
 };
 const bowl: HillsideConfig = { ...valleys, landscape: { type: "bowl", min: 0, max: 100 }, start: 47, stepMax: 4 };
 const block = (c: HillsideConfig) => ({ id: "h1", type: "hillside", config: c as unknown as Record<string, unknown> });
@@ -30,12 +31,25 @@ describe("hillside", () => {
     expect(issues({ ...valleys, extra: true }).length).toBeGreaterThan(0);
     const { leftKey: _l, ...noLeft } = valleys;
     expect(issues(noLeft).length).toBeGreaterThan(0);
-    expect(hillside.stringKeys(valleys as never).sort()).toEqual(["fade", "goal", "left", "p", "right"]);
-    expect(hillside.stringKeys({ ...valleys, breaksKey: "breaks" } as never)).toContain("breaks");
+    expect(hillside.stringKeys(valleys as never).sort()).toEqual(["breaks", "fade", "goal", "left", "p", "right"]);
+    // A fade (the analogy) without its break point is rejected; a break point alone is fine.
+    const { breaksKey: _b, ...noBreaks } = valleys;
+    expect(issues(noBreaks).map((i) => i.message).join()).toMatch(/breaksKey/);
+    expect(issues({ ...noBreaks, fadeKey: undefined })).toEqual([]);
     expect(issues({ ...valleys, breaksKey: "breaks", glossary: ["slope", "loss"] })).toEqual([]);
     expect(issues({ ...valleys, glossary: "slope" }).length).toBeGreaterThan(0);
     expect(hillside.vote!(valleys as never)!.options).toEqual([{ id: "left", labelKey: "left" }, { id: "right", labelKey: "right" }]);
+    // One live item per decision point (default 15 steps; the classroom override of maxSteps is respected).
+    expect(hillside.vote!({ ...valleys, maxSteps: undefined } as never)!.perItem!.map((i) => i.id)).toEqual(Array.from({ length: 15 }, (_, i) => `trap-${i + 1}`));
+    expect(hillside.vote!({ ...valleys, maxSteps: 3 } as never)!.perItem!.map((i) => i.id)).toEqual(["trap-1", "trap-2", "trap-3"]);
     expect(hillside.act).toBe("explore");
+  });
+
+  it("reports a config glossary id that is not in the glossary", () => {
+    const run = (glossary: string[]) => validateBlocks([{ ...block({ ...valleys, glossary } as never), componentVersion: "1.0" }] as never, { en: strings }, { contracts: [hillside], locales: ["en"], glossaryTerms: new Set(["slope"]) });
+    expect(run(["slope"])).toEqual([]);
+    expect(run(["slope", "nope"]).map((i) => i.message)).toEqual([`glossary term "nope" is not in the glossary`]);
+    expect(hillside.glossaryRefs!({ glossary: ["a"] } as never)).toEqual(["a"]);
   });
 
   it("shows only the local height and slope, and records each step", async () => {
@@ -71,7 +85,7 @@ describe("hillside", () => {
     expect(screen.getByText("The whole hill")).toBeInTheDocument();
     expect(screen.getByText(/^Height after each step: your loss curve/)).toBeInTheDocument();
     expect(screen.getByText(strings.fade)).toBeInTheDocument();
-    expect(screen.queryByText(strings.breaks)).not.toBeInTheDocument();
+    expect(screen.queryByText(strings.breaks)).toBeInTheDocument();
     expect(screen.getAllByRole("img").length).toBe(2);
   });
 
@@ -175,6 +189,42 @@ describe("hillside", () => {
     await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
     await userEvent.click(screen.getByRole("button", { name: "Take the class's step" }));
     expect(screen.getByText(/Step 3: you went Go right/)).toBeInTheDocument();
+  });
+
+  it("classroom: phone votes are kept per decision point and never add across steps", async () => {
+    const asked: (string | null)[] = [];
+    const votes: Record<string, Record<string, number>> = { size: { small: 7 }, "trap-2": { right: 5 }, "trap-3": { left: 4 } };
+    const live: LiveVotes = { connected: true, counts: (_b, item) => votes[item ?? ""] ?? {}, setItem: (_b, item) => void asked.push(item) };
+    localStorage.clear();
+    const lesson = {
+      id: "t", version: 1,
+      meta: { titleKey: "title", subject: "test", concepts: ["c"], objectives: [{ id: "o1", textKey: "title" }], prerequisites: [], audiences: ["school-13-17"], estimatedMinutes: 5 },
+      stages: [{ stage: "manipulate" as const, blocks: [{ ...block(valleys), componentVersion: "1.0" }] }],
+      strings: { en: { title: "T", ...strings } }, localeStatus: { en: "draft" as const },
+    };
+    render(
+      <LiveVotesContext.Provider value={live}>
+        <LessonView lesson={lesson as never} locale="en" mode="classroom" registry={new Registry([hillside])} storageKey={`t:${Math.random()}`} />
+      </LiveVotesContext.Provider>,
+    );
+    // The step-size tally reads only its own item: the 7 phone votes under "size" show, the trap votes do not.
+    expect(screen.getByText(/^7 votes in total/)).toBeInTheDocument();
+    await settleSize();
+    await userEvent.click(screen.getByRole("button", { name: "Take one step downhill" }));
+    await userEvent.click(screen.getByRole("button", { name: "Take one step downhill" }));
+    // Trapped after two steps: only trap-2's 5 phone votes count (not the 7 for size, not trap-3's 4).
+    expect(asked[asked.length - 1]).toBe("trap-2");
+    expect(screen.getByText(/^5 votes in total/)).toBeInTheDocument();
+    expect(screen.getByText(/5 from phones/)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Show the class result" }));
+    await userEvent.click(screen.getByRole("button", { name: "Take the class's step" }));
+    // The next decision point is a different item, so its count starts from its own votes only.
+    expect(screen.queryByText(/5 from phones/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/9 votes in total/)).not.toBeInTheDocument();
+    if (screen.queryByText(/votes in total/)) {
+      expect(asked[asked.length - 1]).toBe("trap-3");
+      expect(screen.getByText(/^4 votes in total/)).toBeInTheDocument();
+    }
   });
 
   it("classroom: a trap tie asks for another count, and the class can restart with a new step size", async () => {

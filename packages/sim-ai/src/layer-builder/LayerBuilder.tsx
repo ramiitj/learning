@@ -41,6 +41,8 @@ const bigWidths = (c: LayerBuilderConfig): number[] => Array.from({ length: c.ma
 function Chart({ data, curve, ui, locale, big = false }: { data: Dataset; curve?: Point[]; ui: Ui; locale: string; big?: boolean }) {
   const f1 = useNumber(locale, 1);
   const r = big ? 7 : 4;
+  /** Test squares are larger than the training dots and hollow, so a dot on the same spot still shows inside the square. */
+  const q = r * 1.7;
   const all = [...data.train, ...data.test, ...(curve ?? [])];
   const xs = all.map((p) => p[0]);
   const ys = all.map((p) => p[1]);
@@ -60,7 +62,10 @@ function Chart({ data, curve, ui, locale, big = false }: { data: Dataset; curve?
         <rect className="lm-layers-chart__bg" x="0" y="0" width={W} height={H} rx="8" />
         {curve && curve.length > 1 ? <polyline className="lm-layers-chart__curve" points={curve.map(([x, y]) => `${px(x).toFixed(1)},${py(y).toFixed(1)}`).join(" ")} /> : null}
         {data.test.map(([x, y], i) => (
-          <rect key={`t${i}`} className="lm-layers-chart__test" x={px(x) - r} y={py(y) - r} width={2 * r} height={2 * r} />
+          <g key={`t${i}`}>
+            <rect className="lm-layers-chart__halo" x={px(x) - q} y={py(y) - q} width={2 * q} height={2 * q} />
+            <rect className="lm-layers-chart__test" x={px(x) - q} y={py(y) - q} width={2 * q} height={2 * q} />
+          </g>
         ))}
         {data.train.map(([x, y], i) => (
           <circle key={`r${i}`} className="lm-layers-chart__train" cx={px(x)} cy={py(y)} r={r} />
@@ -188,6 +193,7 @@ export function LayerBuilder({ block, config, state, setState, t, ui, locale }: 
     <div className="lm-layers">
       <p className="lm-lead">{t.rich(config.promptKey)}</p>
       {config.analogyKey ? <div className="lm-callout" data-tone="insight">{t.rich(config.analogyKey)}</div> : null}
+      {config.analogyKey && config.analogyBreaksKey ? <div className="lm-callout" data-tone="warm">{t.rich(config.analogyBreaksKey)}</div> : null}
       <p className="lm-small lm-muted">{ui("glossNetwork")}</p>
       <GlossaryRow ids={config.glossary} ui={ui} />
       {!running ? (
@@ -263,6 +269,7 @@ export function LayerBuilderClassroom({ config, state, setState, t, ui, locale }
     <div className="lm-layers">
       <h3 className="lm-prompt">{t.rich(config.promptKey)}</h3>
       {config.analogyKey ? <div className="lm-callout" data-tone="insight">{t.rich(config.analogyKey)}</div> : null}
+      {config.analogyKey && config.analogyBreaksKey ? <div className="lm-callout" data-tone="warm">{t.rich(config.analogyBreaksKey)}</div> : null}
       <p className="lm-small lm-muted">{ui("glossNetwork")}</p>
       <GlossaryRow ids={config.glossary} ui={ui} />
       {hasVote ? (

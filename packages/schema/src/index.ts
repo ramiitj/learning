@@ -89,6 +89,8 @@ export interface ComponentContract {
   stringKeys: (config: BlockConfig) => string[];
   /** Other block ids the config refers to (shared lesson state). */
   blockRefs?: (config: BlockConfig) => string[];
+  /** Glossary term ids the config itself names (checked like a block's `glossaryTerms`). */
+  glossaryRefs?: (config: BlockConfig) => string[];
   /** The learner act this component asks for (constitution, Article 4). */
   act: "decide" | "predict" | "build" | "explore" | "explain" | "connective";
   /**

@@ -51,13 +51,17 @@ export function labelTestItems(config: TrainClassifierConfig, labels: Record<str
   return config.testItems.map((item) => ({ item, prediction: predict(examples, toVector(item.features, ids)) }));
 }
 
+const MIN_PER_GROUP = 2;
+
 function useTraining(config: TrainClassifierConfig, state: TrainClassifierState | undefined, readBlock: Props["readBlock"]) {
   const labels = currentLabels(config, state, readBlock);
   const trainedOn = state?.trainedOn;
   const results = useMemo(() => (trainedOn ? labelTestItems(config, trainedOn) : []), [config, trainedOn]);
   const pairs = useMemo(() => (trainedOn ? conflicts(buildExamples(config, trainedOn)) : []), [config, trainedOn]);
   const used = trainedOn ? new Set(Object.values(trainedOn)).size : 0;
-  return { labels, trainedOn, results, pairs, count: Object.keys(labels).length, stale: !!trainedOn && !sameLabels(labels, trainedOn), oneGroup: !!trainedOn && used === 1 };
+  /** Training opens once every group has at least MIN_PER_GROUP labelled examples; labelling the rest is optional. */
+  const perGroup = config.groups.map((g) => Object.values(labels).filter((l) => l === g).length);
+  return { ready: perGroup.every((n) => n >= MIN_PER_GROUP), total: config.items.length, labels, trainedOn, results, pairs, count: Object.keys(labels).length, stale: !!trainedOn && !sameLabels(labels, trainedOn), oneGroup: !!trainedOn && used === 1 };
 }
 
 function FeatureLine({ config, item, t, ui, locale }: { config: TrainClassifierConfig; item: TrainItem; t: T; ui: Ui; locale: string }) {
@@ -215,7 +219,8 @@ function Notices({ config, training, t, ui }: { config: TrainClassifierConfig; t
 }
 
 function TrainButton({ training, onTrain, ui }: { training: ReturnType<typeof useTraining>; onTrain: () => void; ui: Ui }) {
-  const enough = training.count >= 2;
+  const enough = training.ready;
+  const more = enough && training.count < training.total;
   return (
     <div className="lm-stack">
       <p className="lm-muted lm-small">{ui("labelledOf", { n: training.count })}</p>
@@ -223,6 +228,7 @@ function TrainButton({ training, onTrain, ui }: { training: ReturnType<typeof us
         {ui(training.trainedOn ? "trainAgain" : "train")}
       </Button>
       {!enough ? <p className="lm-muted lm-small">{ui("needMore")}</p> : null}
+      {more ? <p className="lm-muted lm-small">{ui("moreHelps")}</p> : null}
     </div>
   );
 }

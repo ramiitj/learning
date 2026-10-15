@@ -16,8 +16,10 @@ export interface LayerBuilderConfig {
   /** Classroom vote: describes the small and the big network. Both are needed for a vote. */
   smallKey?: string;
   bigKey?: string;
-  /** An analogy shown before the build, with where it breaks down (optional). */
+  /** An analogy shown before the build (optional). Needs analogyBreaksKey. */
   analogyKey?: string;
+  /** Where the analogy breaks down, shown right after it. Required whenever analogyKey is set. */
+  analogyBreaksKey?: string;
   /** Glossary term ids to link under the prompt (optional). */
   glossary?: string[];
 }
@@ -38,6 +40,8 @@ export const layerBuilderContract: ComponentContract = {
     type: "object",
     required: ["promptKey", "dataset", "maxLayers", "maxWidth"],
     additionalProperties: false,
+    // An analogy always shows where it breaks (constitution Art. 7 and 14).
+    dependentRequired: { analogyKey: ["analogyBreaksKey"] },
     properties: {
       promptKey: { type: "string" },
       dataset: {
@@ -67,11 +71,13 @@ export const layerBuilderContract: ComponentContract = {
       smallKey: { type: "string" },
       bigKey: { type: "string" },
       analogyKey: { type: "string" },
+      analogyBreaksKey: { type: "string" },
       glossary: glossaryProperty,
     },
   },
+  glossaryRefs: (c) => (c as { glossary?: string[] }).glossary ?? [],
   stringKeys: (c) => {
     const x = c as unknown as LayerBuilderConfig;
-    return keys(x.promptKey, x.explainKey, x.smallKey, x.bigKey, x.analogyKey);
+    return keys(x.promptKey, x.explainKey, x.smallKey, x.bigKey, x.analogyKey, x.analogyBreaksKey);
   },
 };

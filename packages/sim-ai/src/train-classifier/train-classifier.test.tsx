@@ -112,6 +112,25 @@ describe("train-classifier", () => {
     expect(within(rabbit).getByText(/two examples with exactly the same numbers/)).toBeInTheDocument();
   });
 
+  it("opens training at two labels per group, nudges toward more, and retrains after more labels", async () => {
+    renderBlock(trainClassifier, block(), strings);
+    const trainBtn = () => screen.getByRole("button", { name: /^Train/ });
+    await labelAll({ Mouse: "Small", Hamster: "Small", Horse: "Big" });
+    expect(trainBtn()).toBeDisabled();
+    expect(screen.getByText(/at least two examples in each group/)).toBeInTheDocument();
+    expect(screen.queryByText(/More examples usually help/)).not.toBeInTheDocument();
+    await labelAll({ Cow: "Big" });
+    expect(trainBtn()).toBeEnabled();
+    expect(screen.getByText("More examples usually help — try labelling the rest and training again.")).toBeInTheDocument();
+    await userEvent.click(trainBtn());
+    expect(screen.getByText("Trained on 4 examples.")).toBeInTheDocument();
+    await labelAll({ Gerbil: "Small", Camel: "Big" });
+    expect(screen.queryByText(/More examples usually help/)).not.toBeInTheDocument();
+    expect(screen.getByText(/labels have changed since the machine last trained/)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Train again" }));
+    expect(screen.getByText("Trained on 6 examples.")).toBeInTheDocument();
+  });
+
   it("flags results as out of date when labels change after training, and retrains", async () => {
     renderBlock(trainClassifier, block(), strings);
     await labelAll(standard);

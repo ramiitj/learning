@@ -37,6 +37,7 @@ export const nextWordModelContract: ComponentContract = {
       glossary: glossaryProperty,
     },
   },
+  glossaryRefs: (c) => (c as { glossary?: string[] }).glossary ?? [],
   stringKeys: (c) => {
     const x = c as unknown as NextWordModelConfig;
     return keys(x.promptKey, x.starterSentencesKey, x.explainKey);

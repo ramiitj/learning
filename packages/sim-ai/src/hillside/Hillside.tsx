@@ -1,7 +1,7 @@
 "use client";
 import { useId } from "react";
-import { addCounts, Button, Tally, useFocusAfter, useLiveCounts, type BlockProps, type Counts } from "@lm/engine";
-import type { HillsideConfig } from "./contract";
+import { addCounts, Button, Tally, useFocusAfter, useLiveCounts, useLiveItem, type BlockProps, type Counts } from "@lm/engine";
+import { SIZE_ITEM, trapItem, type HillsideConfig } from "./contract";
 import { GlossaryRow } from "../glossary";
 import {
   curvePoints,
@@ -308,7 +308,12 @@ export function HillsideClassroom({ config, state, setState, t, ui, locale }: Pr
   const w = useWalk(config, state);
   const focus = useFocusAfter<HTMLDivElement>(w.done);
   const controls = useFocusAfter<HTMLDivElement>(`${w.positions.length}-${state?.sizeChosen ? 1 : 0}`);
-  const phones = useLiveCounts();
+  const trapped = w.done && w.result === "trapped";
+  // Each decision point is its own live item, so phone votes for one step never add to another.
+  const trapId = trapItem(w.positions.length - 1);
+  const trapOpen = trapped && !state?.faded;
+  useLiveItem(trapOpen ? trapId : null);
+  const phones = useLiveCounts(trapId);
   const f = fmtNum(locale);
   const sizes = sizeOptions(w.walk);
   const sizeVote = sizes.length > 1;
@@ -319,7 +324,6 @@ export function HillsideClassroom({ config, state, setState, t, ui, locale }: Pr
   const counts: Counts = state?.counts ?? {};
   const decision = majority(addCounts(counts, phones));
   const shown = !!state?.tallyShown;
-  const trapped = w.done && w.result === "trapped";
   const options = [
     { id: "left", label: t.rich(config.leftKey), text: t.text(config.leftKey) },
     { id: "right", label: t.rich(config.rightKey), text: t.text(config.rightKey) },
@@ -355,6 +359,7 @@ export function HillsideClassroom({ config, state, setState, t, ui, locale }: Pr
             <p className="lm-muted">{ui("classSizeIntro")}</p>
             <Tally
               ui={ui}
+              itemId={SIZE_ITEM}
               options={sizes.map((o) => ({ id: o.id, label: sizeLabel(o), text: sizeLabel(o) }))}
               counts={sizeCounts}
               onChange={(c) => setState((prev) => ({ ...prev, sizeCounts: c }), { coalesce: true })}
@@ -379,7 +384,7 @@ export function HillsideClassroom({ config, state, setState, t, ui, locale }: Pr
               <div className="lm-hill__controls">
                 <h3 className="lm-hill__heading">{ui("classTrapHeading")}</h3>
                 <p className="lm-muted">{ui("classTrapIntro")}</p>
-                <Tally ui={ui} options={options} counts={counts} onChange={(c) => setState((prev) => ({ ...prev, counts: c }), { coalesce: true })} revealed={shown} onReveal={(v) => setState((prev) => ({ ...prev, tallyShown: v }))} highlight={shown ? (decision ?? undefined) : undefined} />
+                <Tally ui={ui} itemId={trapId} options={options} counts={counts} onChange={(c) => setState((prev) => ({ ...prev, counts: c }), { coalesce: true })} revealed={shown} onReveal={(v) => setState((prev) => ({ ...prev, tallyShown: v }))} highlight={shown ? (decision ?? undefined) : undefined} />
                 {shown && !decision ? <p className="lm-notice" role="status">{ui("classTie")}</p> : null}
                 <Button variant="primary" disabled={!shown || !decision} onClick={() => decision && advance(decision)}>{ui("classTake")}</Button>
               </div>

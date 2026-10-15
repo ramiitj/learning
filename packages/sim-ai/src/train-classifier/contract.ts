@@ -84,6 +84,7 @@ export const trainClassifierContract: ComponentContract = {
       glossary: glossaryProperty,
     },
   },
+  glossaryRefs: (c) => (c as { glossary?: string[] }).glossary ?? [],
   stringKeys: (c) => {
     const x = c as unknown as TrainClassifierConfig;
     return keys(

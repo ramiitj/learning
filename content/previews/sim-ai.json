@@ -195,7 +195,8 @@
         "explainKey": "lb.explain",
         "smallKey": "lb.small",
         "bigKey": "lb.big",
-        "analogyKey": "lb.analogy"
+        "analogyKey": "lb.analogy",
+        "analogyBreaksKey": "lb.analogyBreaks"
       },
       "componentVersion": "1.0"
     },
@@ -307,8 +308,9 @@
       "tc.bear": "Bear",
       "tc.camel": "Camel",
       "tc.goat": "Goat",
-      "lb.analogy": "Picture a team where each person turns one dial, and together they try to match the dots. Where this picture breaks: nobody on the team uses judgement. Every dial is turned by arithmetic, by a calculation that says which way and how far.",
-      "hs.breaks": "Where this picture breaks: a real model stands on a “hill” with millions of directions, and its step size follows a rule called the learning rate, not a choice."
+      "lb.analogy": "Picture a team where each person turns one dial, and together they try to match the dots.",
+      "hs.breaks": "Where this picture breaks: a real model stands on a “hill” with millions of directions, and its step size follows a rule called the learning rate, not a choice.",
+      "lb.analogyBreaks": "Where this picture breaks: nobody on the team uses judgement. Every dial is turned by arithmetic, by a calculation that says which way and how far."
     },
     "hi": {
       "title": "AI सिमुलेशन",
@@ -355,8 +357,9 @@
       "tc.bear": "भालू",
       "tc.camel": "ऊँट",
       "tc.goat": "बकरी",
-      "lb.analogy": "सोचिए एक टीम है जिसमें हर व्यक्ति एक घुंडी घुमाता है, और सब मिलकर बिंदुओं से मेल बिठाने की कोशिश करते हैं। यह तस्वीर यहाँ टूटती है: टीम में कोई समझ-बूझ से काम नहीं लेता। हर घुंडी गणना से घुमाई जाती है, जो बताती है कि किस ओर और कितनी।",
-      "hs.breaks": "यह तस्वीर यहाँ टूटती है: असली मॉडल लाखों दिशाओं वाली “पहाड़ी” पर खड़ा होता है, और उसके क़दम का आकार सीखने की दर (लर्निंग रेट) नाम के नियम से तय होता है, किसी के चुनाव से नहीं।"
+      "lb.analogy": "सोचिए एक टीम है जिसमें हर व्यक्ति एक घुंडी घुमाता है, और सब मिलकर बिंदुओं से मेल बिठाने की कोशिश करते हैं।",
+      "hs.breaks": "यह तस्वीर यहाँ टूटती है: असली मॉडल लाखों दिशाओं वाली “पहाड़ी” पर खड़ा होता है, और उसके क़दम का आकार सीखने की दर (लर्निंग रेट) नाम के नियम से तय होता है, किसी के चुनाव से नहीं।",
+      "lb.analogyBreaks": "यह तस्वीर यहाँ टूटती है: टीम में कोई समझ-बूझ से काम नहीं लेता। हर घुंडी गणना से घुमाई जाती है, जो बताती है कि किस ओर और कितनी।"
     },
     "te": {
       "title": "AI సిమ్యులేషన్లు",
@@ -403,8 +406,9 @@
       "tc.bear": "ఎలుగుబంటి",
       "tc.camel": "ఒంటె",
       "tc.goat": "మేక",
-      "lb.analogy": "ఒక బృందాన్ని ఊహించండి: ప్రతి ఒక్కరూ ఒక నాబ్ తిప్పుతారు, అందరూ కలిసి చుక్కలకు సరిపోయేలా ప్రయత్నిస్తారు. ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: బృందంలో ఎవరూ విచక్షణ వాడరు. ప్రతి నాబ్ లెక్క ద్వారా తిరుగుతుంది, ఏ వైపు, ఎంత అని ఆ లెక్కే చెబుతుంది.",
-      "hs.breaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: నిజమైన మోడల్ లక్షలాది దిశలున్న “కొండ”పై నిలబడుతుంది, దాని అడుగు పరిమాణం లెర్నింగ్ రేట్ అనే నియమం ప్రకారం ఉంటుంది, ఎంపిక ప్రకారం కాదు."
+      "lb.analogy": "ఒక బృందాన్ని ఊహించండి: ప్రతి ఒక్కరూ ఒక నాబ్ తిప్పుతారు, అందరూ కలిసి చుక్కలకు సరిపోయేలా ప్రయత్నిస్తారు.",
+      "hs.breaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: నిజమైన మోడల్ లక్షలాది దిశలున్న “కొండ”పై నిలబడుతుంది, దాని అడుగు పరిమాణం లెర్నింగ్ రేట్ అనే నియమం ప్రకారం ఉంటుంది, ఎంపిక ప్రకారం కాదు.",
+      "lb.analogyBreaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: బృందంలో ఎవరూ విచక్షణ వాడరు. ప్రతి నాబ్ లెక్క ద్వారా తిరుగుతుంది, ఏ వైపు, ఎంత అని ఆ లెక్కే చెబుతుంది."
     }
   }
 }

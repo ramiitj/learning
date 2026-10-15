@@ -129,7 +129,7 @@ export function validate(doc: unknown, ctx: ValidationContext): ValidationReport
     }
   }
   for (const { block } of blocks) {
-    for (const t of block.glossaryTerms ?? []) {
+    for (const t of [...(block.glossaryTerms ?? []), ...(byType.get(block.type)?.glossaryRefs?.(block.config) ?? [])]) {
       for (const locale of Object.keys(lesson.strings)) {
         if (lesson.localeStatus[locale] !== "missing" && !ctx.glossary[locale]?.[t]) add({ check: "undefined-terms", severity: "error", path: `/blocks/${block.id}`, locale, message: `glossary term "${t}" has no ${locale} entry` });
       }
@@ -139,7 +139,7 @@ export function validate(doc: unknown, ctx: ValidationContext): ValidationReport
   const introducedAt = new Map<string, number>();
   for (const { block, index } of blocks) {
     const tagged = (byType.get(block.type)?.stringKeys(block.config) ?? []).flatMap((k) => [...(lesson.strings.en?.[k] ?? "").matchAll(TERM_TAG)].map((m) => m[1]!));
-    for (const t of [...(block.glossaryTerms ?? []), ...tagged]) if (!introducedAt.has(t)) introducedAt.set(t, index);
+    for (const t of [...(block.glossaryTerms ?? []), ...(byType.get(block.type)?.glossaryRefs?.(block.config) ?? []), ...tagged]) if (!introducedAt.has(t)) introducedAt.set(t, index);
   }
   for (const [term, at] of introducedAt) {
     const word = ctx.glossary.en?.[term]?.term;

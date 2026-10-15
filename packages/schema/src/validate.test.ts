@@ -63,6 +63,21 @@ describe("validateLesson", () => {
   });
 });
 
+describe("config-level glossary ids", () => {
+  const withRefs: ComponentContract = { ...loose("reveal"), glossaryRefs: (c) => (c.glossary as string[]) ?? [] };
+  const block = (glossary: string[]) => [{ id: "g1", type: "reveal", componentVersion: "1.0", config: { glossary } }];
+  it("reports a config glossary id that is not in the glossary, like block-level glossaryTerms", () => {
+    const issues = validateBlocks(block(["slope", "nope"]), { en: {} }, { contracts: [withRefs], glossaryTerms: new Set(["slope"]) });
+    expect(issues.map((i) => i.message)).toEqual([`glossary term "nope" is not in the glossary`]);
+    expect(issues[0]!.severity).toBe("error");
+  });
+  it("is silent when ids are known or no glossary is given, and contracts without the hook are unaffected", () => {
+    expect(validateBlocks(block(["slope"]), { en: {} }, { contracts: [withRefs], glossaryTerms: new Set(["slope"]) })).toEqual([]);
+    expect(validateBlocks(block(["x"]), { en: {} }, { contracts: [withRefs] })).toEqual([]);
+    expect(validateBlocks(block(["x"]), { en: {} }, { contracts: [loose("reveal")], glossaryTerms: new Set() })).toEqual([]);
+  });
+});
+
 describe("validateBlocks", () => {
   it("validates detour blocks and their strings", () => {
     const issues = validateBlocks([{ id: "d1", type: "reveal", componentVersion: "1.0", config: { textKey: "a" } }], { en: {} }, { contracts: [loose("reveal", (c) => [String(c.textKey)])], extraKeys: ["title"] });

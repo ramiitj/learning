@@ -389,7 +389,8 @@
             "leftKey": "hs.left",
             "rightKey": "hs.right",
             "goalKey": "hs.goal",
-            "fadeKey": "hs.fade"
+            "fadeKey": "hs.fade",
+            "breaksKey": "hs.breaks"
           },
           "classroom": {
             "maxSteps": 8
@@ -797,6 +798,7 @@
       "hs.right": "Step right",
       "hs.goal": "Reach the lowest error in as few steps as you can. Use the slope to choose your direction.",
       "hs.fade": "Each step downhill made the error smaller. Training does this for every setting at once, again and again, often many thousands of times. People call this error the loss, so the chart is a loss curve.",
+      "hs.breaks": "Where this picture breaks: a real model has millions of settings, not one. Its hill has millions of directions at once. And a computer does not pick its step size by feel. A rule called the learning rate sets it.",
       "br.challenge": "Now try to make your model fail. Pick an attempt, guess what will happen, then open it. You can also try some on your model above.",
       "br.t1": "Ask for the word after one that is in none of your sentences",
       "br.r1": "It has nothing to count, so it cannot guess at all. A model only has what was in its sentences.",
@@ -988,6 +990,7 @@
       "hs.right": "दाईं ओर क़दम",
       "hs.goal": "जितने कम क़दमों में हो सके, सबसे कम ग़लती तक पहुँचिए। दिशा चुनने के लिए ढलान देखिए।",
       "hs.fade": "नीचे की ओर हर क़दम से ग़लती छोटी हुई। ट्रेनिंग यही सारी सेटिंग्स के साथ एक साथ करती है, बार-बार, अक्सर हज़ारों बार। लोग इस ग़लती को “लॉस” भी कहते हैं, इसलिए इस चार्ट को लॉस कर्व कहते हैं।",
+      "hs.breaks": "यह तस्वीर यहाँ टूटती है: असली मॉडल में एक नहीं, लाखों सेटिंग्स होती हैं। उसकी पहाड़ी की एक साथ लाखों दिशाएँ होती हैं। और कंप्यूटर क़दम का आकार अंदाज़े से नहीं चुनता। उसे सीखने की दर (लर्निंग रेट) नाम का नियम तय करता है।",
       "br.challenge": "अब अपने मॉडल को चूकने पर मजबूर कीजिए। एक कोशिश चुनिए, सोचिए क्या होगा, फिर उसे खोलिए। कुछ कोशिशें आप ऊपर अपने मॉडल पर भी कर सकते हैं।",
       "br.t1": "ऐसे शब्द के बाद का शब्द पूछिए जो आपके किसी वाक्य में नहीं है",
       "br.r1": "उसके पास गिनने को कुछ नहीं, इसलिए वह अनुमान लगा ही नहीं सकता। मॉडल के पास बस वही है जो उसके वाक्यों में था।",
@@ -1179,6 +1182,7 @@
       "hs.right": "కుడికి అడుగు",
       "hs.goal": "వీలైనంత తక్కువ అడుగుల్లో అతి తక్కువ పొరపాటును చేరండి. దిశ ఎంచుకోవడానికి వాలును చూడండి.",
       "hs.fade": "కిందికి వేసిన ప్రతి అడుగుతో పొరపాటు తగ్గింది. ట్రైనింగ్ ఇదే పనిని అన్ని సెట్టింగ్‌లకూ ఒకేసారి, మళ్ళీ మళ్ళీ, తరచుగా వేల సార్లు చేస్తుంది. ఈ పొరపాటును “లాస్” అని కూడా అంటారు, అందుకే ఈ చార్ట్‌ను లాస్ కర్వ్ అంటారు.",
+      "hs.breaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: నిజమైన మోడల్‌కు ఒక్క సెట్టింగ్ కాదు, లక్షలాది సెట్టింగ్‌లు ఉంటాయి. దాని కొండకు ఒకేసారి లక్షలాది దిశలు ఉంటాయి. అడుగు పరిమాణాన్ని కంప్యూటర్ అంచనాతో ఎంచుకోదు. లెర్నింగ్ రేట్ అనే నియమం దాన్ని నిర్ణయిస్తుంది.",
       "br.challenge": "ఇప్పుడు మీ మోడల్ తప్పు చేసేలా ప్రయత్నించండి. ఒక ప్రయత్నం ఎంచుకుని, ఏం జరుగుతుందో ఊహించి, దాన్ని తెరవండి. కొన్నింటిని పైన మీ మోడల్ మీద కూడా ప్రయత్నించవచ్చు.",
       "br.t1": "మీ ఏ వాక్యంలోనూ లేని పదం తర్వాత ఏం వస్తుందో అడగండి",
       "br.r1": "దానికి లెక్కించడానికి ఏమీ లేదు, అందుకే అది అసలు ఊహించలేదు. మోడల్ దగ్గర దాని వాక్యాల్లో ఉన్నదే ఉంటుంది.",

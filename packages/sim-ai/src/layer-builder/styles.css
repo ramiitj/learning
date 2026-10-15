@@ -18,7 +18,8 @@
 .lm-layers-chart__bg { fill: var(--color-surface-2); stroke: var(--color-border); }
 .lm-layers-chart__curve { fill: none; stroke: var(--color-accent); stroke-width: 3; stroke-linejoin: round; }
 .lm-layers-chart__train { fill: var(--color-ink); }
-.lm-layers-chart__test { fill: var(--color-surface); stroke: var(--color-ink); stroke-width: 2; }
+.lm-layers-chart__halo { fill: none; stroke: var(--color-surface); stroke-width: 6; }
+.lm-layers-chart__test { fill: none; stroke: var(--color-ink); stroke-width: 2; }
 .lm-layers-chart figcaption { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
 
 .lm-layers-errors__list { display: grid; gap: var(--space-3); margin: var(--space-3) 0; }
@@ -34,3 +35,8 @@
 .lm-layers-chart--class .lm-layers-chart__curve { stroke-width: 6; }
 .lm-layers-chart--class .lm-layers-chart__test { stroke-width: 3; }
 .lm-layers-chart--class figcaption { font-size: var(--text-body); }
+
+/* 1920x1080 from the back of the room: the two networks stack, each chart fills the card width at a generous height. */
+[data-mode="classroom"] .lm-layers-pair { grid-template-columns: 1fr; }
+.lm-layers-chart--class svg { min-block-size: 360px; max-block-size: 70vh; }
+.lm-layers-chart--class .lm-layers-chart__halo { stroke-width: 9; }

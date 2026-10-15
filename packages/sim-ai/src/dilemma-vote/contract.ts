@@ -71,6 +71,7 @@ export const dilemmaVoteContract: ComponentContract = {
       glossary: glossaryProperty,
     },
   },
+  glossaryRefs: (c) => (c as { glossary?: string[] }).glossary ?? [],
   stringKeys: (c) => {
     const x = c as unknown as DilemmaVoteConfig;
     return keys(x.promptKey, x.options.map((o) => o.labelKey), x.frameworks.flatMap((f) => [f.nameKey, f.reasoningKey]), x.reflectionKey);

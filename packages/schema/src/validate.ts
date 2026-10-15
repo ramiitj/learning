@@ -92,7 +92,7 @@ function checkBlocks(blocks: Block[], opts: ValidateOptions, used: Set<string>, 
     contract.stringKeys(block.config).forEach((k) => used.add(k));
     for (const to of contract.blockRefs?.(block.config) ?? []) refs.push({ from: block.id, to });
     if (opts.glossaryTerms) {
-      for (const g of block.glossaryTerms ?? []) {
+      for (const g of [...(block.glossaryTerms ?? []), ...(contract.glossaryRefs?.(block.config) ?? [])]) {
         if (!opts.glossaryTerms.has(g)) issues.push({ severity: "error", check: "references", path, message: `glossary term "${g}" is not in the glossary` });
       }
     }

@@ -114,13 +114,24 @@ describe("layer-builder", () => {
   }, 30000);
 
   it("shows an analogy before the build, a □ legend and a generated chart description", () => {
-    const { container } = renderBlock(layerBuilder, { ...block, config: { ...config, analogyKey: "ana" } }, { ...strings, ana: "A team each turning one dial. It breaks because dials turn by arithmetic." });
+    const { container } = renderBlock(layerBuilder, { ...block, config: { ...config, analogyKey: "ana", analogyBreaksKey: "anab" } }, { ...strings, ana: "A team each turning one dial.", anab: "It breaks because dials turn by arithmetic." });
     const ana = screen.getByText(/A team each turning one dial/);
+    const breaks = screen.getByText(/It breaks because dials turn by arithmetic/);
+    expect(ana.compareDocumentPosition(breaks) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     const build = container.querySelector(".lm-layers-build")!;
     expect(ana.compareDocumentPosition(build) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(container.querySelector("figcaption")).toHaveTextContent("□ New test points (squares)");
     expect(screen.getByRole("img")).toHaveAccessibleName(/^Chart of 10 training points \(circles\) and 10 new points \(squares\)\. The values run from -?[\d.]+ to -?[\d.]+\.$/);
     expect(screen.getByText(/A neuron is a tiny calculator/)).toBeInTheDocument();
+  });
+
+  it("draws test markers as larger hollow squares with a halo, so they stay apart from training dots", () => {
+    const { container } = renderBlock(layerBuilder, block, strings, { mode: "classroom" });
+    const dot = container.querySelector("circle.lm-layers-chart__train")!;
+    const square = container.querySelector("rect.lm-layers-chart__test")!;
+    expect(Number(square.getAttribute("width"))).toBeGreaterThan(2 * Number(dot.getAttribute("r")));
+    expect(container.querySelectorAll("rect.lm-layers-chart__halo").length).toBe(container.querySelectorAll("rect.lm-layers-chart__test").length);
+    expect(container.querySelector(".lm-layers-pair")).toBeTruthy();
   });
 
   it("classroom without vote keys still trains both", async () => {
@@ -131,7 +142,7 @@ describe("layer-builder", () => {
 
   it("has no accessibility violations in either mode, before and after training", async () => {
     for (const mode of ["personal", "classroom"] as const) {
-      const { container, unmount } = renderBlock(layerBuilder, { ...voteBlock, config: { ...voteBlock.config, analogyKey: "ana" } }, { ...strings, ana: "A team of dials." }, { mode });
+      const { container, unmount } = renderBlock(layerBuilder, { ...voteBlock, config: { ...voteBlock.config, analogyKey: "ana", analogyBreaksKey: "anab" } }, { ...strings, ana: "A team of dials.", anab: "It breaks: nobody judges." }, { mode });
       expect(await a11yViolations(container)).toEqual([]);
       if (mode === "personal") await predict();
       else await revealVote();
@@ -160,13 +171,16 @@ describe("layer-builder", () => {
     expect(check({ ...config, dataset: { type: "spiral", points: 10, noise: 0, seed: 1 } }).length).toBeGreaterThan(0);
     expect(check({ ...config, extra: 1 }).length).toBeGreaterThan(0);
     expect(check({ promptKey: "p" }).length).toBeGreaterThan(0);
-    expect(check({ ...config, analogyKey: "p", glossary: ["error"] })).toEqual([]);
+    expect(check({ ...config, analogyKey: "p", analogyBreaksKey: "p", glossary: ["error"] })).toEqual([]);
+    // An analogy without its break point is rejected.
+    expect(check({ ...config, analogyKey: "p" }).map((i) => i.message).join()).toMatch(/analogyBreaksKey/);
+    expect(check({ ...config, analogyBreaksKey: "p" })).toEqual([]);
     expect(check({ ...config, glossary: [3] }).length).toBeGreaterThan(0);
   });
 
   it("exposes string keys and a class vote only when both keys are present", () => {
     expect(layerBuilder.stringKeys(voteBlock.config)).toEqual(["p", "explain", "small", "big"]);
-    expect(layerBuilder.stringKeys({ ...voteBlock.config, analogyKey: "ana" })).toContain("ana");
+    expect(layerBuilder.stringKeys({ ...voteBlock.config, analogyKey: "ana", analogyBreaksKey: "anab" })).toEqual(expect.arrayContaining(["ana", "anab"]));
     expect(layerBuilder.vote?.(voteBlock.config)?.options.map((o) => o.id)).toEqual(["small", "big"]);
     expect(layerBuilder.vote?.(config)).toBeNull();
   });

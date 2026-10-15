@@ -71,6 +71,7 @@ export const pixelGridContract: ComponentContract = {
       glossary: glossaryProperty,
     },
   },
+  glossaryRefs: (c) => (c as { glossary?: string[] }).glossary ?? [],
   stringKeys: (c) => {
     const x = c as unknown as PixelGridConfig;
     return keys(x.promptKey, x.explainKey, x.sameKey, x.differentKey, (x.presets ?? []).map((p) => p.labelKey));

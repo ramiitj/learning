@@ -171,7 +171,8 @@
             "leftKey": "hs.left",
             "rightKey": "hs.right",
             "goalKey": "hs.goal",
-            "fadeKey": "hs.fade"
+            "fadeKey": "hs.fade",
+            "breaksKey": "hs.breaks"
           },
           "glossaryTerms": [
             "training",
@@ -663,6 +664,7 @@
       "hs.right": "Step right (bigger weight)",
       "hs.goal": "Goal: reach the lowest error in as few steps as you can.",
       "hs.fade": "The second chart shows your height after each step. This is a <term-loss-curve>loss curve</term-loss-curve>. Loss is another name for error. Training takes steps like yours for every weight at once, again and again. Unlike you, the computer does not feel the ground. It calculates the slope from numbers. With good steps, the curve goes down.",
+      "hs.breaks": "Where this picture breaks: you had one weight and so one direction to choose. A real network has millions of weights, so its hill has millions of directions at once. And a computer does not pick its step size by feel. A rule called the learning rate sets it.",
       "rl.title": "Detectives in a relay",
       "rl.source": "Three detectives study one photo, in a relay. The first finds small marks: lines and edges. She passes her notes on. The second joins the marks into shapes. The third joins the shapes into a face and gives the answer.",
       "rl.m1s": "The photo",
@@ -828,6 +830,7 @@
       "hs.right": "दाएँ क़दम (बड़ा वेट)",
       "hs.goal": "लक्ष्य: जितने कम क़दमों में हो सके, सबसे कम ग़लती तक पहुँचिए।",
       "hs.fade": "दूसरा चार्ट हर क़दम के बाद आपकी ऊँचाई दिखाता है। इसे <term-loss-curve>लॉस-वक्र</term-loss-curve> कहते हैं। लॉस ग़लती का ही दूसरा नाम है। ट्रेनिंग हर वेट के लिए एक साथ आपके जैसे क़दम लेती है, बार-बार। आपकी तरह कंप्यूटर ज़मीन महसूस नहीं करता। वह संख्याओं से ढलान का हिसाब लगाता है। क़दम अच्छे हों, तो वक्र नीचे जाता है।",
+      "hs.breaks": "यह तस्वीर यहाँ टूटती है: आपके पास एक वेट था, यानी चुनने के लिए एक ही दिशा। असली नेटवर्क में लाखों वेट होते हैं, इसलिए उसकी पहाड़ी की एक साथ लाखों दिशाएँ होती हैं। और कंप्यूटर क़दम का आकार अंदाज़े से नहीं चुनता। उसे सीखने की दर (लर्निंग रेट) नाम का नियम तय करता है।",
       "rl.title": "रिले में जासूस",
       "rl.source": "तीन जासूस एक ही फ़ोटो को रिले की तरह जाँचते हैं। पहली जासूस छोटे निशान ढूँढती है: रेखाएँ और किनारे। वह अपने नोट्स आगे दे देती है। दूसरा उन निशानों को जोड़कर आकार बनाता है। तीसरा आकारों को जोड़कर चेहरा बनाता है और जवाब देता है।",
       "rl.m1s": "फ़ोटो",
@@ -993,6 +996,7 @@
       "hs.right": "కుడికి అడుగు (పెద్ద వెయిట్)",
       "hs.goal": "లక్ష్యం: వీలైనన్ని తక్కువ అడుగుల్లో అతి తక్కువ పొరపాటుకు చేరండి.",
       "hs.fade": "రెండో చార్ట్ ప్రతి అడుగు తర్వాత మీ ఎత్తును చూపిస్తుంది. దీన్ని <term-loss-curve>లాస్ వక్రరేఖ</term-loss-curve> అంటారు. లాస్ అనేది పొరపాటుకు మరో పేరు. ట్రైనింగ్ ప్రతి వెయిట్‌కూ ఒకేసారి మీలాంటి అడుగులు వేస్తుంది, మళ్లీ మళ్లీ. మీలా కంప్యూటర్ నేలను అనుభవించదు. అది సంఖ్యల నుండి వాలును లెక్కిస్తుంది. అడుగులు బాగుంటే, వక్రరేఖ కిందకు వెళ్తుంది.",
+      "hs.breaks": "ఈ చిత్రం ఇక్కడ విఫలమవుతుంది: మీకు ఒక వెయిట్ మాత్రమే ఉంది, అంటే ఎంచుకోవడానికి ఒకే దిశ. నిజమైన నెట్‌వర్క్‌లో లక్షలాది వెయిట్‌లు ఉంటాయి, అందుకే దాని కొండకు ఒకేసారి లక్షలాది దిశలు ఉంటాయి. అడుగు పరిమాణాన్ని కంప్యూటర్ అంచనాతో ఎంచుకోదు. లెర్నింగ్ రేట్ అనే నియమం దాన్ని నిర్ణయిస్తుంది.",
       "rl.title": "రిలేలో డిటెక్టివ్‌లు",
       "rl.source": "ముగ్గురు డిటెక్టివ్‌లు ఒకే ఫోటోను రిలే లాగా పరిశీలిస్తారు. మొదటి డిటెక్టివ్ చిన్న గుర్తులు కనుగొంటుంది: గీతలు, అంచులు. ఆమె తన నోట్స్‌ను ముందుకు ఇస్తుంది. రెండో డిటెక్టివ్ ఆ గుర్తులను కలిపి ఆకారాలు చేస్తాడు. మూడో డిటెక్టివ్ ఆకారాలను కలిపి ముఖాన్ని గుర్తించి జవాబు ఇస్తాడు.",
       "rl.m1s": "ఫోటో",
