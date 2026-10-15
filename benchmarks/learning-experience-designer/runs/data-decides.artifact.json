@@ -1,0 +1,246 @@
+{
+  "agent": "learning-experience-designer",
+  "hook": {
+    "text": "A program read 92 out of 100 handwritten numbers correctly. Would you let it mark your answer sheet?",
+    "why": "It is about their own marks, and 92 out of 100 sounds trustworthy. One tap later the same test shows 4 in every 10 misread for one school, so the learner is itching to find out how a score that high can hide that."
+  },
+  "blocks": [
+    {
+      "id": "h1",
+      "stage": "hook",
+      "component": "predict",
+      "learnerAct": "decide",
+      "text": "Meet the Number Reader. It is a program that reads handwritten numbers on mark sheets. A program is a list of exact steps a computer follows. Its makers tested it on 100 handwritten numbers. It read 92 of them correctly. Would you let it read the marks on your answer sheet? Pick one: 'Yes, I trust it', 'Not sure yet' or 'No'. Every choice is a fair place to start. We will come back to yours.",
+      "configSummary": "predict with 3 choices ('Yes, I trust it', 'Not sure yet', 'No') and an optional 3-step confidence row ('a hunch', 'fairly sure', 'very sure'). First-use help line: 'Tap a choice, then tap Lock it in.' 'program' is a glossary term. A single bar shows 92 of 100 as dots, with the 8 misread dots marked by a hollow outline (shape, not colour alone). The vote is held for the session and shown again in h2 and t3.",
+      "wrongAnswerDesign": "No choice can be wrong. Each gets a short reply that sets up what follows: Yes -> '92 out of 100 sounds strong. Let us look inside that number.' Not sure -> 'Wanting more evidence is a good instinct. Here is more.' No -> 'Interesting. What would make you trust it? Hold that thought.'",
+      "classroomVariant": "Teacher projects the screen and reads the question. Hands up for each of the three choices; teacher types the three counts. No names. About 2 minutes.",
+      "removalTest": "Without a first vote, the split in h2 has nothing to overturn; the learner would not feel how convincing one total can be."
+    },
+    {
+      "id": "h2",
+      "stage": "hook",
+      "component": "compare",
+      "learnerAct": "explore",
+      "text": "Tap 'Split by school'. The same 100 test numbers sort by who wrote them. 90 came from writers at Hill School. 10 came from writers at River School. Now look at the right answers. Hill School: 86 right out of 90. River School: 6 right out of 10. Each school had 4 numbers misread. Is 4 misread out of 10 the same as 4 misread out of 90? Imagine your sheet comes from River School. Do you still trust the Number Reader? Choose again.",
+      "configSummary": "compare: left panel 'All 100' (92 right); right panel splits into a 90-dot grid (Hill) and a 10-dot grid (River), misread dots hollow. Then a 2-choice question ('About the same' / 'Very different') and a re-vote with the h1 choices, the learner's earlier vote shown beside it.",
+      "wrongAnswerDesign": "'About the same' -> the 4 hollow dots pulse in both grids: they cover almost half of the River row and a thin sliver of the Hill grid. Line: 'Same count, very different share. 4 in every 10 is a lot of lost marks.' Re-vote stays 'Yes' -> 'That may hold for Hill School sheets. For River School, 4 of every 10 were misread. Keep watching.'",
+      "classroomVariant": "Teacher taps the split. Hands up: 'about the same' or 'very different'. Then the class re-votes by hands and the teacher puts the before and after counts side by side. About 3 minutes.",
+      "removalTest": "This is the surprise that drives the lesson; without it the learner has no reason to ask why one group fares worse."
+    },
+    {
+      "id": "p1",
+      "stage": "predict",
+      "component": "predict",
+      "learnerAct": "predict",
+      "text": "Why does the Number Reader misread so many River School numbers? Pick the guess you believe most. A: River School writers have messy handwriting. B: The Number Reader is unfair to River School on purpose. C: It was given very few River School numbers to work from. D: The Number Reader is broken. Lock in your guess. You will test it in a moment.",
+      "configSummary": "predict with 4 choices and the 3-step confidence row. No answer is shown now; the choice is carried to e2, where it is revisited. Reply after locking: 'Locked in. Let us find out.'",
+      "wrongAnswerDesign": "Every guess is answered later by evidence the learner produces. A (messy handwriting): in m1 the learner sees River School 7s side by side with Hill School 7s; they are neat, with a line across the middle, so the difference is a habit, not mess. B (unfair on purpose): in m3 the same program, given a balanced pile, does well for River School; e2 states the program has no likes or plans. D (broken): m3 shows the same program working well once the mix changes. e2 names the learner's own guess and thanks it for being testable.",
+      "classroomVariant": "Hands up for A, B, C and D; teacher writes the counts on the board. Teacher invites one or two volunteers to say why, without recording names. About 2 minutes.",
+      "removalTest": "Without a committed guess, the explanation in e2 is a statement instead of a resolution, and the stereotype in option A would go unchallenged."
+    },
+    {
+      "id": "p2",
+      "stage": "predict",
+      "component": "predict",
+      "learnerAct": "predict",
+      "text": "Here is a fairer test. It has 50 numbers from Hill School and 50 from River School. None of these numbers were used when the Number Reader was made. Numbers kept back for checking like this are called a test set. Out of these 100, how many will it read correctly? Slide to your guess.",
+      "configSummary": "predict slider 0 to 100 in steps of 1, with a fixed marker at 92 labelled 'first test'. 'test set' is a glossary term. First-use help: 'Drag the dot, or use the arrow keys.' The guess is held and placed beside the result in m2.",
+      "wrongAnswerDesign": "Revealed in m2 against the result (78). Guess above 92: 'You expected a fairer test to look better. Half of this test is River School. Watch what that does.' Guess near 92: 'That is what the first test suggested. The new mix changes the picture.' Guess within 5 of 78: 'Close. What made you go lower than 92?' Guess far below 78: 'You expected worse. Hill School results hold the total up a bit.'",
+      "classroomVariant": "Hands up for four bands written on the board: above 92, about 92, 80 to 91, below 80. Teacher sets the slider to the most popular band. About 1 minute.",
+      "removalTest": "Without this guess, the 78 in m2 lands as a fact instead of a surprise the learner owns."
+    },
+    {
+      "id": "m1",
+      "stage": "manipulate",
+      "component": "sort",
+      "learnerAct": "explore",
+      "text": "This is the training table. Each card shows one handwritten number and its right answer. A card like this is called an example. Try it: drag one card into the training pile. Now tap a card to see who wrote it. Hill School cards have a hill mark. River School cards have a wave mark. Sort these 12 cards into two piles by school. Look closely at the River School 7s and 1s. What do many of them share? Training means a program works out its own settings from many examples. Tap 'training' for a short reminder.",
+      "configSummary": "sort: 12 cards (8 Hill, 4 River), two piles labelled with the hill and wave marks. First-use help: 'Drag a card, or tap a card and then a pile.' After sorting, a 3-choice question: 'A line across the 7 and a hook on the 1', 'They are messier', 'They are bigger'. 'example' and 'training' are glossary terms; the 'training' detour (junk-filter cards) returns the learner here, card in hand.",
+      "wrongAnswerDesign": "Card in the wrong pile: the card flips to show its mark and slides to the matching pile, with 'Look for the hill or the wave in the corner.' 'They are messier': a River 7 and a Hill 7 enlarge side by side; both are neat; the River 7 has a line across it. 'Different, not messy. It is a writing habit.' 'They are bigger': the two cards are overlaid at the same size: 'Same size. Look at the strokes.'",
+      "classroomVariant": "Teacher projects the 12 cards and points to each; the class calls 'hill' or 'wave' by raised hands. Then hands up for the three pattern choices. About 3 minutes.",
+      "removalTest": "Without it, the learner never meets an example or the River School writing habit, so the later results have no visible cause."
+    },
+    {
+      "id": "m2",
+      "stage": "manipulate",
+      "component": "compare",
+      "learnerAct": "build",
+      "text": "The makers trained the Number Reader on this pile: 90 Hill School examples and 10 River School examples. Press 'Train' to train it the same way. Now press 'Test' to use the fair test set. Hill School: 48 right out of 50. River School: 30 right out of 50. Add them: 48 + 30 = 78. So it read 78 out of 100 correctly, not 92. Where did your guess land? The first test was mostly Hill School numbers, so it hid the problem. A collection of examples used for training is called a dataset.",
+      "configSummary": "compare with pre-computed results: left 'Makers' test' (90 Hill, 10 River: 92 right); right 'Fair test set' (50 and 50). 'Train' animates the pile into the program once (under 1 second, no loop); 'Test' fills the right panel's two dot grids. The learner's p2 guess marker appears on the 0 to 100 line beside 78. 'dataset' is a glossary term.",
+      "wrongAnswerDesign": "The wrong-answer moment is the p2 guess (designed in p2). Here the gap between guess and 78 is drawn as a bracket labelled with its size, and the line reads: 'Same program, different test. The test mix changed the score.'",
+      "classroomVariant": "Teacher presses 'Train', asks for hands on the p2 bands again, then presses 'Test'. Teacher writes 48 + 30 = 78 on the board. About 2 minutes.",
+      "removalTest": "Without it, the learner has no evidence that the 92 depended on who was in the test, and 'dataset' would be named without being seen."
+    },
+    {
+      "id": "m3",
+      "stage": "manipulate",
+      "component": "knob",
+      "learnerAct": "explore",
+      "text": "Now you change the dataset. The pile stays at 100 examples. Turn the knob to swap Hill School cards for River School cards. Your goal: get River School to 45 or more out of 50. Before each turn, guess: will River School go up or down? Try 10, then 30, then 50 River School examples. Press 'Train', then 'Test', each time. Hill School hardly changed. River School went up a lot. A dataset with similar numbers from each group is called balanced.",
+      "configSummary": "knob with 3 stops for River School examples (10, 30, 50) in a pile fixed at 100. Before each turn, an up/down guess for River School. Results (pre-computed): 10 -> River 30 of 50, Hill 48 of 50; 30 -> River 41, Hill 48; 50 -> River 47, Hill 47. Two bars plus a goal line at 45. 'balanced' is a glossary term, shown when the goal is reached.",
+      "wrongAnswerDesign": "Guess 'down': River's bar rises past the guess arrow, with 'More wave-mark cards gave it more line-across 7s to match.' Learner expects Hill School to fall a lot: the Hill bar is highlighted moving 48 to 47, with 'One fewer. Swapping cards cost Hill School very little.' Goal not reached at 30: 'Closer. One more turn.'",
+      "classroomVariant": "Teacher turns the knob. Before each turn the class shows thumbs up or thumbs down for River School; teacher reads out the rough split, then presses 'Train' and 'Test'. About 3 minutes.",
+      "removalTest": "Without it, the learner never changes the one variable that matters and never sees that the fix is in the data, not the program."
+    },
+    {
+      "id": "m4",
+      "stage": "manipulate",
+      "component": "compare",
+      "learnerAct": "predict",
+      "text": "Here is another idea. Keep the old mix: 9 Hill School cards for every 1 River School card. Make the pile twice as big: 180 Hill School and 20 River School. Predict first: will River School get much better, a little better, or stay the same? Now press 'Train' and 'Test'. River School: 32 of 50 right. Hill School: 49 of 50 right. The balanced pile of 100 gave River School 47 of 50. Which helped River School more: a bigger pile, or a better mix?",
+      "configSummary": "compare split screen: left 'Bigger pile, same mix' (200 cards, 9 to 1), right 'Balanced pile' (100 cards, 1 to 1), each with its River and Hill results. 3-choice predict before 'Train', then a 2-choice decide after.",
+      "wrongAnswerDesign": "'Much better': River moves only 30 to 32; the left pile's 20 wave cards are highlighted: 'Twice the cards, but still only 20 from River School.' 'Stay the same': 'Close. It did move a little: 30 to 32.' Choosing 'a bigger pile': the two River results, 32 and 47, sit side by side with the River card counts, 20 and 50: 'The mix gave River School more of its own patterns.'",
+      "classroomVariant": "Split screen projected. Hands up for the three predictions, teacher presses 'Train' and 'Test', then hands up for 'bigger pile' or 'better mix'. About 2 minutes.",
+      "removalTest": "Without it, the learner leaves believing that more data always fixes unfairness (misconception 5)."
+    },
+    {
+      "id": "e1",
+      "stage": "explain",
+      "component": "analogy",
+      "learnerAct": "decide",
+      "text": "Think of a cook who learned 90 recipes from one family. The cook learned only 10 recipes from the neighbours' family. One day the neighbours ask for their favourite dish. It comes out wrong. Match each part of the cook story to the Number Reader. Where does this story break? A real cook can taste the dish and notice it is wrong. The Number Reader has nothing like taste. You will test this soon.",
+      "configSummary": "analogy as a 4-pair match: recipes -> examples; the cook's recipe collection -> the dataset; the neighbours' family -> River School writers; a dish that tastes wrong -> a number read wrongly. Once all pairs are matched, the recipe cards fade into number cards with wave marks. The break point appears as its own card the learner taps open.",
+      "wrongAnswerDesign": "Each mismatch gets its own reply. Neighbours' family -> dataset: 'The family is a group of people, like River School writers. The recipe collection is the dataset.' Recipes -> River School writers: 'One recipe is one example. Who is it from?' Dish tastes wrong -> the program: 'The dish is one result. Which result came out wrong?' The pair snaps back so the learner tries again.",
+      "classroomVariant": "Teacher reads the story aloud. For each of the four story parts, the class chooses its match by raised hands from four options on screen. Teacher opens the break-point card and asks pairs: 'What does the Number Reader have instead of taste?' About 3 minutes.",
+      "removalTest": "Without it, the result stays a fact about cards; the analogy maps it onto everyday experience and plants the break point that b1 tests."
+    },
+    {
+      "id": "e2",
+      "stage": "explain",
+      "component": "explain-back",
+      "learnerAct": "explain",
+      "text": "Look back at your first guess. C was closest. River School handwriting was not messy. It was different from most of the examples. Here is what your tests showed. When a group has few examples in the dataset, the program makes more mistakes for that group. This is called bias in data. The program did not choose to be unfair. It has no likes or dislikes. It follows the patterns in the examples it was given. A pattern is something that repeats in a way you can spot. Explain it back: why did River School numbers go wrong?",
+      "configSummary": "explain-back: shows the learner's p1 guess. Four explanations to pick from, plus a free-text option: (a) River School writing was messy; (b) the dataset had few River School examples, so few of their patterns; (c) the program dislikes River School; (d) there was not enough data overall. Then a break-point prompt: 'Where does your explanation stop working?' 'bias' and 'pattern' are glossary terms.",
+      "wrongAnswerDesign": "(a): the m1 side-by-side 7s return: 'Neat, but different. The pile had few like them.' (c): the m3 knob result returns: 'Same program, balanced pile, 47 of 50. Nothing changed but the data.' (d): the m4 result returns: 'A pile twice as big moved River School only from 30 to 32.' Learner's p1 guess was A, B or D: 'Your guess was worth testing. Here is what the tests said.'",
+      "classroomVariant": "Pairs talk for 2 minutes, then hands up for (a) to (d). Teacher asks two pairs to say their sentence aloud; nothing is written on the shared screen. About 4 minutes.",
+      "removalTest": "Without it, the learner has the experience but no name for it, and the stereotype in option A stays uncorrected."
+    },
+    {
+      "id": "e3",
+      "stage": "explain",
+      "component": "by-hand-then-automate",
+      "learnerAct": "build",
+      "text": "How can we compare '6 out of 10' with '30 out of 50'? We turn both into 'out of 100'. 'Per cent' means 'out of 100'. A number written this way is a percentage. River School, first test: 6 right out of 10. 10 x 10 = 100, so multiply both by 10. 6 x 10 = 60. That is 60 out of 100, written 60%. River School, fair test: 30 right out of 50. 50 x 2 = 100, so multiply both by 2. 30 x 2 = 60. That is 60% again. Your turn: Hill School got 48 right out of 50. Multiply both by 2. What percentage is that? Tap 'What is a percentage?' for a short detour with pictures.",
+      "configSummary": "by-hand-then-automate: two worked rows are shown step by step, each revealed by a tap. The learner fills one row by hand (48 x 2 = ?, number pad). Then 'Convert all' turns every result in the lesson so far into percentages in one table. Hint ladder: 1) 'Double 48.' 2) '40 x 2 = 80, and 8 x 2 = 16.' 3) '80 + 16 = ?' then the detour offer. The percentage detour (grids of 100, 10 and 50) returns here.",
+      "wrongAnswerDesign": "48: 'That is the out-of-50 number. We doubled the bottom to 100. Double the top too.' 94 or 98: '48 x 2 in two steps: 40 x 2 = 80, 8 x 2 = 16, 80 + 16 = ?' Any other answer: hint ladder rung 1, then 2, then 3, then the detour offer. 96: 'Yes, 96 out of 100, so 96%.'",
+      "classroomVariant": "Teacher shows each step on screen. The class works out 48 x 2 on paper; hands up for 94, 96 or 98. Teacher presses 'Convert all'. About 3 minutes.",
+      "removalTest": "Without it, the learner cannot compare groups of different sizes, which O2 requires and e4 depends on."
+    },
+    {
+      "id": "e4",
+      "stage": "explain",
+      "component": "knob",
+      "learnerAct": "explain",
+      "text": "The share of answers a program gets right is called its accuracy. We often write it as a percentage. River School accuracy: 60%. Hill School accuracy: about 96%. But the first test said 92%. How can all three be true? Turn the knob to change how many of the 100 test numbers came from River School. Before you turn, predict: will the overall accuracy go up or down? With 10 River School numbers: 86 + 6 = 92 right. With 30: 67 + 18 = 85 right. With 50: 48 + 30 = 78 right. When Hill School fills most of the test, River School barely moves the total. Explain it back: why can one accuracy number hide a problem?",
+      "configSummary": "knob with 3 stops: River School numbers in a 100-number test (10, 30, 50); group accuracies held fixed (Hill about 96%, River 60%). Before each turn, an up/down guess for the overall number. Output: a stacked 100-dot grid (Hill dots and River dots in different shapes) and the sum written out. Then a short explain-back with 3 choices plus free text: 'Big groups fill the total, so a small group's results barely show' / 'The test was broken' / 'River School cheated the test'. 'accuracy' is a glossary term.",
+      "wrongAnswerDesign": "Guess 'up': the total falls 92 -> 85 -> 78, and the River dots grow in the grid: 'More River School numbers, so their 60% counts for more.' 'The test was broken': 'The test counted correctly. It counted mostly Hill School.' 'River School cheated': 'Nobody did anything wrong in the test. The mix of the test set decided what the total showed.'",
+      "classroomVariant": "Teacher turns the knob; class shows thumbs up or down before each turn; teacher writes the three sums on the board. Pairs say the explain-back aloud. About 3 minutes.",
+      "removalTest": "Without it, the learner sees the 92 and the 60% but not the mechanism that lets one total hide a small group (misconception 2, O2)."
+    },
+    {
+      "id": "e5",
+      "stage": "explain",
+      "component": "by-hand-then-automate",
+      "learnerAct": "build",
+      "text": "Deeper: what about 86 out of 90? No whole number turns 90 into 100. So we divide instead. Warm up with one you know: 6 / 10 = 0.6. Then 0.6 x 100 = 60. That is the 60% we found before. Now Hill School. Step 1: accuracy = number right / number tested = 86 / 90. Step 2: 86 / 90 = 0.955... A calculator is fine here. Step 3: multiply by 100 to get 'out of 100'. 0.955... x 100 = 95.5... Step 4: round to a whole number. 95.5 sits halfway between 95 and 96. Halfway or more rounds up, so it becomes 96. Hill School accuracy is about 96%. It matches the 96% from the fair test. Tap 'Decimals and rounding' for a short detour.",
+      "configSummary": "Depth-dial layer (deeper), reached from e4. by-hand-then-automate: the learner taps the on-screen calculator for step 2 and chooses the rounded value on a number line from 95 to 96 for step 4; then 'Do the rest' converts 41 of 50, 47 of 50, 32 of 50 and 49 of 50 the same way. The 'Decimals and rounding' detour returns here.",
+      "wrongAnswerDesign": "Chooses 95: the number line zooms to show 95.5... at the halfway mark: 'Halfway or more rounds up.' Types 0.955 as the answer: 'That is the share out of 1. Multiply by 100 for out of 100.'",
+      "classroomVariant": "Teacher works the four steps on the board; one student per step reads the calculator result aloud; the class checks by hands. About 3 minutes, optional.",
+      "removalTest": "Without it, learners who want to handle totals that do not scale to 100 have no route; the core path does not depend on it."
+    },
+    {
+      "id": "e6",
+      "stage": "explain",
+      "component": "analogy",
+      "learnerAct": "predict",
+      "text": "Here is a second way to see it. You visit a town for one week. It rains every single day. Would you say this town is always rainy? Choose: 'Yes', 'Maybe' or 'No, one week is not enough'. Your one week is a sample. A sample is a small part you look at to judge the whole. A good sample looks like the whole. One rainy week does not look like a whole year. A dataset is a sample too. It stands for all the handwriting the Number Reader will ever meet. Where does this story break? Nobody chooses which week it rains. People do choose what goes into a dataset. So people can fix it. Tap 'What is a sample?' for a short detour.",
+      "configSummary": "analogy with a 3-choice predict. After the choice, a 52-week calendar appears with one rainy week lit; the learner taps 'Show the whole year' and sees mostly dry weeks. The calendar then fades into the m2 training pile, the one lit week becoming the 10 wave cards. The break point is a card the learner opens. 'sample' is a glossary term; the soup detour returns here.",
+      "wrongAnswerDesign": "'Yes': 'One week is 7 days out of 365. Tap to see the weeks you did not visit.' 'Maybe': 'Fair. How many weeks would you want to see before deciding?' 'No, one week is not enough': 'That is the idea. Now see why a dataset is the same.'",
+      "classroomVariant": "Hands up for the three choices. Teacher reveals the full-year calendar and the fade into the training pile, then reads the break point and asks the class: 'Who chooses what goes into a dataset?' About 2 minutes.",
+      "removalTest": "Without it, 'dataset' stays a pile of cards; the sample idea explains why a small group's share of the data matters and that people choose it. It is also the required second analogy for a hard concept."
+    },
+    {
+      "id": "b1",
+      "stage": "break-it",
+      "component": "break-it",
+      "learnerAct": "explore",
+      "text": "Let us find where the Number Reader fails without warning. Train it on Hill School examples only. Then show it this River School 7, with a line across its middle. It answers '4'. It also shows 'confidence: 97%'. Confidence is a number showing how closely the input matches patterns from its training examples. It does not check whether the answer is true. Predict: will it ever warn you that River School writing is new to it? Now try three more River School numbers. Watch for a warning. There is none. The program has no list of who was missing from its dataset. Nothing inside it checks for that gap. This is where the cook story breaks.",
+      "configSummary": "break-it: a Hill-only training pile; a tray of 6 River School cards (7s with a line, 1s with a hook, plus a 3 and a 5 with no habit). The learner drops any 3 cards in; each shows a pre-computed answer and confidence (for example 7 read as '4' at 97%, 1 read as '7' at 91%, 3 read as '3' at 94%). A 'Warnings' panel stays visible and empty. 2-choice predict before trying ('It will warn me' / 'It will not warn me'). 'confidence' is a glossary term.",
+      "wrongAnswerDesign": "'It will warn me': after the three tries, the empty Warnings panel is highlighted: 'Nothing. A high confidence number came with a misread 7. Nothing inside checks who was missing.' Picks the 3 and it comes out right: 'That one matched Hill patterns well. Try a 7 with a line.' The cook card from e1 returns: 'The cook could taste. The Number Reader has only a number.'",
+      "classroomVariant": "Teacher shows the River 7 result; hands up for 'will warn' or 'will not warn'. Students call out which three cards to try; teacher drops them in. Teacher points to the empty Warnings panel. About 3 minutes.",
+      "removalTest": "Without it, the learner may trust a confident answer and believe the program would flag its own gap (misconception 7, O4); it is also the live break point of the cook analogy."
+    },
+    {
+      "id": "b2",
+      "stage": "break-it",
+      "component": "predict",
+      "learnerAct": "predict",
+      "text": "The Number Reader is now used at both schools for a month. It misreads many River School sheets. Predict: by the end of the month, will it get better on its own? Choose 'Yes' or 'No'. No. This program does not change after training. Reading more sheets does not update it. Its settings stay the same until people collect new examples, check their right answers, and train it again. Some other systems are updated now and then, so always ask which kind it is. Who can spot the gap? Pick all that fit. The program itself. People who test it on each group. River School students who notice wrong marks.",
+      "configSummary": "predict yes/no, then a multi-select of 3 options. The reveal shows a 30-day strip with the settings dial frozen throughout; it moves only when a 'people retrain it' card is added. Right set: people who test it on each group, and River School students who notice wrong marks.",
+      "wrongAnswerDesign": "'Yes': the frozen dial is highlighted across the month: 'Thirty days of sheets, and the settings did not move. Only people retraining it can change them.' Selecting 'the program itself': the empty b1 Warnings panel returns: 'Remember the 7 read as 4, with no warning.' Leaving out 'River School students': 'They see wrong marks on their own sheets first. Their reports count.'",
+      "classroomVariant": "Hands up for yes or no; teacher reveals. Then hands up for each of the three options in turn. About 2 minutes.",
+      "removalTest": "Without it, learners keep the belief that a program improves on its own from use (misconception 4) and do not learn who can find the gap (O4)."
+    },
+    {
+      "id": "t1",
+      "stage": "transfer-reflect",
+      "component": "sort",
+      "learnerAct": "decide",
+      "text": "A new case. A voice helper answers spoken questions. Its dataset has 9,000 voice clips from adults aged 20 to 40. It has only 300 clips from children and 200 from grandparents. Who might it serve worst? Now build your checking plan. Sort each card into 'In my plan' or 'Not in my plan'. Card 1: test it with voices from every age group. Card 2: report accuracy for each group separately. Card 3: add more clips from children and older people. Card 4: add more clips from adults aged 20 to 40. Card 5: trust the overall accuracy. Then compare your plan with ours.",
+      "configSummary": "A 3-choice question first ('Adults aged 20 to 40', 'Children and grandparents', 'Everyone equally'), then sort: 5 cards into 2 groups. 'Compare with ours' shows cards 1, 2 and 3 in, 4 and 5 out, with the learner's plan alongside.",
+      "wrongAnswerDesign": "'Adults aged 20 to 40' or 'Everyone equally': a bar of the 9,500 clips appears: 'Children and grandparents together are 500 of 9,500. Which group is River School here?' Card 4 in the plan: 'This keeps the same lopsided mix, like the bigger pile in m4.' Card 5 in the plan: 'Remember the 92%. One total can hide a small group.' Card 2 left out: 'Without separate results, how would you see the gap?'",
+      "classroomVariant": "Teacher reads the case; hands up for who it serves worst. Teacher reads each card; class votes 'in' or 'out' by hands; teacher places it. About 3 minutes.",
+      "removalTest": "Without it, the learner has not shown they can apply 'who is in the data, and how well does it work for each group?' to a new system (O5, misconception 5)."
+    },
+    {
+      "id": "t2",
+      "stage": "transfer-reflect",
+      "component": "sort",
+      "learnerAct": "explain",
+      "text": "Now the hardest question. A River School student got a wrong mark because of the Number Reader. Who should be responsible? Drag each one to 'a lot', 'some' or 'none'. The people who collected the examples. The people who built the program. The school that chose to use it. The program itself. People can disagree about most of these. One is firm: a program has no wishes or plans. It cannot take responsibility, but people can. Write one sentence on why you placed them as you did.",
+      "configSummary": "sort: 4 cards into 3 groups, then one free-text sentence. After placing, a panel shows 'Where others placed them' as counts only. Placements and sentences are not stored beyond the session.",
+      "wrongAnswerDesign": "Only the program card has a firm answer. Program placed in 'a lot' or 'some': 'A program has no wishes or plans. It cannot take responsibility, but people can. Where would its share go?' Other placements get no verdict: 'People disagree here. Your reason matters more than the spot.'",
+      "classroomVariant": "Teacher reads each card; hands up for 'a lot', 'some' or 'none'; teacher shows counts only. Pairs discuss for 3 minutes; teacher invites a few views aloud. About 6 minutes.",
+      "removalTest": "Without it, the lesson skips the human question of who answers for unfair data, which O5 requires and the lesson arc ends on."
+    },
+    {
+      "id": "t3",
+      "stage": "transfer-reflect",
+      "component": "takeaway",
+      "learnerAct": "build",
+      "text": "Make your takeaway card. Finish each line in your own words, or keep ours. Line 1: Before I trust a program's answer, I ask who was in its dataset. Line 2: I ask what its accuracy is for each group, not only overall. Line 3: If the data is unfair, people can fix it by adding the missing examples. At the start you chose whether to trust the Number Reader. Where are you now? Save your card. It stays on this device. These three questions will come back in later lessons.",
+      "configSummary": "takeaway: an editable card with three lines (prefilled, each editable), plus the learner's h1 and h2 trust votes and a final trust vote shown on the card as 'Then' and 'Now'. Saved on the device only; no account.",
+      "wrongAnswerDesign": "",
+      "classroomVariant": "Class result card: the teacher asks the class for wording for each line, writes the class version on the projected card, and students copy it into notebooks. Final trust vote by hands, shown as counts beside the h1 counts. About 3 minutes.",
+      "removalTest": "Without it, the learner leaves with nothing of their own; the card captures the core idea in their words and gives them three questions to reuse."
+    }
+  ],
+  "ending": {
+    "keepable": "A takeaway card in the learner's own words with three questions to ask of any program trained on data, plus their 'Then' and 'Now' trust votes on the Number Reader.",
+    "text": "You started by deciding whether to trust a program that scored 92 out of 100. Now you can look inside a number like that. Finish your card in your own words. Who was in the dataset? How well does it work for each group? Who can fix it? Save your card. It stays on this device."
+  },
+  "droppedOrMerged": [
+    {
+      "reason": "Turned into a knob over the test mix so the learner produces the hiding effect instead of reading about it. The 92 count-out is kept as the first knob stop.",
+      "from": "e4 static count-out (86 + 6 = 92)"
+    },
+    {
+      "reason": "Merged into a stored vote that returns in h2 and on the t3 card, so the learner's first stance becomes part of the ending.",
+      "from": "h1 'Any choice is fine. Keep your answer in mind.'"
+    },
+    {
+      "reason": "Turned into a question the learner answers after sorting, so the habit is spotted before it is named; the 'messier' choice sets up the e2 correction.",
+      "from": "m1 statement of the River School writing habit"
+    }
+  ],
+  "notesForCreator": [
+    "No block was dropped; every draft step passed the removal test. 19 blocks, all acts; e5 is a deeper depth-dial layer, not on the core path.",
+    "Domain simulation: 'train-classifier' would serve m2, m3, m4 and b1 better, letting learners build their own pile and see real results. For v1 these run on 'compare', 'knob' and 'break-it' with pre-computed results. Please decide which route v1 takes. If real results are ever used, the text must be generated from them; otherwise each results screen should say 'simulated results'.",
+    "New illustrative values in e4: with 30 River School numbers in a 100-number test, Hill 70 x 86/90 = 66.9, shown as 67, plus River 30 x 60% = 18, total 85. Please send to accuracy review with the draft's other illustrative numbers. The b1 extra confidence values (91%, 94%) are also illustrative.",
+    "p1 option B was reworded from 'does not like River School' to 'is unfair to River School on purpose' so the distractor keeps its mind-framing but never appears as a claim; e2 and t2 correct it. Bias review should still check option A ('messy handwriting'), which m1 and e2 correct with side-by-side cards.",
+    "Accessibility: hill and wave marks, and right versus misread dots, use shape as well as colour. Every drag has a tap alternative. The two short animations (Train, analogy fades) run once on request and respect reduced-motion settings.",
+    "Classroom timing totals about 47 minutes including e5; for a 40-minute period, skip e5 and shorten t2 discussion to 4 minutes. All votes are by raised hands; only counts appear on the shared screen.",
+    "Data handling is unchanged from the draft: the t3 card is stored only on the device; h1, h2, p1 and t2 choices and sentences live only for the session.",
+    "Hand-off: Localisation Specialist (Hindi and Telugu, including 'per cent means out of 100' and the analogies), then the review panel."
+  ]
+}
