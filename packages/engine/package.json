@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@lm/schema": "workspace:*",
-    "intl-messageformat": "^12.1.2"
+    "intl-messageformat": "^12.1.4"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }
